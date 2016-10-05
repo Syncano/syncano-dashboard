@@ -1,0 +1,12 @@
+{
+  "presets": ["react", "es2015", "stage-0"],
+  "plugins": ["add-module-exports", "lodash"],
+  "env": {
+    "development": {
+      "presets": ["react-hmre"]
+    },
+    "testing": {
+      "presets": []
+    }
+  }
+}

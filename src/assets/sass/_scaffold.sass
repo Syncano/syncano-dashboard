@@ -1,0 +1,43 @@
+@for $p from 0 through 6
+  $padding-selector: "vp-#{$p}"
+  $margin-selector: "vm-#{$p}"
+
+  .#{$padding-selector}
+    +vp($p)
+
+  .#{$padding-selector}-b
+    +vp-b($p)
+
+  .#{$padding-selector}-t
+    +vp-t($p)
+
+  .#{$margin-selector}
+    +vm($p)
+
+  .#{$margin-selector}-b
+    +vm-b($p)
+
+  .#{$margin-selector}-t
+    +vm-t($p)
+
+@for $p from 1 through 3
+  $padding-selector: "hp-#{$p}"
+  $margin-selector: "hm-#{$p}"
+
+  .#{$padding-selector}
+    +hp($p)
+
+  .#{$padding-selector}-l
+    +hp-l($p)
+
+  .#{$padding-selector}-r
+    +hp-r($p)
+
+  .#{$margin-selector}
+    +hm($p)
+
+  .#{$margin-selector}-l
+    +hm-l($p)
+
+  .#{$margin-selector}-r
+    +hm-r($p)

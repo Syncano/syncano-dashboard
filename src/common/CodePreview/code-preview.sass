@@ -1,0 +1,49 @@
+.code-preview-container
+  padding: 10px
+  padding-bottom: 0
+
+.code-preview
+  border-top-left-radius: 8px
+  border-top-right-radius: 8px
+  max-width: 880px
+  margin-left: auto
+  margin-right: auto
+  background: #fcfcfc
+  overflow: hidden
+  .code-preview__nav
+    background: #c9c9c9
+    padding: 5px
+    ul
+      margin: 0
+      padding: 0
+      list-style: none
+      display: flex
+      li
+        height: 30px
+        line-height: 30px
+        padding: 0 15px
+        border-radius: 5px
+        text-transform: uppercase
+        font-size: 10px
+        font-weight: bold
+        color: #4a4a4a
+        margin-right: 6px
+        cursor: pointer
+        white-space: nowrap
+        &:last-child
+          margin-right: 0
+        &:hover
+          color: #fff
+        &.is-active
+          color: #fff
+          background: #0070D3
+  .code-preview__content
+    padding: 5px
+    font-size: 12px
+    .code-preview__content__item
+      display: none
+      &.code-preview__content__item--is-active
+        display: block
+        > pre
+          background: none !important
+

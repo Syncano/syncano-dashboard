@@ -1,0 +1,54 @@
+$base-spacing: 8px
+
+=vp-t($padding)
+  padding-top: $padding * $base-spacing
+
+=vp-b($padding)
+  padding-bottom: $padding * $base-spacing
+
+=vp($padding)
+  +vp-b($padding)
+  +vp-t($padding)
+
+// vertical margin
+=vm-t($margin)
+  margin-top: $margin * $base-spacing
+
+=vm-b($margin)
+  margin-bottom: $margin * $base-spacing
+
+=vm($margin)
+  +vm-b($margin)
+  +vm-t($margin)
+
+// horizontal padding
+=hp-l($padding)
+  padding-left: $padding * $base-spacing
+
+=hp-r($padding)
+  padding-right: $padding * $base-spacing
+
+=hp($padding)
+  +hp-l($padding)
+  +hp-r($padding)
+
+// horizontal margin
+=hm-l($margin)
+  margin-left: $margin * $base-spacing
+
+=hm-r($margin)
+  margin-right: $margin * $base-spacing
+
+=hm($margin)
+  +hm-l($margin)
+  +hm-r($margin)
+
+// padding
+=p($padding)
+  +vp($padding)
+  +hp($padding)
+
+// margin
+=m($margin)
+  +vm($margin)
+  +hm($margin)

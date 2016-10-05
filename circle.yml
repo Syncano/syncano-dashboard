@@ -1,0 +1,33 @@
+machine:
+  node:
+    version: 6.2.1
+  java:
+    version: oraclejdk8
+
+general:
+  artifacts:
+    - "coverage/"
+    - "reports/"
+
+test:
+  override:
+    - ./test.sh:
+        timeout: 150
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - npm run git-config
+      - NODE_ENV=production npm run deployment-master
+
+  staging:
+    branch: devel
+    commands:
+      - NODE_ENV=staging npm run deployment-devel
+      - NODE_ENV=beta npm run deployment-beta
+
+  sockets:
+    branch: /.*/
+    commands:
+      - NODE_ENV=staging npm run deployment-branch

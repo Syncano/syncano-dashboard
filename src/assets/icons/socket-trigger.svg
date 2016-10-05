@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="178px" height="160px" viewBox="0 0 178 160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.6.1 (26313) - http://www.bohemiancoding.com/sketch -->
+    <title>socket-trigger</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="socket-trigger" fill="#020202">
+            <g id="Layer_1">
+                <path d="M176.398,74.934 L136.883,4.71 C135.368,1.867 132.434,0 129.05,0 L48.949,0 C45.568,0 42.631,1.867 41.117,4.711 L1.603,74.934 C0.533,76.354 0,78.133 0,80 C0,81.865 0.533,83.646 1.603,85.066 L41.119,155.289 C42.633,158.133 45.57,160 48.951,160 L129.052,160 C132.435,160 135.37,158.133 136.885,155.289 L176.4,85.066 C177.466,83.646 178,81.865 178,80 C178,78.133 177.467,76.354 176.398,74.934 L176.398,74.934 Z M89,114.711 L89,97.356 L54.591,97.356 L54.591,62.644 L89,62.644 L89,45.289 L123.409,80 L89,114.711 L89,114.711 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

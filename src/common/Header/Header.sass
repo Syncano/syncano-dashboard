@@ -1,0 +1,57 @@
+.toolbar-list
+  margin: 0
+  list-style: none
+  padding: 0
+  color: #fff
+  display: -webkit-box
+  display: -webkit-flex
+  display: -ms-flexbox
+  display: flex
+  -webkit-box-align: center
+  -webkit-align-items: center
+  -ms-flex-align: center
+  align-items: center
+  height: 100%
+
+  > li
+    display: -webkit-inline-box
+    display: -webkit-inline-flex
+    display: -ms-inline-flexbox
+    display: inline-flex
+    -webkit-box-align: center
+    -webkit-align-items: center
+    -ms-flex-align: center
+    align-items: center
+    padding: 0
+    padding-left: 16px
+    font-size: 15px
+
+    &:not(:last-child)
+      padding-right: 16px
+
+  &.left
+    > li:first-child
+      padding-left: 0
+
+    a,
+    button
+      color: #fff
+      opacity: .6
+      transition: all 450ms cubic-bezier(.23, 1, .32, 1) 0ms
+
+      .synicon-menu-down
+        line-height: 1
+        top: 2px
+
+      &:hover
+        opacity: 1
+
+    button
+      > div
+        font-size: 0
+
+.notification-count-icon
+  position: absolute !important
+  top: 0
+  right: 0
+  font-size: 24px !important

@@ -1,0 +1,51 @@
+@import 'config'
+@import 'compass.scss'
+
+.account-container
+  max-width: rhythm(500/8)
+  margin: 0 auto
+  padding-left: rhythm(10/8)
+  padding-right: rhythm(10/8)
+  +padding-leader(8)
+  +padding-trailer(8)
+
+  > p
+    +adjust-font-size-to(12px)
+    color: rgba(0, 0, 0, 0.4)
+
+  &__content
+    padding: rhythm(4.5) rhythm(4)
+    +margin-trailer(2)
+
+    &__header
+      +margin-trailer(1)
+      overflow: hidden
+      text-align: center
+
+      p
+        +adjust-font-size-to(20px)
+        margin-bottom: 24px
+        color: rgba(0, 0, 0, 0.87)
+
+      small
+        +adjust-font-size-to(14px, 2.5)
+        color: rgba(0, 0, 0, 0.4)
+
+    &__form
+      +margin-trailer(4)
+
+    &__footer
+      color: rgba(0, 0, 0, 0.4)
+
+      p
+        margin-bottom: 0
+
+.account-logo
+  +margin-trailer(4)
+  text-align: center
+
+  svg
+    display: block
+    margin: 0 auto
+    height: rhythm(6)
+

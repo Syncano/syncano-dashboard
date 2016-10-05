@@ -1,0 +1,71 @@
++establish-baseline()
+
+*,
+*:after,
+*:before
+  box-sizing: border-box
+
+html
+  height: 100%
+
+html,
+body
+  width: 100%
+  min-height: 100%
+
+body
+  display: flex
+  flex-direction: column
+
+body > iframe
+  height: 0
+  position: absolute
+  bottom: -1
+  left: 0
+
+#app
+  display: flex
+  flex: 1
+
+a,
+a:visited
+  color: $blue
+  text-decoration: none
+  cursor: pointer
+
+p
+  margin-top: 0
+
+html
+  +adjust-leading-to(2)
+
+body
+  overflow-x: hidden
+
+input:-webkit-autofill
+  -webkit-box-shadow: 0 0 0px 1000px white inset
+
+.Select.Select--multi > div:nth-last-child(1)
+  position: relative
+
+.full-page-dialog
+  padding: 0 !important
+
+  > div:first-child
+    padding: 16px 0
+    overflow-y: auto
+    height: 100vh
+    display: flex
+    align-items: center
+
+    .full-page-dialog__content
+      margin: auto !important
+
+      > div
+        box-shadow: none !important
+
+[style*="cursor: not-allowed"]
+  cursor: default !important
+
+  svg
+    display: none !important

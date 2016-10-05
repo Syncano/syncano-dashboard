@@ -1,0 +1,112 @@
+$device-sm: 30em
+$device-md: 50em
+$device-lg: 1600px
+$column-gutter: 1.14285714285714
+$columns-count: 35
+
+.container
+  margin: 0 auto
+  padding: 0 10px
+  max-width: $device-lg
+
+.container:after,
+.row:after
+  content: ""
+  display: table
+  clear: both
+
+.row
+  display: -webkit-box
+  display: -webkit-flex
+  display: -ms-flexbox
+  display: flex
+  -webkit-flex-flow: row wrap
+  -ms-flex-flow: row wrap
+  flex-flow: row wrap
+  margin-right: -($column-gutter/2) * 1rem
+  margin-left: -($column-gutter/2) * 1rem
+
+  &.align-middle
+    -webkit-box-align: center
+    -webkit-align-items: center
+    -ms-flex-align: center
+    align-items: center
+
+  &.align-bottom
+    -webkit-box-align: end
+    -webkit-align-items: flex-end
+    -ms-flex-align: end
+    align-items: flex-end
+
+  &.align-left
+    -webkit-box-pack: start
+    -webkit-justify-content: flex-start
+    -ms-flex-pack: start
+    justify-content: flex-start
+
+  &.align-center
+    -webkit-box-pack: center
+    -webkit-justify-content: center
+    -ms-flex-pack: center
+    justify-content: center
+
+  &.align-right
+    -webkit-box-pack: end
+    -webkit-justify-content: flex-end
+    -ms-flex-pack: end
+    justify-content: flex-end
+
+[class^="col-"],
+[class*=" col-"]
+  width: 100%
+  padding: 0 ($column-gutter/2) * 1rem
+
+.col-flex-1
+  -webkit-box-flex: 1
+  -webkit-flex: 1
+  -ms-flex: 1
+  flex: 1
+
+.col-flex-2
+  -webkit-box-flex: 2
+  -webkit-flex: 2
+  -ms-flex: 2
+  flex: 2
+
+.col-flex-3
+  -webkit-box-flex: 3
+  -webkit-flex: 3
+  -ms-flex: 3
+  flex: 3
+
+.col-date
+  width: 90px
+
+.col-menu
+  width: 48px
+  padding: 0
+
+@mixin col-size($col)
+  -webkit-flex-basis: (100% * $col / $columns-count)
+  -ms-flex-preferred-size: (100% * $col / $columns-count)
+  flex-basis: (100% * $col / $columns-count)
+  max-width: (100% * $col / $columns-count)
+
+@for $col from 1 through $columns-count
+  .col-xs-#{$col}
+    @include col-size($col)
+
+@media (min-width: #{$device-sm})
+  @for $col from 1 through $columns-count
+    .col-sm-#{$col}
+      @include col-size($col)
+
+@media (min-width: #{$device-md})
+  @for $col from 1 through $columns-count
+    .col-md-#{$col}
+      @include col-size($col)
+
+@media (min-width: #{$device-lg})
+  @for $col from 1 through $columns-count
+    .col-lg-#{$col}
+      @include col-size($col)

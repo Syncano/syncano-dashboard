@@ -1,0 +1,32 @@
+.icon-picker {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 30px 40px 80px 40px;
+}
+
+.icon-picker-list-item {
+    margin: 5px;
+    padding: 5px;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 3px;
+    fill: #444;
+    max-width: 30px;
+}
+
+.icon-picker-list-item.icon-picker-list-item-selected {
+    background-color: #0091EA;
+    fill: white;
+}
+
+.icon-picker-list-item i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-picker-list-item i svg {
+    width: 36px;
+    height: 36px;
+}

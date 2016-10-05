@@ -1,0 +1,42 @@
+public/
+
+# Build
+build/
+
+# Logs
+logs
+*.log
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# Compiled binary addons (http://nodejs.org/api/addons.html)
+build/Release
+
+# Dependency directory
+node_modules
+
+# Users Environment Variables
+.lock-wscript
+
+dist/
+.idea/
+.tern-project
+*.sublime-project
+*.sublime-workspace
+
+# Reports by nightwatchjs
+reports/
+bin/
+.jshintrc
+
+# OS files
+.DS_Store
+
+# Temp files for tests
+*.p12
+tempAccounts.js
+tempInstances.js
+
+# Others
+.tern-project
