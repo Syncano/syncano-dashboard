@@ -94,8 +94,14 @@ const CreateHostingDialog = React.createClass({
             <Dialog.SidebarSection>
               Hosting allows you to manage, deploy and publish websites using Syncano platform.
             </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Hosting label">
+              Set the name of your hosting. Label field is not unique.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Domains">
+              Define the domain names. Each name must be unique within an Instance.
+            </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
-              <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/">
+              <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/hosting">
                 Learn more
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
