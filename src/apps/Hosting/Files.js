@@ -37,6 +37,13 @@ const HostingFilesView = React.createClass({
     return false;
   },
 
+  handleBackClick() {
+    const { router, params } = this.props;
+    const redirectPath = `/instances/${params.instanceName}/hosting/`;
+
+    router.push(redirectPath);
+  },
+
   handleUploadFiles(event) {
     event.stopPropagation();
     const { files } = event.target;
@@ -86,7 +93,14 @@ const HostingFilesView = React.createClass({
         <HostingDialog />
         <HostingPublishDialog />
 
-        <InnerToolbar title="Website Hosting">
+        <InnerToolbar
+          title="Website Hosting"
+          style={{ padding: 0 }}
+          backButton={true}
+          backFallback={this.handleBackClick}
+          forceBackFallback={true}
+          backButtonTooltip="Go back to Hostings List"
+        >
           <Show if={items.length && !isLoading}>
             <RaisedButton
               label={isDefaultHosting ? 'Published' : 'Publish'}
