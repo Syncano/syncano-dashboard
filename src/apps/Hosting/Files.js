@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import Reflux from 'reflux';
-import Helmet from 'react-helmet';
 import _ from 'lodash';
 
 import HostingFilesStore from './HostingFilesStore';
@@ -76,17 +75,26 @@ const HostingFilesView = React.createClass({
   },
 
   render() {
-    const { isLoading, hideDialogs, items, filesToUpload, lastFileIndex, currentFileIndex, isUploading } = this.state;
+    const {
+      isLoading,
+      hideDialogs,
+      hostingDetails,
+      items,
+      filesToUpload,
+      lastFileIndex,
+      currentFileIndex,
+      isUploading
+    } = this.state;
     const hasFilesToUpload = filesToUpload.length > 0;
     const isDefaultHosting = this.isDefaultHosting();
+    const hostingLabel = hostingDetails ? hostingDetails.label : '';
 
     return (
       <div>
-        <Helmet title="Website Hosting" />
         <HostingDialog />
         <HostingPublishDialog />
 
-        <InnerToolbar title="Website Hosting">
+        <InnerToolbar title={`Website Hosting: ${hostingLabel}`}>
           <Show if={items.length && !isLoading}>
             <RaisedButton
               label={isDefaultHosting ? 'Published' : 'Publish'}
