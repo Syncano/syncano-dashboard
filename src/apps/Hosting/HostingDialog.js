@@ -6,6 +6,7 @@ import { DialogMixin, FormMixin } from '../../mixins';
 
 import Actions from './HostingActions';
 import Store from './HostingStore';
+import SessionStore from '../Session/SessionStore';
 
 import { TextField } from 'material-ui';
 import { Dialog, Show, Notification, SelectWrapper } from '../../common';
@@ -71,6 +72,8 @@ const CreateHostingDialog = React.createClass({
   render() {
     const { isLoading, open, label, description, canSubmit, domains } = this.state;
     const title = this.hasEditMode() ? 'Edit Hosting' : 'Add Hosting';
+    const currentInstance = SessionStore.getInstance();
+    const currentInstanceName = currentInstance && currentInstance.name;
 
     return (
       <Dialog.FullPage
@@ -95,10 +98,12 @@ const CreateHostingDialog = React.createClass({
               Hosting allows you to manage, deploy and publish websites using Syncano platform.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Hosting label">
-              Set the name of your hosting. Label field is not unique.
+              You can set the name of your hosting.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Domains">
-              Define the domain names. Each name must be unique within an Instance.
+              {`Define the domains. Each name must be unique within an Instance. You can also
+              name your domain as 'default' then it will be connected directly to your current Instance
+              and avaliable at https://${currentInstanceName}.syncano.site`}
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/hosting">
