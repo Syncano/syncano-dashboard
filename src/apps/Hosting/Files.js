@@ -95,7 +95,6 @@ const HostingFilesView = React.createClass({
 
         <InnerToolbar
           title="Website Hosting"
-          style={{ padding: 0 }}
           backButton={true}
           backFallback={this.handleBackClick}
           forceBackFallback={true}
