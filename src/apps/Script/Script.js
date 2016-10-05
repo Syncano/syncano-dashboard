@@ -13,6 +13,7 @@ import Actions from './ScriptActions';
 import RuntimeStore from '../Runtimes/RuntimesStore';
 
 import { Checkbox, FlatButton, FontIcon, IconButton, RaisedButton, TextField } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles';
 import {
   Dialog,
   Editor,
@@ -199,7 +200,8 @@ const Script = React.createClass({
       },
       resultContainer: {
         display: 'flex',
-        flexFlow: 'column'
+        flexFlow: 'column',
+        width: '100%'
       },
       lastTrace: {
         zIndex: 1,
@@ -212,6 +214,14 @@ const Script = React.createClass({
         flexBasis: 305,
         flexGrow: 1,
         display: 'flex'
+      },
+      linkIconStyles: {
+        color: Colors.blue500,
+        fontSize: 22,
+        lineHeight: 1
+      },
+      resultIconStyles: {
+        padding: '10px 0 0 0'
       }
     };
   },
@@ -797,14 +807,36 @@ const Script = React.createClass({
     );
   },
 
+  renderRawResultInNewTab() {
+    const { currentScript, lastTraceResult, lastTraceStatus } = this.state;
+    const rawResultPage = window.open();
+    const pageContent = `
+      <title>
+        ${currentScript.label} || ${lastTraceStatus}
+      </title>
+      <pre>${lastTraceResult}</pre>
+    `;
+
+    rawResultPage.document.write(pageContent);
+  },
+
   renderSidebarResultSection() {
     const styles = this.getStyles();
     const { lastTraceResult } = this.state;
+    const rightContent = (
+      <IconButton
+        onTouchTap={this.renderRawResultInNewTab}
+        iconStyle={styles.linkIconStyles}
+        style={styles.resultIconStyles}
+        iconClassName={'synicon-launch'}
+      />
+    );
 
     return (
       <TogglePanel
         title="Result"
         style={styles.resultContainer}
+        rightContent={rightContent}
       >
         <div style={styles.result}>
           {lastTraceResult}
