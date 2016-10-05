@@ -4,12 +4,13 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
 
+import { SnackbarNotificationMixin } from '../../mixins';
+
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
 import HostingPublishDialogActions from './HostingPublishDialogActions';
 
-import { RaisedButton } from 'material-ui';
-import { colors as Colors } from 'material-ui/styles';
+import { FontIcon, RaisedButton } from 'material-ui';
 import { InnerToolbar, Container, Show } from '../../common';
 import HostingFilesList from './HostingFilesList';
 import HostingDialog from './HostingDialog';
@@ -17,7 +18,8 @@ import HostingPublishDialog from './HostingPublishDialog';
 
 const HostingFilesView = React.createClass({
   mixins: [
-    Reflux.connect(HostingFilesStore)
+    Reflux.connect(HostingFilesStore),
+    SnackbarNotificationMixin
   ],
 
   componentDidMount() {
@@ -25,6 +27,17 @@ const HostingFilesView = React.createClass({
 
     HostingFilesActions.setHostingId(hostingId);
     HostingFilesActions.fetch();
+  },
+
+  getRedirectUrl() {
+    const { hostingDetails } = this.state;
+    const { instanceName } = this.props.params;
+    const defaultHostingUrl = `https://${instanceName}.syncano.site/`;
+    const hasDomains = hostingDetails && hostingDetails.domains.length > 0;
+    const customDomainUrl = hasDomains ? `https://${instanceName}--${hostingDetails.domains[0]}.syncano.site/` : null;
+    const redirectUrl = this.isDefaultHosting() ? defaultHostingUrl : customDomainUrl;
+
+    return redirectUrl;
   },
 
   isDefaultHosting() {
@@ -75,10 +88,28 @@ const HostingFilesView = React.createClass({
     return file;
   },
 
+  showSnackbar() {
+    const snackbar = {
+      message: "You don't have any domains yet. Please add some or set Hosting as default."
+    };
+
+    this.setSnackbarNotification(snackbar);
+  },
+
   render() {
-    const { isLoading, hideDialogs, items, filesToUpload, lastFileIndex, currentFileIndex, isUploading } = this.state;
+    const {
+      isLoading,
+      hideDialogs,
+      items,
+      filesToUpload,
+      lastFileIndex,
+      currentFileIndex,
+      isUploading
+    } = this.state;
+
     const hasFilesToUpload = filesToUpload.length > 0;
-    const isDefaultHosting = this.isDefaultHosting();
+    const redirectUrl = this.getRedirectUrl();
+    const hasRedirectUrl = !_.isEmpty(redirectUrl);
 
     return (
       <div>
@@ -89,12 +120,12 @@ const HostingFilesView = React.createClass({
         <InnerToolbar title="Website Hosting">
           <Show if={items.length && !isLoading}>
             <RaisedButton
-              label={isDefaultHosting ? 'Published' : 'Publish'}
-              onTouchTap={this.handleShowPublishDialog}
+              label="Open in tab"
               primary={true}
-              disabled={isDefaultHosting}
-              disabledBackgroundColor={Colors.green500}
-              disabledLabelColor="#FFF"
+              icon={<FontIcon className="synicon-open-in-new" style={{ marginTop: 4 }} />}
+              onTouchTap={!hasRedirectUrl && this.showSnackbar}
+              href={redirectUrl}
+              target="_blank"
             />
           </Show>
         </InnerToolbar>

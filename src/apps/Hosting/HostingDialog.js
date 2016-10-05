@@ -32,7 +32,7 @@ const CreateHostingDialog = React.createClass({
   },
 
   getHostingParams() {
-    const { label, description, domains, id } = this.state;
+    const { label, description, domains = [], id } = this.state;
     let domainsArray = domains;
 
     if (domains && domains.length && _.isObject(domains[0])) {
