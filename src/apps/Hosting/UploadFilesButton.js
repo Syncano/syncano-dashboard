@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 
 import { RaisedButton, FlatButton } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 
 class UploadFilesButton extends Component {
   constructor(props) {
@@ -32,9 +33,14 @@ class UploadFilesButton extends Component {
   }
 
   render = () => {
-    const inputStyles = {
-      display: 'none',
-      position: 'absolute'
+    const styles = {
+      inputStyles: {
+        display: 'none',
+        position: 'absolute'
+      },
+      chooseFilesButton: {
+        color: Colors.blue500
+      }
     };
     const { hasFiles, handleSendFiles, handleUploadFiles, handleClearFiles } = this.props;
 
@@ -56,18 +62,19 @@ class UploadFilesButton extends Component {
     }
 
     return (
-      <RaisedButton
+      <FlatButton
         label="Choose files from disk"
         primary={true}
         onTouchTap={this.handleClickButton}
+        style={styles.chooseFilesButton}
       >
         <input
-          style={inputStyles}
+          style={styles.inputStyles}
           type="file"
           ref="dirSelect"
           onChange={handleUploadFiles}
         />
-      </RaisedButton>
+      </FlatButton>
     );
   }
 }
