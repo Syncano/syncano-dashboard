@@ -1,23 +1,21 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
 import localStorage from 'local-storage-fallback';
 
-import SessionActions from '../apps/Session/SessionActions';
 import SessionStore from '../apps/Session/SessionStore';
+import SessionActions from '../apps/Session/SessionActions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { SnackbarNotification } from './../apps';
 import { SyncanoTheme } from '../common/';
 
 const App = React.createClass({
-  displayName: 'App',
-
   childContextTypes: {
-    location: React.PropTypes.object,
-    params: React.PropTypes.object,
-    routes: React.PropTypes.array
+    location: PropTypes.object,
+    params: PropTypes.object,
+    routes: PropTypes.array
   },
 
   getChildContext() {

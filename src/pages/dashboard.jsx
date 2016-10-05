@@ -18,7 +18,6 @@ const Dashboard = React.createClass({
     const { router } = this.props;
 
     if (SessionStore.getSignUpMode()) {
-      SessionStore.removeSignUpMode();
       router.push('/setup/');
     }
 
