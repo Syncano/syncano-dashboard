@@ -23,15 +23,15 @@ class HostingListItem extends Component {
       moreLinksButton: {
         cursor: 'pointer',
         color: Colors.blue500,
-        alignSelf: 'flex-start',
+        width: '100%',
         fontSize: 12,
-        paddingTop: 8,
+        paddingBottom: 8,
         textTransform: 'uppercase'
       },
       websiteUrlContainerStyles: {
         display: 'flex',
         flexDirection: 'column',
-        maxWidth: '100%'
+        width: '100%'
       }
     }
   )

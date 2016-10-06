@@ -62,6 +62,7 @@ export default Reflux.createStore({
   },
 
   refreshData() {
+    console.debug('ScriptStore::refreshData');
     const { scriptId } = SessionStore.getParams();
 
     if (scriptId) {
@@ -85,9 +86,14 @@ export default Reflux.createStore({
   },
 
   onFetchScriptCompleted(script) {
+    console.debug('ScriptStore::onFetchScriptCompleted');
     this.data.scriptConfig = this.mapConfig(script.config);
     this.data.currentScript = script;
     this.trigger(this.data);
+  },
+
+  onFetchScriptFailure() {
+    SessionActions.handleInvalidURL();
   },
 
   getEditorMode() {
@@ -97,44 +103,49 @@ export default Reflux.createStore({
   },
 
   fetchTraces() {
+    console.debug('ScriptStore::fetchTraces');
     if (this.data.currentScriptId === null) {
       return;
     }
-
     Actions.fetchScriptTraces(this.data.currentScript.id);
   },
 
   onFetchScriptTraces() {
+    console.debug('ScriptStore::onFetchScriptTraces');
     if (this.data.lastTraceReady) {
       this.data.traceIsLoading = true;
     }
-
     this.trigger(this.data);
   },
 
   onFetchScriptTracesCompleted(traces) {
+    console.debug('ScriptStore::onFetchScriptTracesCompleted');
     this.data.traces = traces;
     this.data.isLoading = false;
     this.getScriptLastTraceResult();
   },
 
   onFetchScriptTracesFailure() {
+    console.debug('ScriptStore::onFetchScriptTracesFailure');
     this.data.traceIsLoading = false;
     this.trigger(this.data);
   },
 
   onRunScriptCompleted() {
+    console.debug('ScriptStore::onRunScriptCompleted');
     this.dismissSnackbarNotification();
     this.refreshData();
     this.sendScriptAnalytics('run', this.data.currentScript);
   },
 
   onRunScriptFailure() {
+    console.debug('ScriptStore::onRunScriptFailure');
     this.dismissSnackbarNotification();
     this.sendScriptAnalytics('run_failure', this.data.currentScript);
   },
 
   getScriptLastTraceResult() {
+    console.debug('ScriptStore::getScriptLastTraceResult', this.data.traces);
     this.data.lastTraceResult = null;
     this.data.lastTraceStatus = null;
     this.data.lastTraceDuration = null;

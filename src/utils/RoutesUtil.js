@@ -34,13 +34,14 @@ const RoutesUtil = {
       });
   },
 
-  isInstanceAvailable(instanceName) {
+  isInstanceAvailable() {
     const connection = NewLibConnection.get();
+    const lastInstance = localStorage.getItem('lastInstance');
 
     return connection
       .Instance
       .please()
-      .get({ name: instanceName });
+      .get({ name: lastInstance });
   },
 
   onAppEnter(nextState, replace) {
@@ -117,11 +118,11 @@ const RoutesUtil = {
   },
 
   redirectToLastInstance(nextState, replace) {
-    const lastInstanceName = localStorage.getItem('lastInstanceName');
+    const lastInstance = localStorage.getItem('lastInstance');
 
-    if (lastInstanceName) {
-      this.isInstanceAvailable(lastInstanceName)
-        .then(replace({ pathname: `/instances/${lastInstanceName}/` }));
+    if (lastInstance) {
+      this.isInstanceAvailable()
+        .then(replace({ pathname: `/instances/${lastInstance}/` }));
     }
   },
 

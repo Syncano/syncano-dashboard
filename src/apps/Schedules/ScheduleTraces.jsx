@@ -1,9 +1,11 @@
 import React from 'react';
 import Reflux from 'reflux';
 
+// Stores & Actions
 import Store from '../Traces/TracesStore';
 import Actions from '../Traces/TracesActions';
 
+// Components
 import Traces from '../Traces';
 
 export default React.createClass({

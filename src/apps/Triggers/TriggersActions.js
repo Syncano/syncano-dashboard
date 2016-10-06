@@ -8,7 +8,6 @@ export default CreateActions(
     fetchTriggers: {
       asyncResult: true,
       loading: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Triggers.list'
     },

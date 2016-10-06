@@ -18,21 +18,6 @@ export default {
       .catch(this.failure);
   },
 
-  getDetails(instanceName) {
-    const accountKey = SYNCANO_DEMO_APPS_ACCOUNT_KEY;
-    const connection = Syncano({
-      accountKey,
-      baseUrl: SYNCANO_BASE_URL
-    })
-
-    connection
-      .Instance
-      .please()
-      .get(instanceName)
-      .then(this.completed)
-      .catch(this.failure);
-  },
-
   install(payload) {
     const { email, instanceName } = payload;
     const accountKey = SYNCANO_DEMO_APPS_ACCOUNT_KEY;

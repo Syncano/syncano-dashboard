@@ -5,18 +5,16 @@ export default CreateActions(
     fetch: {},
     setDevices: {},
     fetchGCMPushNotificationConfig: {
+      loading: true,
       asyncForm: true,
       asyncResult: true,
-      loading: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.PushNotifications.getGCMPushNotificationConfig'
     },
     configGCMPushNotification: {
-      asyncForm: true,
       asyncResult: true,
+      asyncForm: true,
       loading: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.PushNotifications.configGCMPushNotification'
     }

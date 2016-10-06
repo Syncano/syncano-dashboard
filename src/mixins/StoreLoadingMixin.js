@@ -1,14 +1,13 @@
 import _ from 'lodash';
-import SessionActions from '../apps/Session/SessionActions';
 
 export default {
+
   setLoadingStates() {
     if (this.listenables) {
       const listenables = [].concat(this.listenables);
 
       _.forEach(listenables, (listenable) => {
         this.bindLoadingListeners(listenable);
-        this.bindFailureListeners(listenable);
       });
     }
   },
@@ -30,24 +29,18 @@ export default {
     });
   },
 
-  bindFailureListeners(listenable) {
-    _.forEach(listenable, (action) => {
-      action.redirectOnFailure && this.listenTo(action.failure, SessionActions.handleInvalidURL);
-    });
-  },
-
   setLoading(state = true, trigger = true) {
     if (this.data.isLoading === state) {
       return;
     }
 
+    console.debug('StoreLoadingMixin::setLoading', state);
     this.data.isLoading = state;
 
     if (trigger) {
       if (!state) {
         this.data.hideDialogs = true;
       }
-
       this.trigger(this.data);
     }
   }

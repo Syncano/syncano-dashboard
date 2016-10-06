@@ -8,16 +8,16 @@ const styles = {
 };
 
 const TraceBigResult = ({ onClick }) => (
-  <span>
-    {'The result was too large to view instantly. Click '}
+  <div>
+    The result was too large to view instantly. Click
     <a
       style={styles.link}
       onClick={onClick}
     >
-      here
+      {' here '}
     </a>
-    {' to load it.'}
-  </span>
+    to load it.
+  </div>
 );
 
 export default TraceBigResult;

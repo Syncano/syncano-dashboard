@@ -8,6 +8,7 @@ import Billing from './Billing';
 import Channels from './Channels';
 import Classes from './Classes';
 import CustomSockets from './CustomSockets';
+import CustomSocketsRegistry from './CustomSocketsRegistry';
 import Scripts from './Scripts';
 import DataEndpoints from './DataEndpoints';
 import ScriptEndpoints from './ScriptEndpoints';
@@ -39,6 +40,7 @@ export default {
   Channels,
   Classes,
   CustomSockets,
+  CustomSocketsRegistry,
   Scripts,
   DataEndpoints,
   ScriptEndpoints,

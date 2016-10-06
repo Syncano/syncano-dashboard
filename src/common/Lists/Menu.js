@@ -5,38 +5,34 @@ const menuItemStyle = {
   cursor: 'pointer'
 };
 
-const Menu = ({ children, checkedItemsCount, handleSelectAll, handleUnselectAll, itemsCount }) => {
-  const areAllItemsChecked = checkedItemsCount >= itemsCount;
-
-  return (
-    <IconMenu
-      iconButtonElement={
-        <IconButton
-          touch={true}
-          tooltipPosition="bottom-left"
-          iconClassName="synicon-dots-vertical"
-        />
-      }
-      anchorOrigin={{ horizontal: 'middle', vertical: 'center' }}
-      targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-    >
-      <MenuItem
-        primaryText="Select All"
-        style={!areAllItemsChecked && menuItemStyle}
-        disabled={areAllItemsChecked}
-        onTouchTap={handleSelectAll}
+const Menu = ({ children, checkedItemsCount, handleSelectAll, handleUnselectAll }) => (
+  <IconMenu
+    iconButtonElement={
+      <IconButton
+        touch={true}
+        tooltipPosition="bottom-left"
+        iconClassName="synicon-dots-vertical"
       />
-      <MenuItem
-        primaryText="Unselect All"
-        style={checkedItemsCount && menuItemStyle}
-        disabled={!checkedItemsCount}
-        onTouchTap={handleUnselectAll}
-      />
-      <div style={menuItemStyle}>
-        {React.Children.map(children, (child) => React.cloneElement(child, { checkedItemsCount }))}
-      </div>
-    </IconMenu>
-  );
-};
+    }
+    anchorOrigin={{ horizontal: 'middle', vertical: 'center' }}
+    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+  >
+    <MenuItem
+      primaryText="Select All"
+      style={!checkedItemsCount && menuItemStyle}
+      disabled={checkedItemsCount}
+      onTouchTap={handleSelectAll}
+    />
+    <MenuItem
+      primaryText="Unselect All"
+      style={checkedItemsCount && menuItemStyle}
+      disabled={!checkedItemsCount}
+      onTouchTap={handleUnselectAll}
+    />
+    <div style={menuItemStyle}>
+      {React.Children.map(children, (child) => React.cloneElement(child, { checkedItemsCount }))}
+    </div>
+  </IconMenu>
+);
 
 export default Menu;

@@ -14,7 +14,7 @@ const Column = ColumnList.Column;
 
 const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checkable }) => {
   const handleClickInstanceName = () => {
-    localStorage.setItem('lastInstanceName', item.name);
+    localStorage.setItem('lastInstance', item.name);
     router.push(`/instances/${item.name}/`);
   };
   const showEditDialog = () => {

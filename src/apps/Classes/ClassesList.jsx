@@ -113,7 +113,6 @@ export default React.createClass({
   },
 
   render() {
-    const { items } = this.props;
     const checkedItems = Store.getCheckedItems();
     const checkedItemsCount = Store.getNumberOfChecked();
     const someClassIsProtectedFromDelete = checkedItems.some(this.isProtectedFromDelete);
@@ -152,7 +151,6 @@ export default React.createClass({
               checkedItemsCount={checkedItemsCount}
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}
-              itemsCount={items.length}
             >
               <Lists.MenuItem
                 disabled={someClassIsProtectedFromDelete}

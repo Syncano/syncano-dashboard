@@ -3,19 +3,13 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 export default CreateActions(
   {
     fetch: {},
+    setClickedApp: {},
 
     fetchDemoApps: {
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DemoApps.list'
-    },
-
-    fetchDemoApp: {
-      asyncResult: true,
-      loading: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DemoApps.getDetails'
     },
 
     installDemoApp: {

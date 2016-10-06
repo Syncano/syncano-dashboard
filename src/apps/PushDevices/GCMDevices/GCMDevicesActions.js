@@ -6,15 +6,14 @@ export default CreateActions(
     setDevices: {},
     changeStep: {},
     fetchGCMConfig: {
-      asyncResult: true,
       loading: true,
+      asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.PushNotifications.getGCMPushNotificationConfig'
     },
     fetchDevices: {
       asyncResult: true,
       loading: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.PushDevices.listGCMDevices'
     },

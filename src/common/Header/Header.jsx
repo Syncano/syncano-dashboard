@@ -41,17 +41,6 @@ const Header = Radium(React.createClass({
 
   getStyles() {
     return {
-      avatar: {
-        backgroundImage: `url(${this.getGravatarUrl()}), url(${this.getFallBackAvatar()})`,
-        backgroundSize: '40px 40px',
-        top: 'calc(50% - 20px)'
-      },
-      betaBadge: {
-        color: '#fff',
-        fontWeight: 600,
-        paddingLeft: 10,
-        paddingTop: 5
-      },
       topToolbar: {
         background: this.context.muiTheme.rawTheme.palette.primary1Color,
         height: 50,
@@ -68,12 +57,6 @@ const Header = Radium(React.createClass({
       },
       logo: {
         height: 20
-      },
-      toolbarGroup: {
-        marginLeft: -5,
-        height: '100%',
-        flex: 1,
-        justifyContent: 'flex-end'
       },
       toolbarList: {
         padding: '0 24px',
@@ -94,6 +77,7 @@ const Header = Radium(React.createClass({
   },
 
   getDropdownItems() {
+    const { router } = this.props;
     const styles = this.getStyles();
     const user = SessionStore.getUser() || '';
     const billingIcon = <FontIcon className="synicon-credit-card" />;
@@ -109,7 +93,7 @@ const Header = Radium(React.createClass({
       <div>
         <ListItem
           leftAvatar={this.renderIconButton()}
-          onTouchTap={this.goToAccountDetails}
+          onTouchTap={() => router.push('/account/')}
           primaryText={`${user.first_name} ${user.last_name}`}
           secondaryText={user.email}
         />
@@ -121,26 +105,28 @@ const Header = Radium(React.createClass({
           <Clipboard
             text="Copy Account Key"
             copyText={user.account_key}
-            onCopy={this.showSnackbarNotification}
+            onCopy={() => this.setSnackbarNotification({
+              message: 'Account Key copied to the clipboard'
+            })}
             label="Copy Account Key"
             type="list"
           />
         </ListItem>
         <ListItem
-          onTouchTap={this.goToIntances}
+          onTouchTap={() => router.push('/instances/')}
           leftIcon={instancesListIcon}
           primaryText="My Instances"
         />
         <ListItem
-          onTouchTap={this.goToAccountPlan}
+          onTouchTap={() => router.push('/account/plan/')}
           leftIcon={billingIcon}
           primaryText="Plans & Billing"
         />
         <ListItem
+          data-e2e="account-logout-top-nav-item"
           onTouchTap={SessionActions.logout}
           leftIcon={logoutIcon}
           primaryText="Logout"
-          data-e2e="account-logout-top-nav-item"
         />
       </div>
     );
@@ -161,35 +147,15 @@ const Header = Radium(React.createClass({
     return Gravatar.url(userEmail, { d: 'blank' }, true);
   },
 
-  goToAccountDetails() {
-    const { router } = this.props;
-
-    router.push('/account/');
-  },
-
-  goToIntances() {
-    const { router } = this.props;
-
-    router.push('/instances/');
-  },
-
-  goToAccountPlan() {
-    const { router } = this.props;
-
-    router.push('/account/plan/');
-  },
-
-  showSnackbarNotification() {
-    this.setSnackbarNotification({ message: 'Account Key copied to the clipboard' });
-  },
-
   renderIconButton() {
-    const styles = this.getStyles();
-
     return (
       <Avatar
         data-e2e="account-icon-top-nav"
-        style={styles.avatar}
+        style={{
+          backgroundImage: `url(${this.getGravatarUrl()}), url(${this.getFallBackAvatar()})`,
+          backgroundSize: '40px 40px',
+          top: 'calc(50% - 20px)'
+        }}
       />
     );
   },
@@ -214,14 +180,12 @@ const Header = Radium(React.createClass({
   },
 
   renderBetaBadge() {
-    const styles = this.getStyles();
-
     if (process.env.NODE_ENV !== 'beta') {
       return null;
     }
 
     return (
-      <span style={styles.betaBadge}>BETA</span>
+      <span style={{ color: '#fff', fontWeight: 600, paddingLeft: 10, paddingTop: 5 }}>BETA</span>
     );
   },
 
@@ -245,8 +209,17 @@ const Header = Radium(React.createClass({
               className="toolbar-list left"
               style={styles.toolbarList}
             >
-              <li style={styles.toolbarListItem}>
+              {/* <li
+                id="menu-demo-apps"
+                style={styles.toolbarListItem}
+              >
                 <Link to="demo-apps">Demo Apps</Link>
+              </li>*/}
+              <li
+                id="custom-sockets-registry"
+                style={styles.toolbarListItem}
+              >
+                <Link to="custom-sockets-registry">Sockets Registry</Link>
               </li>
               <li
                 id="menu-solutions"
@@ -259,7 +232,7 @@ const Header = Radium(React.createClass({
               </li>
             </ul>
           </ToolbarGroup>
-          <ToolbarGroup style={styles.toolbarGroup}>
+          <ToolbarGroup style={{ marginLeft: -5, height: '100%', flex: 1, justifyContent: 'flex-end' }}>
             <ul
               className="toolbar-list"
               style={styles.toolbarList}

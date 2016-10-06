@@ -16,6 +16,7 @@ class TracesList extends Component {
   }
 
   handleToggleTrace(traceId) {
+    console.info('ScriptsTraces::toggleTrace', traceId);
     const { visibleTraceId } = this.state;
     const isVisible = _.includes(visibleTraceId, traceId);
     const newVisibleTraceId = isVisible ? _.without(visibleTraceId, traceId) : [...visibleTraceId, traceId];

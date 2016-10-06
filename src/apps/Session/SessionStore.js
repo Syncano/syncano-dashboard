@@ -252,7 +252,7 @@ export default Reflux.createStore({
     this.removeInstance();
     this.connection.setAccountKey(null);
 
-    localStorage.removeItem('lastInstanceName');
+    localStorage.removeItem('lastInstance');
     localStorage.removeItem('lastPathname');
     localStorage.removeItem('token');
     localStorage.removeItem('invitationKey');
@@ -268,7 +268,7 @@ export default Reflux.createStore({
   },
 
   onHandleInvalidURL() {
-    this.getRouter().push('instances');
+    this.getRouter().push('/');
   },
 
   isAuthenticated() {

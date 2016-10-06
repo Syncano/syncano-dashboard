@@ -4,12 +4,9 @@ export default CreateActions(
   {
     fetch: {},
     setCustomSockets: {},
-    setClickedCustomSockets: {},
-    setScriptEndpoints: {},
     fetchCustomSockets: {
       asyncResult: true,
       loading: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.CustomSockets.list'
     },
@@ -32,16 +29,9 @@ export default CreateActions(
       loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.CustomSockets.remove'
-    },
-    fetchScriptEndpoints: {
-      asyncResult: true,
-      loading: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.CustomSockets.listScriptEndpoints'
     }
   },
   {
-    withCheck: true,
     withDialog: true
   }
 );

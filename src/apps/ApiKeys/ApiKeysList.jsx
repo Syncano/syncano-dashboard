@@ -69,7 +69,6 @@ export default React.createClass({
   },
 
   render() {
-    const { items } = this.props;
     const checkedItems = Store.getNumberOfChecked();
 
     return (
@@ -100,7 +99,6 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}
-              itemsCount={items.length}
             >
               <Lists.MenuItem
                 primaryText="Reset All"

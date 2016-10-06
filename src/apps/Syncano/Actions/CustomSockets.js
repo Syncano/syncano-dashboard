@@ -1,4 +1,3 @@
-
 export default {
   create(payload) {
     this.NewLibConnection
@@ -33,7 +32,7 @@ export default {
       .CustomSocket
       .please()
       .update({ name }, payload)
-      .then(this.completed)
+      .then(updatedCustomSocketRegistry => this.completed(updatedCustomSocketRegistry, payload.instanceName))
       .catch(this.failure);
   },
 
@@ -46,15 +45,6 @@ export default {
       );
 
     this.Promise.all(promises)
-      .then(this.completed)
-      .catch(this.failure);
-  },
-  listScriptEndpoints() {
-    this.NewLibConnection
-      .ScriptEndpoint
-      .please()
-      .list()
-      .ordering('desc')
       .then(this.completed)
       .catch(this.failure);
   }

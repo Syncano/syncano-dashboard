@@ -17,6 +17,7 @@ import APNSActions from '../PushNotifications/APNS/APNSPushNotificationsActions'
 import GCMActions from '../PushNotifications/GCM/GCMPushNotificationsActions';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
+
 export default Reflux.createStore({
   listenables: Actions,
 
@@ -89,6 +90,7 @@ export default Reflux.createStore({
   },
 
   refreshData() {
+    console.debug('SocketsStore::refreshData');
     Actions.fetchSockets();
     ScriptsActions.fetchScripts();
   },
@@ -136,6 +138,7 @@ export default Reflux.createStore({
   },
 
   onFetchSocketsCompleted(sockets) {
+    console.debug('SocketsStore::onFetchSocketsCompleted');
     const gcmDevicesCount = sockets.gcmDevices.length;
     const apnsDevicesCount = sockets.apnsDevices.length;
     const gcmItems = this.getPushNotificationsItems([sockets.gcmPushNotifications], 'GCM', gcmDevicesCount);

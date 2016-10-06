@@ -6,6 +6,7 @@ import { FontIcon } from 'material-ui';
 
 const Notification = React.createClass({
   propTypes: {
+    style: React.PropTypes.object,
     type: React.PropTypes.string.isRequired,
     children: React.PropTypes.any.isRequired
   },
@@ -44,8 +45,7 @@ const Notification = React.createClass({
         display: 'flex',
         fontSize: '16px',
         alignItems: 'center',
-        lineHeight: '1.4',
-        position: 'relative'
+        lineHeight: '1.4'
       },
       notificationContentIcon: {
         minWidth: '34px'
@@ -78,9 +78,10 @@ const Notification = React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const { className, type, children } = this.props;
+    const { type, children } = this.props;
     const { isNotificationVisible } = this.state;
     const notificationStyle = `notification${_.capitalize(type)}`;
+
     const iconClass = classNames({
       information: type === 'info',
       'alert-circle': type === 'error',
@@ -88,10 +89,7 @@ const Notification = React.createClass({
     });
 
     return isNotificationVisible && (
-      <div
-        className={className}
-        style={{ ...styles.notificationContainer }}
-      >
+      <div style={styles.notificationContainer}>
         <div style={{ ...styles[notificationStyle], ...styles.notificationContent }}>
           <div
             style={styles.closeButton}
@@ -101,8 +99,8 @@ const Notification = React.createClass({
           </div>
           <div style={styles.notificationContentIcon}>
             <FontIcon
-              className={`synicon-${iconClass}`}
               style={styles.icon}
+              className={`synicon-${iconClass}`}
             />
           </div>
           <div>{children}</div>

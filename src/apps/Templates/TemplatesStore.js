@@ -1,17 +1,19 @@
 import Reflux from 'reflux';
 
-import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
+// Utils & Mixins
+import { CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../mixins';
 
-import Actions from './TemplatesActions';
+// Stores & Actions
 import SessionActions from '../Session/SessionActions';
+import Actions from './TemplatesActions';
 
 export default Reflux.createStore({
   listenables: Actions,
 
   mixins: [
     CheckListStoreMixin,
-    StoreLoadingMixin,
-    WaitForStoreMixin
+    WaitForStoreMixin,
+    StoreLoadingMixin
   ],
 
   getInitialState() {
@@ -44,6 +46,7 @@ export default Reflux.createStore({
   },
 
   onFetchTemplatesCompleted(items) {
+    console.debug('TemplatesStore::onFetchTemplatesCompleted');
     Actions.setTemplates(items);
   },
 

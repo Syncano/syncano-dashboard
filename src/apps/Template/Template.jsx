@@ -101,6 +101,9 @@ const Template = React.createClass({
         flexDirection: 'column',
         padding: 0
       },
+      notification: {
+        marginBottom: 20
+      },
       deleteIcon: {
         width: 64,
         display: 'flex',
@@ -120,13 +123,12 @@ const Template = React.createClass({
       },
       codeContainer: {
         display: 'flex',
-        flexWrap: 'wrap',
         borderRight: '1px solid rgba(224, 224, 224, .5)'
       },
       codeTogglePanel: {
         display: 'flex',
         flexDirection: 'column',
-        flex: '0 0 100%'
+        width: '100%'
       },
       codeEditorContainer: {
         position: 'relative',
@@ -312,12 +314,11 @@ const Template = React.createClass({
           }
         >
           <Show if={this.getValidationMessages('content').length}>
-            <Notification
-              type="error"
-              className="vm-2-b"
-            >
-              {this.getValidationMessages('content').join(' ')}
-            </Notification>
+            <div style={styles.notification}>
+              <Notification type="error">
+                {`Error: ${this.getValidationMessages('content').join(' ')}`}
+              </Notification>
+            </div>
           </Show>
           <div style={styles.codeEditorContainer}>
             <Editor

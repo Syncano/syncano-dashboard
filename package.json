@@ -134,7 +134,7 @@
     "lint": "eslint src --quiet --ext .js --ext .jsx --fix",
     "lint-tests": "eslint test/e2e --quiet --ext .js --ext .jsx --fix",
     "e2e": "./test.sh",
-    "e2e-branch": "nightwatch -e chrome --suiteRetries 1 --skiptags socialLogins,demoApp",
+    "e2e-branch": "nightwatch -e chrome --suiteRetries 1 --skiptags socialLogins",
     "e2e-master-devel": "nightwatch -e chrome --suiteRetries 1",
     "e2e-local": "nightwatch -e chrome --suiteRetries 1 --skiptags socialLogins,apns --skipgroup billing",
     "e2e-tag": "nightwatch -e chrome --suiteRetries 1 --tag",

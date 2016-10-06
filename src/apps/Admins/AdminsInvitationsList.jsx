@@ -3,14 +3,18 @@ import Actions from './AdminsInvitationsActions';
 import Store from './AdminsInvitationsStore';
 import AdminsActions from './AdminsActions';
 
+// Utils
 import { DialogsMixin } from '../../mixins';
 
+// Components
 import ListItem from './AdminsInvitationsListItem';
 import { ColumnList, Dialog, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
-const AdminsInvitationsList = React.createClass({
+export default React.createClass({
+  displayName: 'AdminsInvitationsList',
+
   mixins: [DialogsMixin],
 
   componentWillUpdate(nextProps) {
@@ -76,7 +80,6 @@ const AdminsInvitationsList = React.createClass({
   },
 
   render() {
-    const { items } = this.props;
     const checkedItems = Store.getNumberOfChecked();
 
     return (
@@ -98,7 +101,6 @@ const AdminsInvitationsList = React.createClass({
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}
-              itemsCount={items.length}
             >
               <Lists.MenuItem onTouchTap={() => this.showDialog('removeInvitationDialog')} />
             </Lists.Menu>
@@ -114,5 +116,3 @@ const AdminsInvitationsList = React.createClass({
     );
   }
 });
-
-export default AdminsInvitationsList;

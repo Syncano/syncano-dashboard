@@ -122,7 +122,7 @@ const DevicesList = Radium(React.createClass({
   },
 
   renderHeader() {
-    const { getCheckedItems, actions, items } = this.props;
+    const { getCheckedItems, actions } = this.props;
     const checkedItemsCount = getCheckedItems().length;
 
     return (
@@ -154,7 +154,6 @@ const DevicesList = Radium(React.createClass({
             checkedItemsCount={checkedItemsCount}
             handleSelectAll={actions.selectAll}
             handleUnselectAll={actions.uncheckAll}
-            itemsCount={items.length}
           >
             <Lists.MenuItem onTouchTap={this.showDeleteDialog} />
           </Lists.Menu>

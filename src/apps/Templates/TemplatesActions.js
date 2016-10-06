@@ -5,10 +5,10 @@ export default CreateActions(
     fetch: {},
     changeStep: {},
     setTemplates: {},
+
     fetchTemplates: {
       asyncResult: true,
       loading: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Templates.list'
     },

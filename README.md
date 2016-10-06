@@ -187,8 +187,6 @@ $ export SYNCANO_SUPPORT_EMAIL='xx'
 
 ### Tests
 
-> You won't be able to launch e2e tests locally. For more info refer to [Running tests](README.md#running-tests) section.
-
 You will need to export `TEST_BASE_EMAIL` for test account creation.
 
 ```sh
@@ -208,14 +206,11 @@ $ npm run iconfont
 
 and commit your changes.
 
-## Tests :no_entry_sign:
+## Tests
 
 ### Running tests
 
-> You won't be able to launch e2e tests locally, we are currently in progress of rewriting them to work for everyone.
-For now, when you create a pull request, these tests will run on our CI servers. You can still review them for inspiration.
-
- :information_source: **E2E tests require development server to be running, be sure to start it.**
+> E2E tests require development server to be running, be sure to start it.
 
 E2E Test can be started by typing:
 

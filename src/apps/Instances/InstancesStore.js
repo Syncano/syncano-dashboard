@@ -109,7 +109,7 @@ export default Reflux.createStore({
   },
 
   getMyInstances() {
-    return this.data.myInsances;
+    return this.data.myInstances;
   },
 
   getInstancesDropdown() {

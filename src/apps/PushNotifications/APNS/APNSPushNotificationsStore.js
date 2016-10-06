@@ -1,7 +1,9 @@
 import Reflux from 'reflux';
 
+// Utils & Mixins
 import { WaitForStoreMixin, StoreLoadingMixin, StoreHelpersMixin } from '../../../mixins';
 
+// Stores & Actions
 import Actions from './APNSPushNotificationsActions';
 import DevicesActions from '../../PushDevices/APNSDevices/APNSDevicesActions';
 import DevicesStore from '../../PushDevices/APNSDevices/APNSDevicesStore';
@@ -9,7 +11,6 @@ import SessionActions from '../../Session/SessionActions';
 
 export default Reflux.createStore({
   listenables: Actions,
-
   mixins: [
     WaitForStoreMixin,
     StoreLoadingMixin,
@@ -46,6 +47,7 @@ export default Reflux.createStore({
   },
 
   onFetchAPNSPushNotificationConfigCompleted(items) {
+    console.debug('APNSPushNotificationsStore::onFetchAPNSPushNotificationConfigCompleted');
     this.data.items = [items].map((item) => {
       item.name = 'APNS';
       item.hasConfig = this.hasConfig([items]);
@@ -53,11 +55,11 @@ export default Reflux.createStore({
 
       return item;
     });
-
     this.trigger(this.data);
   },
 
   onRemoveCertificateCompleted() {
+    console.debug('APNSPushNotificationsStore::onRemoveCertificateCompleted');
     this.refreshData();
   }
 });

@@ -36,6 +36,7 @@ import ChannelHistory from './apps/ChannelHistory';
 import Channels from './apps/Channels';
 import Classes from './apps/Classes';
 import CustomSockets from './apps/CustomSockets';
+import CustomSocketsRegistry from './apps/CustomSocketsRegistry';
 import ScriptEndpoints from './apps/ScriptEndpoints';
 import Script from './apps/Script';
 import Scripts from './apps/Scripts';
@@ -215,15 +216,9 @@ export default (
         {/* Custom Sockets */}
         <Route
           name="custom-sockets"
+          component={CustomSockets}
           path="custom-sockets"
-        >
-          <Route
-            name="custom-socket-detail"
-            path=":customSocketName"
-            component={CustomSockets.Endpoints}
-          />
-          <IndexRoute component={CustomSockets} />
-        </Route>
+        />
 
         {/* General */}
         <Route
@@ -516,6 +511,13 @@ export default (
         <IndexRoute component={Profile.Settings} />
       </Route>
 
+      {/* Custom Sockets Registry */}
+      <Route
+        name="custom-sockets-registry"
+        component={CustomSocketsRegistry}
+        path="custom-sockets-registry"
+      />
+
       {/* Solutions */}
       <Route
         name="solutions"
@@ -554,14 +556,8 @@ export default (
         name="demo-apps"
         path="/demo-apps"
         onEnter={RoutesUtil.checkActiveSubscriptions}
-      >
-        <Route
-          name="demo-app"
-          component={DemoApps.DemoApp}
-          path=":appName"
-        />
-        <IndexRoute component={DemoApps} />
-      </Route>
+        component={DemoApps}
+      />
 
       <IndexRoute
         onEnter={RoutesUtil.checkActiveSubscriptions}

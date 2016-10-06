@@ -142,7 +142,7 @@ const HostingFilesList = React.createClass({
   },
 
   renderHeader() {
-    const { handleTitleClick, handleSelectAll, handleUnselectAll, items, getCheckedItems } = this.props;
+    const { handleTitleClick, handleSelectAll, handleUnselectAll, getCheckedItems } = this.props;
 
     return (
       <ColumnList.Header>
@@ -172,7 +172,6 @@ const HostingFilesList = React.createClass({
             checkedItemsCount={getCheckedItems().length}
             handleSelectAll={handleSelectAll}
             handleUnselectAll={handleUnselectAll}
-            itemsCount={items.length}
           >
             <Lists.MenuItem onTouchTap={this.showRemoveDialog} />
           </Lists.Menu>

@@ -34,6 +34,7 @@ import PaymentIcons from './PaymentIcons';
 import Popover from './Popover';
 import PricingPlans from './PricingPlans';
 import DialogRefreshButton from './DialogRefreshButton';
+import RegistryEmptyView from './RegistryEmptyView';
 import SelectFieldWrapper from './SelectFieldWrapper';
 import SelectWrapper from './SelectWrapper';
 import Show from './Show';
@@ -49,7 +50,7 @@ import SyncanoTheme from './SyncanoTheme';
 import Tags from './Tags';
 import TogglePanel from './TogglePanel';
 import Tooltip from './Tooltip';
-import { TraceResult, TraceBigResult } from './TraceResult';
+import Trace from './Trace';
 import Truncate from './Truncate';
 import UpgradeButton from './UpgradeButton';
 import UpgradeNowToolbar from './UpgradeNowToolbar';
@@ -93,6 +94,7 @@ export { PaymentIcons };
 export { Popover };
 export { PricingPlans };
 export { DialogRefreshButton };
+export { RegistryEmptyView };
 export { SelectFieldWrapper };
 export { SelectWrapper };
 export { Show };
@@ -108,8 +110,7 @@ export { SyncanoTheme };
 export { Tags };
 export { TogglePanel };
 export { Tooltip };
-export { TraceResult };
-export { TraceBigResult };
+export { Trace };
 export { Truncate };
 export { UpgradeButton };
 export { UpgradeNowToolbar };
@@ -154,6 +155,7 @@ export default {
   Popover,
   PricingPlans,
   DialogRefreshButton,
+  RegistryEmptyView,
   SelectFieldWrapper,
   SelectWrapper,
   Show,
@@ -169,8 +171,7 @@ export default {
   Tags,
   TogglePanel,
   Tooltip,
-  TraceResult,
-  TraceBigResult,
+  Trace,
   Truncate,
   UpgradeButton,
   UnsupportedBrowserView,

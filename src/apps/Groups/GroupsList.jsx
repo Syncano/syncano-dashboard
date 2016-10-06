@@ -53,7 +53,6 @@ export default Radium(React.createClass({
   },
 
   render() {
-    const { items } = this.props;
     const checkedItems = Store.getNumberOfChecked();
 
     return (
@@ -72,7 +71,6 @@ export default Radium(React.createClass({
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}
-              itemsCount={items.length}
             >
               <Lists.MenuItem onTouchTap={() => this.showDialog('removeGroupDialog')} />
             </Lists.Menu>

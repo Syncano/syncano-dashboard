@@ -23,8 +23,8 @@ const InnerToolbar = Radium(React.createClass({
   getStyles() {
     return {
       toolbar: {
-        background: 'rgba(243, 243, 243, .90)',
-        padding: '0px 24px',
+        background: 'rgba(243,243,243,0.90)',
+        padding: '0px 24px 0 24px',
         zIndex: 6,
         justifyContent: 'flex-start'
       },
@@ -34,20 +34,20 @@ const InnerToolbar = Radium(React.createClass({
         alignItems: 'center',
         flex: 1,
         justifyContent: 'flex-end'
-      },
-      icon: {
-        color: 'rgba(0, 0, 0, .4)'
-      },
-      iconButton: {
-        marginTop: 4
       }
     };
+  },
+
+  isHistory() {
+    // it has to be fixed
+    // return History.length > 1;
+    return false;
   },
 
   handleBackButtonTouchTap() {
     const { backFallback, forceBackFallback, router } = this.props;
 
-    if (!forceBackFallback) {
+    if (this.isHistory() && !forceBackFallback) {
       return router.goBack();
     }
 
@@ -56,18 +56,17 @@ const InnerToolbar = Radium(React.createClass({
 
   renderBackButton() {
     const { backButtonTooltip, backButtonTooltipPosition } = this.props;
-    const styles = this.getStyles();
 
     return (
-      <ToolbarGroup>
+      <ToolbarGroup style={{ paddingRight: 24 }}>
         <IconButton
           iconClassName="synicon-arrow-left"
           tooltip={backButtonTooltip}
           tooltipPosition={backButtonTooltipPosition}
           onClick={this.handleBackButtonTouchTap}
           touch={true}
-          style={styles.iconButton}
-          iconStyle={styles.icon}
+          style={{ marginTop: 4 }}
+          iconStyle={{ color: 'rgba(0,0,0,.4)' }}
         />
       </ToolbarGroup>
     );
@@ -112,7 +111,7 @@ const InnerToolbar = Radium(React.createClass({
           style={styles.toolbar}
           data-e2e="inner-toolbar"
         >
-          {backFallback && backButton ? this.renderBackButton() : null}
+          {(this.isHistory() || backFallback) && backButton ? this.renderBackButton() : null}
           {title ? this.renderTitle(title) : null}
           {menu ? this.renderMenu(menu) : null}
           {children ? this.renderChildren(children) : null}
