@@ -92,7 +92,7 @@ const utils = {
   },
 
   splitTestBaseEmail() {
-    const email = process.env.TEST_BASE_EMAIL;
+    const email = process.env.CI_BASE_EMAIL || process.env.E2E_EMAIL;
     const splittedEmail = {};
 
     [splittedEmail.emailName, splittedEmail.emailDomain] = email.split('@');
