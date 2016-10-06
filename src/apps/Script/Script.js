@@ -221,7 +221,7 @@ const Script = React.createClass({
         lineHeight: 1
       },
       resultIcon: {
-        padding: '10px 0 0 0'
+        paddingTop: '10px'
       }
     };
   },
@@ -830,7 +830,7 @@ const Script = React.createClass({
         style={styles.resultIcon}
         tooltip="Open last trace result in new tab"
         tooltipPosition="bottom-left"
-        iconClassName={'synicon-launch'}
+        iconClassName="synicon-launch"
       />
     );
 
