@@ -9,7 +9,8 @@ export default ({ name, items, showDividers = true, ...other }) => {
   const titles = {
     script: 'Scripts',
     class: 'Data Classes',
-    contentType: 'Content Type'
+    contentType: 'Content Type',
+    instanceName: 'Instance Name'
   };
   const title = titles[name] || 'Data';
   const dividerStyles = {
@@ -50,6 +51,10 @@ export default ({ name, items, showDividers = true, ...other }) => {
   const getIconInfo = (item) => {
     const runtime = item.runtime_name && RuntimeStore.getRuntimeByKey(item.runtime_name) || {};
     const iconInfo = {
+      instanceName: item.metadata && {
+        icon: item.metadata.icon,
+        color: Color.getColorByName(item.metadata.color)
+      },
       class: item.metadata && {
         icon: item.metadata.icon,
         color: Color.getColorByName(item.metadata.color)

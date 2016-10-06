@@ -34,6 +34,7 @@ import PaymentIcons from './PaymentIcons';
 import Popover from './Popover';
 import PricingPlans from './PricingPlans';
 import DialogRefreshButton from './DialogRefreshButton';
+import RegistryEmptyView from './RegistryEmptyView';
 import SelectFieldWrapper from './SelectFieldWrapper';
 import SelectWrapper from './SelectWrapper';
 import Show from './Show';
@@ -93,6 +94,7 @@ export { PaymentIcons };
 export { Popover };
 export { PricingPlans };
 export { DialogRefreshButton };
+export { RegistryEmptyView };
 export { SelectFieldWrapper };
 export { SelectWrapper };
 export { Show };
@@ -154,6 +156,7 @@ export default {
   Popover,
   PricingPlans,
   DialogRefreshButton,
+  RegistryEmptyView,
   SelectFieldWrapper,
   SelectWrapper,
   Show,

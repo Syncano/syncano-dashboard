@@ -33,7 +33,7 @@ export default {
       .CustomSocket
       .please()
       .update({ name }, payload)
-      .then(this.completed)
+      .then(updatedCustomSocketRegistry => this.completed(updatedCustomSocketRegistry, payload.instanceName))
       .catch(this.failure);
   },
 

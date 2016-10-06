@@ -1,12 +1,19 @@
 import React from 'react';
-import Radium from 'radium';
 import { Tabs, Tab } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
-import Preview from './Preview';
+import PreviewCircle from './PreviewCircle';
+import PreviewHexagon from './PreviewHexagon';
 import ColorPicker from './ColorPicker';
 import IconPicker from './IconPicker';
 
-export default Radium(({ icon, color, onIconChange, onColorChange }) => {
+const ColorIconPicker = ({
+  color,
+  icon,
+  previewStyle = 'circle',
+  onIconChange,
+  onColorChange,
+  title = 'Instance icon'
+}) => {
   const styles = {
     headline: {
       color: 'rgba(0, 0, 0, 0.498039)',
@@ -31,15 +38,27 @@ export default Radium(({ icon, color, onIconChange, onColorChange }) => {
     }
   };
 
-  return (
-    <div>
-      <p style={styles.headline}>
-        Instance icon
-      </p>
-      <Preview
+  const renderPreview = {
+    circle: (
+      <PreviewCircle
         color={color}
         icon={icon}
       />
+    ),
+    hexagon: (
+      <PreviewHexagon
+        color={color}
+        icon={icon}
+      />
+    )
+  }[previewStyle];
+
+  return (
+    <div>
+      <p style={styles.headline}>
+        {title}
+      </p>
+      {renderPreview}
       <Tabs
         inkBarStyle={styles.inkBarStyle}
         contentContainerStyle={styles.contentContainerStyle}
@@ -66,4 +85,6 @@ export default Radium(({ icon, color, onIconChange, onColorChange }) => {
       </Tabs>
     </div>
   );
-});
+};
+
+export default ColorIconPicker;
