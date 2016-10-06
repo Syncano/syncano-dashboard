@@ -34,7 +34,7 @@ class UploadFilesButton extends Component {
 
   render = () => {
     const styles = {
-      inputStyles: {
+      input: {
         display: 'none',
         position: 'absolute'
       },
@@ -69,7 +69,7 @@ class UploadFilesButton extends Component {
         style={styles.chooseFilesButton}
       >
         <input
-          style={styles.inputStyles}
+          style={styles.input}
           type="file"
           ref="dirSelect"
           onChange={handleUploadFiles}
