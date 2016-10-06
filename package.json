@@ -133,6 +133,7 @@
     "clean": "gulp clean",
     "lint": "eslint src --quiet --ext .js --ext .jsx --fix",
     "lint-tests": "eslint test/e2e --quiet --ext .js --ext .jsx --fix",
+    "lint-all": "eslint src test/e2e --quiet --ext .js --ext .jsx --fix",
     "e2e": "./test.sh",
     "e2e-branch": "nightwatch -e chrome --suiteRetries 1 --skiptags socialLogins,demoApp",
     "e2e-master-devel": "nightwatch -e chrome --suiteRetries 1",

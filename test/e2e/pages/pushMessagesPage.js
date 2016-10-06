@@ -1,4 +1,4 @@
-import accounts from '../tempAccounts.js';
+import accounts from '../tempAccounts';
 
 export default {
   elements: {
