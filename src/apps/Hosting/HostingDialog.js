@@ -106,7 +106,7 @@ const CreateHostingDialog = React.createClass({
               https://{currentInstanceName}--<em>domain</em>.syncano.site
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Default domain">
-              You can also name your domain as <em>default</em> then it will be connected directly to your current
+              You can also check <em>Set as default domain</em> then it will be connected directly to your current
               Instance and avaliable at {defaultLink}
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
