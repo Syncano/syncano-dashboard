@@ -3,14 +3,14 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
 
+import InstancesActions from '../Instances/InstancesActions';
 import Actions from './CustomSocketsRegistryActions';
 import Store from './CustomSocketsRegistryStore';
 
-import { Container, Show } from '../../common/';
+import { Show } from '../../common/';
 
 import SocketsRegistryInnerToolbar from './SocketsRegistryInnerToolbar';
 import SocketsSearchBar from './SocketsSearchBar';
-import CustomSocketsRegistryList from './CustomSocketsRegistryList';
 
 const CustomSocketsRegistry = React.createClass({
 
@@ -19,7 +19,7 @@ const CustomSocketsRegistry = React.createClass({
   ],
 
   componentDidMount() {
-    console.info('CustomSocketsRegistry::componentDidMount');
+    InstancesActions.fetch();
     Actions.fetchCustomSocketsRegistry();
   },
 
@@ -63,9 +63,10 @@ const CustomSocketsRegistry = React.createClass({
     return filterByType;
   },
 
+
   render() {
-    const { isLoading, items, term, changeListView, searchClicked } = this.state;
-    const filteredData = this.filteredData();
+    const { children } = this.props;
+    const { term, items, isLoading, searchClicked, changeListView, filter, filterBySyncano } = this.state;
 
     return (
       <div>
@@ -77,16 +78,14 @@ const CustomSocketsRegistry = React.createClass({
           value={term}
         />
         <Show if={searchClicked}>
-          <SocketsRegistryInnerToolbar />
-        </Show>
-        <Container>
-          <CustomSocketsRegistryList
-            changeListView={changeListView}
-            isLoading={isLoading}
-            items={filteredData}
-            onIconClick={Actions.checkItem}
+          <SocketsRegistryInnerToolbar
+            filter={filter}
+            filterBySyncano={filterBySyncano}
           />
-        </Container>
+        </Show>
+
+
+        {children && React.cloneElement(children, { changeListView, term, items, isLoading, filter, filterBySyncano })}
       </div>
     );
   }

@@ -1,19 +1,17 @@
 import React from 'react';
 import pluralize from 'pluralize';
 
-import { DialogsMixin } from '../../mixins';
+import _ from 'lodash';
 
 import Actions from './CustomSocketsRegistryActions';
 import Store from './CustomSocketsRegistryStore';
 
+import { ColumnList, Lists, Container, RegistryEmptyView } from '../../common/';
 import ListItem from './CustomSocketsRegistryListItem';
-import { ColumnList, Dialog, Lists, Container, RegistryEmptyView } from '../../common/';
 
 const Column = ColumnList.Column;
 
 const CustomSocketsRegistryList = React.createClass({
-
-  mixins: [DialogsMixin],
 
   getDefaultProps() {
     return {
@@ -24,25 +22,15 @@ const CustomSocketsRegistryList = React.createClass({
     };
   },
 
-  componentWillUpdate(nextProps) {
-    console.info('customSocket::componentWillUpdate');
-    this.hideDialogs(nextProps.hideDialogs);
-  },
-
   getStyles() {
     return {
       container: {
         margin: '0 200px'
       },
       ammount: {
+        marginTop: 24,
         textAlign: 'center',
         fontSize: '1em'
-      },
-      children: {
-        paddingTop: 24
-      },
-      textZeroState: {
-        fontSize: 30
       },
       noResultsState: {
         fontSize: 28,
@@ -57,25 +45,42 @@ const CustomSocketsRegistryList = React.createClass({
       noResultsText: {
         marginTop: 30,
         fontStyle: 'italic'
+      },
+      foundSocketsCount: {
+        fontWeight: 500
+      },
+      detailsColumnHeader: {
+        padding: '0 32px'
       }
     };
   },
 
-  initDialogs() {
-    const { items, isLoading } = this.props;
+  getFilteredData() {
+    const { items, filter } = this.props;
+    const filteredByAuthor = filter === 'all' ? items : _.filter(items, { by_syncano: filter });
+    const filterResult = this.filterByType(filteredByAuthor);
 
-    return [{
-      dialog: Dialog.Delete,
-      params: {
-        key: 'removeCustomSocketsDialog',
-        ref: 'removeCustomSocketsDialog',
-        title: 'Delete Custom Sockets',
-        handleConfirm: Actions.removeCustomSockets,
-        items,
-        groupName: 'Custom Sockets',
-        isLoading
-      }
-    }];
+    return filterResult;
+  },
+
+  filterByType(items) {
+    const { term, filterBySyncano } = this.props;
+    const searchTerm = term && term.toLowerCase();
+
+    if (filterBySyncano === 'all') {
+      const filterByType = _.filter(items, item => {
+        const isName = _.includes(item.author.toLowerCase(), searchTerm);
+        const isAuthor = _.includes(item.description.toLowerCase(), searchTerm);
+        const isDescription = _.includes(item.name.toLowerCase(), searchTerm);
+
+        return isName || isAuthor || isDescription;
+      });
+
+      return filterByType;
+    }
+    const filterByType = _.filter(items, item => _.includes(item[filterBySyncano].toLowerCase(), searchTerm));
+
+    return filterByType;
   },
 
   renderItem(item) {
@@ -94,11 +99,12 @@ const CustomSocketsRegistryList = React.createClass({
 
   renderHeader() {
     const { handleTitleClick } = this.props;
+    const styles = this.getStyles();
 
     return (
       <ColumnList.Header>
         <Column.ColumnHeader
-          className="col-xs-10"
+          className="col-sm-10"
           primary={true}
           columnName="CHECK_ICON"
           handleClick={handleTitleClick}
@@ -108,7 +114,7 @@ const CustomSocketsRegistryList = React.createClass({
         <Column.ColumnHeader
           columnName="DESC"
           registry={true}
-          className="col-xs-5"
+          className="col-sm-5"
         >
           Author
         </Column.ColumnHeader>
@@ -120,8 +126,9 @@ const CustomSocketsRegistryList = React.createClass({
           Description
         </Column.ColumnHeader>
         <Column.ColumnHeader
-          className="col-sm-5"
+          className="col-sm-7"
           registry={true}
+          styles={styles.detailsColumnHeader}
         >
           Details
         </Column.ColumnHeader>
@@ -131,12 +138,10 @@ const CustomSocketsRegistryList = React.createClass({
 
   render() {
     const {
-      items,
       isLoading,
-      style,
-      changeListView,
-      ...other
+      changeListView
     } = this.props;
+    const items = this.getFilteredData();
     const styles = this.getStyles();
     const customSocketImageDir = '/img/custom-socket-assemble.svg';
     const pluralizedResults = pluralize('result', items.length);
@@ -169,15 +174,17 @@ const CustomSocketsRegistryList = React.createClass({
     }
 
     return (
-      <Lists.Container style={style && styles.list}>
+      <Lists.Container>
         <div style={styles.ammount}>
-          Found <strong>{items.length}</strong> {pluralizedResults}
+          Found
+          <span style={styles.foundSocketsCount}>
+            {` ${items.length} `}
+          </span>
+          {pluralizedResults}
         </div>
         <Container style={styles.container}>
-          {this.getDialogs()}
           {this.renderHeader()}
           <Lists.List
-            {...other}
             isLoading={isLoading}
             items={items}
             renderItem={this.renderItem}

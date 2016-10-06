@@ -1,6 +1,8 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
+import YAML from 'js-yaml';
 
-import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
+import { CheckListStoreMixin, StoreLoadingMixin } from '../../mixins';
 
 import Actions from './CustomSocketsRegistryActions';
 
@@ -9,8 +11,7 @@ export default Reflux.createStore({
 
   mixins: [
     CheckListStoreMixin,
-    StoreLoadingMixin,
-    WaitForStoreMixin
+    StoreLoadingMixin
   ],
 
   getInitialState() {
@@ -18,7 +19,9 @@ export default Reflux.createStore({
       items: [],
       filterBySyncano: 'all',
       isLoading: true,
-      filter: 'all'
+      filter: 'all',
+      currentSocket: null,
+      currentSocketId: null
     };
   },
 
@@ -29,6 +32,17 @@ export default Reflux.createStore({
 
   getCustomSocketsRegistry(empty) {
     return this.data.items || empty || null;
+  },
+
+  getCustomSocketById(id) {
+    const { items } = this.data;
+
+    return _.find(items, ['id', Number(id)]);
+  },
+
+  onSetCurrentSocketId(id) {
+    this.data.currentSocketId = Number(id);
+    this.trigger(this.data);
   },
 
   onSetFilter(filter) {
@@ -42,12 +56,22 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    console.debug('CustomSocketsRegistryStore::refreshData');
-    Actions.fetchCustomSocketsRegistry();
+    const { currentSocketId } = this.data;
+    const currentSocket = this.getCustomSocketById(currentSocketId);
+
+    this.data.currentSocket = currentSocket;
+
+    Actions.fetchCustomSocketsInfo(currentSocket.url);
+  },
+
+  onFetchCustomSocketsInfoCompleted({ data, license, ymlUrl }) {
+    this.data.currentSocket = YAML.safeLoad(data);
+    this.data.currentSocket.license = license;
+    this.data.currentSocket.ymlUrl = ymlUrl;
+    this.trigger(this.data);
   },
 
   onFetchCustomSocketsRegistryCompleted(items) {
-    console.debug('CustomSocketsRegistryStore::onFetchCustomSocketsRegistryCompleted');
     this.data.items = items;
     this.trigger(this.data);
   }

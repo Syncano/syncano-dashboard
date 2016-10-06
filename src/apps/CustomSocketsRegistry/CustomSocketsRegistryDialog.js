@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import _ from 'lodash';
+import { withRouter } from 'react-router';
 
 import { DialogMixin, DialogsMixin, FormMixin } from '../../mixins';
 
@@ -16,10 +17,6 @@ import CustomSocketsRegistryDialogSidebar from './CustomSocketsRegistryDialogSid
 import CustomSocketsRegistrySummary from './CustomSocketsRegistrySummary';
 
 const CustomSocketsRegistryDialog = React.createClass({
-  contextTypes: {
-    params: React.PropTypes.object
-  },
-
   mixins: [
     Reflux.connect(DialogStore),
     DialogMixin,
@@ -38,10 +35,22 @@ const CustomSocketsRegistryDialog = React.createClass({
     }
   },
 
+  getDefaultProps() {
+    return {
+      shouldRedirect: false,
+      url: 'https://raw.githubusercontent.com/Syncano/custom-socket-hello-world/master/socket.yml'
+    };
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    if (!this.state._dialogVisible && nextState._dialogVisible) {
+      DialogStore.getInstancesDropdown();
+    }
+  },
+
   handleAddSubmit() {
     const { instanceName, name, description, twitterApiKey } = this.state;
-    // Will be replaced by props from other component
-    const url = 'https://raw.githubusercontent.com/Syncano/custom-socket-hello-world/master/socket.yml';
+    const { url } = this.props;
     const params = { instanceName, description, twitterApiKey };
 
     this.handleFinish(() => Actions.installCustomSocketRegistry(params, name, url));
@@ -98,6 +107,24 @@ const CustomSocketsRegistryDialog = React.createClass({
 
   handleDeleteCustomSocket() {
     this.refs.removeCustomSocketsDialog.show();
+  },
+
+  handleCloseSummary() {
+    const { shouldRedirect } = this.props;
+
+    if (shouldRedirect) {
+      this.redirectToCreatedSocket();
+    }
+
+    this.handleCancel();
+  },
+
+  redirectToCreatedSocket() {
+    const { router } = this.props;
+    const { instanceName, name } = this.state;
+    const redirectUrl = `/instances/${instanceName}/custom-sockets/${name}/`;
+
+    router.push(redirectUrl);
   },
 
   initDialogs() {
@@ -227,7 +254,7 @@ const CustomSocketsRegistryDialog = React.createClass({
         <RaisedButton
           label="Close"
           primary={true}
-          onTouchTap={this.handleCancel}
+          onTouchTap={this.handleCloseSummary}
           data-e2e="sockets-registry-summary-dialog-close-button"
         />
       );
@@ -235,14 +262,14 @@ const CustomSocketsRegistryDialog = React.createClass({
 
     return (
       <div>
-      {isEditMode &&
-        <FlatButton
-          style={{ float: 'left' }}
-          labelStyle={{ color: Colors.red400 }}
-          label={`DELETE ${name}`}
-          onTouchTap={this.handleDeleteCustomSocket}
-        />
-      }
+        {isEditMode &&
+          <FlatButton
+            style={{ float: 'left' }}
+            labelStyle={{ color: Colors.red400 }}
+            label={`DELETE ${name}`}
+            onTouchTap={this.handleDeleteCustomSocket}
+          />
+        }
         <Dialog.StandardButtons
           submitLabel={submitText}
           handleCancel={this.handleCancel}
@@ -265,21 +292,24 @@ const CustomSocketsRegistryDialog = React.createClass({
           handleColorChange={this.handleColorChange}
           handleIconChange={this.handleIconChange}
           isEditMode={isEditMode}
-        />,
-        isEditMode && (
-          <ColorIconPicker
-            key="coloriconpicker"
-            previewStyle="hexagon"
-            icon={metadata.icon}
-            color={metadata.color}
-            onIconChange={this.handleIconChange}
-            onColorChange={this.handleColorChange}
-            title={`${initialName} icon`}
-          />
-        )
+        />
       ]),
       step1: null
     };
+
+    if (stepIndex === 0 && isEditMode) {
+      sidebarContentMap[`step${stepIndex}`].push(
+        <ColorIconPicker
+          key="coloriconpicker"
+          previewStyle="hexagon"
+          icon={metadata.icon || 'cloud'}
+          color={metadata.color || 'red'}
+          onIconChange={this.handleIconChange}
+          onColorChange={this.handleColorChange}
+          title={`${initialName} icon`}
+        />
+      );
+    }
 
     return sidebarContentMap[`step${stepIndex}`];
   },
@@ -325,4 +355,4 @@ const CustomSocketsRegistryDialog = React.createClass({
   }
 });
 
-export default CustomSocketsRegistryDialog;
+export default withRouter(CustomSocketsRegistryDialog);
