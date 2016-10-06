@@ -1,22 +1,20 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['class'],
-  before(client) {
-    const { accountKey } = accounts.alternativeUser;
+  tags: ['class', 'newTool'],
+  before: (client) => {
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
       .setResolution(client);
   },
-  after(client) {
-    client.end();
-  },
+  after: (client) => client.end(),
   'Test Add Class': (client) => {
     const classesPage = client.page.classesPage();
     const className = utils.addSuffix('class');
-    const { instanceName } = accounts.alternativeUser;
+    const { instanceName } = instances.secondInstance;
 
     classesPage
       .goToUrl(instanceName, 'classes')
@@ -28,9 +26,8 @@ export default addTestNamePrefixes({
       .clickElement('@confirmButton')
       .clickElement('@summaryDialogCloseButton')
       .waitForElementNotPresent('@addClassTitle')
-      .waitForElementVisible('@classTableRow');
-
-    classesPage.verify.containsText('@classTableRowDescription', utils.addSuffix());
+      .waitForElementVisible('@classTableRow')
+      .verify.containsText('@classTableRowDescription', utils.addSuffix());
   },
   'Test Edit Class': (client) => {
     const classesPage = client.page.classesPage();
@@ -71,10 +68,9 @@ export default addTestNamePrefixes({
   'Test Admin cannot delete user_profile class': (client) => {
     const classesPage = client.page.classesPage();
 
-    classesPage.clickElement('@userClassDropDown', client);
-    classesPage.waitForElementVisible('@inactiveDeleteButton');
-
-  // assert that Delete Class element is greyed out
-    classesPage.assert.attributeContains('@inactiveDeleteButton', 'style', utils.getGreyedOutStyle(client));
+    classesPage
+      .clickElement('@userClassDropDown', client)
+      .waitForElementVisible('@inactiveDeleteButton')
+      .assert.attributeContains('@inactiveDeleteButton', 'style', utils.getGreyedOutStyle(client));
   }
 });

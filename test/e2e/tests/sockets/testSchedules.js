@@ -1,23 +1,21 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['schedules'],
-  before(client) {
-    const { accountKey } = accounts.alternativeUser;
+  tags: ['schedules', 'newTool'],
+  before: (client) => {
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
       .setResolution(client);
   },
-  after(client) {
-    client.end();
-  },
+  after: (client) => client.end(),
   'Administrator adds a Schedule Socket': (client) => {
     const schedulesPage = client.page.schedulesPage();
     const schedule = utils.addSuffix('schedule');
-    const { instanceName } = accounts.alternativeUser;
-    const scriptName = accounts.alternativeUser.tempScriptNames[0];
+    const { instanceName } = instances.secondInstance;
+    const scriptName = instances.secondInstance.scriptsNames[0];
 
     schedulesPage
       .goToUrl(instanceName, 'schedules')
@@ -55,19 +53,20 @@ export default addTestNamePrefixes({
   'Administrator edits a Schedule Socket Crontab': (client) => {
     const schedulesPage = client.page.schedulesPage();
     const schedule = utils.addSuffix('schedule');
-    const scriptName = accounts.alternativeUser.tempScriptNames[0];
+    const scriptName = instances.secondInstance.scriptsNames[0];
+    const cronTab = '0 0 * * *';
 
     schedulesPage
       .clickListItemDropdown(schedule, 'Edit')
       .clearInput('@addScheduleModalScript')
       .fillInput('@addScheduleModalScript', scriptName)
       .clickElement('@scriptUserOption')
-      .fillInput('@addScheduleModalCrontab', '0 0 * * *')
+      .fillInput('@addScheduleModalCrontab', cronTab)
       .clickElement('@addScheduleConfirmButton')
       .waitForElementPresent('@scheduleModalSummaryTitle')
       .clickElement('@summaryDialogCloseButton')
       .waitForElementVisible('@cronTabScheduleTableRow')
-      .assert.containsText('@cronTabScheduleTableRow', '0 0 * * *');
+      .assert.containsText('@cronTabScheduleTableRow', cronTab);
   },
   'Administrator deletes a Schedule Socket': (client) => {
     const schedulesPage = client.page.schedulesPage();
@@ -75,7 +74,6 @@ export default addTestNamePrefixes({
 
     schedulesPage
       .clickListItemDropdown(schedule, 'Delete')
-      .waitForElementPresent('@deleteScheduleModalTitle')
-      .clickElement('@addScheduleButton');
+      .clickElement('@deleteScheduleButton');
   }
 });

@@ -44,7 +44,7 @@ const thirdInstance = () => {
     })
     .then((classNames) => {
       console.log('thirdInstance::classNames', classNames);
-      thirdInstance.classNames = classNames;
+      thirdInstanceStructure.classNames = classNames;
 
       return thirdInstanceStructure;
     });

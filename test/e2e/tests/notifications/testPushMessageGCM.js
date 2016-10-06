@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['pushMessageGCM'],
+  tags: ['pushMessageGCM', 'newTool'],
   before: (client) => {
-    const { accountKey } = accounts.alternativeUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -13,7 +13,7 @@ export default addTestNamePrefixes({
   after: (client) => client.end(),
   'Test Admin Sends Android Push Notification': (client) => {
     const pushMessagesPage = client.page.pushMessagesPage();
-    const { instanceName } = accounts.alternativeUser;
+    const { instanceName } = instances.secondInstance;
 
     pushMessagesPage
       .goToUrl(instanceName, 'push-notifications/messages/gcm/')
@@ -27,5 +27,14 @@ export default addTestNamePrefixes({
       .clickElement('@submitButton')
       .waitForElementVisible('@snackBarNotification')
       .assert.containsText('@snackBarNotification', 'Your Android Message was sent');
+  },
+  'Test User views GCM Push Notification history': (client) => {
+    const pushMessagesPage = client.page.pushMessagesPage();
+    const { instanceName } = instances.secondInstance;
+    const messageListSelector = pushMessagesPage.elements.messageListItem.selector;
+
+    pushMessagesPage
+      .goToUrl(instanceName, 'push-notifications/messages/gcm/')
+      .assertSelectedCount('css selector', messageListSelector, 1);
   }
 });

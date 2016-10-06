@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['instances'],
+  tags: ['instances', 'newTool'],
   before: (client) => {
-    const { accountKey } = accounts.instanceUser;
+    const accountKey = instances.account.account_key;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -14,14 +14,14 @@ export default addTestNamePrefixes({
   'Test Instances Dropdown': (client) => {
     const instancesPage = client.page.instancesPage();
     const leftMenuPage = client.page.leftMenuPage();
-    const socketsPage = client.page.socketsPage();
+    const instanceName = instancesPage.elements.instancesTableName;
+    const dropdown = leftMenuPage.elements.instancesDropdownName.selector;
 
     const instanceNames = [];
 
     instancesPage
       .navigate()
       .waitForElementPresent('@instancesTableName');
-    const instanceName = instancesPage.elements.instancesTableName;
 
     client.elements(instanceName.locateStrategy, instanceName.selector, (result) => {
       result.value.forEach((value) => {
@@ -30,31 +30,27 @@ export default addTestNamePrefixes({
         });
       });
     });
+
     instancesPage
       .clickElement('@instancesTableName');
     leftMenuPage
       .clickElement('@instancesDropdown')
       .clickElement('@instancesListSecondItem');
 
-    socketsPage.waitForElementPresent('@emptySocketsHeading');
-    const dropdown = leftMenuPage.elements.instancesDropdownName.selector;
-
     client.getText('xpath', dropdown, (text) => {
       client.assert.equal(text.value, instanceNames[0]);
     });
   },
-  'Test Admin See Instance as Mainview': (client) => {
+  'Test Admin See Instance as Main view': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
-    const socketsPage = client.page.socketsPage();
     const baseUrl = utils.testBaseUrl();
 
     leftMenuPage
         .clickElement('@instancesDropdown')
         .clickElement('@userInstanceName');
-    socketsPage.waitForElementPresent('@emptySocketsHeading');
 
     client.url(baseUrl);
 
-    leftMenuPage.waitForElementPresent('@currentIinstanceName');
+    leftMenuPage.waitForElementPresent('@currentInstanceName');
   }
 });

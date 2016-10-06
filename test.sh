@@ -51,9 +51,9 @@ function http_server_start {
 
 function ci_cleanup {
     rm -rf ./dist_e2e
-    babel-node ./test/scripts/files/removeCertificate.js
     # Commented out as for now waiting for tests change
-    # babel-node ./test/setup/files/removeCertificate.js
+    # babel-node ./test/scripts/files/removeCertificate.js
+    babel-node ./test/setup/files/removeCertificate.js
 }
 
 function ci_setup {
@@ -62,10 +62,12 @@ function ci_setup {
     npm run build
     mv ./dist ./dist_e2e
 
-    babel-node ./test/scripts/createTempAccounts.js
     # Commented out as for now waiting for tests change
-    # babel-node ./test/setup/createTestInstances.js
-    npm run lint-tests
+    # babel-node ./test/scripts/createTempAccounts.js
+    babel-node ./test/setup/createTestInstances.js
+    # Workaround for old tests sourcing tempAccounts file
+    mv ./test/e2e/tempAccountsMockup.js ./test/e2e/tempAccounts.js
+    # npm run lint-tests
 
     selenium_start
     http_server_start
@@ -85,7 +87,8 @@ function ci_tests {
             npm run e2e-master-devel
         else
             message "Starting branch test flow..."
-            npm run e2e-branch
+            # npm run e2e-branch
+            npm run e2e-tag "newTool"
         fi
 
         ci_cleanup
@@ -95,7 +98,7 @@ function ci_tests {
 function local_cleanup {
     message "Closing selenium server. Please wait..."
     # Commented out as for now waiting for tests change
-    # babel-node ./test/setup/deleteTestInstances.js
+    babel-node ./test/setup/deleteTestInstances.js
     kill $(ps aux | grep '[.]selenium' | awk '{print $2}') \
       && message "Done"
 }
@@ -104,9 +107,9 @@ function local_setup {
     selenium_install
 
     message "Creating temporary accounts for tests..."
-    babel-node ./test/scripts/createTempAccounts.js
+    # babel-node ./test/scripts/createTempAccounts.js
     # Commented out as for now waiting for tests change
-    # babel-node ./test/setup/createTestInstances.js
+    babel-node ./test/setup/createTestInstances.js
 
     message "Starting Selenium in background..."
     trap local_cleanup EXIT

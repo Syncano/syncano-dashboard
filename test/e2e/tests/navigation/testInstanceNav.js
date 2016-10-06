@@ -1,17 +1,18 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['instanceNav'],
+  tags: ['instanceNav', 'newTool'],
   before: (client) => {
     const instancesPage = client.page.instancesPage();
-    const { accountKey } = accounts.navigationUser;
+    const accountKey = instances.account.account_key;
 
     instancesPage
       .loginUsingLocalStorage(accountKey)
       .setResolution(client)
       .navigate()
-      .clickElement('@instancesTableName');
+      .waitForElementVisible('@instancesListRowName')
+      .clickElement('@instancesListRowButton');
 
     client.pause(500);
   },
@@ -41,11 +42,11 @@ export default addTestNamePrefixes({
   },
   'User goes to Script Endpoint Traces View': (client) => {
     const scriptEndpointTracesPage = client.page.scriptEndpointTracesPage();
-    const { instanceName } = accounts.navigationUser;
-    const tempScriptEndpointsNames = accounts.navigationUser.tempScriptEndpointsNames[0];
+    const { instanceName } = instances.thirdInstance;
+    const scriptEndpointName = instances.thirdInstance.scriptEndpointsNames[0];
 
     scriptEndpointTracesPage
-      .goToUrl(instanceName, `script-endpoints/${tempScriptEndpointsNames}/traces`)
+      .goToUrl(instanceName, `script-endpoints/${scriptEndpointName}/traces`)
       .waitForElementPresent('@scriptEndpointTracesEmptyView');
   }
 });

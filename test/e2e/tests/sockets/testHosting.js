@@ -1,23 +1,21 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['hosting'],
+  tags: ['hosting', 'newTool'],
   before: (client) => {
-    const { accountKey } = accounts.alternativeUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
       .setResolution(client);
   },
-  after: (client) => {
-    client.end();
-  },
+  after: (client) => client.end(),
   'Administrator adds a Hosting Socket': (client) => {
     const hostingPage = client.page.hostingPage();
     const hosting = utils.addSuffix('hosting');
     const domain = `${utils.randomString(10)}domain`;
-    const { instanceName } = accounts.alternativeUser;
+    const { instanceName } = instances.secondInstance;
 
     hostingPage
       .goToUrl(instanceName, 'hosting')

@@ -1,11 +1,11 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 import Syncano from 'syncano';
 
 export default addTestNamePrefixes({
-  tags: ['pushSocketsApns', 'apns'],
+  tags: ['pushSocketsApns', 'apns', 'newTool'],
   beforeEach: (client) => {
-    const { accountKey } = accounts.navigationUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -15,7 +15,7 @@ export default addTestNamePrefixes({
   'Test Admin Adds APNS Socket': (client) => {
     const socketsPage = client.page.socketsPage();
     const filePath = './cert12';
-    const { instanceName } = accounts.navigationUser;
+    const { instanceName } = instances.thirdInstance;
 
     socketsPage
       .goToUrl(instanceName, 'push-notifications/config/')
@@ -36,8 +36,8 @@ export default addTestNamePrefixes({
     const socketsPage = client.page.socketsPage();
     const filePath = './cert.p12';
 
-    const { accountKey } = accounts.navigationUser;
-    const { instanceName } = accounts.navigationUser;
+    const { account_key: accountKey } = instances.account;
+    const { instanceName } = instances.thirdInstance;
     const baseUrl = client.globals.apiBaseUrl;
     const connection = Syncano({
       baseUrl,
@@ -74,12 +74,12 @@ export default addTestNamePrefixes({
   'Test Admin Goes to APNS Device list': (client) => {
     const socketsPage = client.page.socketsPage();
     const pushDevicesPage = client.page.pushDevicesPage();
-    const { instanceName } = accounts.navigationUser;
+    const { instanceName } = instances.thirdInstance;
 
     // This duplicates action above so additional api calls is done
     // For now there is no other way to do it as tests before it
     // can't properly add push socket
-    const { accountKey } = accounts.navigationUser;
+    const { account_key: accountKey } = instances.account;
     const filePath = './cert.p12';
     const baseUrl = client.globals.apiBaseUrl;
     const connection = Syncano({

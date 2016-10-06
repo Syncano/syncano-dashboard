@@ -1,13 +1,14 @@
+import commonElementsPage from './commonElementsPage';
+import utils from '../utils';
+
 export default {
-  url: 'https://localhost:8080/#/account',
+  url: `${utils.testBaseUrl()}/#/account`,
   elements: {
     updateButton: {
-      selector: '//span[text()="Update"]',
-      locateStrategy: 'xpath'
+      selector: '[data-e2e="profile-update-button"]'
     },
-    title: {
-      selector: '//span[text()="Profile"]',
-      locateStrategy: 'xpath'
+    innerToolbar: {
+      selector: '[data-e2e="inner-toolbar"]'
     },
     firstName: {
       selector: 'input[name=firstName]'
@@ -15,9 +16,6 @@ export default {
     lastName: {
       selector: 'input[name=lastName]'
     },
-    successDialog: {
-      selector: '//div[text()="Profile saved successfully."]',
-      locateStrategy: 'xpath'
-    }
+    ...commonElementsPage
   }
 };

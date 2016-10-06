@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['scriptSockets'],
+  tags: ['scriptSockets', 'newTool'],
   before: (client) => {
-    const { accountKey } = accounts.navigationUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -15,7 +15,7 @@ export default addTestNamePrefixes({
     const listsPage = client.page.listsPage();
     const selectedItemDataEndpoint = listsPage.elements.selectedItemDataEndpoint.selector;
     const optionsMenu = listsPage.elements.optionsMenu.selector;
-    const { instanceName } = accounts.navigationUser;
+    const { instanceName } = instances.thirdInstance;
 
     client
       .goToUrl(instanceName, 'script-endpoints')

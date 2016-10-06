@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['topNavigation'],
+  tags: ['topNavigation', 'newTool'],
   before: (client) => {
-    const { accountKey } = accounts.navigationUser;
+    const accountKey = instances.account.account_key;
 
     client
       .loginUsingLocalStorage(accountKey)

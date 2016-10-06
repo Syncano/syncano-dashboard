@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { apiBaseUrl } from './globals';
+
 import sampleScripts from '../../src/apps/Scripts/SampleScripts';
 import sampleSchemas from '../../src/apps/Classes/SampleSchemas';
 import { SNIPPET_TEMPLATE_DATA_SOURCE_TYPES } from '../../src/constants/Constants';

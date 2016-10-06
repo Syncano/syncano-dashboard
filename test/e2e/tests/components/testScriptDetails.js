@@ -1,11 +1,11 @@
 import Syncano from 'syncano';
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['scripts'],
+  tags: ['scripts', 'newTool'],
   before: (client) => {
-    const { accountKey } = accounts.instanceUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -15,7 +15,7 @@ export default addTestNamePrefixes({
   'User goes to Script edit view': (client) => {
     const listsPage = client.page.listsPage();
     const scriptEditPage = client.page.scriptEditPage();
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
 
     listsPage
       .goToUrl(instanceName, 'scripts')
@@ -26,9 +26,9 @@ export default addTestNamePrefixes({
   'User goes to Script traces view': (client) => {
     const listsPage = client.page.listsPage();
     const scriptEditPage = client.page.scriptEditPage();
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
     const baseUrl = client.globals.apiBaseUrl;
-    const { accountKey } = accounts.instanceUser;
+    const { account_key: accountKey } = instances.account;
     const connection = Syncano({
       baseUrl,
       accountKey,

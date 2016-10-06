@@ -34,6 +34,7 @@ const Account = {
       .then((response) => {
         connection.setAccountKey(response.account_key);
         account = response;
+        ({ password: response.password } = authentication);
 
         return response;
       });

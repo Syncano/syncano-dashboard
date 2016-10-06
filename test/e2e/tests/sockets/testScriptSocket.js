@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['scriptSocket'],
+  tags: ['scriptSocket', 'newTool'],
   before: (client) => {
-    const { accountKey } = accounts.alternativeUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -14,13 +14,13 @@ export default addTestNamePrefixes({
   'User adds a User Script Socket from User Script': (client) => {
     const socketsPage = client.page.socketsPage();
     const script = utils.addSuffix('script');
-    const { instanceName } = accounts.alternativeUser;
+    const { instanceName } = instances.secondInstance;
 
     socketsPage
       .goToUrl(instanceName, 'script-endpoints')
       .clickElement('@addScriptSocketButton')
       .fillInput('@endpointNameInput', script)
-      .fillInput('@scriptName', accounts.alternativeUser.tempScriptNames[0])
+      .fillInput('@scriptName', instances.secondInstance.scriptsNames[0])
       .clickElement('@scriptUserOption')
       .clickElement('@scriptSocketSubmitButton')
       .clickElement('@scriptSocketCloseDialog')
@@ -45,7 +45,7 @@ export default addTestNamePrefixes({
   'User edits a Script Socket': (client) => {
     const socketsPage = client.page.socketsPage();
     const edited = utils.addSuffix('edited');
-    const { instanceName } = accounts.alternativeUser;
+    const { instanceName } = instances.secondInstance;
 
     socketsPage
       .goToUrl(instanceName, 'script-endpoints')
@@ -54,9 +54,8 @@ export default addTestNamePrefixes({
       .clickElement('@scriptSocketSubmitButton')
       .clickElement('@scriptSocketCloseDialogButton')
       .waitForElementVisible('@scriptSocketRow')
-      .waitForElementVisible('@scriptSocketRowDescription');
-
-    socketsPage.verify.containsText('@scriptSocketRowDescription', edited);
+      .waitForElementVisible('@scriptSocketRowDescription')
+      .verify.containsText('@scriptSocketRowDescription', edited);
   },
   'User deletes a Script Socket': (client) => {
     const socketsPage = client.page.socketsPage();

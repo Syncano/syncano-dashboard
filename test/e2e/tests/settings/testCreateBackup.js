@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances.js';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['backup'],
+  tags: ['backup', 'newTool'],
   before: (client) => {
-    const { accountKey } = accounts.instanceUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -15,7 +15,7 @@ export default addTestNamePrefixes({
     const backupPage = client.page.backupPage();
     const label = utils.addSuffix();
     const description = utils.addSuffix('description');
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
 
     backupPage
       .goToUrl(instanceName, 'backup-and-restore/full')

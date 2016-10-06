@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['pushDeviceAPNS', 'apns'],
+  tags: ['pushDeviceAPNS', 'apns', 'newTool'],
   before: (client) => {
-    const { accountKey } = accounts.instanceUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -14,15 +14,13 @@ export default addTestNamePrefixes({
   'Test Admin Adds iOS Device': (client) => {
     const pushDevicesPage = client.page.pushDevicesPage();
     const listsPage = client.page.listsPage();
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
     const labelName = utils.addSuffix('ioslabel');
     const registrationId = utils.randomString(64);
 
     pushDevicesPage
       .goToUrl(instanceName, 'push-notifications/devices/apns')
       .waitForElementVisible('@iosDevicesHeading');
-
-    client.pause(500);
 
     listsPage
       .clickElement('@addButton')
@@ -49,9 +47,6 @@ export default addTestNamePrefixes({
       .clickElement('@summaryDialogCloseButton')
       .waitForElementNotPresent('@addTitleHeading');
 
-    // this pause won't be necessary when we add push devices stepper
-    client.pause(1000);
-
     pushDevicesPage.verify.containsText('@firstDevice', labelName);
   },
   'Test Admin Selects/Deselects iOS Device': (client) => {
@@ -64,8 +59,8 @@ export default addTestNamePrefixes({
   'Test Admin Deletes iOS Device': (client) => {
     const pushDevicesPage = client.page.pushDevicesPage();
     const listsPage = client.page.listsPage();
-    const { tempAPNSDevicesNames } = accounts.instanceUser;
-    const lastDeviceName = tempAPNSDevicesNames[tempAPNSDevicesNames.length - 1];
+    const { apnsDevicesNames } = instances.firstInstance;
+    const lastDeviceName = apnsDevicesNames[apnsDevicesNames.length - 1];
 
     pushDevicesPage.waitForElementVisible('@iosDevicesHeading');
 

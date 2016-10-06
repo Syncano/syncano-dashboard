@@ -1,35 +1,29 @@
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['socialLogins'],
-  beforeEach(client) {
+  tags: ['socialLogins', 'newTool'],
+  beforeEach: (client) => {
     const loginPage = client.page.loginPage();
 
     loginPage
       .navigate()
       .setResolution(client);
   },
-  afterEach(client, done) {
-    client.end(done);
-  },
+  afterEach: (client, done) => client.end(done),
   'Admin Logs in with Facebook': (client) => {
     const loginPage = client.page.loginPage();
     const instancesPage = client.page.instancesPage();
 
-    loginPage.clickElement('@loginButtonFacebook');
-
-    client
-      .pause(1000)
+    loginPage
+      .clickElement('@loginButtonFacebook')
       .changeWindow(1, 2);
 
     loginPage
       .fillInput('@emailInputFacebook', process.env.FACEBOOK_EMAIL)
       .fillInput('@passInputFacebook', process.env.NIGHTWATCH_PASSWORD)
-      .clickElement('@signInButtonFacebook');
-
-    client
-      .pause(1000)
+      .clickElement('@signInButtonFacebook')
       .changeWindow(0, 1);
+
     instancesPage
       .navigate()
       .waitForElementPresent('@instancesTable');
@@ -38,10 +32,8 @@ export default addTestNamePrefixes({
     const loginPage = client.page.loginPage();
     const instancesPage = client.page.instancesPage();
 
-    loginPage.clickElement('@loginButtonGoogle');
-
-    client
-      .pause(1000)
+    loginPage
+      .clickElement('@loginButtonGoogle')
       .changeWindow(1, 2);
 
     loginPage
@@ -50,10 +42,11 @@ export default addTestNamePrefixes({
       .fillInput('@passInputGoogle', process.env.NIGHTWATCH_PASSWORD)
       .clickElement('@signInButtonGoogle');
 
+    // Cool down for approve button before it is clickable
     client.pause(2000);
-    loginPage.clickElement('@approveAccessButtonGoogle');
-    client
-      .pause(1000)
+
+    loginPage
+      .clickElement('@approveAccessButtonGoogle')
       .changeWindow(0, 1);
 
     instancesPage
@@ -64,25 +57,18 @@ export default addTestNamePrefixes({
     const loginPage = client.page.loginPage();
     const instancesPage = client.page.instancesPage();
 
-    loginPage.clickElement('@loginButtonGithub');
-
-    client
-      .pause(1000)
+    loginPage
+      .clickElement('@loginButtonGithub')
       .changeWindow(1, 2);
 
     loginPage
       .fillInput('@emailInputGithub', process.env.NIGHTWATCH_EMAIL)
       .fillInput('@passInputGithub', process.env.NIGHTWATCH_PASSWORD)
-      .clickElement('@signInButtonGithub');
+      .clickElement('@signInButtonGithub')
+      .changeWindow(0, 1);
 
-    client
-      .pause(3000)
-      .changeWindow(0, 1)
-      .pause(3000);
-
-    instancesPage.navigate();
-    client.pause(3000);
     instancesPage
+      .navigate()
       .waitForElementPresent('@instancesTable');
   }
 });

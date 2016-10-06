@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['pushDeviceGCM'],
+  tags: ['pushDeviceGCM', 'newTool'],
   before: (client) => {
-    const { accountKey } = accounts.instanceUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -14,7 +14,7 @@ export default addTestNamePrefixes({
   'Test Admin Adds Android Device': (client) => {
     const pushDevicesPage = client.page.pushDevicesPage();
     const listsPage = client.page.listsPage();
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
     const labelName = utils.addSuffix('androidlabel');
     const registrationId = utils.randomString(64);
     const deviceId = utils.randomInt(100, 1000);
@@ -22,8 +22,6 @@ export default addTestNamePrefixes({
     pushDevicesPage
       .goToUrl(instanceName, 'push-notifications/devices/gcm')
       .waitForElementVisible('@androidDevicesHeading');
-
-    client.pause(500);
 
     listsPage
       .clickElement('@addButton')
@@ -64,8 +62,8 @@ export default addTestNamePrefixes({
   'Test Admin Deletes Android Device': (client) => {
     const pushDevicesPage = client.page.pushDevicesPage();
     const listsPage = client.page.listsPage();
-    const { tempGCMDevicesNames } = accounts.instanceUser;
-    const lastDeviceName = tempGCMDevicesNames[tempGCMDevicesNames.length - 1];
+    const { gcmDevicesNames } = instances.firstInstance;
+    const lastDeviceName = gcmDevicesNames[gcmDevicesNames.length - 1];
 
     pushDevicesPage.waitForElementVisible('@androidDevicesHeading');
 

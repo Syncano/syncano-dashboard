@@ -1,21 +1,19 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['channels'],
-  before(client) {
-    const { accountKey } = accounts.instanceUser;
+  tags: ['channels', 'newTool'],
+  before: (client) => {
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
       .setResolution(client);
   },
-  after(client) {
-    client.end();
-  },
+  after: (client) => client.end(),
   'User adds a Channel Socket': (client) => {
     const channelsPage = client.page.channelsPage();
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
 
     channelsPage
       .goToUrl(instanceName, 'channels')
@@ -40,9 +38,8 @@ export default addTestNamePrefixes({
       .clickElement('@channelDialogConfirmButton')
       .clickElement('@channelSummaryDialogCloseButton')
       .waitForElementVisible('@channelTableRow')
-      .waitForElementVisible('@channelTableRowDescription');
-
-    channelsPage.verify.containsText('@channelTableRowDescription', utils.addSuffix('edit'));
+      .waitForElementVisible('@channelTableRowDescription')
+      .verify.containsText('@channelTableRowDescription', utils.addSuffix('edit'));
   },
   'User sends a Channel Message': (client) => {
     const channelsPage = client.page.channelsPage();

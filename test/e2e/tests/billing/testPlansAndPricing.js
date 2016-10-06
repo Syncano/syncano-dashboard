@@ -1,18 +1,16 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances.js';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['plansAndPricing'],
+  tags: ['plansAndPricing', 'newTool'],
   before: (client) => {
-    const { accountKey } = accounts.alternativeUser;
+    const accountKey = instances.account.account_key;
 
     client
       .loginUsingLocalStorage(accountKey)
       .setResolution(client);
   },
-  after: (client) => {
-    client.end();
-  },
+  after: (client) => client.end(),
   'User switches to production plan': (client) => {
     const billingPage = client.page.billingPlanPage();
 

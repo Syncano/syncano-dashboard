@@ -1,22 +1,20 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['users'],
-  before(client) {
-    const { accountKey } = accounts.instanceUser;
+  tags: ['users', 'newTool'],
+  before: (client) => {
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
       .setResolution(client);
   },
-  after(client) {
-    client.end();
-  },
+  after: (client) => client.end(),
   'Administrator adds a User': (client) => {
     const usersPage = client.page.usersPage();
     const suffix = utils.addSuffix('user');
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
 
     usersPage
       .goToUrl(instanceName, 'users')

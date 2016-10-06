@@ -1,23 +1,21 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['dataObjects'],
-  before(client) {
-    const { accountKey } = accounts.alternativeUser;
+  tags: ['dataObjects', 'newTool'],
+  before: (client) => {
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
       .setResolution(client);
   },
-  after(client) {
-    client.end();
-  },
-  'Administrator adds a Data Object': function (client) {
+  after: (client) => client.end(),
+  'Administrator adds a Data Object': (client) => {
     const dataObjectsPage = client.page.dataObjectsPage();
     const string = utils.addSuffix('string');
-    const { instanceName } = accounts.alternativeUser;
-    const tempClassName = accounts.alternativeUser.tempClassNames[0];
+    const { instanceName } = instances.secondInstance;
+    const tempClassName = instances.secondInstance.classNames[0];
 
     dataObjectsPage
       .goToUrl(instanceName, `classes/${tempClassName}/objects`)
@@ -26,7 +24,7 @@ export default addTestNamePrefixes({
       .clickElement('@confirm')
       .waitForElementVisible('@stringFieldTableRow');
   },
-  'Administrator edits a Data Object': function (client) {
+  'Administrator edits a Data Object': (client) => {
     const dataObjectsPage = client.page.dataObjectsPage();
     const edited = utils.addSuffix('edited');
 
@@ -36,7 +34,7 @@ export default addTestNamePrefixes({
       .clickElement('@confirm')
       .waitForElementVisible('@stringFieldTableRow');
   },
-  'Administrator deletes a Data Object': function (client) {
+  'Administrator deletes a Data Object': (client) => {
     const dataObjectsPage = client.page.dataObjectsPage();
 
     dataObjectsPage

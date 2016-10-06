@@ -1,11 +1,11 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances.js';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['passwordSettings'],
+  tags: ['passwordSettings', 'newTool'],
   after: (client) => client.end(),
   before: (client) => {
-    const { accountKey } = accounts.navigationUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -13,19 +13,21 @@ export default addTestNamePrefixes({
   },
   'Administrator resets his password': (client) => {
     const authenticationPage = client.page.authenticationPage();
+    const { password: currentPassword } = instances.account;
     const newPassword = utils.addSuffix('pass');
 
     authenticationPage
       .navigate()
-      .fillInput('@currentPassword', accounts.navigationUser.password)
+      .fillInput('@currentPassword', currentPassword)
       .fillInput('@newPassword', newPassword)
       .fillInput('@confirmNewPassword', newPassword)
       .clickElement('@updateButton')
-      .waitForElementPresent('@notificationMessage');
+      .waitForElementPresent('@snackBarNotification');
   },
   'Administrator logs in with a new password': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const loginPage = client.page.loginPage();
+    const { email } = instances.account;
     const newPassword = utils.addSuffix('pass');
 
     topNavigationPage
@@ -34,8 +36,8 @@ export default addTestNamePrefixes({
 
     loginPage
       .navigate()
-      .login(accounts.navigationUser.email, newPassword);
+      .login(email, newPassword);
 
-    accounts.navigationUser.password = newPassword;
+    instances.account.password = newPassword;
   }
 });
