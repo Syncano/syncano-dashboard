@@ -4,7 +4,7 @@ import utils, { addTestNamePrefixes } from '../../utils';
 export default addTestNamePrefixes({
   tags: ['instance', 'newTool'],
   before: (client) => {
-    const accountKey = instances.account.account_key;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)

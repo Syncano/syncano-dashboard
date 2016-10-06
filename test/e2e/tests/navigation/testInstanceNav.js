@@ -5,7 +5,7 @@ export default addTestNamePrefixes({
   tags: ['instanceNav', 'newTool'],
   before: (client) => {
     const instancesPage = client.page.instancesPage();
-    const accountKey = instances.account.account_key;
+    const { account_key: accountKey } = instances.account;
 
     instancesPage
       .loginUsingLocalStorage(accountKey)

@@ -1,10 +1,10 @@
-import instances from '../../tempInstances.js';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['paymentMethods', 'newTool'],
   before: (client) => {
-    const accountKey = instances.account.account_key;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)

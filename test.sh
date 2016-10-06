@@ -65,9 +65,7 @@ function ci_setup {
     # Commented out as for now waiting for tests change
     # babel-node ./test/scripts/createTempAccounts.js
     babel-node ./test/setup/createTestInstances.js
-    # Workaround for old tests sourcing tempAccounts file
-    mv ./test/e2e/tempAccountsMockup.js ./test/e2e/tempAccounts.js
-    # npm run lint-tests
+    npm run lint-tests
 
     selenium_start
     http_server_start

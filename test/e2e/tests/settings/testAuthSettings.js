@@ -1,4 +1,4 @@
-import instances from '../../tempInstances.js';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
