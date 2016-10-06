@@ -37,9 +37,6 @@ class UploadFilesButton extends Component {
       input: {
         display: 'none',
         position: 'absolute'
-      },
-      chooseFilesButton: {
-        color: Colors.blue500
       }
     };
     const { hasFiles, handleSendFiles, handleUploadFiles, handleClearFiles } = this.props;
@@ -66,7 +63,6 @@ class UploadFilesButton extends Component {
         label="Choose files from disk"
         primary={true}
         onTouchTap={this.handleClickButton}
-        style={styles.chooseFilesButton}
       >
         <input
           style={styles.input}
