@@ -35,6 +35,11 @@ const InnerToolbar = Radium(React.createClass({
         flex: 1,
         justifyContent: 'flex-end'
       },
+      tooltip: {
+        fontSize: 10,
+        lineHeight: '22px',
+        padding: '0 8px'
+      },
       icon: {
         color: 'rgba(0, 0, 0, .4)'
       },
@@ -64,6 +69,7 @@ const InnerToolbar = Radium(React.createClass({
           iconClassName="synicon-arrow-left"
           tooltip={backButtonTooltip}
           tooltipPosition={backButtonTooltipPosition}
+          tooltipStyles={styles.tooltip}
           onClick={this.handleBackButtonTouchTap}
           touch={true}
           style={styles.iconButton}
