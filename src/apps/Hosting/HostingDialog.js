@@ -96,18 +96,21 @@ const CreateHostingDialog = React.createClass({
         sidebar={
           <Dialog.SidebarBox>
             <Dialog.SidebarSection>
-              Hosting allows you to manage, deploy and publish websites using Syncano platform.
+              Hosting allows you to manage, deploy and publish websites using Syncano Platform.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Hosting label">
-              You can set the name of your hosting.
+              Name of the hosthing in Syncano Dashboard.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Domains">
-              Define the domains. Each name must be unique within an Instance. You can also
-              name your domain as <em>default</em> then it will be connected directly to your current Instance
-              and avaliable at {defaultLink}
+              Define the domains which will be linked to your hosting at
+              https://{currentInstanceName}--<em>domain</em>.syncano.site
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Default domain">
+              You can also name your domain as <em>default</em> then it will be connected directly to your current
+              Instance and avaliable at {defaultLink}
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
-              <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/hosting">
+              <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/hosting/">
                 Learn more
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
