@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 import _ from 'lodash';
 
 import HostingFilesStore from './HostingFilesStore';
@@ -91,6 +92,7 @@ const HostingFilesView = React.createClass({
 
     return (
       <div>
+        <Helmet title={`Website Hosting: ${hostingLabel}`} />
         <HostingDialog />
         <HostingPublishDialog />
 
