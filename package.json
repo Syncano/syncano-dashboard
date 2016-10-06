@@ -136,7 +136,7 @@
     "e2e": "./test.sh",
     "e2e-branch": "nightwatch -e chrome --suiteRetries 1 --skiptags socialLogins,demoApp",
     "e2e-master-devel": "nightwatch -e chrome --suiteRetries 1",
-    "e2e-local": "nightwatch -e chrome --suiteRetries 1 --skiptags apns --skipgroup billing,signup_logins,settings",
+    "e2e-local": "nightwatch -e chrome --suiteRetries 1 --skiptags apns,administrators --skipgroup billing,signup_logins,settings",
     "e2e-tag": "nightwatch -e chrome --suiteRetries 1 --tag",
     "iconfont": "gulp iconfont",
     "add-github-tag": "gulp add-github-tag",

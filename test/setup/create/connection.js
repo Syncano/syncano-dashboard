@@ -49,7 +49,7 @@ const Account = {
   },
 
   init() {
-    if (process.env.CI && process.env.CI !== 'local') {
+    if (process.env.CI) {
       return Account.register().then((authentication) => Account.login(authentication));
     }
     return Account.login();

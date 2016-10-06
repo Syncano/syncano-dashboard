@@ -1,4 +1,3 @@
-
 #!/bin/bash
 set -e
 
@@ -51,8 +50,6 @@ function http_server_start {
 
 function ci_cleanup {
     rm -rf ./dist_e2e
-    # Commented out as for now waiting for tests change
-    # babel-node ./test/scripts/files/removeCertificate.js
     babel-node ./test/setup/files/removeCertificate.js
 }
 
@@ -62,8 +59,6 @@ function ci_setup {
     npm run build
     mv ./dist ./dist_e2e
 
-    # Commented out as for now waiting for tests change
-    # babel-node ./test/scripts/createTempAccounts.js
     babel-node ./test/setup/createTestInstances.js
     npm run lint-tests
 
@@ -85,8 +80,7 @@ function ci_tests {
             npm run e2e-master-devel
         else
             message "Starting branch test flow..."
-            # npm run e2e-branch
-            npm run e2e-tag "newTool"
+            npm run e2e-branch
         fi
 
         ci_cleanup
@@ -95,7 +89,6 @@ function ci_tests {
 
 function local_cleanup {
     message "Closing selenium server. Please wait..."
-    # Commented out as for now waiting for tests change
     babel-node ./test/setup/deleteTestInstances.js
     kill $(ps aux | grep '[.]selenium' | awk '{print $2}') \
       && message "Done"
@@ -105,8 +98,6 @@ function local_setup {
     selenium_install
 
     message "Creating temporary accounts for tests..."
-    # babel-node ./test/scripts/createTempAccounts.js
-    # Commented out as for now waiting for tests change
     babel-node ./test/setup/createTestInstances.js
 
     message "Starting Selenium in background..."
