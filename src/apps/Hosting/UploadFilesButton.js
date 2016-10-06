@@ -1,13 +1,10 @@
-/* eslint-disable no-useless-constructor */
 import React, { Component } from 'react';
-
 import { RaisedButton, FlatButton } from 'material-ui';
-import { colors as Colors } from 'material-ui/styles/';
 
 class UploadFilesButton extends Component {
-  constructor(props) {
-    super(props);
-  }
+  static defaultProps = {
+    hasFiles: false
+  };
 
   componentDidMount() {
     this.setInputAttributes();
@@ -74,9 +71,5 @@ class UploadFilesButton extends Component {
     );
   }
 }
-
-UploadFilesButton.defaultProps = {
-  hasFiles: false
-};
 
 export default UploadFilesButton;
