@@ -47,14 +47,14 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const { iconElement, primaryText, secondaryText, handleIconClick, className, ...other } = this.props;
+    const { iconElement: Icon, primaryText, secondaryText, handleIconClick, className, ...other } = this.props;
 
     return (
       <div
         className={className}
         style={styles.container}
       >
-        <iconElement
+        <Icon
           {...other}
           handleClick={handleIconClick}
           data-e2e={_.isString(primaryText) ? `${primaryText}-check-icon` : this.props['data-e2e']}
