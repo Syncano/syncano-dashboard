@@ -1,34 +1,43 @@
 import React from 'react';
-import { FontIcon } from 'material-ui';
+import { IconButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
 import Truncate from '../Truncate';
 
-const LinkWithIcon = ({ url, iconClassName = 'synicon-launch' }) => {
+const LinkWithIcon = ({ url, urlLabel, iconClassName = 'synicon-launch' }) => {
   const linkStyles = {
+    cursor: 'pointer',
     color: Colors.blue500,
-    display: 'flex',
-    alignItems: 'center'
+    width: '80%'
   };
   const linkIconStyles = {
-    paddingTop: 2,
-    marginRight: 8,
     color: Colors.blue500,
-    fontSize: 16,
-    maxWidth: 16
+    fontSize: 22
+  };
+  const containerStyles = {
+    maxWidth: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   };
 
   return (
-    <a
-      href={url}
-      target="_blank"
-      style={linkStyles}
-    >
-      <FontIcon
-        style={linkIconStyles}
-        className={iconClassName}
+    <div style={containerStyles}>
+      <div style={linkStyles}>
+        <a
+          href={url}
+          target="_blank"
+          style={linkStyles}
+        >
+          <Truncate text={urlLabel || url} />
+        </a>
+      </div>
+      <IconButton
+        href={url}
+        target="_blank"
+        iconStyle={linkIconStyles}
+        iconClassName={iconClassName}
       />
-      <Truncate text={url} />
-    </a>
+    </div>
   );
 };
 

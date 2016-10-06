@@ -7,6 +7,8 @@ export default {
   },
 
   handleCancel(dialogRef) {
+    console.debug('DialogsMixin::handleCancel');
+
     const ref = _.isString(dialogRef) ? this.refs[dialogRef] : this.refs.dialog;
 
     ref.dismiss();

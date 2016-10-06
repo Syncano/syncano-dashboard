@@ -10,7 +10,7 @@ import Actions from './SendChannelMessageDialogActions';
 
 import { FontIcon, RaisedButton, TextField, Toggle } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
-import { Dialog, Editor, Notification, Show, Stepper, TraceResult } from '../../common/';
+import { Dialog, Editor, Notification, Show, Stepper, Trace } from '../../common/';
 import { DialogBindShortcutsHOC } from '../../common/Dialog';
 import SendChannelMessageSummary from './SendChannelMessageSummary';
 
@@ -84,28 +84,6 @@ const SendChannelMessageDialog = React.createClass({
     }
   },
 
-  getStyles() {
-    return {
-      stepTitleFontIcon: {
-        fontSize: 32,
-        padding: '8px 8px 0 8px'
-      },
-      messageEditor: {
-        marginTop: 24
-      },
-      traceResult: {
-        padding: 20,
-        height: 350,
-        overflow: 'auto'
-      },
-      messagesHistoryMessage: {
-        marginBottom: 8,
-        paddingBottom: 8,
-        borderBottom: '1px dashed white'
-      }
-    };
-  },
-
   handleEditSubmit() {
     const { name, messageText, isJSONMessage, JSONMessage, room } = this.state;
 
@@ -114,12 +92,6 @@ const SendChannelMessageDialog = React.createClass({
     }
 
     return Actions.sendChannelMessage(name, { content: messageText }, room);
-  },
-
-  handleAdvancedEditorToggleToggle() {
-    const { isJSONMessage } = this.state;
-
-    this.setState({ isJSONMessage: !isJSONMessage });
   },
 
   renderSidebarContent() {
@@ -144,7 +116,6 @@ const SendChannelMessageDialog = React.createClass({
   },
 
   renderMessageEditor() {
-    const styles = this.getStyles();
     const { enableBindShortcuts, disableBindShortcuts } = this.context;
     const { isJSONMessage, messageText, JSONMessage } = this.state;
 
@@ -155,7 +126,7 @@ const SendChannelMessageDialog = React.createClass({
             name="message-editor"
             mode="json"
             height="200px"
-            style={styles.messageEditor}
+            style={{ marginTop: 24 }}
             onChange={(value) => this.setState({ JSONMessage: value })}
             onFocus={disableBindShortcuts}
             onBlur={enableBindShortcuts}
@@ -166,12 +137,11 @@ const SendChannelMessageDialog = React.createClass({
             ].join('\n')}
           />
           <Show if={this.getValidationMessages('JSONMessage').length}>
-            <Notification
-              type="error"
-              className="vm-2-t"
-            >
-              {this.getValidationMessages('JSONMessage').join(' ')}
-            </Notification>
+            <div className="vm-2-t">
+              <Notification type="error">
+                {this.getValidationMessages('JSONMessage').join(' ')}
+              </Notification>
+            </div>
           </Show>
         </div>
       );
@@ -179,6 +149,7 @@ const SendChannelMessageDialog = React.createClass({
 
     return (
       <TextField
+        data-e2e="send-channel-message-content-input"
         label="messageText"
         autoFocus={true}
         fullWidth={true}
@@ -188,34 +159,53 @@ const SendChannelMessageDialog = React.createClass({
         errorText={this.getValidationMessages('messageText').join(' ')}
         hintText="Your message goes here"
         floatingLabelText="Message"
-        data-e2e="send-channel-message-content-input"
       />
     );
   },
 
   renderMessagesHistory() {
-    const styles = this.getStyles();
     const { messagesHistory } = this.state;
 
-    return _.map(messagesHistory, (message) => (
-      <div
-        key={`message${message.id}-${shortid.generate()}`}
-        style={styles.messagesHistoryMessage}
-      >
-        <div>Message Id: {message.id}</div>
-        <div>Author Id: {message.author.admin}</div>
-        <div>Created at: {message.created_at}</div>
-        {message.room && <div>Room: {message.room}</div>}
-        {JSON.stringify(message.payload, null, 2)}
-      </div>
-    ));
+    return _.map(messagesHistory, (message) => {
+      const messageStyle = {
+        marginBottom: 8,
+        paddingBottom: 8,
+        borderBottom: '1px dashed white'
+      };
+
+      if (_.isString(message)) {
+        return (
+          <div
+            key={`message${message.id}-${shortid.generate()}`}
+            style={messageStyle}
+          >
+            {message}
+          </div>
+        );
+      }
+
+      return (
+        <div
+          key={`message${message.id}-${shortid.generate()}`}
+          style={messageStyle}
+        >
+          <div>Message Id: {message.id}</div>
+          <div>Author Id: {message.author.admin}</div>
+          <div>Created at: {message.created_at}</div>
+          {message.room && <div>Room: {message.room}</div>}
+          {JSON.stringify(message.payload, null, 2)}
+        </div>
+      );
+    });
   },
 
   renderStepContent() {
-    const styles = this.getStyles();
     const { sentMessage, stepIndex, isJSONMessage, room, type, isLoading } = this.state;
     const isSeparateRooms = type === 'separate_rooms';
     const roomHint = isSeparateRooms ? 'Channel room' : 'Channel room is available for spearate rooms type only';
+    const basicViewToggleLabel = 'Toggle basic view';
+    const JSONViewToggleLabel = 'Toggle JSON format view (Allows you to send more complex messages)';
+    const toggleViewLabel = isJSONMessage ? basicViewToggleLabel : JSONViewToggleLabel;
     const stepContent = {
       step0: (
         <div className="vm-2-t">
@@ -223,49 +213,45 @@ const SendChannelMessageDialog = React.createClass({
             className="vp-2-b"
             title="Channel Room"
           >
-            <div className="col-flex-1">
-              <TextField
-                label="room"
-                autoFocus={true}
-                fullWidth={true}
-                disabled={!isSeparateRooms}
-                value={room}
-                onChange={(event, value) => this.setState({ room: value })}
-                errorText={this.getValidationMessages('room').join(' ')}
-                hintText="Type room name here"
-                floatingLabelText={roomHint}
-              />
-            </div>
+            <TextField
+              label="room"
+              autoFocus={true}
+              fullWidth={true}
+              disabled={!isSeparateRooms}
+              value={room}
+              onChange={(event, value) => this.setState({ room: value })}
+              errorText={this.getValidationMessages('room').join(' ')}
+              hintText="Type room name here"
+              floatingLabelText={roomHint}
+            />
           </Dialog.ContentSection>
           <Dialog.ContentSection title="Message Content">
-            <div className="col-flex-1">
+            <div style={{ padding: '20px 0', width: '100%' }}>
               <Toggle
-                label="Use advanced editor (JSON)"
                 className="vm-2-t"
+                label={toggleViewLabel}
                 labelPosition="right"
                 toggled={isJSONMessage}
-                onToggle={this.handleAdvancedEditorToggleToggle}
+                onToggle={() => this.setState({ isJSONMessage: !isJSONMessage })}
               />
               {this.renderMessageEditor()}
-              <div className="vm-2-t text--right">
+              <div className="row align-right">
                 <RaisedButton
-                  primary={true}
-                  label="Send Message"
-                  onTouchTap={this.handleFormValidation}
                   data-e2e="send-channel-message-dialog-send-message-button"
+                  className="vm-2-t right"
+                  label="Send Message"
+                  primary={true}
+                  onTouchTap={this.handleFormValidation}
                 />
               </div>
             </div>
           </Dialog.ContentSection>
-          <Dialog.ContentSection
-            title="Message History (Real-time)"
-            last={true}
-          >
-            <div className="col-flex-1 vm-2-t">
-              <TraceResult
-                result={this.renderMessagesHistory()}
-                style={styles.traceResult}
+          <Dialog.ContentSection title="Message History (Real-time)">
+            <div style={{ padding: '20px 0', width: '100%' }}>
+              <Trace.Result
                 data-e2e="send-channel-message-messages-preview"
+                style={{ padding: '20px 10px', width: '100%', height: 350, overflow: 'auto' }}
+                result={this.renderMessagesHistory()}
               />
             </div>
           </Dialog.ContentSection>
@@ -283,17 +269,16 @@ const SendChannelMessageDialog = React.createClass({
   },
 
   renderStepTitle() {
-    const styles = this.getStyles();
     const { stepIndex, name } = this.state;
     const stepTitle = {
       step0: `Send message to ${name} Channel`,
       step1: (
         <div
-          className="row align-middle"
           data-e2e="send-channel-message-summary-title"
+          className="row align-middle"
         >
           <FontIcon
-            style={styles.stepTitleFontIcon}
+            style={{ fontSize: 32, padding: '8px 8px 0 8px' }}
             color={Colors.blue400}
             className="synicon-comment-alert"
           />
@@ -330,21 +315,21 @@ const SendChannelMessageDialog = React.createClass({
     if (isFinished) {
       return (
         <RaisedButton
-          primary={true}
-          label="Close"
-          onTouchTap={this.handleCancel}
           data-e2e="send-channel-message-summary-close-button"
+          label="Close"
+          primary={true}
+          onTouchTap={this.handleCancel}
         />
       );
     }
 
     return (
       <Dialog.StandardButtons
+        data-e2e-submit="send-channel-message-dialog-finish-button"
         submitLabel="Finish"
         disabled={!canSubmit}
         handleCancel={this.handleCancel}
         handleConfirm={sentMessage ? handleNextStep : this.handleCancel}
-        data-e2e-submit="send-channel-message-dialog-finish-button"
       />
     );
   },

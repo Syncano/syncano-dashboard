@@ -394,7 +394,7 @@ const Script = React.createClass({
 
   handlePayloadFromStorage() {
     const { currentScript } = this.state;
-    const instance = localStorage.getItem('lastInstanceName');
+    const instance = localStorage.getItem('lastInstance');
 
     return currentScript && localStorage.getItem(`${instance}-${currentScript.id}`);
   },
@@ -507,7 +507,7 @@ const Script = React.createClass({
 
   savePayloadToStorage() {
     const { currentScript, payload } = this.state;
-    const instance = localStorage.getItem('lastInstanceName');
+    const instance = localStorage.getItem('lastInstance');
 
     return currentScript && localStorage.setItem(`${instance}-${currentScript.id}`, payload);
   },

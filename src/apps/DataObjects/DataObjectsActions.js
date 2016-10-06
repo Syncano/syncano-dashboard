@@ -9,9 +9,9 @@ export default CreateActions(
     setSelectedRows: {},
     getIDsFromTable: {},
     clearStore: {},
+
     fetchCurrentClassObj: {
       asyncResult: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.getClass'
     },

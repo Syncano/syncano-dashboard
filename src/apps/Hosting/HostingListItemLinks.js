@@ -5,10 +5,10 @@ import { colors as Colors } from 'material-ui/styles/';
 
 import { LinkWithIcon } from '../../common';
 
-const HostingListItemLinks = ({ isVisible, params, domains }) => {
+const HostingListItemLinks = ({ isVisible, params, isDefaultHosting, domains }) => {
   const styles = {
     base: {
-      width: '100%',
+      minWidth: '100%',
       backgroundColor: Colors.grey100,
       borderRight: '1px solid #DDD',
       borderLeft: '1px solid #DDD',
@@ -26,38 +26,19 @@ const HostingListItemLinks = ({ isVisible, params, domains }) => {
       transition: 'max-height 450ms ease-out'
     },
     container: {
-      minWidth: '100%',
       display: 'flex',
-      justifyContent: 'flex-start',
-      flexWrap: 'wrap',
+      flexDirection: 'column',
       padding: 20
-    },
-    linkItem: {
-      display: 'flex',
-      alignSelf: 'flex-start',
-      padding: '0 0 16px 16px',
-      width: '50%'
-    },
-    linkBorderStyles: {
-      borderRight: `1px solid ${Colors.grey300}`,
-      paddingRight: 16,
-      paddingLeft: 0
     }
   };
   const renderHostingLinks = () => {
     const { instanceName } = params;
-    const domainsToDisplay = _.without(domains, 'default');
-    const linksItems = _.map(domainsToDisplay, (domain, index) => {
-      const linkBase = `${instanceName}--${domain}`;
-      const hasBorder = domainsToDisplay.length > 1 && index % 2 === 0;
-      const linkStyles = hasBorder ? { ...styles.linkItem, ...styles.linkBorderStyles } : styles.linkItem;
+    const linksItems = _.map(domains, domain => {
+      const linkBase = isDefaultHosting ? instanceName : `${instanceName}--${domain}`;
 
       return (
-        <div
-          style={linkStyles}
-          key={`domain-${domain}`}
-        >
-          <LinkWithIcon url={`https://${linkBase}.syncano.site`} />
+        <div key={`domain-${domain}`}>
+          <LinkWithIcon url={`http://${linkBase}.syncano.site`} />
         </div>
       );
     });

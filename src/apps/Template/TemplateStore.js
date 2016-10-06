@@ -38,12 +38,14 @@ export default Reflux.createStore({
   },
 
   refreshData() {
+    console.debug('TemplateStore::refreshData');
     if (SessionStore.getParams().templateName) {
       Actions.fetchTemplate(SessionStore.getParams().templateName);
     }
   },
 
   getTemplate() {
+    console.debug('TemplateStore::getTemplate');
     return this.data.template;
   },
 
@@ -70,37 +72,48 @@ export default Reflux.createStore({
   },
 
   saveRenderedTemplate(renderedTemplate) {
+    console.debug('TemplateStore::saveRenderedTemplate');
     this.data.isRendering = false;
     this.data.renderedTemplate = _.has(renderedTemplate, 'data') ? renderedTemplate.data : renderedTemplate;
     this.trigger(this.data);
   },
 
   onFetchTemplateCompleted(template) {
+    console.debug('TemplateStore::onFetchTemplateCompleted');
     this.data.isLoading = false;
     this.data.template = template;
     this.trigger(this.data);
   },
 
+  onFetchTemplateFailure() {
+    SessionActions.handleInvalidURL();
+  },
+
   onRenderTemplate() {
+    console.debug('TemplateStore::onRenderTemplate');
     this.data.isRendering = true;
     this.trigger(this.data);
   },
 
   onRenderTemplateCompleted(renderedTemplate) {
+    console.debug('TemplateStore::onRenderTemplateCompleted');
     this.saveRenderedTemplate(renderedTemplate);
     Actions.resetFlag();
   },
 
   onRenderTemplateFailure() {
+    console.debug('TemplateStore::onRenderTemplateFailure');
     this.saveRenderedTemplate('');
     Actions.resetFlag();
   },
 
   onRenderFromEndpointCompleted(renderedTemplate) {
+    console.debug('TemplateStore::onRenderFromEndpointCompleted');
     this.saveRenderedTemplate(renderedTemplate);
   },
 
   onRenderFromEndpointFailure(renderedTemplate) {
+    console.debug('TemplateStore::onRenderFromEndpointFailure');
     this.saveRenderedTemplate(renderedTemplate);
   },
 

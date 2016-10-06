@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Paper } from 'material-ui';
+import { ColumnList, Trace } from '../../common/';
 import { colors as Colors } from 'material-ui/styles';
-import { ColumnList, TraceResult, TraceBigResult } from '../../common/';
+import { Paper } from 'material-ui';
 
 const Column = ColumnList.Column;
 
@@ -17,7 +17,7 @@ const TracesListItem = ({ item, onToggle, onLoadMore, visible = true }) => {
 
   const status = {
     blocked: {
-      background: 'rgba(0, 0, 0, .2)',
+      background: 'rgba(0,0,0,0.2)',
       icon: 'alert',
       duration: 'not executed'
     },
@@ -59,23 +59,14 @@ const TracesListItem = ({ item, onToggle, onLoadMore, visible = true }) => {
       transition: 'max-height 450ms ease-out'
     };
     styles.trace = {
-      margin: 0
+      margin: '0px 0 0'
     };
   }
 
-  const { stdout, stderr, __error__ } = item.result;
-  const emptyResultText = item.status === 'processing' ? 'still running...' : 'no response';
-  let result = stdout || emptyResultText;
-  let error = stderr || __error__;
-  const handleLoadMore = (event) => {
-    event.stopPropagation();
-    onLoadMore(item.scriptId, item.id);
-  };
-
-  if (error === 'Result is too big to show in trace.') {
-    result = <TraceBigResult onClick={handleLoadMore} />;
-    error = null;
-  }
+  const resultText = item.status === 'processing' ? 'Script is still running.' : 'Success, but there is no response.';
+  const { stderr, stdout, __error__ } = item.result;
+  const result = stderr || stdout || __error__ || resultText;
+  const handleLoadMore = () => onLoadMore(item.scriptId, item.id);
 
   return (
     <Paper
@@ -99,18 +90,15 @@ const TracesListItem = ({ item, onToggle, onLoadMore, visible = true }) => {
           primaryText={item.status}
           secondaryText={`ID: ${item.id}`}
         />
-        <Column.Desc className="col-sm-6">
-          {status.duration}
-        </Column.Desc>
+        <Column.Desc className="col-sm-6">{status.duration}</Column.Desc>
         <Column.Date
           date={item.executed_at}
           ifInvalid={item.status}
         />
       </ColumnList.Item>
       <div style={styles.traceResult}>
-        <TraceResult
+        <Trace.Result
           result={result}
-          error={error}
           onLoadMore={handleLoadMore}
         />
       </div>

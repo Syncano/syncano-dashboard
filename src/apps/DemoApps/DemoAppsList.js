@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
 import _ from 'lodash';
 
-import { Loading } from '../../common';
+import Actions from './DemoAppsActions';
 
 import ListItem from './DemoAppListItem';
 import InstallDetailsDialog from './DemoAppsIntallationDetailsDialog';
+import { Loading } from '../../common';
 
-class DemoAppsList extends Component {
+export default class DemoAppsList extends Component {
   getStyles() {
     return {
       container: {
@@ -21,10 +21,12 @@ class DemoAppsList extends Component {
     };
   }
 
-  handleRedirectToDemoApp(item) {
-    const { router } = this.props;
+  handleClickInstall(item) {
+    if (this.props.handleClickInstall) {
+      this.props.handleClickInstall();
+    }
 
-    router.push(`/demo-apps/${item.name}`);
+    Actions.setClickedApp(item.name);
   }
 
   renderItems() {
@@ -32,7 +34,7 @@ class DemoAppsList extends Component {
 
     return _.map(items, (item) => (
       <ListItem
-        handleOpenDemoApp={() => this.handleRedirectToDemoApp(item)}
+        handleClickInstall={() => this.handleClickInstall(item)}
         key={item.name}
         item={item}
       />
@@ -55,6 +57,3 @@ class DemoAppsList extends Component {
     );
   }
 }
-
-export default withRouter(DemoAppsList);
-

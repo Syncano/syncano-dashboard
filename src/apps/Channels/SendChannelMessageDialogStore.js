@@ -1,15 +1,14 @@
 import Reflux from 'reflux';
 
-import { DialogStoreMixin, StoreFormMixin } from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin } from '../../mixins';
 
 import Actions from './SendChannelMessageDialogActions';
 
 export default Reflux.createStore({
   listenables: Actions,
-
   mixins: [
-    DialogStoreMixin,
-    StoreFormMixin
+    StoreFormMixin,
+    DialogStoreMixin
   ],
 
   stepsCount: 2,

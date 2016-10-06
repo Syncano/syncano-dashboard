@@ -32,6 +32,10 @@ export default Radium(React.createClass({
         fontSize: 20,
         fontWeight: 500
       },
+      registry: {
+        fontSize: 16,
+        lineHeight: '2.5em'
+      },
       iconName: {
         paddingLeft: 16
       },
@@ -53,13 +57,17 @@ export default Radium(React.createClass({
 
   render() {
     const headerStyles = this.getStyles();
-    const { children, handleClick, primary, columnName, styles } = this.props;
+    const { children, handleClick, primary, registry, columnName, styles } = this.props;
+    const registryStyles = registry && headerStyles.registry;
+    const primaryStyles = primary && headerStyles.primary;
+    const columnNameStyles = columnName === 'ICON_NAME' && headerStyles.iconName;
+    const containerStyles = [registryStyles, primaryStyles, columnNameStyles, styles];
 
     return (
       <div
         className={this.getClassName()}
         data-e2e={this.props['data-e2e']}
-        style={[primary && headerStyles.primary, columnName === 'ICON_NAME' && headerStyles.iconName, styles]}
+        style={containerStyles}
       >
         <div
           style={handleClick && headerStyles.link}

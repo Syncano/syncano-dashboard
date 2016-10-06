@@ -12,7 +12,8 @@ class TogglePanel extends Component {
   getStyles() {
     return {
       root: {
-        padding: '3px 0'
+        padding: '3px 0',
+        width: '100%'
       },
       title: {
         flex: 1,
@@ -29,7 +30,6 @@ class TogglePanel extends Component {
         padding: '0 20px 20px',
         flex: 1,
         display: 'flex',
-        flexDirection: 'column',
         height: '100%',
         overflowY: 'scroll'
       }
@@ -37,21 +37,23 @@ class TogglePanel extends Component {
   }
 
   render() {
-    const styles = this.getStyles();
     const { open } = this.state;
-    const { children, title, rightContent, style, panelStyles } = this.props;
+    const { children, title, rightContent, style } = this.props;
+    const styles = this.getStyles();
 
     return (
       <div style={{ ...styles.root, ...style }}>
         <div style={{ display: 'flex', padding: '0 20px' }}>
-          <div style={styles.title}>
+          <div
+            style={styles.title}
+          >
             {title}
           </div>
           <div style={styles.rightContent}>
             {rightContent}
           </div>
         </div>
-        <div style={{ ...styles.panel, ...panelStyles }}>
+        <div style={styles.panel}>
           {open ? children : null}
         </div>
       </div>

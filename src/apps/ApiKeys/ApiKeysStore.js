@@ -1,17 +1,19 @@
 import Reflux from 'reflux';
 
-import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
+// Utils & Mixins
+import { CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../mixins';
 
-import Actions from './ApiKeysActions';
+// Stores & Actions
 import SessionActions from '../Session/SessionActions';
+import Actions from './ApiKeysActions';
 
 export default Reflux.createStore({
   listenables: Actions,
 
   mixins: [
     CheckListStoreMixin,
-    StoreLoadingMixin,
-    WaitForStoreMixin
+    WaitForStoreMixin,
+    StoreLoadingMixin
   ],
 
   getInitialState() {
@@ -32,15 +34,18 @@ export default Reflux.createStore({
   },
 
   refreshData() {
+    console.debug('ApiKeysStore::refreshData');
     Actions.fetchApiKeys();
   },
 
   setApiKeys(items) {
+    console.debug('AdminsStore::setApiKeys');
     this.data.items = items;
     this.trigger(this.data);
   },
 
   onFetchApiKeysCompleted(items) {
+    console.debug('ApiKeysStore::onFetchApiKeysCompleted');
     Actions.setApiKeys(items);
   },
 

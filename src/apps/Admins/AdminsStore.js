@@ -1,12 +1,14 @@
 import Reflux from 'reflux';
 
+// Utils & Mixins
 import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
 
-import Actions from './AdminsActions';
-import SessionStore from '../Session/SessionStore';
+// Stores & Actions
 import SessionActions from '../Session/SessionActions';
-import AdminsInvitationsStore from './AdminsInvitationsStore';
+import SessionStore from '../Session/SessionStore';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
+import AdminsInvitationsStore from './AdminsInvitationsStore';
+import Actions from './AdminsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -36,16 +38,19 @@ export default Reflux.createStore({
   },
 
   refreshData() {
+    console.debug('AdminsStore::refreshData');
     Actions.fetchAdmins();
     AdminsInvitationsActions.fetchInvitations();
   },
 
   setAdmins(items) {
+    console.debug('AdminsStore::setAdmins');
     this.data.items = items;
     this.trigger(this.data);
   },
 
   onSelectAll() {
+    console.debug('AdminsStore::onSelectAllAdmins');
     this.data.items.forEach((item) => {
       const instanceOwnerId = SessionStore.getInstance().owner.id;
 
@@ -57,10 +62,12 @@ export default Reflux.createStore({
   },
 
   onFetchAdminsCompleted(items) {
+    console.debug('AdminsStore::onFetchAdminsCompleted');
     Actions.setAdmins(items);
   },
 
   onRemoveAdminsCompleted() {
+    console.debug('AdminsStore::onRemoveAdminsCompleted');
     this.refreshData();
   }
 });

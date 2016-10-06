@@ -1,7 +1,11 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
+import {
+  CheckListStoreMixin,
+  WaitForStoreMixin,
+  StoreLoadingMixin
+} from '../../mixins';
 
 import Actions from './HostingFilesActions';
 import SessionActions from '../Session/SessionActions';
@@ -11,8 +15,8 @@ export default Reflux.createStore({
 
   mixins: [
     CheckListStoreMixin,
-    StoreLoadingMixin,
-    WaitForStoreMixin
+    WaitForStoreMixin,
+    StoreLoadingMixin
   ],
 
   getInitialState() {
@@ -57,9 +61,8 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    const { currentHostingId } = this.data;
-
-    currentHostingId && Actions.fetchFiles(currentHostingId);
+    console.debug('HostingStore::refreshData');
+    Actions.fetchFiles(this.data.currentHostingId);
   },
 
   setHostingId(hostingId) {
@@ -84,9 +87,14 @@ export default Reflux.createStore({
   },
 
   onFetchFilesCompleted(data) {
+    console.debug('HostingStore::onFetchHostigCompleted');
     this.data.items = data.files;
     this.data.hostingDetails = data.hostingDetails;
     this.trigger(this.data);
+  },
+
+  onFetchFilesFailure() {
+    SessionActions.handleInvalidURL();
   },
 
   onRemoveHostingFilesCompleted() {

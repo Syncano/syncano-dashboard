@@ -1,11 +1,13 @@
 import Reflux from 'reflux';
-import URI from 'urijs';
 import _ from 'lodash';
+import URI from 'urijs';
 
+// Utils & Mixins
 import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
 
-import Actions from './UsersActions';
+// Stores & Actions
 import SessionActions from '../Session/SessionActions';
+import Actions from './UsersActions';
 import GroupsActions from '../Groups/GroupsActions';
 
 export default Reflux.createStore({
@@ -56,6 +58,8 @@ export default Reflux.createStore({
   },
 
   setUsers(items, rawData) {
+    console.debug('UsersStore::setUsers');
+
     this.data.hasNextPage = items.hasNext();
     this.data.items = _.uniqBy(this.data.items.concat(items), 'id');
     this.data.nextParams = new URI(rawData.next || '').search(true);
@@ -64,26 +68,31 @@ export default Reflux.createStore({
   },
 
   onFetchUsersCompleted(payload, rawData) {
+    console.debug('UsersStore::onFetchUsersCompleted');
     this.data.items = [];
     Actions.setUsers(payload, rawData);
   },
 
   onSubFetchUsersCompleted(payload, rawData) {
+    console.debug('UsersStore::onSubFetchUsersCompleted');
     Actions.setUsers(payload, rawData);
   },
 
   onRemoveUsersCompleted(payload) {
+    console.debug('UsersStore::onRemoveUsersCompleted');
     this.data.hideDialogs = true;
     this.refreshData();
     this.sendUserAnalytics('delete', payload);
   },
 
   onCreateUserCompleted(payload) {
+    console.debug('UsersStore::onCreateUserCompleted');
     this.refreshData();
     this.sendUserAnalytics('add', payload);
   },
 
   onUpdateUserCompleted(payload) {
+    console.debug('UsersStore::onUpdateUserCompleted');
     this.refreshData();
     this.sendUserAnalytics('edit', payload);
   }

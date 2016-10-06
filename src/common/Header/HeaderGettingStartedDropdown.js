@@ -13,7 +13,6 @@ class HeaderGettingStartedDropdown extends Component {
   getStyles() {
     return {
       flatButtonLabelStyle: {
-        paddingLeft: 0,
         color: '#fff',
         fontSize: 15,
         fontWeight: 400,

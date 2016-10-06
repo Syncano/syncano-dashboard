@@ -21,7 +21,7 @@ const Instance = React.createClass({
     const { params } = this.props;
 
     if (params.instanceName) {
-      localStorage.setItem('lastInstanceName', params.instanceName);
+      localStorage.setItem('lastInstance', params.instanceName);
       SessionActions.fetchInstance(params.instanceName);
     }
   },

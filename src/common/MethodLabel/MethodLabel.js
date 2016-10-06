@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { colors as Colors } from 'material-ui/styles/';
-
 const styles = {
   container: {
-    width: '60px',
+    width: '50px',
     borderRadius: 5,
     color: '#fff',
     display: 'inline-flex',
@@ -14,26 +12,17 @@ const styles = {
     textTransform: 'uppercase'
   },
   backgroundColor: {
-    get: Colors.green700,
+    get: '#4CAF50',
     post: '#105CCA',
-    put: Colors.purple500,
-    patch: Colors.deepOrange500,
-    delete: '#FF1300'
+    put: '#9C27B0',
+    patch: '#FF5722'
   }
 };
 
-const MethodLabel = ({ method, style }) => {
-  const methodLabelStyle = {
-    ...styles.container,
-    ...style,
-    backgroundColor: styles.backgroundColor[method]
-  };
-
-  return (
-    <div style={methodLabelStyle}>
-      {method}
-    </div>
-  );
-};
+const MethodLabel = ({ method, style }) => (
+  <div style={{ ...styles.container, ...style, backgroundColor: styles.backgroundColor[method] }}>
+    {method}
+  </div>
+);
 
 export default MethodLabel;

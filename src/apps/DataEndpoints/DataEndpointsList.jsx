@@ -124,7 +124,6 @@ export default React.createClass({
               checkedItemsCount={getCheckedItems().length}
               handleSelectAll={handleSelectAll}
               handleUnselectAll={handleUnselectAll}
-              itemsCount={items.length}
             >
               <Lists.MenuItem onTouchTap={() => this.showDialog('removeDataEndpointDialog')} />
             </Lists.Menu>

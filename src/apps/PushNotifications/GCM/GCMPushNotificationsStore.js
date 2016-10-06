@@ -1,8 +1,10 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
+// Utils & Mixins
 import { WaitForStoreMixin, StoreLoadingMixin, StoreHelpersMixin } from '../../../mixins';
 
+// Stores & Actions
 import Actions from './GCMPushNotificationsActions';
 import DevicesActions from '../../PushDevices/GCMDevices/GCMDevicesActions';
 import DevicesStore from '../../PushDevices/GCMDevices/GCMDevicesStore';
@@ -10,7 +12,6 @@ import SessionActions from '../../Session/SessionActions';
 
 export default Reflux.createStore({
   listenables: Actions,
-
   mixins: [
     WaitForStoreMixin,
     StoreLoadingMixin,
@@ -47,6 +48,7 @@ export default Reflux.createStore({
   },
 
   onFetchGCMPushNotificationConfigCompleted(items) {
+    console.debug('GCMPushNotificationsStore::onFetchGCMPushNotificationConfigCompleted');
     this.data.items = [items].map((item) => {
       item.name = 'GCM';
       item.hasConfig = this.hasConfig([items]);
@@ -54,7 +56,6 @@ export default Reflux.createStore({
 
       return item;
     });
-
     this.trigger(this.data);
   }
 });

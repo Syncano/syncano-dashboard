@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import { WaitForStoreMixin, StoreLoadingMixin, StoreFormMixin, SnackbarNotificationMixin } from '../../mixins';
+import { WaitForStoreMixin, StoreLoadingMixin, SnackbarNotificationMixin } from '../../mixins';
 
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
@@ -14,12 +14,12 @@ export default Reflux.createStore({
   mixins: [
     WaitForStoreMixin,
     StoreLoadingMixin,
-    StoreFormMixin,
     SnackbarNotificationMixin
   ],
 
   getInitialState() {
     return {
+      clickedAppName: null,
       items: [],
       isLoading: true
     };
@@ -35,39 +35,29 @@ export default Reflux.createStore({
   },
 
   refreshData() {
+    console.debug('DemoAppsStore::refreshData');
     Actions.fetchDemoApps();
   },
 
-  onFetchDemoAppCompleted(demoApp) {
-    const { appDesc, appTitle, appGithubSrc, appTutorialSrc } = demoApp.metadata;
-
-    this.data = {
-      appName: demoApp.name,
-      appDesc,
-      appTitle,
-      appGithubSrc,
-      appTutorialSrc
-    };
+  onSetClickedApp(clickedAppName) {
+    this.data.clickedAppName = clickedAppName;
     this.trigger(this.data);
   },
 
   onFetchDemoAppsCompleted(demoApps) {
+    console.debug('DemoAppsStore::onFetchDemoAppsCompleted');
     this.data.items = demoApps;
     this.trigger(this.data);
   },
 
   onInstallDemoAppCompleted() {
-    SessionStore.getRouter().push({ name: 'sockets', params: { instanceName: this.data.appName } });
+    console.debug('InstallDemoAppDialogStore::onInstallDemoAppCompleted');
+    SessionStore.getRouter().push({ name: 'sockets', params: { instanceName: this.data.clickedAppName } });
     this.setSnackbarNotification({
       autoHideDuration: null,
       onActionTouchTap: this.dismissSnackbarNotification,
       action: 'DISMISS',
       message: `Demo App ${this.data.clickedAppName} has been successfully installed`
     });
-  },
-
-  onInstallDemoAppFailure(response) {
-    this.data.feedback = response.errors.email;
-    this.trigger(this.data);
   }
 });

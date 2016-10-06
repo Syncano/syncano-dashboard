@@ -1,13 +1,10 @@
 import React from 'react';
 
-// Utils
 import { DialogsMixin } from '../../mixins';
 
-// Stores and Actions
 import Actions from './CustomSocketsActions';
 import Store from './CustomSocketsStore';
 
-// Components
 import ListItem from './CustomSocketsListItem';
 import { colors as Colors } from 'material-ui/styles';
 import { ColumnList, Dialog, Lists, EmptyView } from '../../common/';
@@ -21,63 +18,65 @@ const CustomSocketsList = React.createClass({
   getDefaultProps() {
     return {
       emptyItemContent: 'Add a Custom Socket',
-      emptyItemHandleClick: Actions.showDialog,
-      getCheckedItems: Store.getCheckedItems,
-      checkItem: Actions.checkItem,
-      handleSelectAll: Actions.selectAll,
-      handleUnselectAll: Actions.uncheckAll
+      getCheckedItems: Store.getCheckedItems
+    };
+  },
+
+  getInitialState() {
+    return {
+      deletedItem: {}
     };
   },
 
   componentWillUpdate(nextProps) {
+    console.info('customSocket::componentWillUpdate');
     this.hideDialogs(nextProps.hideDialogs);
   },
 
   initDialogs() {
     const { getCheckedItems, isLoading } = this.props;
+    const { deletedItem: { name } } = this.state;
 
     return [{
       dialog: Dialog.Delete,
       params: {
         key: 'removeCustomSocketsDialog',
         ref: 'removeCustomSocketsDialog',
-        title: 'Delete Custom Sockets',
+        title: `Remove ${name}`,
         handleConfirm: Actions.removeCustomSockets,
         items: getCheckedItems(),
-        groupName: 'Custom Sockets',
+        itemName: name,
+        description: "and all of it's endpoints.",
+        withConfirm: true,
+        groupName: 'sockets',
         isLoading
       }
     }];
   },
 
-  showDeleteDialog() {
-    this.showDialog('removeCustomSocketsDialog');
-  },
 
   renderItem(item) {
-    const { checkItem } = this.props;
+    const showDeleteDialog = () => {
+      this.setState({ deletedItem: item });
+      this.showDialog('removeCustomSocketsDialog', item);
+    };
 
     return (
       <ListItem
         key={`custom-socket-list-item-${item.name}`}
-        onIconClick={checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('removeCustomSocketsDialog', item)}
+        showDeleteDialog={showDeleteDialog}
       />
     );
   },
 
   renderHeader() {
-    const { handleTitleClick, handleSelectAll, handleUnselectAll, items, getCheckedItems } = this.props;
-    const checkedItemsCount = getCheckedItems().length;
-
     return (
       <ColumnList.Header>
         <Column.ColumnHeader
           className="col-xs-12"
           primary={true}
           columnName="CHECK_ICON"
-          handleClick={handleTitleClick}
         >
           Custom Sockets (BETA)
         </Column.ColumnHeader>
@@ -97,16 +96,6 @@ const CustomSocketsList = React.createClass({
           className="col-flex-1"
         >
           Endpoints
-        </Column.ColumnHeader>
-        <Column.ColumnHeader columnName="MENU">
-          <Lists.Menu
-            checkedItemsCount={checkedItemsCount}
-            handleSelectAll={handleSelectAll}
-            handleUnselectAll={handleUnselectAll}
-            itemsCount={items.length}
-          >
-            <Lists.MenuItem onTouchTap={this.showDeleteDialog} />
-          </Lists.Menu>
         </Column.ColumnHeader>
       </ColumnList.Header>
     );

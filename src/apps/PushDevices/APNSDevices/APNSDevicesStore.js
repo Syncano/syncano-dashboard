@@ -1,17 +1,18 @@
 import Reflux from 'reflux';
 
-import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../../mixins';
+// Utils & Mixins
+import { CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../../mixins';
 
+// Stores & Actions
 import Actions from './APNSDevicesActions';
 import SessionActions from '../../Session/SessionActions';
 
 export default Reflux.createStore({
   listenables: Actions,
-
   mixins: [
     CheckListStoreMixin,
-    StoreLoadingMixin,
-    WaitForStoreMixin
+    WaitForStoreMixin,
+    StoreLoadingMixin
   ],
 
   getInitialState() {
@@ -37,10 +38,12 @@ export default Reflux.createStore({
   },
 
   getDevices() {
+    console.debug('APNSDevicesStore::getDevices');
     return this.data.items;
   },
 
   setDevices(response) {
+    console.debug('APNSDevicesStore::setDevices');
     const { config, devices } = response;
 
     this.data.items = devices;
@@ -50,14 +53,17 @@ export default Reflux.createStore({
   },
 
   refreshData() {
+    console.debug('APNSDevicesStore::refreshData');
     Actions.fetchDevices();
   },
 
   onFetchDevicesCompleted(response) {
+    console.debug('APNSDevicesStore::onFetchDevicesCompleted');
     Actions.setDevices(response);
   },
 
   onRemoveDevicesCompleted(payload) {
+    console.debug('APNSDevicesStore::onRemoveDevicesCompleted');
     this.refreshData();
     window.analytics.track('Used Dashboard Push Devices API', {
       type: 'delete',
@@ -68,6 +74,7 @@ export default Reflux.createStore({
   },
 
   onFetchAPNSConfigCompleted(config) {
+    console.debug('APNSDevicesStore::onFetchAPNSConfigCompleted');
     this.data.hasConfig = config.development_certificate || config.production_certificate;
     this.trigger(this.data);
   }

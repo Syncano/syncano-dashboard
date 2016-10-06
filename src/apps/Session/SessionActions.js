@@ -11,6 +11,7 @@ export default CreateActions(
     setInvitationFromUrl: {},
     getInvitationFromUrl: {},
     handleInvalidURL: {},
+
     fetchUser: {
       asyncResult: true,
       children: ['completed', 'failure'],

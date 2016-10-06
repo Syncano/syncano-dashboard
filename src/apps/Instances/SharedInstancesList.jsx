@@ -54,7 +54,7 @@ export default React.createClass({
   },
 
   render() {
-    const { isLoading, items, ...other } = this.props;
+    const { isLoading, ...other } = this.props;
     const checkedItems = Store.getNumberOfChecked('sharedInstances');
 
     return (
@@ -75,7 +75,6 @@ export default React.createClass({
                 checkedItemsCount={checkedItems}
                 handleSelectAll={() => Actions.selectAll('sharedInstances')}
                 handleUnselectAll={() => Actions.uncheckAll('sharedInstances')}
-                itemsCount={items.length}
               >
                 <Lists.MenuItem
                   primaryText="Leave Selected"
@@ -86,7 +85,6 @@ export default React.createClass({
           </ColumnList.Header>
           <Lists.List
             {...other}
-            items={items}
             key="shared-instances-list"
             renderItem={this.renderItem}
           />

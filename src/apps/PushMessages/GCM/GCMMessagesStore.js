@@ -1,8 +1,10 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import { StoreLoadingMixin, WaitForStoreMixin } from '../../../mixins';
+// Utils & Mixins
+import { WaitForStoreMixin, StoreLoadingMixin } from '../../../mixins';
 
+// Stores & Actions
 import Actions from './GCMMessagesActions';
 import SessionActions from '../../Session/SessionActions';
 import GCMPushNotificationsActions from '../../PushNotifications/GCM/GCMPushNotificationsActions';
@@ -10,10 +12,9 @@ import GCMDevicesActions from '../../PushDevices/GCMDevices/GCMDevicesActions';
 
 export default Reflux.createStore({
   listenables: Actions,
-
   mixins: [
-    StoreLoadingMixin,
-    WaitForStoreMixin
+    WaitForStoreMixin,
+    StoreLoadingMixin
   ],
 
   getInitialState() {
@@ -35,10 +36,12 @@ export default Reflux.createStore({
   },
 
   refreshData() {
+    console.debug('APNSMessagesStore::refreshData');
     Actions.fetchMessages();
   },
 
   onFetchMessagesCompleted(push) {
+    console.debug('GCMMessagesStore::onFetchGCMMessagesCompleted');
     this.data.items = push.messages;
     this.data.hasMessages = push.messages.length > 0;
     this.data.hasDevices = push.devices.length > 0;

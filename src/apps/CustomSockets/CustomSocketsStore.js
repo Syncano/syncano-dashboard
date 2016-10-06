@@ -1,11 +1,10 @@
 import Reflux from 'reflux';
 
-// Utils & Mixins
 import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
 
-// Stores & Actions
 import SessionActions from '../Session/SessionActions';
 import Actions from './CustomSocketsActions';
+import ActionsDialog from '../CustomSocketsRegistry/CustomSocketsRegistryActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -19,8 +18,7 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       items: [],
-      isLoading: true,
-      scriptEndpoints: []
+      isLoading: true
     };
   },
 
@@ -42,26 +40,17 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  setScriptEndpoints(items) {
-    this.data.scriptEndpoints = items;
-    this.trigger(this.data);
-  },
-
   refreshData() {
     Actions.fetchCustomSockets();
-    Actions.fetchScriptEndpoints();
   },
 
   onFetchCustomSocketsCompleted(items) {
     Actions.setCustomSockets(items);
   },
 
-  onFetchScriptEndpointsCompleted(items) {
-    Actions.setScriptEndpoints(items);
-  },
-
   onRemoveCustomSocketsCompleted(payload) {
     this.refreshData();
+    ActionsDialog.dismissDialog();
     window.analytics.track('Used Dashboard Sockets API', {
       type: 'delete',
       instance: payload.instanceName,

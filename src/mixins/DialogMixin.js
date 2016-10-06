@@ -8,6 +8,8 @@ export default {
   },
 
   componentWillUpdate(nextProps, nextState) {
+    console.debug('DialogMixin::componentWillUpdate');
+
     if (this.state._dialogVisible === nextState._dialogVisible) {
       return true;
     }
@@ -28,12 +30,15 @@ export default {
   },
 
   resetDialogState() {
+    console.debug('DialogMixin::resetDialogState');
     if (_.isFunction(this.getInitialState)) {
       this.replaceState(this.getInitialState());
     }
   },
 
   handleCancel() {
+    console.debug('DialogMixin::handleCancel');
+
     this.dismiss();
 
     if (!this.props.avoidResetState) {
@@ -42,6 +47,8 @@ export default {
   },
 
   handleSuccessfullValidation() {
+    console.debug('DialogMixin::handleSuccessfullValidation');
+
     if (this.hasEditMode()) {
       if (_.isFunction(this.handleEditSubmit)) {
         this.handleEditSubmit();

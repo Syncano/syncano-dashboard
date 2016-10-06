@@ -1,22 +1,27 @@
 import React from 'react';
 import Reflux from 'reflux';
-import { Link, withRouter } from 'react-router';
-import localStorage from 'local-storage-fallback';
+import { withRouter, Link } from 'react-router';
 import _ from 'lodash';
+import localStorage from 'local-storage-fallback';
 
+// Utils
 import { FormMixin } from '../../mixins';
 
-import Store from './AuthStore';
-import Actions from './AuthActions';
+// Stores and Actions
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
+import Store from './AuthStore';
+import Actions from './AuthActions';
 import Constants from './AuthConstants';
 
-import { RaisedButton, TextField } from 'material-ui';
-import { SocialAuthButtonsList } from '../../common/';
+// Components
 import AccountContainer from './AccountContainer';
+import { TextField, RaisedButton } from 'material-ui';
+import { SocialAuthButtonsList } from '../../common/';
 
 const AccountSignup = React.createClass({
+  displayName: 'AccountSignup',
+
   mixins: [
     Reflux.connect(Store),
     FormMixin
@@ -39,7 +44,7 @@ const AccountSignup = React.createClass({
 
     if (SessionStore.isAuthenticated()) {
       const queryNext = location.query.next || null;
-      const lastInstanceName = localStorage.getItem('lastInstanceName') || null;
+      const lastInstance = localStorage.getItem('lastInstance') || null;
 
       SessionStore
         .getConnection()
@@ -47,7 +52,7 @@ const AccountSignup = React.createClass({
         .please()
         .list()
         .then((instances) => {
-          if (_.some(instances, { name: lastInstanceName })) {
+          if (_.includes(_.map(instances, (instance) => instance.name), lastInstance)) {
             router.replace({
               pathname: queryNext,
               query: _.omit(location.query, 'next')
@@ -156,11 +161,13 @@ const AccountSignup = React.createClass({
             onClick={this.handleFormValidation}
           />
         </form>
+
         <SocialAuthButtonsList
           mode="signup"
           networks={Constants.SOCIAL_NETWORKS_SIGNUP}
           onSocialLogin={this.handleSocialLogin}
         />
+
         <div className="account-container__content__footer">
           <ul className="list--flex list--horizontal">
             <li>

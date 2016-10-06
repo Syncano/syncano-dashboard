@@ -69,7 +69,6 @@ export default React.createClass({
             checkedItemsCount={checkedItems}
             handleSelectAll={Actions.selectAll}
             handleUnselectAll={Actions.uncheckAll}
-            itemsCount={items.length}
           >
             <Lists.MenuItem onTouchTap={() => this.showDialog('deleteFullBackupDialog')} />
           </Lists.Menu>

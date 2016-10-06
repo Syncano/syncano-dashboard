@@ -14,7 +14,6 @@ export default CreateActions(
     fetchFiles: {
       asyncResult: true,
       loading: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Hosting.listFiles'
     },

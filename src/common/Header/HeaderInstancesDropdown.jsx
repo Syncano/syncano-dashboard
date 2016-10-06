@@ -108,7 +108,7 @@ const HeaderInstancesDropdown = Radium(React.createClass({
     // redirect to main instance screen
     this.refs.instancesDropdown.close();
     SessionActions.fetchInstance(instanceName);
-    localStorage.setItem('lastInstanceName', instanceName);
+    localStorage.setItem('lastInstance', instanceName);
     router.push(`/instances/${instanceName}/sockets`);
   },
 

@@ -3,10 +3,12 @@ import Reflux from 'reflux';
 
 import { DialogsMixin } from '../../mixins';
 
-import Store from './DemoAppsStore';
 import Actions from './DemoAppsActions';
+import Store from './DemoAppsStore';
+import SessionStore from '../Session/SessionStore';
 
 import DemoAppsList from './DemoAppsList';
+import { Dialog } from '../../common';
 
 export default React.createClass({
   displayName: 'DemoApps',
@@ -39,6 +41,39 @@ export default React.createClass({
     };
   },
 
+  initDialogs() {
+    const { clickedAppName, isLoading } = this.state;
+    const email = SessionStore.getUser() ? SessionStore.getUser().email : null;
+    const params = {
+      email,
+      instanceName: clickedAppName
+    };
+
+    return [{
+      dialog: Dialog.FullPage,
+      params: {
+        key: 'installDemoAppDialog',
+        ref: 'installDemoAppDialog',
+        contentSize: 'small',
+        title: `Install ${clickedAppName} Demo App`,
+        onRequestClose: () => this.handleCancel('installDemoAppDialog'),
+        isLoading,
+        actions: (
+          <Dialog.StandardButtons
+            disabled={isLoading}
+            handleCancel={() => this.handleCancel('installDemoAppDialog')}
+            handleConfirm={() => Actions.installDemoApp(params)}
+          />
+        ),
+        children: (
+          <div>
+            This action will install {clickedAppName} Demo App. You will be redirected to new Instance.
+          </div>
+        )
+      }
+    }];
+  },
+
   render() {
     const { isLoading, items } = this.state;
     const styles = this.getStyles();
@@ -48,13 +83,15 @@ export default React.createClass({
         style={styles.container}
         className="vm-3-t align-center"
       >
+        {this.getDialogs()}
         <div style={styles.title}>
-          Syncano Demo Apps
+          Syncano DEMO Apps
         </div>
         <div style={styles.subTitle}>
           Demo Apps allow you to get more detailed knowledge about Syncano functionalities and see how they can be used.
         </div>
         <DemoAppsList
+          handleClickInstall={() => this.showDialog('installDemoAppDialog')}
           isLoading={isLoading}
           items={items}
         />

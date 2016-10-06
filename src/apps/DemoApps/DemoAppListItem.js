@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
-import _ from 'lodash';
 
-import { Paper, RaisedButton } from 'material-ui';
+import Actions from './DemoAppsIntallationDetailsDialogActions';
+
+import { Paper, RaisedButton, FlatButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
 
-class DemoAppListItem extends Component {
+export default class DemoAppListItem extends Component {
   getStyles() {
     return {
       container: {
@@ -20,18 +20,13 @@ class DemoAppListItem extends Component {
       },
       title: {
         fontSize: 22,
-        fontWeight: 500,
-        paddingBottom: 20
-      },
-      demoAppImage: {
-        height: 130
+        fontWeight: 500
       },
       description: {
         textAlign: 'center',
         color: Colors.grey500,
         maxHeight: 180,
-        overflowY: 'hidden',
-        padding: '20px 0'
+        overflowY: 'hidden'
       },
       buttonsContainer: {
         width: '100%',
@@ -48,11 +43,17 @@ class DemoAppListItem extends Component {
     };
   }
 
+  truncate(text, maxCount) {
+    if (text.length > maxCount) {
+      return `${text.slice(0, maxCount)}...`;
+    }
+
+    return text;
+  }
+
   render() {
-    const { item, handleOpenDemoApp } = this.props;
+    const { item, handleClickInstall } = this.props;
     const styles = this.getStyles();
-    const appImageSrc = `/img/demo-app-${item.name}.png`;
-    const truncatedDesc = _.truncate(item.description, { length: 100 });
 
     return (
       <Paper
@@ -60,28 +61,25 @@ class DemoAppListItem extends Component {
         style={styles.container}
       >
         <div style={styles.title}>
-          {item.metadata.appTitle}
+          {item.name}
         </div>
-        <img
-          src={appImageSrc}
-          alt="demo app"
-          style={styles.demoAppImage}
-        />
         <div style={styles.description}>
-          {truncatedDesc}
+          {this.truncate(item.description, 300)}
         </div>
         <div style={styles.buttonsContainer}>
           <RaisedButton
             style={styles.installButton}
-            onTouchTap={handleOpenDemoApp}
+            onTouchTap={handleClickInstall}
             primary={true}
+            label="Install App"
+          />
+          <FlatButton
+            style={styles.moreButton}
             label="More"
-            data-e2e={`demo-app-${item.name}-more-button`}
+            onTouchTap={() => Actions.showDialog(item)}
           />
         </div>
       </Paper>
     );
   }
 }
-
-export default withRouter(DemoAppListItem);

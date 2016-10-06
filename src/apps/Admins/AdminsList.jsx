@@ -12,7 +12,9 @@ import { ColumnList, Dialog, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
-const AdminsList = React.createClass({
+export default React.createClass({
+  displayName: 'AdminsList',
+
   mixins: [DialogsMixin],
 
   componentWillUpdate(nextProps) {
@@ -53,9 +55,7 @@ const AdminsList = React.createClass({
   },
 
   render() {
-    const { items } = this.props;
     const checkedItems = Store.getNumberOfChecked();
-    const adminsWithoutOwnerCount = items.length - 1;
 
     return (
       <Lists.Container
@@ -79,7 +79,6 @@ const AdminsList = React.createClass({
               checkedItemsCount={checkedItems}
               handleSelectAll={Actions.selectAll}
               handleUnselectAll={Actions.uncheckAll}
-              itemsCount={adminsWithoutOwnerCount}
             >
               <Lists.MenuItem onTouchTap={() => this.showDialog('deleteAdminDialog')} />
             </Lists.Menu>
@@ -95,5 +94,3 @@ const AdminsList = React.createClass({
     );
   }
 });
-
-export default AdminsList;

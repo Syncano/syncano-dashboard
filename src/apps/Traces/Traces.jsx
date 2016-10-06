@@ -1,19 +1,25 @@
 import React from 'react';
-import Reflux from 'reflux';
 import { withRouter } from 'react-router';
-import Helmet from 'react-helmet';
+import Reflux from 'reflux';
 import Radium from 'radium';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
+// Stores and Actions
 import Store from './TracesStore';
 import Actions from './TracesActions';
 
-import { IconButton } from 'material-ui';
+// Components
 import { Container, InnerToolbar } from '../../common/';
+import { IconButton } from 'material-ui';
 
+// Local components
 import TracesList from './TracesList';
 
+
 const Traces = Radium(React.createClass({
+  displayName: 'Traces',
+
   propTypes: {
     tracesFor: React.PropTypes.oneOf(['scriptEndpoint', 'script', 'trigger', 'schedule']),
     objectId: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string])

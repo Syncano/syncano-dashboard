@@ -1,17 +1,19 @@
 import Reflux from 'reflux';
 
-import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../../mixins';
+// Utils & Mixins
+import { CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../../mixins';
 
-import Actions from './FullBackupsActions';
+// Stores & Actions
 import SessionActions from '../../Session/SessionActions';
+import Actions from './FullBackupsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
 
   mixins: [
     CheckListStoreMixin,
-    StoreLoadingMixin,
-    WaitForStoreMixin
+    WaitForStoreMixin,
+    StoreLoadingMixin
   ],
 
   getInitialState() {
@@ -31,15 +33,18 @@ export default Reflux.createStore({
   },
 
   refreshData() {
+    console.debug('FullBackupsStore::refreshData');
     Actions.fetchFullBackups();
   },
 
   onFetchFullBackupsCompleted(items) {
+    console.debug('FullBackupsStore::onFetchFullBackupsCompleted');
     this.data.items = items;
     this.trigger(this.data);
   },
 
   onRemoveFullBackupsCompleted() {
+    console.debug('FullBackupsStore::onRemoveFullBackupsCompleted');
     this.refreshData();
   }
 });

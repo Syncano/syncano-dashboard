@@ -1,22 +1,27 @@
 import React from 'react';
 import Reflux from 'reflux';
-import { Link, withRouter } from 'react-router';
-import localStorage from 'local-storage-fallback';
+import { withRouter, Link } from 'react-router';
 import _ from 'lodash';
+import localStorage from 'local-storage-fallback';
 
+// Utils
 import { FormMixin } from '../../mixins';
 
-import Store from './AuthStore';
-import Actions from './AuthActions';
+// Stores and Actions
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
+import Store from './AuthStore';
+import Actions from './AuthActions';
 import Constants from './AuthConstants';
 
-import { RaisedButton, TextField } from 'material-ui';
-import { Notification, Show, SocialAuthButtonsList } from '../../common/';
+// Components
 import AccountContainer from './AccountContainer';
+import { TextField, RaisedButton } from 'material-ui';
+import { SocialAuthButtonsList, Notification, Show } from '../../common/';
 
 const AccountLogin = React.createClass({
+  displayName: 'AccountLogin',
+
   mixins: [
     Reflux.connect(Store),
     FormMixin
@@ -39,7 +44,7 @@ const AccountLogin = React.createClass({
 
     if (SessionStore.isAuthenticated()) {
       const queryNext = location.query.next || null;
-      const lastInstanceName = localStorage.getItem('lastInstanceName') || null;
+      const lastInstance = localStorage.getItem('lastInstance') || null;
 
       SessionStore
         .getConnection()
@@ -47,7 +52,7 @@ const AccountLogin = React.createClass({
         .please()
         .list()
         .then((instances) => {
-          if (_.some(instances, { name: lastInstanceName })) {
+          if (_.includes(_.map(instances, (instance) => instance.name), lastInstance)) {
             router.replace({
               pathname: queryNext,
               query: _.omit(location.query, 'next')
@@ -98,6 +103,7 @@ const AccountLogin = React.createClass({
           acceptCharset="UTF-8"
           method="post"
         >
+
           <div className="vm-2-b">
             <Show if={this.getValidationMessages('detail').length}>
               <Notification type="error">
@@ -105,6 +111,7 @@ const AccountLogin = React.createClass({
               </Notification>
             </Show>
           </div>
+
           <TextField
             ref="email"
             value={email}
@@ -116,6 +123,7 @@ const AccountLogin = React.createClass({
             hintText="Email"
             fullWidth={true}
           />
+
           <TextField
             ref="password"
             value={password}
@@ -128,6 +136,7 @@ const AccountLogin = React.createClass({
             hintText="My password"
             fullWidth={true}
           />
+
           <RaisedButton
             type="submit"
             label="Login"
@@ -138,10 +147,12 @@ const AccountLogin = React.createClass({
             onTouchTap={this.handleFormValidation}
           />
         </form>
+
         <SocialAuthButtonsList
           networks={Constants.SOCIAL_NETWORKS_LOGIN}
           onSocialLogin={this.handleSocialLogin}
         />
+
         <div className="account-container__content__footer">
           <ul className="list--flex list--horizontal">
             <li>
