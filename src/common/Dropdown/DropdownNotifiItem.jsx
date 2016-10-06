@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { FontIcon, FlatButton, List, ListItem } from 'material-ui';
 import { Loading } from '../../common/';
 
@@ -8,13 +7,7 @@ export default React.createClass({
 
   propTypes: {
     items: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    isLoading: React.PropTypes.bool,
-    headerContent: React.PropTypes.shape({
-      userFullName: React.PropTypes.string.isRequired,
-      userEmail: React.PropTypes.string.isRequired,
-      handleItemClick: React.PropTypes.func,
-      clickable: React.PropTypes.bool
-    })
+    isLoading: React.PropTypes.bool
   },
 
   getInvitationItems() {

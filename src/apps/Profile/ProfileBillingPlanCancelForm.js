@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import _ from 'lodash';
 
 import Store from './ProfileBillingPlanStore';
-import Actions from './ProfileBillingPlanActions.js';
+import Actions from './ProfileBillingPlanActions';
 import SessionStore from '../Session/SessionStore';
 
 import { FormMixin } from '../../mixins';

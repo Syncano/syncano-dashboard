@@ -112,8 +112,8 @@ const AccountSignup = React.createClass({
         <div className="account-container__content__header vm-3-b">
           <p className="vm-2-b">Start Building Now</p>
           <small>
-            Simply enter your email, create a password and you're in!<br />
-            No credit card required.
+            {`Simply enter your email, create a password and you're in!
+            No credit card required.`}
           </small>
         </div>
         {this.renderFormNotifications()}

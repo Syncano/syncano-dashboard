@@ -102,7 +102,7 @@ const CustomSocketsEndpointsListItem = React.createClass({
             data-e2e={`${item.name}-script-custom-socket-related-script`}
             to={{ pathname: scriptLink }}
           >
-          {item.name}
+            {item.name}
           </Link>
         </Column.Desc>
         <Column.Desc className="col-sm-3">

@@ -116,7 +116,7 @@ export default class DropZone extends Component {
           className="synicon-cloud-upload"
         />
         <div data-e2e={`${certificateType}-dropzone-description`}>
-            {`Drag & Drop to upload ${certificateType} certificate`}
+          {`Drag & Drop to upload ${certificateType} certificate`}
         </div>
       </div>
     );
