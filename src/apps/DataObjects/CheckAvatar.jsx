@@ -8,8 +8,6 @@ export default React.createClass({
 
   propTypes: {
     id: React.PropTypes.string,
-    color: React.PropTypes.string,
-    hoverColor: React.PropTypes.string,
     handleIconClick: React.PropTypes.func
   },
 

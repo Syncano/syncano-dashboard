@@ -11,58 +11,56 @@ class MobileOnboarding extends Component {
     };
   }
 
-  getStyles() {
-    return {
-      root: {
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100vh'
-      },
-      header: {
-        flex: '0 0 50px',
-        background: '#244273',
-        display: 'flex',
-        alignItems: 'center',
-        padding: '0 15px'
-      },
-      headerLogo: {
-        height: 20
-      },
-      content: {
-        flex: 1
-      },
-      footer: {
-        flex: '0 0 42px',
-        background: '#244273',
-        display: 'flex',
-        padding: '0 15px'
-      },
-      footerArrowLeft: {
-        flex: 2,
-        color: '#fff',
-        display: 'flex',
-        alignItems: 'center'
-      },
-      footerCounter: {
-        flex: 1,
-        color: '#fff',
-        fontSize: 18,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      },
-      footerArrowRight: {
-        flex: 2,
-        color: '#fff',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end'
-      },
-      footerIcon: {
-        fontSize: 26
-      }
-    };
-  }
+  getStyles = () => ({
+    root: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh'
+    },
+    header: {
+      flex: '0 0 50px',
+      background: '#244273',
+      display: 'flex',
+      alignItems: 'center',
+      padding: '0 15px'
+    },
+    headerLogo: {
+      height: 20
+    },
+    content: {
+      flex: 1
+    },
+    footer: {
+      flex: '0 0 42px',
+      background: '#244273',
+      display: 'flex',
+      padding: '0 15px'
+    },
+    footerArrowLeft: {
+      flex: 2,
+      color: '#fff',
+      display: 'flex',
+      alignItems: 'center'
+    },
+    footerCounter: {
+      flex: 1,
+      color: '#fff',
+      fontSize: 18,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    footerArrowRight: {
+      flex: 2,
+      color: '#fff',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-end'
+    },
+    footerIcon: {
+      fontSize: 26
+    }
+  })
 
   showNextSlide = () => {
     const { children } = this.props;

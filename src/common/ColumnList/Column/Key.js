@@ -7,11 +7,6 @@ import Clipboard from '../../Clipboard';
 export default Radium(React.createClass({
   displayName: 'ColumnKey',
 
-  propTypes: {
-    id: React.PropTypes.string,
-    handleClick: React.PropTypes.func
-  },
-
   getDefaultProps() {
     return {
       className: ColumnListConstans.DEFAULT_CLASSNAME.KEY

@@ -41,7 +41,7 @@ const HostingFilesList = React.createClass({
     const { items } = this.props;
     const { directoryDepth } = this.state;
     const fileFolderName = file.path.split('/')[directoryDepth];
-    const folderFiles = _.filter(items, item => {
+    const folderFiles = _.filter(items, (item) => {
       const itemFolders = item.path.split('/');
       const hasSubFolders = directoryDepth > itemFolders.length;
       const isFileInCurrentFolder = _.includes(itemFolders, fileFolderName);
@@ -105,7 +105,7 @@ const HostingFilesList = React.createClass({
 
   filterByCurrentDirectoryDepth(items) {
     const { directoryDepth, currentFolderName } = this.state;
-    const filteredItems = _.filter(items, item => {
+    const filteredItems = _.filter(items, (item) => {
       const isInFolder = directoryDepth < item.folders.length;
       const isInRootFolder = currentFolderName === '';
       const isInSubfolder = _.includes(item.folders, currentFolderName);
@@ -118,7 +118,7 @@ const HostingFilesList = React.createClass({
 
   filterFolders(items) {
     const { directoryDepth } = this.state;
-    let extendedItems = _.map(items, item => {
+    let extendedItems = _.map(items, (item) => {
       const itemFolders = item.path.split('/');
 
       item.isFolder = _.isString(itemFolders[directoryDepth + 1]);
@@ -131,8 +131,8 @@ const HostingFilesList = React.createClass({
 
     extendedItems = this.filterByCurrentDirectoryDepth(extendedItems);
 
-    const splitedByType = _.partition(extendedItems, item => item.isFolder);
-    const uniqueFolders = _.uniqBy(splitedByType[0], item => item.folderName);
+    const splitedByType = _.partition(extendedItems, (item) => item.isFolder);
+    const uniqueFolders = _.uniqBy(splitedByType[0], (item) => item.folderName);
 
     return [...uniqueFolders, ...splitedByType[1]];
   },
@@ -191,7 +191,7 @@ const HostingFilesList = React.createClass({
     const { checkItem, items } = this.props;
     const { directoryDepth } = this.state;
     const filteredItems = this.filterFolders(items);
-    const listItems = _.map(filteredItems, item => {
+    const listItems = _.map(filteredItems, (item) => {
       const filesToRemove = item.isFolder ? item.files : item;
 
       return (

@@ -57,7 +57,7 @@ const utils = {
     const possible = 'ABCDEFabcdef0123456789';
     let apiKey = '';
 
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i < length; i += 1) {
       apiKey += possible.charAt(Math.floor(Math.random() * possible.length));
     }
 
