@@ -29,15 +29,15 @@ const HostingFilesView = React.createClass({
     HostingFilesActions.fetch();
   },
 
-  getRedirectUrl() {
+  getHostingUrl() {
     const { hostingDetails } = this.state;
     const { instanceName } = this.props.params;
     const defaultHostingUrl = `https://${instanceName}.syncano.site/`;
     const hasDomains = hostingDetails && hostingDetails.domains.length > 0;
     const customDomainUrl = hasDomains ? `https://${instanceName}--${hostingDetails.domains[0]}.syncano.site/` : null;
-    const redirectUrl = this.isDefaultHosting() ? defaultHostingUrl : customDomainUrl;
+    const hostingUrl = this.isDefaultHosting() ? defaultHostingUrl : customDomainUrl;
 
-    return redirectUrl;
+    return hostingUrl;
   },
 
   isDefaultHosting() {
@@ -89,11 +89,9 @@ const HostingFilesView = React.createClass({
   },
 
   showSnackbar() {
-    const snackbar = {
+    this.setSnackbarNotification({
       message: "You don't have any domains yet. Please add some or set Hosting as default."
-    };
-
-    this.setSnackbarNotification(snackbar);
+    });
   },
 
   render() {
@@ -108,8 +106,8 @@ const HostingFilesView = React.createClass({
     } = this.state;
 
     const hasFilesToUpload = filesToUpload.length > 0;
-    const redirectUrl = this.getRedirectUrl();
-    const hasRedirectUrl = !_.isEmpty(redirectUrl);
+    const hostingUrl = this.getHostingUrl();
+    const hasHostingUrl = !_.isEmpty(hostingUrl);
 
     return (
       <div>
@@ -120,11 +118,11 @@ const HostingFilesView = React.createClass({
         <InnerToolbar title="Website Hosting">
           <Show if={items.length && !isLoading}>
             <RaisedButton
-              label="Open in tab"
+              label="Go to site"
               primary={true}
               icon={<FontIcon className="synicon-open-in-new" style={{ marginTop: 4 }} />}
-              onTouchTap={!hasRedirectUrl && this.showSnackbar}
-              href={redirectUrl}
+              onTouchTap={!hasHostingUrl && this.showSnackbar}
+              href={hostingUrl}
               target="_blank"
             />
           </Show>
