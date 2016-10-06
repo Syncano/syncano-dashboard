@@ -109,6 +109,8 @@ const SendChannelMessageDialog = React.createClass({
   handleEditSubmit() {
     const { name, messageText, isJSONMessage, JSONMessage, room } = this.state;
 
+    this.clearMessageTextInput();
+
     if (isJSONMessage) {
       return Actions.sendChannelMessage(name, JSON.parse(JSONMessage), room);
     }
@@ -120,6 +122,10 @@ const SendChannelMessageDialog = React.createClass({
     const { isJSONMessage } = this.state;
 
     this.setState({ isJSONMessage: !isJSONMessage });
+  },
+
+  clearMessageTextInput() {
+    this.setState({ messageText: null });
   },
 
   renderSidebarContent() {
@@ -182,12 +188,13 @@ const SendChannelMessageDialog = React.createClass({
         label="messageText"
         autoFocus={true}
         fullWidth={true}
-        multiLine={true}
         value={messageText}
         onChange={(event, value) => this.setState({ messageText: value })}
         errorText={this.getValidationMessages('messageText').join(' ')}
         hintText="Your message goes here"
         floatingLabelText="Message"
+        onFocus={disableBindShortcuts}
+        onBlur={enableBindShortcuts}
         data-e2e="send-channel-message-content-input"
       />
     );
@@ -239,22 +246,24 @@ const SendChannelMessageDialog = React.createClass({
           </Dialog.ContentSection>
           <Dialog.ContentSection title="Message Content">
             <div className="col-flex-1">
-              <Toggle
-                label="Use advanced editor (JSON)"
-                className="vm-2-t"
-                labelPosition="right"
-                toggled={isJSONMessage}
-                onToggle={this.handleAdvancedEditorToggleToggle}
-              />
-              {this.renderMessageEditor()}
-              <div className="vm-2-t text--right">
-                <RaisedButton
-                  primary={true}
-                  label="Send Message"
-                  onTouchTap={this.handleFormValidation}
-                  data-e2e="send-channel-message-dialog-send-message-button"
+              <form onSubmit={this.handleFormValidation}>
+                <Toggle
+                  label="Use advanced editor (JSON)"
+                  className="vm-2-t"
+                  labelPosition="right"
+                  toggled={isJSONMessage}
+                  onToggle={this.handleAdvancedEditorToggleToggle}
                 />
-              </div>
+                {this.renderMessageEditor()}
+                <div className="vm-2-t text--right">
+                  <RaisedButton
+                    primary={true}
+                    type="submit"
+                    label="Send Message"
+                    data-e2e="send-channel-message-dialog-send-message-button"
+                  />
+                </div>
+              </form>
             </div>
           </Dialog.ContentSection>
           <Dialog.ContentSection
