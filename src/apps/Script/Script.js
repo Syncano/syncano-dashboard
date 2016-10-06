@@ -215,12 +215,12 @@ const Script = React.createClass({
         flexGrow: 1,
         display: 'flex'
       },
-      linkIconStyles: {
+      linkIcon: {
         color: Colors.blue500,
         fontSize: 22,
         lineHeight: 1
       },
-      resultIconStyles: {
+      resultIcon: {
         padding: '10px 0 0 0'
       }
     };
@@ -807,7 +807,7 @@ const Script = React.createClass({
     );
   },
 
-  renderRawResultInNewTab() {
+  renderLastTraceResultInNewTab() {
     const { currentScript, lastTraceResult, lastTraceStatus } = this.state;
     const rawResultPage = window.open();
     const pageContent = `
@@ -825,9 +825,11 @@ const Script = React.createClass({
     const { lastTraceResult } = this.state;
     const rightContent = (
       <IconButton
-        onTouchTap={this.renderRawResultInNewTab}
-        iconStyle={styles.linkIconStyles}
-        style={styles.resultIconStyles}
+        onTouchTap={this.renderLastTraceResultInNewTab}
+        iconStyle={styles.linkIcon}
+        style={styles.resultIcon}
+        tooltip="Open last trace result in new tab"
+        tooltipPosition="bottom-left"
         iconClassName={'synicon-launch'}
       />
     );
