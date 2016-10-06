@@ -74,6 +74,7 @@ const CreateHostingDialog = React.createClass({
     const title = this.hasEditMode() ? 'Edit Hosting' : 'Add Hosting';
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
+    const defaultLink = `https://${currentInstanceName}.syncano.site`;
 
     return (
       <Dialog.FullPage
@@ -101,9 +102,9 @@ const CreateHostingDialog = React.createClass({
               You can set the name of your hosting.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Domains">
-              {`Define the domains. Each name must be unique within an Instance. You can also
-              name your domain as 'default' then it will be connected directly to your current Instance
-              and avaliable at https://${currentInstanceName}.syncano.site`}
+              Define the domains. Each name must be unique within an Instance. You can also
+              name your domain as <em>default</em> then it will be connected directly to your current Instance
+              and avaliable at {defaultLink}
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/hosting">
