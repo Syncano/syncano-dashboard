@@ -8,7 +8,7 @@ import Actions from './HostingActions';
 import Store from './HostingStore';
 
 import { TextField, Checkbox } from 'material-ui';
-import { Dialog, Show, Notification, Tooltip, SelectWrapper } from '../../common';
+import { Dialog, Show, Notification, SelectWrapper } from '../../common';
 
 const CreateHostingDialog = React.createClass({
   mixins: [
@@ -34,7 +34,7 @@ const CreateHostingDialog = React.createClass({
   getStyles() {
     return {
       checkBox: {
-        marginTop: 20,
+        marginTop: 15,
         outline: '#bababa'
       },
       checkBoxLabel: {
@@ -143,9 +143,15 @@ const CreateHostingDialog = React.createClass({
             floatingLabelText="Description"
             data-e2e="hosting-dialog-description-input"
           />
+          <Checkbox
+            style={styles.checkBox}
+            label="Set as default hosting"
+            labelStyle={styles.checkBoxLabel}
+            onCheck={this.handleDefaultDomainCheck}
+          />
           <SelectWrapper
             errorText={this.getValidationMessages('domains').join(' ')}
-            className="vm-5-t"
+            className="vm-3-t"
             multi={true}
             value={domains}
             allowCreate={true}
@@ -153,18 +159,6 @@ const CreateHostingDialog = React.createClass({
             onChange={this.handleChangeDomain}
             data-e2e="hosting-dialog-domains-input"
           />
-          <div>
-            <Tooltip
-              label="Set as default domain"
-            >
-              <Checkbox
-                style={styles.checkBox}
-                label="Set as default domain"
-                labelStyle={styles.checkBoxLabel}
-                onCheck={this.handleDefaultDomainCheck}
-              />
-            </Tooltip>
-          </div>
         </div>
         <div className="vm-2-t">
           {this.renderFormNotifications()}
