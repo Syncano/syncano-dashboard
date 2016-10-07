@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['script'],
   before: (client) => {
-    const { accountKey } = accounts.alternativeUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -13,7 +13,7 @@ export default addTestNamePrefixes({
   after: (client) => client.end(),
   'Admin Adds a Script': (client) => {
     const scriptsPage = client.page.scriptsPage();
-    const { instanceName } = accounts.alternativeUser;
+    const { instanceName } = instances.secondInstance;
     const scriptName = utils.addSuffix('script');
 
     scriptsPage
@@ -31,7 +31,7 @@ export default addTestNamePrefixes({
   'Admin edits a Script': (client) => {
     const listsPage = client.page.listsPage();
     const scriptsPage = client.page.scriptsPage();
-    const { instanceName } = accounts.alternativeUser;
+    const { instanceName } = instances.secondInstance;
     const scriptName = utils.addSuffix('script');
     const scriptDescription = utils.addSuffix('description');
 
@@ -53,7 +53,7 @@ export default addTestNamePrefixes({
   },
   'Test Admin Selects/Deselects Script': (client) => {
     const listsPage = client.page.listsPage();
-    const { instanceName } = accounts.alternativeUser;
+    const { instanceName } = instances.secondInstance;
     const selectedItem = listsPage.elements.selectedItem.selector;
     const optionsMenu = listsPage.elements.firstItemOptionsMenu.selector;
 
@@ -63,7 +63,7 @@ export default addTestNamePrefixes({
   },
   'Admin deletes a Script': (client) => {
     const listsPage = client.page.listsPage();
-    const { instanceName } = accounts.alternativeUser;
+    const { instanceName } = instances.secondInstance;
 
     listsPage
       .goToUrl(instanceName, 'scripts')

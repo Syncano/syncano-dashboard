@@ -1,23 +1,21 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['snippets'],
-  before(client) {
-    const { accountKey } = accounts.instanceUser;
+  before: (client) => {
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
       .setResolution(client);
   },
-  after(client) {
-    client.end();
-  },
+  after: (client) => client.end(),
   'Test Select/Deselect multiple Scripts': (client) => {
     const listsPage = client.page.listsPage();
     const optionsMenu = listsPage.elements.optionsMenu.selector;
     const selectedItems = listsPage.elements.selectedItem.selector;
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
 
     client
       .goToUrl(instanceName, 'scripts')

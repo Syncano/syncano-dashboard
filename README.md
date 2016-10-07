@@ -185,18 +185,6 @@ $ export SYNCANO_BILLING_EMAIL='xx'
 $ export SYNCANO_SUPPORT_EMAIL='xx'
 ```
 
-### Tests
-
-> You won't be able to launch e2e tests locally. For more info refer to [Running tests](README.md#running-tests) section.
-
-You will need to export `TEST_BASE_EMAIL` for test account creation.
-
-```sh
-$ export TEST_BASE_EMAIL='xx'
-```
-
-It should be your **Syncano** account email address.
-
 ### Icons
 
 We are using set of [Material Design Icons](http://materialdesignicons.com/).
@@ -208,14 +196,25 @@ $ npm run iconfont
 
 and commit your changes.
 
-## Tests :no_entry_sign:
+## Tests
+
+### Configuration
+
+You will need to export `E2E_EMAIL` and `E2E_PASSWORD` for test account creation.
+
+```sh
+$ export E2E_EMAIL="xx"
+$ export E2E_PASSWORD="xx"
+```
+
+It should be your **Syncano** account email address and password.
 
 ### Running tests
 
-> You won't be able to launch e2e tests locally, we are currently in progress of rewriting them to work for everyone.
-For now, when you create a pull request, these tests will run on our CI servers. You can still review them for inspiration.
+:warning: **Our current E2E test are in testing phase, and they run on your Syncano account. 
+Please be careful what you do.**
 
- :information_source: **E2E tests require development server to be running, be sure to start it.**
+:information_source: **E2E tests require development server to be running, be sure to start it.**
 
 E2E Test can be started by typing:
 
