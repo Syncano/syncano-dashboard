@@ -72,7 +72,7 @@ const HostingDialogDomainRow = ({
         style={{ ...styles.tableRowColumn, ...styles.tableRowColumnLink }}
       >
         <a href={`https://${currentInstanceName}--${domain}.syncano.site`} target="_blank">
-          https://{currentInstanceName}--{domain}.syncano.site/
+          {'https://{currentInstanceName}--{domain}.syncano.site/'}
         </a>
       </TableRowColumn>
       <TableRowColumn

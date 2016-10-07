@@ -11,7 +11,8 @@ const HostingDialogDomainTable = ({
   handleChangeDomains,
   domains,
   handleChangeNewDomain,
-  newDomain }) => {
+  newDomain
+}) => {
   const styles = {
     tableRow: {
       display: 'flex'
