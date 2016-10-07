@@ -8,7 +8,9 @@ import Actions from './HostingActions';
 import Store from './HostingStore';
 
 import { TextField } from 'material-ui';
-import { Dialog, Show, Notification, SelectWrapper } from '../../common';
+import { Dialog, Show, Notification } from '../../common';
+
+import HostingDialogDomainTable from './HostingDialogDomainTable';
 
 const CreateHostingDialog = React.createClass({
   mixins: [
@@ -42,10 +44,33 @@ const CreateHostingDialog = React.createClass({
     return { label, description, id, domains: domainsArray };
   },
 
-  handleChangeDomain(newValues, domains) {
+  handleChangeNewDomain(event, domain) {
     this.setState({
-      domains: _.uniqBy(domains, 'value')
+      newDomain: domain
     });
+  },
+
+  handleAddNewDomain() {
+    const { domains, newDomain } = this.state;
+    const newDomains = _.union(domains, [newDomain]);
+
+    this.setState({
+      domains: newDomains,
+      newDomain: ''
+    });
+  },
+
+  handleChangeDomains(domain, index) {
+    const { domains } = this.state;
+
+    domains[index] = domain;
+    this.setState({ domains });
+  },
+
+  handleRemoveDomain(domain) {
+    const domains = _.without(this.state.domains, domain);
+
+    this.setState({ domains });
   },
 
   handleAddSubmit() {
@@ -69,14 +94,13 @@ const CreateHostingDialog = React.createClass({
   },
 
   render() {
-    const { isLoading, open, label, description, canSubmit, domains } = this.state;
+    const { isLoading, open, label, description, canSubmit, newDomain, domains } = this.state;
     const title = this.hasEditMode() ? 'Edit Hosting' : 'Add Hosting';
 
     return (
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        contentSize="medium"
         title={title}
         onRequestClose={this.handleCancel}
         open={open}
@@ -124,16 +148,21 @@ const CreateHostingDialog = React.createClass({
             floatingLabelText="Description"
             data-e2e="hosting-dialog-description-input"
           />
-          <SelectWrapper
-            errorText={this.getValidationMessages('domains').join(' ')}
-            className="vm-5-t"
-            multi={true}
-            value={domains}
-            allowCreate={true}
-            placeholder="Domains"
-            onChange={this.handleChangeDomain}
-            data-e2e="hosting-dialog-domains-input"
+          <HostingDialogDomainTable
+            domains={domains}
+            newDomain={newDomain}
+            handleChangeNewDomain={this.handleChangeNewDomain}
+            handleAddNewDomain={this.handleAddNewDomain}
+            handleChangeDomains={this.handleChangeDomains}
+            handleRemoveDomain={this.handleRemoveDomain}
           />
+          <div className="vm-2-t">
+            <Show if={this.getValidationMessages('domains').length}>
+              <Notification type="error">
+                {this.getValidationMessages('domains').join(' ')}
+              </Notification>
+            </Show>
+          </div>
         </div>
         <div className="vm-2-t">
           {this.renderFormNotifications()}
