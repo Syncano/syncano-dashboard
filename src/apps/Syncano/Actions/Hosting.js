@@ -12,21 +12,43 @@ export default {
       .catch(this.failure);
   },
 
-  create(params) {
+  create(params, shouldBeSetAsDefault) {
     this.NewLibConnection
       .Hosting
       .please()
       .create(params)
-      .then(this.completed)
+      .then(createdHosting => {
+        if (shouldBeSetAsDefault) {
+          return this.NewLibConnection
+            .Hosting
+            .please()
+            .setDefault({ id: createdHosting.id })
+            .then(this.completed)
+            .catch(this.failure);
+        }
+
+        return this.completed(createdHosting);
+      })
       .catch(this.failure);
   },
 
-  update(id, params) {
+  update(id, params, shouldBeSetAsDefault) {
     this.NewLibConnection
       .Hosting
       .please()
       .update({ id }, params)
-      .then(this.completed)
+      .then(createdHosting => {
+        if (shouldBeSetAsDefault) {
+          return this.NewLibConnection
+            .Hosting
+            .please()
+            .setDefault({ id: createdHosting.id })
+            .then(this.completed)
+            .catch(this.failure);
+        }
+
+        return this.completed(createdHosting);
+      })
       .catch(this.failure);
   },
 

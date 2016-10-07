@@ -7,8 +7,8 @@ import { DialogMixin, FormMixin } from '../../mixins';
 import Actions from './HostingActions';
 import Store from './HostingStore';
 
-import { TextField } from 'material-ui';
-import { Dialog, Show, Notification, SelectWrapper } from '../../common';
+import { TextField, Checkbox } from 'material-ui';
+import { Dialog, Show, Notification, Tooltip, SelectWrapper } from '../../common';
 
 const CreateHostingDialog = React.createClass({
   mixins: [
@@ -31,8 +31,20 @@ const CreateHostingDialog = React.createClass({
     }
   },
 
+  getStyles() {
+    return {
+      checkBox: {
+        marginTop: 20,
+        outline: '#bababa'
+      },
+      checkBoxLabel: {
+        color: '#bababa'
+      }
+    };
+  },
+
   getHostingParams() {
-    const { label, description, domains, id } = this.state;
+    const { label, description, domains = [], id } = this.state;
     let domainsArray = domains;
 
     if (domains && domains.length && _.isObject(domains[0])) {
@@ -49,15 +61,17 @@ const CreateHostingDialog = React.createClass({
   },
 
   handleAddSubmit() {
+    const { shouldBeSetAsDefault } = this.state;
     const params = this.getHostingParams();
 
-    Actions.createHosting(params);
+    Actions.createHosting(params, shouldBeSetAsDefault);
   },
 
   handleEditSubmit() {
+    const { shouldBeSetAsDefault } = this.state;
     const params = this.getHostingParams();
 
-    Actions.updateHosting(params.id, params);
+    Actions.updateHosting(params.id, params, shouldBeSetAsDefault);
   },
 
   handleChangeLabel(event, value) {
@@ -68,9 +82,14 @@ const CreateHostingDialog = React.createClass({
     this.setState({ description: value });
   },
 
+  handleDefaultDomainCheck(event, checked) {
+    this.setState({ shouldBeSetAsDefault: checked });
+  },
+
   render() {
     const { isLoading, open, label, description, canSubmit, domains } = this.state;
     const title = this.hasEditMode() ? 'Edit Hosting' : 'Add Hosting';
+    const styles = this.getStyles();
 
     return (
       <Dialog.FullPage
@@ -134,6 +153,18 @@ const CreateHostingDialog = React.createClass({
             onChange={this.handleChangeDomain}
             data-e2e="hosting-dialog-domains-input"
           />
+          <div>
+            <Tooltip
+              label="Set as default domain"
+            >
+              <Checkbox
+                style={styles.checkBox}
+                label="Set as default domain"
+                labelStyle={styles.checkBoxLabel}
+                onCheck={this.handleDefaultDomainCheck}
+              />
+            </Tooltip>
+          </div>
         </div>
         <div className="vm-2-t">
           {this.renderFormNotifications()}
