@@ -161,6 +161,32 @@ const DemoApp = React.createClass({
     );
   },
 
+  renderTutorialLink() {
+    const styles = this.getStyles();
+    const { appTutorialSrc } = this.state;
+
+    return (
+      <li>
+        <div style={styles.listItem}>
+          <img
+            src="/img/syncano-symbol.svg"
+            alt="demo app"
+            style={styles.icon}
+          />
+          <div>
+            {'Full Tutorial: '}
+            <a
+              href={appTutorialSrc}
+              target="_blank"
+            >
+              {appTutorialSrc}
+            </a>
+          </div>
+        </div>
+      </li>
+    );
+  },
+
   renderDescContainer() {
     const styles = this.getStyles();
     const { appName, appTitle, appDesc, appGithubSrc, appTutorialSrc, feedback } = this.state;
@@ -206,24 +232,7 @@ const DemoApp = React.createClass({
                 </div>
               </div>
             </li>
-            <li>
-              <div style={styles.listItem}>
-                <img
-                  src="/img/syncano-symbol.svg"
-                  alt="demo app"
-                  style={styles.icon}
-                />
-                <div>
-                  {'Full Tutorial: '}
-                  <a
-                    href={appTutorialSrc}
-                    target="_blank"
-                  >
-                    {appTutorialSrc}
-                  </a>
-                </div>
-              </div>
-            </li>
+            { appTutorialSrc && this.renderTutorialLink() }
           </ul>
         </div>
         <div style={styles.subHeader}>
