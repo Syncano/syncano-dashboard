@@ -89,7 +89,7 @@ export default Reflux.createStore({
   },
 
   onFetchScriptRuntimesCompleted(runtimes) {
-    console.debug('RuntimesStore::onFetchScriptRuntimesCompleted');
+    console.debug('RuntimesStore::onFetchScriptRuntimesCompleted', runtimes);
     const runtimesDict = _.map(runtimes, this.buildRuntimesIconsInfo);
 
     this.data.runtimes = runtimesDict;

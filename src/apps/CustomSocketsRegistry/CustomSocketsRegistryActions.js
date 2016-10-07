@@ -6,6 +6,7 @@ export default CreateActions(
     fetch: {},
     setFilter: {},
     setSearchFilter: {},
+    setCurrentSocketId: {},
     setCustomSocketsRegistry: {},
     fetchCustomSocketsRegistry: {
       asyncResult: true,
@@ -15,15 +16,20 @@ export default CreateActions(
     },
     installCustomSocketRegistry: {
       asyncResult: true,
-      loading: true,
+      asyncForm: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.CustomSocketsRegistry.install'
     },
     getCustomSocketRegistry: {
       asyncResult: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.CustomSocketsRegistry.get'
+    },
+    fetchCustomSocketsInfo: {
+      asyncResult: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.CustomSocketsRegistry.fetchInfo'
     }
   },
   {

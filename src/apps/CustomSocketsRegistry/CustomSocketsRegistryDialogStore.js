@@ -32,7 +32,8 @@ export default Reflux.createStore({
       stepIndex: 0,
       isFinished: false,
       instance: '',
-      name: ''
+      name: '',
+      metadata: {}
     };
   },
 
@@ -72,8 +73,8 @@ export default Reflux.createStore({
       processing: () => getCustomSocketRegistry(createdCustomSocketRegistry.name, instanceName),
       checking: () => getCustomSocketRegistry(createdCustomSocketRegistry.name, instanceName),
       ok: () => {
-        Actions.changeStep(1);
         this.trigger({ createdCustomSocketRegistry, isLoading: false });
+        Actions.changeStep(1);
         this.sendCustomSocketRegistryAnalytics(action, createdCustomSocketRegistry);
       },
       error: () => this.trigger({ feedback: createdCustomSocketRegistry.status_info, isLoading: false })

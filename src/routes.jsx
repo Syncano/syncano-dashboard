@@ -522,7 +522,20 @@ export default (
         name="custom-sockets-registry"
         component={CustomSocketsRegistry}
         path="custom-sockets-registry"
-      />
+      >
+        <Route
+          name="custom-sockets-registry-list"
+          component={CustomSocketsRegistry.List}
+          path="list"
+        />
+        <Route
+          name="custom-sockets-registry-details"
+          component={CustomSocketsRegistry.Details}
+          path=":customSocketId/details"
+        />
+
+        <IndexRoute component={CustomSocketsRegistry.List} />
+      </Route>
 
       {/* Solutions */}
       <Route

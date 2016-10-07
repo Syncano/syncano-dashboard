@@ -24,7 +24,6 @@ import LinkWrapper from './LinkWrapper';
 import Lists from './Lists';
 import Loading from './Loading';
 import Logo from './Logo';
-import MethodLabel from './MethodLabel';
 import MobileOnboarding from './MobileOnboarding';
 import NoMobileInfo from './NoMobileInfo';
 import Notification from './Notification';
@@ -57,6 +56,7 @@ import UpgradeNowToolbar from './UpgradeNowToolbar';
 import UnsupportedBrowserView from './UnsupportedBrowserView';
 import StatusLabel from './StatusLabel';
 import LinkWithIcon from './LinkWithIcon';
+import MethodLabel from './MethodLabel';
 
 export { AlertPageContent };
 export { AutoCompleteWrapper };
