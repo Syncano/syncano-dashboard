@@ -2,7 +2,7 @@ import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['pushMessageGCM', 'newTool'],
+  tags: ['pushMessageGCM'],
   before: (client) => {
     const { account_key: accountKey } = instances.account;
 

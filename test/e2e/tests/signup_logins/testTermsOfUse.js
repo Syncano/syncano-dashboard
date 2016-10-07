@@ -1,7 +1,7 @@
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['terms', 'newTool'],
+  tags: ['terms'],
   after: (client) => client.end(),
   'User Goes to terms of use page': (client) => {
     const signupPage = client.page.signupPage();

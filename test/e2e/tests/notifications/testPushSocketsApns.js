@@ -3,7 +3,7 @@ import { addTestNamePrefixes } from '../../utils';
 import Syncano from 'syncano';
 
 export default addTestNamePrefixes({
-  tags: ['pushSocketsApns', 'apns', 'newTool'],
+  tags: ['pushSocketsApns', 'apns'],
   beforeEach: (client) => {
     const { account_key: accountKey } = instances.account;
 

@@ -2,7 +2,7 @@ import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['passwordSettings', 'newTool'],
+  tags: ['passwordSettings'],
   after: (client) => client.end(),
   before: (client) => {
     const { account_key: accountKey } = instances.account;

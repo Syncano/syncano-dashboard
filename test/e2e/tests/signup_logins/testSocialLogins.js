@@ -1,7 +1,7 @@
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['socialLogins', 'newTool'],
+  tags: ['socialLogins'],
   beforeEach: (client) => {
     const loginPage = client.page.loginPage();
 

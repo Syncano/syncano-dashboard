@@ -3,7 +3,7 @@ import { addTestNamePrefixes } from '../../utils';
 import _ from 'lodash';
 
 export default addTestNamePrefixes({
-  tags: ['planUsage', 'newTool'],
+  tags: ['planUsage'],
   beforeEach: (client) => {
     const { account_key: accountKey } = instances.account;
 
