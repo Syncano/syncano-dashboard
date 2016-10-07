@@ -1,7 +1,5 @@
 import React from 'react';
-
 import SessionStore from '../Session/SessionStore';
-
 import { CodePreview, Dialog } from '../../common/';
 import { Card, CardTitle, CardText } from 'material-ui';
 
@@ -15,8 +13,8 @@ export default ({ trigger }) => {
         <div className="col-flex-1">
           <div style={{ fontSize: 16, lineHeight: 1.6, color: 'rgba(68,68,68, .8)' }}>
             <p>
-              Trigger you just created can always be modified later. Trigger Sockets execute a Script when a
-              Data Object inside selected Data Class is created, updated or deleted (depends on "signal" field value).
+              {`Trigger you just created can always be modified later. Trigger Sockets execute a Script when a
+              Data Object inside selected Data Class is created, updated or deleted (depends on "signal" field value).`}
             </p>
           </div>
         </div>

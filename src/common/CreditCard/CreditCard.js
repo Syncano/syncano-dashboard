@@ -7,10 +7,6 @@ import PaymentIcon from '../PaymentIcon';
 export default Radium(React.createClass({
   displayName: 'CreditCard',
 
-  propTypes: {
-    handleClick: React.PropTypes.func
-  },
-
   getStyles() {
     return {
       cardContainer: {

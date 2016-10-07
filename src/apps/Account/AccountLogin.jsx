@@ -151,7 +151,7 @@ const AccountLogin = React.createClass({
             </li>
             <li>
               <p>
-                <span>Don't have an account? </span>
+                <span>{'Don\'t have an account? '}</span>
                 <Link
                   to={{
                     name: 'signup',

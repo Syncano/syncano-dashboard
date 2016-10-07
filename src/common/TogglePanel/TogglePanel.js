@@ -9,32 +9,30 @@ class TogglePanel extends Component {
     };
   }
 
-  getStyles() {
-    return {
-      root: {
-        padding: '3px 0'
-      },
-      title: {
-        flex: 1,
-        lineHeight: '48px',
-        color: '#aaa',
-        fontSize: 10,
-        fontWeight: 800,
-        textTransform: 'uppercase'
-      },
-      rightContent: {
-        lineHeight: '48px'
-      },
-      panel: {
-        padding: '0 20px 20px',
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        overflowY: 'scroll'
-      }
-    };
-  }
+  getStyles = () => ({
+    root: {
+      padding: '3px 0'
+    },
+    title: {
+      flex: 1,
+      lineHeight: '48px',
+      color: '#aaa',
+      fontSize: 10,
+      fontWeight: 800,
+      textTransform: 'uppercase'
+    },
+    rightContent: {
+      lineHeight: '48px'
+    },
+    panel: {
+      padding: '0 20px 20px',
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      overflowY: 'scroll'
+    }
+  })
 
   render() {
     const styles = this.getStyles();

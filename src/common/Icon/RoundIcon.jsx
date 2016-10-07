@@ -6,7 +6,6 @@ export default Radium(React.createClass({
 
   propTypes: {
     id: React.PropTypes.string,
-    icon: React.PropTypes.string,
     background: React.PropTypes.string.isRequired,
     handleClick: React.PropTypes.func
   },
