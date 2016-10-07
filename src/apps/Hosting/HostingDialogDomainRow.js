@@ -38,6 +38,7 @@ const HostingDialogDomainRow = ({
 
   const handleDomainChange = handleChangeCurrentDomain || handleChangeNewDomain;
   const handleDomainRemove = () => handleRemoveDomain(domain);
+  const domainName = domain || '';
   const renderActionButton = () => (
     handleChangeNewDomain ?
       <FlatButton
@@ -72,7 +73,7 @@ const HostingDialogDomainRow = ({
         style={{ ...styles.tableRowColumn, ...styles.tableRowColumnLink }}
       >
         <a href={`https://${currentInstanceName}--${domain}.syncano.site`} target="_blank">
-          {'https://{currentInstanceName}--{domain}.syncano.site/'}
+          {`https://{currentInstanceName}--${domainName}.syncano.site/`}
         </a>
       </TableRowColumn>
       <TableRowColumn
