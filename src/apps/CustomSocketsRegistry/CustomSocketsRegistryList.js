@@ -1,6 +1,5 @@
 import React from 'react';
 import pluralize from 'pluralize';
-
 import _ from 'lodash';
 
 import Actions from './CustomSocketsRegistryActions';

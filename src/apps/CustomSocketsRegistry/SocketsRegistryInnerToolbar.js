@@ -30,6 +30,9 @@ const CustomSocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
       height: '100%',
       lineHeight: '100%',
       minWidth: '60px'
+    },
+    innerToolbar: {
+      background: 'rgba(243, 243, 243, 1)'
     }
   };
   const handleBackClick = () => {
@@ -93,6 +96,7 @@ const CustomSocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
       zIndex={99}
     >
       <InnerToolbar
+        style={styles.innerToolbar}
         backButton={!isRegistryListRouteActive}
         backFallback={handleBackClick}
         backButtonTooltip="Go back to Custom Sockets Registry List"

@@ -39,11 +39,19 @@ const styles = {
   },
   cardFooterText: {
     marginTop: 20
+  },
+  descriptionContainer: {
+    fontSize: 16,
+    lineHeight: 1.6,
+    color: 'rgba(68,68,68, .8)'
+  },
+  callMethodLabel: {
+    maxWidth: '100%'
   }
 };
 
 const CustomSocketsRegistrySummary = ({ item }) => {
-  const renderCallMethodsLabel = (call) => {
+  const renderCallMethodsLabel = call => {
     const methods = call.methods[0] === '*' ? ['get', 'post', 'put', 'patch'] : call.methods;
 
     return _.map(methods, (method, index) => (
@@ -63,7 +71,7 @@ const CustomSocketsRegistrySummary = ({ item }) => {
     _.map(calls, (call, index) => (
       <div
         key={index}
-        style={{ maxWidth: '100%' }}
+        style={styles.callMethodLabel}
       >
         {renderCallMethodsLabel(call)}
       </div>
@@ -74,14 +82,16 @@ const CustomSocketsRegistrySummary = ({ item }) => {
     <div>
       <Dialog.ContentSection>
         <div className="col-flex-1">
-          <div style={{ fontSize: 16, lineHeight: 1.6, color: 'rgba(68,68,68, .8)' }}>
+          <div style={styles.descriptionContainer}>
             {`Custom Socket you just created contains several endpoints that you can connect your frontend
-              or mobile app to. Check out the their dependencies to see how everything work under the hood.
+              or mobile app to. Check out their dependencies to see how everything work under the hood.
             There's no need for that though since a socket should work out of the box (if configured properly).`}
           </div>
         </div>
       </Dialog.ContentSection>
-      <div style={styles.endpointsTitle}>Available endpoints</div>
+      <div style={styles.endpointsTitle}>
+        Available endpoints
+      </div>
       <Dialog.ContentSection>
         <div className="col-flex-1">
           {_.map(item.endpoints, (endpoint, key) => (

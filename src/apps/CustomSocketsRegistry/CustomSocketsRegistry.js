@@ -13,7 +13,6 @@ import SocketsRegistryInnerToolbar from './SocketsRegistryInnerToolbar';
 import SocketsSearchBar from './SocketsSearchBar';
 
 const CustomSocketsRegistry = React.createClass({
-
   mixins: [
     Reflux.connect(Store)
   ],
@@ -83,7 +82,6 @@ const CustomSocketsRegistry = React.createClass({
             filterBySyncano={filterBySyncano}
           />
         </Show>
-
 
         {children && React.cloneElement(children, { changeListView, term, items, isLoading, filter, filterBySyncano })}
       </div>

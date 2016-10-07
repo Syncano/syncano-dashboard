@@ -27,7 +27,7 @@ const MethodLabel = ({ method, style }) => {
   const methodLabelStyle = {
     ...styles.container,
     ...style,
-    backgroundColor: styles.backgroundColor[method]
+    backgroundColor: styles.backgroundColor[method.toLowerCase()]
   };
 
   return (

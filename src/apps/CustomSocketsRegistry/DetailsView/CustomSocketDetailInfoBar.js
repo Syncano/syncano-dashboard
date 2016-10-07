@@ -48,7 +48,7 @@ class CustomSocketsRegistryInfoBar extends Component {
       sidebarContent: {
         left: 0,
         position: 'absolute',
-        top: 270
+        top: 300
       },
       sidebarBackground: {
         position: 'relative'
