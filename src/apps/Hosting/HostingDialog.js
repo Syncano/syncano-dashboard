@@ -49,7 +49,12 @@ const CreateHostingDialog = React.createClass({
   },
 
   handleAddSubmit() {
+    const { items } = this.state;
     const params = this.getHostingParams();
+
+    if (_.isEmpty(items)) {
+      params.domains.push('default');
+    }
 
     Actions.createHosting(params);
   },
