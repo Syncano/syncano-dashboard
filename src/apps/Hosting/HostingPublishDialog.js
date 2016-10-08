@@ -40,14 +40,14 @@ const PublishDialog = React.createClass({
         ref="dialog"
         icon="synicon-alert"
         iconColor={Colors.orange400}
-        title="Publish your website"
+        title="Set this website as default"
         onRequestClose={this.handleCancel}
         open={open}
         isLoading={isLoading}
         actions={
           <Dialog.StandardButtons
             disabled={isLoading}
-            submitLabel="Publish"
+            submitLabel="Set as default"
             handleCancel={this.handleCancel}
             handleConfirm={this.handlePublishHosting}
           />
@@ -55,7 +55,7 @@ const PublishDialog = React.createClass({
       >
         <div style={containerStyles}>
           <strong>
-            {"This action will publish the changes you've applied to your website."}
+            {"This action will set this website as default."}
           </strong>
           <div>
             Website will be available at:
@@ -69,7 +69,7 @@ const PublishDialog = React.createClass({
             </a>
           </div>
           <div className="vm-4-t vm-4-b">
-            Click publish button to deploy you changes
+            Click button to set this website as default
           </div>
         </div>
       </Dialog.Delete>

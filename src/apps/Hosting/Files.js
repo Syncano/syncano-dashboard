@@ -89,7 +89,7 @@ const HostingFilesView = React.createClass({
         <InnerToolbar title="Website Hosting">
           <Show if={items.length && !isLoading}>
             <RaisedButton
-              label={isDefaultHosting ? 'Published' : 'Publish'}
+              label={isDefaultHosting ? 'Default' : 'Set as default'}
               onTouchTap={this.handleShowPublishDialog}
               primary={true}
               disabled={isDefaultHosting}
