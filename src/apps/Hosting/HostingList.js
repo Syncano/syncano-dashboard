@@ -1,5 +1,4 @@
 import React from 'react';
-import shortid from 'shortid';
 import _ from 'lodash';
 
 import { DialogsMixin } from '../../mixins';
@@ -53,11 +52,7 @@ const HostingList = React.createClass({
     const { checkItem } = this.props;
 
     const showEditDialog = () => {
-      item.domains = _.without(item.domains, 'default');
-      item.domains = _.map(item.domains, (domain) => {
-        if (_.isString(domain)) return ({ id: shortid.generate(), value: domain });
-        return domain;
-      });
+      item.domains = _.reject(item.domains, { value: 'default' });
       HostingActions.showDialog(item);
     };
 

@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import shortid from 'shortid';
 import _ from 'lodash';
 
 import {
@@ -49,15 +50,12 @@ export default Reflux.createStore({
     });
   },
 
-  getDefaultHosting(objects) {
-    const defaultHosting = _.find(objects, (hosting) => _.includes(hosting.domains, 'default'));
-
-    return defaultHosting;
-  },
-
   setHosting(data) {
-    this.data.items = data;
-    this.data.defaultHosting = this.getDefaultHosting(data);
+    const hostings = _.forEach(data, (hosting) => {
+      hosting.domains = _.map(hosting.domains, (domain) => ({ id: shortid.generate(), value: domain }));
+    });
+
+    this.data.items = hostings;
     this.trigger(this.data);
   },
 

@@ -48,10 +48,11 @@ class HostingListItem extends Component {
     const { areLinksVisible } = this.state;
     const { item, onIconClick, params, showDeleteDialog, showPublishDialog, showEditDialog } = this.props;
     const styles = this.getStyles();
-    const isDefaultHosting = _.includes(item.domains, 'default');
+    const isDefaultHosting = _.some(item.domains, { value: 'default' });
     const defaultLink = `https://${params.instanceName}.syncano.site`;
     const domainsCount = item.domains.length;
-    const customDomainLink = domainsCount ? `https://${params.instanceName}--${item.domains[0]}.syncano.site` : '';
+    const customDomainLink = domainsCount ?
+      `https://${params.instanceName}--${item.domains[0].value}.syncano.site` : '';
     const visibleLink = isDefaultHosting ? defaultLink : customDomainLink;
     const moreLinksLabel = areLinksVisible ? 'Hide Links' : 'More Links';
     const filesRedirectPath = `/instances/${params.instanceName}/hosting/${item.id}/files/`;

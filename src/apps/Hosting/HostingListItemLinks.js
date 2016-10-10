@@ -48,7 +48,7 @@ const HostingListItemLinks = ({ isVisible, params, domains }) => {
     const { instanceName } = params;
     const domainsToDisplay = _.without(domains, 'default');
     const linksItems = _.map(domainsToDisplay, (domain, index) => {
-      const linkBase = `${instanceName}--${domain}`;
+      const linkBase = `${instanceName}--${domain.value}`;
       const hasBorder = domainsToDisplay.length > 1 && index % 2 === 0;
       const linkStyles = hasBorder ? { ...styles.linkItem, ...styles.linkBorderStyles } : styles.linkItem;
 
