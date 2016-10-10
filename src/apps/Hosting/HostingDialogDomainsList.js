@@ -4,11 +4,6 @@ import _ from 'lodash';
 import HostingDialogDomainRow from './HostingDialogDomainRow';
 
 class HostingDialogDomainsList extends Component {
-  /* eslint-disable no-useless-constructor */
-  constructor(props) {
-    super(props);
-  }
-
   componentDidUpdate(prevProps) {
     if (prevProps.domains.length < this.props.domains.length) {
       this.refs.hostingDialogDomainsList.scrollIntoView(false);
@@ -22,8 +17,8 @@ class HostingDialogDomainsList extends Component {
 
       return (
         <HostingDialogDomainRow
-          key={index}
-          domain={domain}
+          key={domain.id}
+          domain={domain.value}
           handleAddNewDomain={handleAddNewDomain}
           handleChangeCurrentDomain={handleChangeCurrentDomain}
           handleRemoveDomain={handleRemoveDomain}
@@ -34,11 +29,13 @@ class HostingDialogDomainsList extends Component {
     return items;
   }
 
-  render = () => (
-    <div ref="hostingDialogDomainsList">
-      {this.renderItems()}
-    </div>
-  );
+  render() {
+    return (
+      <div ref="hostingDialogDomainsList">
+        {this.renderItems()}
+      </div>
+    );
+  }
 }
 
 export default HostingDialogDomainsList;

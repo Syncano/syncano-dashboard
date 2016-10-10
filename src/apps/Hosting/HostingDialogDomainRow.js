@@ -4,7 +4,8 @@ import {
   FlatButton,
   TableRow,
   TableRowColumn,
-  TextField } from 'material-ui';
+  TextField
+} from 'material-ui';
 
 import SessionStore from '../Session/SessionStore';
 
@@ -21,66 +22,50 @@ const HostingDialogDomainRow = ({
     tableRow: {
       display: 'flex',
       borderBottom: 'none',
-      flex: 1
+      flex: 1,
+      justifyContent: 'space-between'
     },
     tableRowColumn: {
       display: 'flex',
-      alignItems: 'center'
-    },
-    tableRowColumnLink: {
-      overflowX: 'scroll',
-      marginLeft: 0
-    },
-    tableRowColumnButton: {
-      justifyContent: 'center'
+      alignItems: 'center',
+      fontSize: 14
     }
   };
 
   const handleDomainChange = handleChangeCurrentDomain || handleChangeNewDomain;
   const handleDomainRemove = () => handleRemoveDomain(domain);
-  const domainName = domain || '';
-  const renderActionButton = () => (
-    handleChangeNewDomain ?
-      <FlatButton
-        label="Add"
-        secondary={true}
-        disabled={!domain}
-        onClick={handleAddNewDomain}
-      /> :
-      <FlatButton
-        label="Remove"
-        secondary={true}
-        onClick={handleDomainRemove}
-      />
+  const addButton = (
+    <FlatButton
+      label="Add"
+      secondary={true}
+      disabled={!domain}
+      onClick={handleAddNewDomain}
+    />
   );
+  const deleteButton = (
+    <FlatButton
+      label="Remove"
+      secondary={true}
+      onClick={handleDomainRemove}
+    />
+  );
+  const renderActionButton = handleChangeNewDomain ? addButton : deleteButton;
 
   return (
     <TableRow style={styles.tableRow}>
-      <TableRowColumn
-        className="col-flex-2"
-        style={styles.tableRowColumn}
-      >
+      <TableRowColumn style={styles.tableRowColumn}>
+        {`https://${currentInstanceName}--`}
         <TextField
           name="domain"
-          hintText="Domain"
+          hintText="domain"
           fullWidth={true}
           value={domain}
           onChange={handleDomainChange}
         />
+        .syncano.site/
       </TableRowColumn>
-      <TableRowColumn
-        className="col-flex-2"
-        style={{ ...styles.tableRowColumn, ...styles.tableRowColumnLink }}
-      >
-        <a href={`https://${currentInstanceName}--${domain}.syncano.site`} target="_blank">
-          {`https://{currentInstanceName}--${domainName}.syncano.site/`}
-        </a>
-      </TableRowColumn>
-      <TableRowColumn
-        className="col-flex-1"
-        style={{ ...styles.tableRowColumn, ...styles.tableRowColumnButton }}
-      >
-        {renderActionButton()}
+      <TableRowColumn style={{ ...styles.tableRowColumn, ...styles.tableRowButtonColumn }}>
+        {renderActionButton}
       </TableRowColumn>
     </TableRow>
   );

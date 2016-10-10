@@ -1,13 +1,8 @@
-/* eslint-disable no-useless-constructor */
 import React, { Component } from 'react';
 
 import { RaisedButton, FlatButton } from 'material-ui';
 
 class UploadFilesButton extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.setInputAttributes();
   }

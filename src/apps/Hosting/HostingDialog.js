@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import shortid from 'shortid';
 import _ from 'lodash';
 
 import { DialogMixin, FormMixin } from '../../mixins';
@@ -34,25 +35,27 @@ const CreateHostingDialog = React.createClass({
   },
 
   getHostingParams() {
-    const { label, description, domains, id } = this.state;
+    const { description, domains, id, label, newDomain } = this.state;
     let domainsArray = domains;
 
     if (domains && domains.length && _.isObject(domains[0])) {
       domainsArray = _.map(domains, 'value');
     }
 
+    if (newDomain && newDomain.value.length) {
+      domainsArray.push(newDomain);
+    }
+
     return { label, description, id, domains: domainsArray };
   },
 
   handleChangeNewDomain(event, domain) {
-    this.setState({
-      newDomain: domain
-    });
+    this.setState({ newDomain: domain });
   },
 
   handleAddNewDomain() {
     const { domains, newDomain } = this.state;
-    const newDomains = _.union(domains, [newDomain]);
+    const newDomains = _.union(domains, [{ id: shortid.generate(), value: newDomain }]);
 
     this.setState({
       domains: newDomains,
@@ -63,12 +66,12 @@ const CreateHostingDialog = React.createClass({
   handleChangeDomains(domain, index) {
     const { domains } = this.state;
 
-    domains[index] = domain;
+    domains[index].value = domain;
     this.setState({ domains });
   },
 
   handleRemoveDomain(domain) {
-    const domains = _.without(this.state.domains, domain);
+    const domains = _.reject(this.state.domains, { value: domain });
 
     this.setState({ domains });
   },
@@ -156,13 +159,14 @@ const CreateHostingDialog = React.createClass({
             handleChangeDomains={this.handleChangeDomains}
             handleRemoveDomain={this.handleRemoveDomain}
           />
-          <div className="vm-2-t">
-            <Show if={this.getValidationMessages('domains').length}>
-              <Notification type="error">
-                {this.getValidationMessages('domains').join(' ')}
-              </Notification>
-            </Show>
-          </div>
+          <Show if={this.getValidationMessages('domains').length}>
+            <Notification
+              className="vm-2-t"
+              type="error"
+            >
+              {this.getValidationMessages('domains').join(' ')}
+            </Notification>
+          </Show>
         </div>
         <div className="vm-2-t">
           {this.renderFormNotifications()}

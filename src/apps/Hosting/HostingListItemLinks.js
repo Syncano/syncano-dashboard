@@ -55,7 +55,7 @@ const HostingListItemLinks = ({ isVisible, params, domains }) => {
       return (
         <div
           style={linkStyles}
-          key={`domain-${domain}`}
+          key={`domain-${domain.id || domain}`}
         >
           <LinkWithIcon url={`https://${linkBase}.syncano.site`} />
         </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Table, TableHeader, TableRow, TableHeaderColumn, TableBody } from 'material-ui';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow } from 'material-ui';
 
 import HostingDialogDomainRow from './HostingDialogDomainRow';
 import HostingDialogDomainsList from './HostingDialogDomainsList';
@@ -14,50 +14,45 @@ const HostingDialogDomainTable = ({
   newDomain
 }) => {
   const styles = {
+    tableBody: {
+      display: 'block',
+      maxHeight: 240
+    },
     tableRow: {
-      display: 'flex'
+      display: 'flex',
+      justifyContent: 'space-between',
+      border: 'none'
     },
     tableHeaderColumn: {
       display: 'flex',
       alignItems: 'center'
     },
     tableHeaderColumnButton: {
-      justifyContent: 'center'
-    },
-    tableBody: {
-      display: 'block',
-      maxHeight: 240
+      justifyContent: 'center',
+      width: 140
     }
   };
+
+  const renderTableHeader = () => (
+    <TableHeader
+      adjustForCheckbox={false}
+      displaySelectAll={false}
+    >
+      <TableRow style={styles.tableRow}>
+        <TableHeaderColumn style={styles.tableHeaderColumn}>
+          Domain
+        </TableHeaderColumn>
+        <TableHeaderColumn style={{ ...styles.tableHeaderColumn, ...styles.tableHeaderColumnButton }}>
+          Action
+        </TableHeaderColumn>
+      </TableRow>
+    </TableHeader>
+  );
 
   return (
     <div>
       <Table>
-        <TableHeader
-          adjustForCheckbox={false}
-          displaySelectAll={false}
-        >
-          <TableRow style={styles.tableRow}>
-            <TableHeaderColumn
-              className="col-flex-2"
-              style={styles.tableHeaderColumn}
-            >
-              Domain
-            </TableHeaderColumn>
-            <TableHeaderColumn
-              className="col-flex-2"
-              style={styles.tableHeaderColumn}
-            >
-              Link
-            </TableHeaderColumn>
-            <TableHeaderColumn
-              className="col-flex-1"
-              style={{ ...styles.tableHeaderColumn, ...styles.tableHeaderColumnButton }}
-            >
-              Action
-            </TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
+        {renderTableHeader()}
         <TableBody
           displayRowCheckbox={false}
           style={styles.tableBody}

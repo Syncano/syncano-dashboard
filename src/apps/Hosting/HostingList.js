@@ -1,4 +1,6 @@
 import React from 'react';
+import shortid from 'shortid';
+import _ from 'lodash';
 
 import { DialogsMixin } from '../../mixins';
 
@@ -50,14 +52,30 @@ const HostingList = React.createClass({
   renderItem(item) {
     const { checkItem } = this.props;
 
+    const showEditDialog = () => {
+      item.domains = _.map(item.domains, (domain) => {
+        if (_.isString(domain)) return ({ id: shortid.generate(), value: domain });
+        return domain;
+      });
+      HostingActions.showDialog(item);
+    };
+
+    const showPublishDialog = () => {
+      HostingPublishDialogActions.showDialog(item);
+    };
+
+    const showDeleteDialog = () => {
+      this.showDialog('removeHostingDialog', item);
+    };
+
     return (
       <ListItem
         key={`hosting-list-item-${item.id}`}
         onIconClick={checkItem}
         item={item}
-        showEditDialog={() => HostingActions.showDialog(item)}
-        showPublishDialog={() => HostingPublishDialogActions.showDialog(item)}
-        showDeleteDialog={() => this.showDialog('removeHostingDialog', item)}
+        showEditDialog={showEditDialog}
+        showPublishDialog={showPublishDialog}
+        showDeleteDialog={showDeleteDialog}
       />
     );
   },
