@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 import { DialogsMixin } from '../../mixins';
 
@@ -49,6 +50,10 @@ const HostingList = React.createClass({
 
   renderItem(item) {
     const { checkItem } = this.props;
+
+    if (_.includes(item.domains, 'default')) {
+      item.shouldBeSetAsDefault = true;
+    }
 
     return (
       <ListItem

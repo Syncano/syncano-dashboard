@@ -112,9 +112,9 @@ export default React.createClass({
               {' ).'}
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Anonymous usage">
-              API Key with this flag will allow making GET requests to Data Classes
+              {`API Key with this flag will allow making GET requests to Data Classes
               and Data Objects provided that "other_permissions"
-              for those resources are set appropriately.
+              for those resources are set appropriately.`}
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/docs/permissions#using-api-keys-and-user-keys">

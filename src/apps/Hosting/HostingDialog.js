@@ -6,6 +6,7 @@ import { DialogMixin, FormMixin } from '../../mixins';
 
 import Actions from './HostingActions';
 import Store from './HostingStore';
+import SessionStore from '../Session/SessionStore';
 
 import { TextField, Checkbox } from 'material-ui';
 import { Dialog, Show, Notification, SelectWrapper } from '../../common';
@@ -61,8 +62,12 @@ const CreateHostingDialog = React.createClass({
   },
 
   handleAddSubmit() {
-    const { shouldBeSetAsDefault } = this.state;
+    const { shouldBeSetAsDefault, items } = this.state;
     const params = this.getHostingParams();
+
+    if (_.isEmpty(items)) {
+      params.domains.push('default');
+    }
 
     Actions.createHosting(params, shouldBeSetAsDefault);
   },
@@ -87,9 +92,13 @@ const CreateHostingDialog = React.createClass({
   },
 
   render() {
-    const { isLoading, open, label, description, canSubmit, domains } = this.state;
+    const { isLoading, open, label, description, canSubmit, domains, shouldBeSetAsDefault } = this.state;
     const title = this.hasEditMode() ? 'Edit Hosting' : 'Add Hosting';
     const styles = this.getStyles();
+    const currentInstance = SessionStore.getInstance();
+    const currentInstanceName = currentInstance && currentInstance.name;
+    const defaultLink = `https://${currentInstanceName}.syncano.site`;
+    const valueWithoutDefault = _.pull(domains, 'default');
 
     return (
       <Dialog.FullPage
@@ -111,10 +120,23 @@ const CreateHostingDialog = React.createClass({
         sidebar={
           <Dialog.SidebarBox>
             <Dialog.SidebarSection>
-              Hosting allows you to manage, deploy and publish websites using Syncano platform.
+              Hosting allows you to manage, deploy and publish websites using Syncano Platform.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Hosting label">
+              Name of the hosting in Syncano Dashboard.
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Domains">
+              You can define different domains and use it for staging/production flow or simply to
+              compare various versions of your web application.
+              The domains will be linked to your hosting at
+              https://{currentInstanceName}--<em>domain</em>.syncano.site
+            </Dialog.SidebarSection>
+            <Dialog.SidebarSection title="Default hosting">
+              You can also check <em>Set as default hosting</em> then it will be connected directly to your current
+              Instance and avaliable at {defaultLink}
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
-              <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/">
+              <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/hosting/">
                 Learn more
               </Dialog.SidebarLink>
             </Dialog.SidebarSection>
@@ -146,6 +168,7 @@ const CreateHostingDialog = React.createClass({
           <Checkbox
             style={styles.checkBox}
             label="Set as default hosting"
+            checked={shouldBeSetAsDefault}
             labelStyle={styles.checkBoxLabel}
             onCheck={this.handleDefaultDomainCheck}
           />
@@ -153,7 +176,7 @@ const CreateHostingDialog = React.createClass({
             errorText={this.getValidationMessages('domains').join(' ')}
             className="vm-3-t"
             multi={true}
-            value={domains}
+            value={valueWithoutDefault}
             allowCreate={true}
             placeholder="Domains"
             onChange={this.handleChangeDomain}

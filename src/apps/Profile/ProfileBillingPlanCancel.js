@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { withRouter } from 'react-router';
 
 import Store from './ProfileBillingPlanStore';
-import Actions from './ProfileBillingPlanActions.js';
+import Actions from './ProfileBillingPlanActions';
 
 import { Container, InnerToolbar, Loading } from '../../common/';
 import ProfileBillingPlanCancelForm from './ProfileBillingPlanCancelForm';

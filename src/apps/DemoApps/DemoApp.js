@@ -196,7 +196,7 @@ const DemoApp = React.createClass({
                   style={styles.icon}
                 />
                 <div>
-                  {"App Code: "}
+                  {'App Code: '}
                   <a
                     href={appGithubSrc}
                     target="_blank"
@@ -214,7 +214,7 @@ const DemoApp = React.createClass({
                   style={styles.icon}
                 />
                 <div>
-                  {"Full Tutorial: "}
+                  {'Full Tutorial: '}
                   <a
                     href={appTutorialSrc}
                     target="_blank"
@@ -229,10 +229,10 @@ const DemoApp = React.createClass({
         <div style={styles.subHeader}>
           Description
         </div>
-          {`When you click the Install button, Syncano will set up the backend needed for
-          the application to work. It'll also deploy the front-end and connect it to the database.
-          Click on the Hosting socket url to view your app. Browse through Classes and Sockets to 
-          understand the data schema.`}
+        {`When you click the Install button, Syncano will set up the backend needed for
+        the application to work. It'll also deploy the front-end and connect it to the database.
+        Click on the Hosting socket url to view your app. Browse through Classes and Sockets to
+        understand the data schema.`}
         <div style={styles.subHeader}>
           App Data Schema
         </div>

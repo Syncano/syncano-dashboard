@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['groups'],
   before(client) {
-    const { accountKey } = accounts.instanceUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -16,7 +16,7 @@ export default addTestNamePrefixes({
   'Administrator adds a Group': (client) => {
     const usersPage = client.page.usersPage();
     const suffix = utils.addSuffix('group');
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
 
     usersPage
       .goToUrl(instanceName, 'users')

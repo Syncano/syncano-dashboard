@@ -58,6 +58,7 @@ export default React.createClass({
             primary={true}
             style={{ marginRight: 0 }}
             onTouchTap={Actions.showDialog}
+            data-e2e="classes-add-button"
           />
         </InnerToolbar>
 

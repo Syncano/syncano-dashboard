@@ -5,8 +5,8 @@ import _ from 'lodash';
 
 import { DialogMixin, FormMixin } from '../../mixins';
 
-import Store from './SendChannelMessageDialogStore';
-import Actions from './SendChannelMessageDialogActions';
+import SendChannelMessageDialogStore from './SendChannelMessageDialogStore';
+import SendChannelMessageDialogActions from './SendChannelMessageDialogActions';
 
 import { FontIcon, RaisedButton, TextField, Toggle } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
@@ -16,7 +16,7 @@ import SendChannelMessageSummary from './SendChannelMessageSummary';
 
 const SendChannelMessageDialog = React.createClass({
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(SendChannelMessageDialogStore),
     DialogMixin,
     FormMixin
   ],
@@ -38,7 +38,7 @@ const SendChannelMessageDialog = React.createClass({
             return {
               inclusion: {
                 within: [],
-                message: '^ is not a valid JSON'
+                message: '^Message is not a valid JSON'
               }
             };
           }
@@ -50,7 +50,7 @@ const SendChannelMessageDialog = React.createClass({
     if (type === 'separate_rooms') {
       validateObj.room = {
         presence: {
-          message: "^Room field can't be blank for separate_rooms Channel type"
+          message: '^Room field can\'t be blank for separate_rooms Channel type'
         }
       };
     }
@@ -59,7 +59,9 @@ const SendChannelMessageDialog = React.createClass({
   },
 
   componentWillMount() {
-    this.updatePoll = _.debounce((name, room) => Actions.pollForChannel(name, room), 500, { trailing: true });
+    this.updatePoll = _.debounce(
+      (name, room) => SendChannelMessageDialogActions.pollForChannel(name, room), 500, { trailing: true }
+    );
   },
 
   componentWillUpdate(nextProps, nextState) {
@@ -70,17 +72,17 @@ const SendChannelMessageDialog = React.createClass({
     const shouldUpdatePolling = isSeparateRooms && !_.isEmpty(nextState.room) && (this.state.room !== nextState.room);
 
     if (shouldStartPolling) {
-      Actions.pollForChannel(name, room);
+      SendChannelMessageDialogActions.pollForChannel(name, room);
     }
 
     if (nextState._dialogVisible && shouldUpdatePolling) {
-      Actions.stopPolling();
+      SendChannelMessageDialogActions.stopPolling();
       this.updatePoll(name, room);
     }
 
     if (shouldStopPolling) {
-      Actions.clearMessagesHistory();
-      Actions.stopPolling();
+      SendChannelMessageDialogActions.clearMessagesHistory();
+      SendChannelMessageDialogActions.stopPolling();
     }
   },
 
@@ -99,27 +101,50 @@ const SendChannelMessageDialog = React.createClass({
         overflow: 'auto'
       },
       messagesHistoryMessage: {
-        marginBottom: 8,
-        paddingBottom: 8,
-        borderBottom: '1px dashed white'
+        borderBottom: '1px solid rgba(255, 255, 255, .0980392)'
       }
     };
   },
 
-  handleEditSubmit() {
-    const { name, messageText, isJSONMessage, JSONMessage, room } = this.state;
+  getMessage() {
+    const { messageText, isJSONMessage, JSONMessage } = this.state;
+    let message = { content: messageText };
 
     if (isJSONMessage) {
-      return Actions.sendChannelMessage(name, JSON.parse(JSONMessage), room);
+      message = JSON.parse(JSONMessage);
     }
 
-    return Actions.sendChannelMessage(name, { content: messageText }, room);
+    return message;
+  },
+
+  handleEditSubmit() {
+    const { name, room } = this.state;
+    const message = this.getMessage();
+
+    SendChannelMessageDialogActions.sendChannelMessage(name, message, room);
+    this.clearMessageText();
   },
 
   handleAdvancedEditorToggleToggle() {
     const { isJSONMessage } = this.state;
 
     this.setState({ isJSONMessage: !isJSONMessage });
+  },
+
+  handleRoomChange(event, value) {
+    this.setState({ room: value });
+  },
+
+  handleMessageTextChange(event, value) {
+    this.setState({ messageText: value });
+  },
+
+  handleJSONMessageChange(value) {
+    this.setState({ JSONMessage: value });
+  },
+
+  clearMessageText() {
+    this.setState({ messageText: null });
   },
 
   renderSidebarContent() {
@@ -156,7 +181,7 @@ const SendChannelMessageDialog = React.createClass({
             mode="json"
             height="200px"
             style={styles.messageEditor}
-            onChange={(value) => this.setState({ JSONMessage: value })}
+            onChange={this.handleJSONMessageChange}
             onFocus={disableBindShortcuts}
             onBlur={enableBindShortcuts}
             value={JSONMessage || [
@@ -182,12 +207,13 @@ const SendChannelMessageDialog = React.createClass({
         label="messageText"
         autoFocus={true}
         fullWidth={true}
-        multiLine={true}
         value={messageText}
-        onChange={(event, value) => this.setState({ messageText: value })}
+        onChange={this.handleMessageTextChange}
         errorText={this.getValidationMessages('messageText').join(' ')}
         hintText="Your message goes here"
         floatingLabelText="Message"
+        onFocus={disableBindShortcuts}
+        onBlur={enableBindShortcuts}
         data-e2e="send-channel-message-content-input"
       />
     );
@@ -200,6 +226,7 @@ const SendChannelMessageDialog = React.createClass({
     return _.map(messagesHistory, (message) => (
       <div
         key={`message${message.id}-${shortid.generate()}`}
+        className="vm-2-b vp-2-b"
         style={styles.messagesHistoryMessage}
       >
         <div>Message Id: {message.id}</div>
@@ -219,10 +246,7 @@ const SendChannelMessageDialog = React.createClass({
     const stepContent = {
       step0: (
         <div className="vm-2-t">
-          <Dialog.ContentSection
-            className="vp-2-b"
-            title="Channel Room"
-          >
+          <Dialog.ContentSection title="Channel Room">
             <div className="col-flex-1">
               <TextField
                 label="room"
@@ -230,7 +254,7 @@ const SendChannelMessageDialog = React.createClass({
                 fullWidth={true}
                 disabled={!isSeparateRooms}
                 value={room}
-                onChange={(event, value) => this.setState({ room: value })}
+                onChange={this.handleRoomChange}
                 errorText={this.getValidationMessages('room').join(' ')}
                 hintText="Type room name here"
                 floatingLabelText={roomHint}
@@ -239,22 +263,24 @@ const SendChannelMessageDialog = React.createClass({
           </Dialog.ContentSection>
           <Dialog.ContentSection title="Message Content">
             <div className="col-flex-1">
-              <Toggle
-                label="Use advanced editor (JSON)"
-                className="vm-2-t"
-                labelPosition="right"
-                toggled={isJSONMessage}
-                onToggle={this.handleAdvancedEditorToggleToggle}
-              />
-              {this.renderMessageEditor()}
-              <div className="vm-2-t text--right">
-                <RaisedButton
-                  primary={true}
-                  label="Send Message"
-                  onTouchTap={this.handleFormValidation}
-                  data-e2e="send-channel-message-dialog-send-message-button"
+              <form onSubmit={this.handleFormValidation}>
+                <Toggle
+                  label="Use advanced editor (JSON)"
+                  className="vm-2-t"
+                  labelPosition="right"
+                  toggled={isJSONMessage}
+                  onToggle={this.handleAdvancedEditorToggleToggle}
                 />
-              </div>
+                {this.renderMessageEditor()}
+                <div className="vm-2-t text--right">
+                  <RaisedButton
+                    primary={true}
+                    type="submit"
+                    label="Send Message"
+                    data-e2e="send-channel-message-dialog-send-message-button"
+                  />
+                </div>
+              </form>
             </div>
           </Dialog.ContentSection>
           <Dialog.ContentSection
@@ -325,7 +351,7 @@ const SendChannelMessageDialog = React.createClass({
 
   renderActionButtons() {
     const { canSubmit, isFinished, sentMessage, stepIndex } = this.state;
-    const handleNextStep = () => Actions.changeStep(stepIndex + 1);
+    const handleNextStep = () => SendChannelMessageDialogActions.changeStep(stepIndex + 1);
 
     if (isFinished) {
       return (

@@ -17,7 +17,7 @@ export default {
       .Hosting
       .please()
       .create(params)
-      .then(createdHosting => {
+      .then((createdHosting) => {
         if (shouldBeSetAsDefault) {
           return this.NewLibConnection
             .Hosting
@@ -37,7 +37,7 @@ export default {
       .Hosting
       .please()
       .update({ id }, params)
-      .then(createdHosting => {
+      .then((createdHosting) => {
         if (shouldBeSetAsDefault) {
           return this.NewLibConnection
             .Hosting
@@ -64,7 +64,7 @@ export default {
   uploadFiles(hostingId, files) {
     const all = this.NewLibConnection.HostingFile.please().all({ hostingId }, { ordering: 'desc' });
 
-    all.on('stop', fetchedFiles => {
+    all.on('stop', (fetchedFiles) => {
       bluebird.mapSeries(files, (file, currentFileIndex) => {
         const lastFileIndex = files.length - 1;
         const hasNextFile = files.length > currentFileIndex + 1;
@@ -102,14 +102,14 @@ export default {
     const data = {};
     const all = this.NewLibConnection.HostingFile.please().all({ hostingId }, { ordering: 'desc' });
 
-    all.on('stop', files => {
+    all.on('stop', (files) => {
       data.files = files;
 
       this.NewLibConnection
         .Hosting
         .please()
         .get({ id: hostingId })
-        .then(hostingDetails => {
+        .then((hostingDetails) => {
           data.hostingDetails = hostingDetails;
 
           this.completed(data);
@@ -119,7 +119,7 @@ export default {
   },
 
   removeFiles(files, hostingId) {
-    bluebird.mapSeries(files, file => (
+    bluebird.mapSeries(files, (file) => (
       this.NewLibConnection
         .HostingFile
         .please()

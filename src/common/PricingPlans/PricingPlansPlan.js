@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import numeral from 'numeral';
 import _ from 'lodash';
 
-import PricingPlansUtil from '../../utils/PricingPlansUtil.js';
+import PricingPlansUtil from '../../utils/PricingPlansUtil';
 
 import Store from '../../apps/Profile/ProfileBillingPlanStore';
 import PlanDialogActions from '../../apps/Profile/ProfileBillingPlanDialogActions';
@@ -56,93 +56,91 @@ class PricingPlansPlan extends Component {
     return options[0].price;
   }
 
-  getStyles() {
-    return {
-      heading: {
-        fontSize: '1.3em',
-        height: 65,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        position: 'relative'
-      },
-      headingSmall: {
-        fontSize: 13,
-        width: '100%',
-        marginBottom: 6,
-        position: 'absolute',
-        top: 0,
-        color: '#AAA'
-      },
-      pricingPlansPlan: {
-        maxWidth: 350,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        textAlign: 'left'
-      },
-      pricingPlansPlanHighlighted: {
-        backgroundColor: '#f5f5f5'
-      },
-      pricingPlansPlanContent: {
-        padding: 16
-      },
-      subheader: {
-        textAlign: 'center',
-        padding: 0,
-        borderBottom: 'solid 1px rgba(0, 0, 0, .117647)',
-        fontWeight: 700
-      },
-      price: {
-        fontWeight: 700,
-        color: '#333A42',
-        fontSize: 48,
-        textAlign: 'center',
-        textTransform: 'uppercase',
-        lineHeight: 1
-      },
-      period: {
-        fontSize: 18,
-        fontWeight: 500,
-        color: '#757E88',
-        textAlign: 'center',
-        lineHeight: 1,
-        height: 18
-      },
-      includes: {
-        padding: 0,
-        lineHeight: 1,
-        marginTop: 24,
-        marginBottom: 12
-      },
-      button: {
-        width: '100%',
-        height: 44,
-        marginTop: 24
-      },
-      listItemInnerDiv: {
-        paddingTop: 8,
-        paddingBottom: 8,
-        paddingLeft: 48
-      },
-      listItemIcon: {
-        width: 'auto',
-        height: 'auto',
-        margin: 0,
-        top: '50%',
-        left: 16,
-        transform: 'translateY(-50%)'
-      },
-      footer: {
-        marginTop: 16,
-        color: '#AAA'
-      },
-      textlink: {
-        color: '#42a5f5',
-        cursor: 'pointer'
-      }
-    };
-  }
+  getStyles = () => ({
+    heading: {
+      fontSize: '1.3em',
+      height: 65,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'column',
+      position: 'relative'
+    },
+    headingSmall: {
+      fontSize: 13,
+      width: '100%',
+      marginBottom: 6,
+      position: 'absolute',
+      top: 0,
+      color: '#AAA'
+    },
+    pricingPlansPlan: {
+      maxWidth: 350,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      textAlign: 'left'
+    },
+    pricingPlansPlanHighlighted: {
+      backgroundColor: '#f5f5f5'
+    },
+    pricingPlansPlanContent: {
+      padding: 16
+    },
+    subheader: {
+      textAlign: 'center',
+      padding: 0,
+      borderBottom: 'solid 1px rgba(0, 0, 0, .117647)',
+      fontWeight: 700
+    },
+    price: {
+      fontWeight: 700,
+      color: '#333A42',
+      fontSize: 48,
+      textAlign: 'center',
+      textTransform: 'uppercase',
+      lineHeight: 1
+    },
+    period: {
+      fontSize: 18,
+      fontWeight: 500,
+      color: '#757E88',
+      textAlign: 'center',
+      lineHeight: 1,
+      height: 18
+    },
+    includes: {
+      padding: 0,
+      lineHeight: 1,
+      marginTop: 24,
+      marginBottom: 12
+    },
+    button: {
+      width: '100%',
+      height: 44,
+      marginTop: 24
+    },
+    listItemInnerDiv: {
+      paddingTop: 8,
+      paddingBottom: 8,
+      paddingLeft: 48
+    },
+    listItemIcon: {
+      width: 'auto',
+      height: 'auto',
+      margin: 0,
+      top: '50%',
+      left: 16,
+      transform: 'translateY(-50%)'
+    },
+    footer: {
+      marginTop: 16,
+      color: '#AAA'
+    },
+    textlink: {
+      color: '#42a5f5',
+      cursor: 'pointer'
+    }
+  })
 
   getPlanHeaderContent() {
     const { price } = this.props;
@@ -215,7 +213,7 @@ class PricingPlansPlan extends Component {
     router.push('profile-billing-plan-downgrade');
   }
 
-  formatSelectLabel(field, option) {
+  formatSelectLabel = (field, option) => {
     const label = {
       apiCallsPrice: 'API calls',
       scriptsPrice: 'Script seconds'

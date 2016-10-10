@@ -1,13 +1,11 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['template'],
-  after(client) {
-    client.end();
-  },
-  before(client) {
-    const { accountKey } = accounts.instanceUser;
+  after: (client) => client.end(),
+  before: (client) => {
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -17,7 +15,7 @@ export default addTestNamePrefixes({
     const listsPage = client.page.listsPage();
     const templateViewPage = client.page.templateViewPage();
     const templateName = utils.addSuffix('template');
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
 
     listsPage
       .goToUrl(instanceName, 'templates')
@@ -36,7 +34,7 @@ export default addTestNamePrefixes({
   },
   'Test Edit Template': (client) => {
     const listsPage = client.page.listsPage();
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
     const templateViewPage = client.page.templateViewPage();
 
     listsPage
@@ -56,7 +54,7 @@ export default addTestNamePrefixes({
   },
   'Test Delete Template': (client) => {
     const listsPage = client.page.listsPage();
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
 
     listsPage
       .goToUrl(instanceName, 'templates')
