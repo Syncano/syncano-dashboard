@@ -144,13 +144,13 @@ class DataObjectsTable extends Component {
     });
   }
 
-  handleFileOnClick(event, value) {
+  handleFileOnClick = (event, value) => {
     event.preventDefault();
     event.stopPropagation();
     window.open(value, '_blank');
   }
 
-  showDataObjectEditDialog(cellNumber, columnNumber) {
+  showDataObjectEditDialog = (cellNumber, columnNumber) => {
     if (columnNumber > -1) {
       Store.getSelectedRowObj(cellNumber);
     }
@@ -182,7 +182,7 @@ class DataObjectsTable extends Component {
   }
 
   // Columns renderers
-  renderColumnDate(value) {
+  renderColumnDate = (value) => {
     if (!value) {
       return '';
     }
@@ -195,11 +195,9 @@ class DataObjectsTable extends Component {
     );
   }
 
-  renderReference(obj) {
-    return (
-      <div>{`${obj.target}: ${obj.value}`}</div>
-    );
-  }
+  renderReference = (obj) => (
+    <div>{`${obj.target}: ${obj.value}`}</div>
+  )
 
   renderFile(obj) {
     return (

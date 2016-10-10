@@ -9,6 +9,6 @@ export default ({ empty = false, children }) => (
       title="Sockets:"
       menu={<SocketsDropdown />}
     >
-        {children}
+      {children}
     </InnerToolbar>
 );

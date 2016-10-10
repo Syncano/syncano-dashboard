@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['solutions'],
   beforeEach: (client) => {
-    const { accountKey } = accounts.navigationUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -14,8 +14,7 @@ export default addTestNamePrefixes({
   'Administrator can view Favorite Solutions': (client) => {
     const solutionsPage = client.page.solutionsPage();
 
-    solutionsPage
-      .navigate();
+    solutionsPage.navigate();
     // Added as favorites selection is not applied without pause.
     client.pause(1500);
     solutionsPage

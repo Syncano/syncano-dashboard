@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['paymentMethods'],
   before: (client) => {
-    const { accountKey } = accounts.instanceUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -28,6 +28,7 @@ export default addTestNamePrefixes({
     const visibleEndNumber = '**** **** **** 4444';
 
     paymentPage
+      .navigate()
       .clickElement('@updatePaymentButton')
       .fillInput('@cardNumberInput', '5555555555554444')
       .fillInput('@cardMonthInput', '11')
@@ -41,6 +42,7 @@ export default addTestNamePrefixes({
     const paymentPage = client.page.billingPaymentPage();
 
     paymentPage
+      .navigate()
       .clickElement('@removePaymentButton')
       .click('@confirmRemoveButton')
       .waitForElementVisible('@addPaymentButton');

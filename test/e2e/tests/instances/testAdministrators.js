@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['administrators'],
   before: (client) => {
-    const { accountKey } = accounts.instanceUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -17,7 +17,7 @@ export default addTestNamePrefixes({
     const { emailDomain } = utils.splitTestBaseEmail();
     const email = `${utils.addSuffix('admin')}@${emailDomain}`;
     const adminsPage = client.page.adminsPage();
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
 
     adminsPage
       .goToUrl(instanceName, 'admins')
@@ -32,7 +32,7 @@ export default addTestNamePrefixes({
   'User deletes an Administrator invitation': (client) => {
     const adminsPage = client.page.adminsPage();
     const listsPage = client.page.listsPage();
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
 
     adminsPage
       .goToUrl(instanceName, 'admins')

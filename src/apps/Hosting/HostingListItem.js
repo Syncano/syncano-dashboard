@@ -44,7 +44,7 @@ class HostingListItem extends Component {
     });
   }
 
-  render = () => {
+  render() {
     const { areLinksVisible } = this.state;
     const { item, onIconClick, params, showDeleteDialog, showPublishDialog, showEditDialog } = this.props;
     const styles = this.getStyles();
@@ -114,8 +114,8 @@ class HostingListItem extends Component {
             />
             <MenuItem
               onTouchTap={showPublishDialog}
-              primaryText="Publish"
-              data-e2e="dropdown-hosting-item-publish"
+              primaryText="Set as default"
+              data-e2e="dropdown-hosting-item-set-default"
             />
             <MenuItem
               onTouchTap={showDeleteDialog}

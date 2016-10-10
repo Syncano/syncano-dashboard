@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['invoices'],
   beforeEach: (client) => {
-    const { accountKey } = accounts.alternativeUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)

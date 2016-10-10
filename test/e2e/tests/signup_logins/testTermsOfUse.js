@@ -10,13 +10,11 @@ export default addTestNamePrefixes({
     signupPage
       .navigate()
       .setResolution(client)
-      .clickTermsOfUseLink();
-
-    client
-      .pause(1000)
+      .clickTermsOfUseLink()
       .changeWindow(1, 2);
 
-    termsPage.expect.element('@termsOfUseContainer').to.be.present.after(10000);
-    termsPage.expect.element('@termsOfUseContainer').to.contain.text('Terms and Legal');
+    termsPage
+      .waitForElementVisible('@termsOfUseContainer')
+      .assert.containsText('@termsOfUseContainer', 'Terms and Legal');
   }
 });
