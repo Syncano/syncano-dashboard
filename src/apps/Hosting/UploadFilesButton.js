@@ -14,6 +14,13 @@ class UploadFilesButton extends Component {
     this.setInputAttributes();
   }
 
+  getStyles = () => ({
+    chooseFilesButton: {
+      display: 'none',
+      position: 'absolute'
+    }
+  })
+
   handleClickButton = () => {
     this.refs.dirSelect.click();
   }
@@ -30,13 +37,8 @@ class UploadFilesButton extends Component {
   }
 
   render = () => {
-    const styles = {
-      input: {
-        display: 'none',
-        position: 'absolute'
-      }
-    };
     const { hasFiles, handleSendFiles, handleUploadFiles, handleClearFiles } = this.props;
+    const styles = this.getStyles();
 
     if (hasFiles) {
       return (
@@ -62,7 +64,7 @@ class UploadFilesButton extends Component {
         onTouchTap={this.handleClickButton}
       >
         <input
-          style={styles.input}
+          style={styles.chooseFilesButton}
           type="file"
           ref="dirSelect"
           onChange={handleUploadFiles}
