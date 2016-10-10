@@ -58,7 +58,7 @@ const HostingDialogDomainRow = ({
         {`https://${currentInstanceName}--`}
         <TextField
           name={handleChangeNewDomain ? 'newDomain' : `domain-${domain}`}
-          hintText="domain"
+          hintText="Type domain"
           fullWidth={true}
           value={domain}
           onChange={handleDomainChange}

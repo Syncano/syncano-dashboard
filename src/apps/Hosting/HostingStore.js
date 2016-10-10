@@ -51,8 +51,12 @@ export default Reflux.createStore({
   },
 
   setHosting(data) {
+    const addIdToDomain = (domain) => ({ id: shortid.generate(), value: domain });
     const hostings = _.forEach(data, (hosting) => {
-      hosting.domains = _.map(hosting.domains, (domain) => ({ id: shortid.generate(), value: domain }));
+      const domains = _.without(hosting.domains, 'default');
+
+      hosting.domains = _.map(domains, addIdToDomain);
+      return hosting;
     });
 
     this.data.items = hostings;
