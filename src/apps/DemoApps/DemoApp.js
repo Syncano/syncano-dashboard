@@ -10,7 +10,6 @@ import SessionStore from '../Session/SessionStore';
 
 import { RaisedButton, FontIcon } from 'material-ui';
 import { InnerToolbar, Dialog, Show, Notification } from '../../common';
-
 import DemoAppBlogLink from './DemoAppBlogLink';
 
 const DemoApp = React.createClass({

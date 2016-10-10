@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({ linkSrc }) => {
+const DemoAppBlogLink = ({ linkSrc }) => {
   const styles = {
     listItem: {
       display: 'inline-flex',
@@ -36,3 +36,5 @@ export default ({ linkSrc }) => {
     </li>
   );
 };
+
+export default DemoAppBlogLink;
