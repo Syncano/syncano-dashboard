@@ -84,6 +84,9 @@ const Header = Radium(React.createClass({
         alignItems: 'center',
         cursor: 'pointer'
       },
+      toolbarDropdownListItem: {
+        paddingLeft: 0
+      },
       accountKeyIcon: {
         zIndex: -1
       },
@@ -254,7 +257,7 @@ const Header = Radium(React.createClass({
               >
                 <Link to="solutions">Solutions Market</Link>
               </li>
-              <li>
+              <li style={styles.toolbarDropdownListItem}>
                 <HeaderGettingStartedDropdown />
               </li>
             </ul>

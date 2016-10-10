@@ -12,7 +12,6 @@ class HeaderGettingStartedDropdown extends Component {
 
   getStyles = () => ({
     flatButtonLabelStyle: {
-      paddingLeft: 0,
       color: '#fff',
       fontSize: 15,
       fontWeight: 400,
@@ -34,9 +33,7 @@ class HeaderGettingStartedDropdown extends Component {
   };
 
   handleRequestClose = () => {
-    this.setState({
-      open: false
-    });
+    this.setState({ open: false });
   };
 
   render() {
@@ -45,7 +42,6 @@ class HeaderGettingStartedDropdown extends Component {
     return (
       <div>
         <FlatButton
-          data-e2e="getting-started-top-nav-button"
           label="Getting Started"
           labelPosition="before"
           labelStyle={styles.flatButtonLabelStyle}
@@ -55,6 +51,7 @@ class HeaderGettingStartedDropdown extends Component {
           />}
           hoverColor="none"
           onTouchTap={this.handleTouchTap}
+          data-e2e="getting-started-top-nav-button"
         />
         <Popover
           open={this.state.open}
@@ -69,8 +66,8 @@ class HeaderGettingStartedDropdown extends Component {
               target="_blank"
             >
               <MenuItem
-                data-e2e="syncano-overview-top-nav-item"
                 primaryText="Syncano Overview"
+                data-e2e="syncano-overview-top-nav-item"
               />
             </a>
             <a
@@ -78,8 +75,8 @@ class HeaderGettingStartedDropdown extends Component {
               target="_blank"
             >
               <MenuItem
-                data-e2e="quickstart-guide-top-nav-item"
                 primaryText="Quick Start Tutorial"
+                data-e2e="quickstart-guide-top-nav-item"
               />
             </a>
             <a
@@ -87,8 +84,8 @@ class HeaderGettingStartedDropdown extends Component {
               target="_blank"
             >
               <MenuItem
-                data-e2e="documentation-top-nav-item"
                 primaryText="Documentation"
+                data-e2e="documentation-top-nav-item"
               />
             </a>
             <a
@@ -96,8 +93,8 @@ class HeaderGettingStartedDropdown extends Component {
               target="_blank"
             >
               <MenuItem
-                data-e2e="tutorials-top-nav-item"
                 primaryText="Tutorials"
+                data-e2e="tutorials-top-nav-item"
               />
             </a>
           </Menu>
