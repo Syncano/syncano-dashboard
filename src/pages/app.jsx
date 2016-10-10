@@ -49,16 +49,6 @@ const App = React.createClass({
       localStorage.setItem('token', token);
       SessionStore.setToken(token);
       SessionActions.setToken(token);
-
-      const { query, state } = this.props.location;
-
-      delete query.token;
-
-      this.props.router.push({
-        pathname: '/',
-        query,
-        state
-      });
     }
   },
 

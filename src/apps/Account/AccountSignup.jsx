@@ -74,13 +74,14 @@ const AccountSignup = React.createClass({
   getBottomContent() {
     return (
       <p className="vm-0-b text--center">
-        By signing up you agree to our
+        {'By signing up you agree to our '}
         <a
           href="http://www.syncano.com/terms-of-service/"
           target="_blank"
         >
-          {' Terms of Use and Privacy Policy'}
-        </a>.
+          Terms of Use and Privacy Policy
+        </a>
+        .
       </p>
     );
   },

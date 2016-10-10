@@ -3,27 +3,45 @@ import { withRouter } from 'react-router';
 import Syncano from 'syncano';
 
 import SessionStore from '../apps/Session/SessionStore';
-import SessionActions from '../apps/Session/SessionActions';
 import InstanceDialogStore from '../apps/Instances/InstanceDialogStore';
 import { Dialog, Loading } from '../common/';
 
 class SetupPage extends Component {
   componentDidMount() {
-    const connection = new Syncano({ baseUrl: SYNCANO_BASE_URL, accountKey: SessionStore.getToken() });
     const { router } = this.props;
-    const name = InstanceDialogStore.genUniqueName();
 
     if (SessionStore.getSignUpMode()) {
-      connection.Instance.please().create({ name }).then((instance) => {
-        SessionActions.fetchInstance(instance.name);
-        router.push(`/instances/${instance.name}/`);
-      });
-
-      SessionStore.removeSignUpMode();
+      this.createFirstInstance();
+    } else {
+      router.push('/instances');
     }
   }
 
+  getStyles = () => ({
+    content: {
+      textAlign: 'center'
+    }
+  });
+
+  createFirstInstance() {
+    const { router } = this.props;
+    const connection = new Syncano({ baseUrl: SYNCANO_BASE_URL, accountKey: SessionStore.getToken() });
+    const name = InstanceDialogStore.genUniqueName();
+
+    connection.Instance.please().create({ name })
+      .then(instance => {
+        router.push(`/instances/${instance.name}/sockets`);
+      })
+      .catch(() => {
+        router.push('/instances');
+      });
+
+    SessionStore.removeSignUpMode();
+  }
+
   render() {
+    const styles = this.getStyles();
+
     return (
       <Dialog.FullPage
         open={true}
@@ -32,9 +50,10 @@ class SetupPage extends Component {
       >
         <div
           className="vm-3-b"
-          style={{ textAlign: 'center' }}
+          style={styles.content}
+          data-e2e="setup-page-content"
         >
-          {"We're preparing your account, please wait..."}
+          {'We\'re preparing your account, please wait...'}
         </div>
         <Loading show={true} />
       </Dialog.FullPage>
