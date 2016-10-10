@@ -36,7 +36,7 @@ class UploadFilesButton extends Component {
     }
   }
 
-  render = () => {
+  render() {
     const { hasFiles, handleSendFiles, handleUploadFiles, handleClearFiles } = this.props;
     const styles = this.getStyles();
 
