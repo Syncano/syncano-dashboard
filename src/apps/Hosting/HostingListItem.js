@@ -80,12 +80,12 @@ class HostingListItem extends Component {
             primaryText={item.label}
           />
           <Column.Desc
-            className="col-flex-1"
+            className="col-sm-5"
             data-e2e={`${item.description}-hosting-list-item-description`}
           >
             {item.description}
           </Column.Desc>
-          <Column.Desc className="col-sm-12">
+          <Column.Desc className="col-flex-1">
             <Show if={domainsCount}>
               <div style={styles.websiteUrlContainerStyles}>
                 <LinkWithIcon url={visibleLink} />
