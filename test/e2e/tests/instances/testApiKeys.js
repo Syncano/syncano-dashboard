@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['apiKeys'],
   before: (client) => {
-    const { accountKey } = accounts.instanceUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -14,7 +14,7 @@ export default addTestNamePrefixes({
   'Test Add Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
     const description = utils.addSuffix();
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
 
     apiKeysPage
       .goToUrl(instanceName, 'api-keys')

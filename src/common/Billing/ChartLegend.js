@@ -5,16 +5,6 @@ import _ from 'lodash';
 export default Radium(React.createClass({
   displayName: 'ChartLegend',
 
-  propTypes: {
-    showPercents: React.PropTypes.bool,
-    rows: React.PropTypes.arrayOf(React.PropTypes.shape({
-      percent: React.PropTypes.number,
-      amount: React.PropTypes.number,
-      label: React.PropTypes.string,
-      styles: React.PropTypes.object
-    }))
-  },
-
   getDefaultProps() {
     return {
       rows: [],
@@ -69,8 +59,9 @@ export default Radium(React.createClass({
           <div className="row">
             <div className="col-md-8">{row.label}</div>
             <div className="col-md-10" style={styles.legendAmount}>
-              <strong>{parseInt(row.amount, 10).toLocaleString()}</strong>  this month</div>
-              {this.props.showPercents ? this.renderPercent(row) : null}
+              <strong>{parseInt(row.amount, 10).toLocaleString()}</strong>  this month
+            </div>
+            {this.props.showPercents ? this.renderPercent(row) : null}
           </div>
         </div>
       </div>

@@ -1,11 +1,12 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 import { DialogStoreMixin, StoreFormMixin } from '../../mixins';
 
-import Actions from './SendChannelMessageDialogActions';
+import SendChannelMessageDialogActions from './SendChannelMessageDialogActions';
 
 export default Reflux.createStore({
-  listenables: Actions,
+  listenables: SendChannelMessageDialogActions,
 
   mixins: [
     DialogStoreMixin,
@@ -74,9 +75,10 @@ export default Reflux.createStore({
     this.trigger({ isLoading: false });
   },
 
-  onPollForChannelCompleted(poll, message) {
+  onPollForChannelCompleted(poll, message, room) {
     this.poll = poll;
     if (message) {
+      !message.room && _.assign(message, { room });
       this.messagesHistory = [message, ...this.messagesHistory];
       this.trigger({ messagesHistory: this.messagesHistory });
     }

@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['pushSocketsGcm'],
   before: (client) => {
-    const { accountKey } = accounts.navigationUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -14,7 +14,7 @@ export default addTestNamePrefixes({
   'Test Admin Adds GCM Socket': (client) => {
     const socketsPage = client.page.socketsPage();
     const gcmDevKey = utils.randomString(39);
-    const { instanceName } = accounts.navigationUser;
+    const { instanceName } = instances.thirdInstance;
 
     socketsPage
       .goToUrl(instanceName, 'push-notifications/config')
@@ -28,8 +28,6 @@ export default addTestNamePrefixes({
     const socketsPage = client.page.socketsPage();
     const gcmDevKey = utils.randomString(39);
     const gcmProdKey = utils.randomString(39);
-
-    client.pause(500);
 
     socketsPage
       .clickListItemDropdown('Google Cloud Messaging (GCM)', 'Edit')
@@ -46,7 +44,7 @@ export default addTestNamePrefixes({
   'Test Admin Goes to GCM Device list': (client) => {
     const socketsPage = client.page.socketsPage();
     const pushDevicesPage = client.page.pushDevicesPage();
-    const { instanceName } = accounts.navigationUser;
+    const { instanceName } = instances.thirdInstance;
 
     socketsPage
       .goToUrl(instanceName, 'push-notifications/config')

@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['pushDevicesGCM'],
   before: (client) => {
-    const { accountKey } = accounts.instanceUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -15,7 +15,7 @@ export default addTestNamePrefixes({
     const listsPage = client.page.listsPage();
     const selectedItems = listsPage.elements.selectedItem.selector;
     const optionsMenu = listsPage.elements.optionsMenu.selector;
-    const { instanceName } = accounts.instanceUser;
+    const { instanceName } = instances.firstInstance;
 
     client
       .goToUrl(instanceName, 'push-notifications/devices/gcm')

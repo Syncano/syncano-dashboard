@@ -13,6 +13,7 @@ import Actions from './ScriptActions';
 import RuntimeStore from '../Runtimes/RuntimesStore';
 
 import { Checkbox, FlatButton, FontIcon, IconButton, RaisedButton, TextField } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles';
 import {
   Dialog,
   Editor,
@@ -199,7 +200,8 @@ const Script = React.createClass({
       },
       resultContainer: {
         display: 'flex',
-        flexFlow: 'column'
+        flexFlow: 'column',
+        width: '100%'
       },
       lastTrace: {
         zIndex: 1,
@@ -212,6 +214,14 @@ const Script = React.createClass({
         flexBasis: 305,
         flexGrow: 1,
         display: 'flex'
+      },
+      linkIcon: {
+        color: Colors.blue500,
+        fontSize: 22,
+        lineHeight: 1
+      },
+      resultIcon: {
+        paddingTop: 10
       }
     };
   },
@@ -236,6 +246,20 @@ const Script = React.createClass({
     const runtimeName = currentScript && RuntimeStore.getRuntimeByName(currentScript.runtime_name);
 
     return runtimeName ? runtimeName.packages : '';
+  },
+
+  getLastTrace(callback) {
+    const { currentScript, traces } = this.state;
+    const lastTrace = traces && traces[0];
+
+    Actions.fetchScriptTrace(currentScript.id, lastTrace.id);
+    const lastTraceResult = this.state.traces[0].result;
+
+    if (_.has(lastTraceResult, '__error__')) {
+      setTimeout(() => this.getLastTrace(callback), 250);
+    } else {
+      callback(lastTraceResult);
+    }
   },
 
   isSaved() {
@@ -797,14 +821,43 @@ const Script = React.createClass({
     );
   },
 
+  renderLastTraceResultInNewTab() {
+    const { currentScript, lastTraceStatus } = this.state;
+
+    this.getLastTrace((pageContent) => {
+      const rawResultPage = window.open();
+      const documentContent = `
+        <title>
+          ${currentScript.label} || ${lastTraceStatus}
+        </title>
+        <pre>${pageContent.stdout}</pre>
+        <pre>${pageContent.stderr}</pre>
+      `;
+
+      rawResultPage.document.write(documentContent);
+    });
+  },
+
   renderSidebarResultSection() {
     const styles = this.getStyles();
     const { lastTraceResult } = this.state;
+    const showRightContent = lastTraceResult && lastTraceResult !== 'Success';
+    const rightContent = showRightContent && (
+      <IconButton
+        onTouchTap={this.renderLastTraceResultInNewTab}
+        iconStyle={styles.linkIcon}
+        style={styles.resultIcon}
+        tooltip="Open last trace result in new tab"
+        tooltipPosition="bottom-left"
+        iconClassName="synicon-launch"
+      />
+    );
 
     return (
       <TogglePanel
         title="Result"
         style={styles.resultContainer}
+        rightContent={rightContent}
       >
         <div style={styles.result}>
           {lastTraceResult}

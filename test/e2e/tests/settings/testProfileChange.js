@@ -1,13 +1,11 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['profile'],
-  after(client) {
-    client.end();
-  },
-  before(client) {
-    const { accountKey } = accounts.navigationUser;
+  after: (client) => client.end(),
+  before: (client) => {
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -20,15 +18,12 @@ export default addTestNamePrefixes({
 
     profilePage
       .navigate()
-      .waitForElementPresent('@title');
-
-    client.pause(2000);
-
-    profilePage
+      .waitForElementPresent('@innerToolbar')
       .fillInput('@firstName', firstName)
       .fillInput('@lastName', lastName)
       .clickElement('@updateButton')
-      .waitForElementPresent('@successDialog')
+      .waitForElementPresent('@notificationBar')
+      .verify.containsText('@notificationBar', 'Profile saved successfully.')
       .verify.value('@firstName', firstName)
       .verify.value('@lastName', lastName);
   }

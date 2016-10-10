@@ -1,22 +1,20 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['triggers'],
-  before(client) {
-    const { accountKey } = accounts.alternativeUser;
+  before: (client) => {
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
       .setResolution(client);
   },
-  after(client) {
-    client.end();
-  },
+  after: (client) => client.end(),
   'Administrator adds a Trigger': (client) => {
     const triggersPage = client.page.triggersPage();
     const suffix = utils.addSuffix('trigger');
-    const { instanceName } = accounts.alternativeUser;
+    const { instanceName } = instances.secondInstance;
 
     triggersPage
       .goToUrl(instanceName, 'triggers')
@@ -25,7 +23,7 @@ export default addTestNamePrefixes({
       .selectDropdownValue('@addTriggerModalSignal', 'create')
       .fillInput('@className', 'user_profile')
       .clickElement('@classUserOption')
-      .fillInput('@addTriggerModalScript', accounts.alternativeUser.tempScriptNames[0])
+      .fillInput('@addTriggerModalScript', instances.secondInstance.scriptsNames[0])
       .clickElement('@scriptUserOption')
       .clickElement('@addTriggerConfirmButton')
       .clickElement('@summaryDialogCloseButton')
