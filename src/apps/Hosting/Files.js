@@ -80,18 +80,24 @@ const HostingFilesView = React.createClass({
     HostingFilesActions.uploadFiles(hostingId, filesToUpload);
   },
 
+  handleOnTouchTap(url) {
+    const hasHostingUrl = !_.isEmpty(url);
+
+    return !hasHostingUrl && this.showMissingDomainsSnackbar;
+  },
+
+  showMissingDomainsSnackbar() {
+    this.setSnackbarNotification({
+      message: "You don't have any domains yet. Please add some or set Hosting as default."
+    });
+  },
+
   extendFilePath(file) {
     const firstSlashIndex = file.webkitRelativePath.indexOf('/');
 
     file.path = file.webkitRelativePath.substring(firstSlashIndex + 1);
 
     return file;
-  },
-
-  showSnackbar() {
-    this.setSnackbarNotification({
-      message: "You don't have any domains yet. Please add some or set Hosting as default."
-    });
   },
 
   render() {
@@ -107,21 +113,19 @@ const HostingFilesView = React.createClass({
 
     const hasFilesToUpload = filesToUpload.length > 0;
     const hostingUrl = this.getHostingUrl();
-    const hasHostingUrl = !_.isEmpty(hostingUrl);
 
     return (
       <div>
         <Helmet title="Website Hosting" />
         <HostingDialog />
         <HostingPublishDialog />
-
         <InnerToolbar title="Website Hosting">
           <Show if={items.length && !isLoading}>
             <RaisedButton
               label="Go to site"
               primary={true}
               icon={<FontIcon className="synicon-open-in-new" style={{ marginTop: 4 }} />}
-              onTouchTap={!hasHostingUrl && this.showSnackbar}
+              onTouchTap={this.handleOnTouchTap(hostingUrl)}
               href={hostingUrl}
               target="_blank"
             />
