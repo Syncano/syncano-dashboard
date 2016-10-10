@@ -6,12 +6,6 @@ import { colors as Colors } from 'material-ui/styles/';
 export default Radium(React.createClass({
   displayName: 'ColumnName',
 
-  propTypes: {
-    id: React.PropTypes.string,
-    color: React.PropTypes.string.isRequired,
-    hoverColor: React.PropTypes.string.isRequired
-  },
-
   getDefaultProps() {
     return {
       color: 'rgba(0,0,0,.54)',

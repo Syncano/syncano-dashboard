@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['pushMessageAPNS', 'apns'],
   before: (client) => {
-    const { accountKey } = accounts.alternativeUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -13,7 +13,7 @@ export default addTestNamePrefixes({
   after: (client) => client.end(),
   'Test Admin Sends iOS Push Notification': (client) => {
     const pushMessagesPage = client.page.pushMessagesPage();
-    const { instanceName } = accounts.alternativeUser;
+    const { instanceName } = instances.secondInstance;
 
     pushMessagesPage
       .goToUrl(instanceName, 'push-notifications/messages/apns/')
@@ -27,5 +27,14 @@ export default addTestNamePrefixes({
       .clickElement('@submitButton')
       .waitForElementVisible('@snackBarNotification')
       .assert.containsText('@snackBarNotification', 'Your iOS Message was sent');
+  },
+  'Test User views APNS Push Notification history': (client) => {
+    const pushMessagesPage = client.page.pushMessagesPage();
+    const { instanceName } = instances.secondInstance;
+    const messageListSelector = pushMessagesPage.elements.messageListItem.selector;
+
+    pushMessagesPage
+      .goToUrl(instanceName, 'push-notifications/messages/apns/')
+      .assertSelectedCount('css selector', messageListSelector, 1);
   }
 });

@@ -1,9 +1,9 @@
-import accounts from '../tempAccounts';
+import instances from '../tempInstances';
 
 export default {
   elements: {
     scriptListItem: {
-      selector: `//div[text()="${accounts.navigationUser.tempScriptNames[0]}"]`,
+      selector: `//div[text()="${instances.thirdInstance.scriptsNames[0]}"]`,
       locateStrategy: 'xpath'
     },
     scriptMenuSelect: {

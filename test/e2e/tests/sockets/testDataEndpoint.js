@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['dataEndpoint'],
   before: (client) => {
-    const { accountKey } = accounts.navigationUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -13,7 +13,7 @@ export default addTestNamePrefixes({
   after: (client) => client.end(),
   'Test Admin Adds Data Endpoint': (client) => {
     const dataEndpointsPage = client.page.dataEndpointsPage();
-    const { instanceName } = accounts.navigationUser;
+    const { instanceName } = instances.thirdInstance;
     const endpointName = utils.addSuffix('data-endpoint');
     const endpointDesc = utils.addSuffix('desc');
     const className = utils.addSuffix('class');
@@ -38,7 +38,7 @@ export default addTestNamePrefixes({
   },
   'Test Admin Edits Data Endpoint': (client) => {
     const dataEndpointsPage = client.page.dataEndpointsPage();
-    const { tempClassNames } = accounts.navigationUser;
+    const { classNames: tempClassNames } = instances.thirdInstance;
     const selectedClass = tempClassNames[0];
 
     dataEndpointsPage
@@ -71,7 +71,7 @@ export default addTestNamePrefixes({
     const dataEndpointsPage = client.page.dataEndpointsPage();
     const endpointName = utils.addSuffix('data-endpoint');
     const endpointDesc = utils.addSuffix('desc');
-    const { instanceName } = accounts.navigationUser;
+    const { instanceName } = instances.thirdInstance;
 
     dataEndpointsPage
       .goToUrl(instanceName, 'data-endpoints')

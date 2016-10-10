@@ -8,7 +8,7 @@ import _ from 'lodash';
 import { FormMixin } from '../../mixins';
 
 import Store from './ProfileBillingPlanStore';
-import Actions from './ProfileBillingPlanActions.js';
+import Actions from './ProfileBillingPlanActions';
 import ChartActions from '../Profile/ProfileBillingChartActions';
 import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';

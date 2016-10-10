@@ -1,3 +1,5 @@
+import instances from '../tempInstances';
+
 const instancesCommands = {
   clickFAB() {
     return this.waitForElementVisible('@fab')
@@ -120,6 +122,13 @@ export default {
     },
     confirmTextField: {
       selector: '//div[@class="confirmation-text-field"]/input',
+      locateStrategy: 'xpath'
+    },
+    instancesListRowName: {
+      selector: `[data-e2e="${instances.thirdInstance.instanceName}-list-row-name"]`
+    },
+    instancesListRowButton: {
+      selector: `//*[@data-e2e="${instances.thirdInstance.instanceName}-list-row-name"]/div/div`,
       locateStrategy: 'xpath'
     }
   }
