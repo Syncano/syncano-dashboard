@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { apiBaseUrl } from './globals';
+
 import sampleScripts from '../../src/apps/Scripts/SampleScripts';
 import sampleSchemas from '../../src/apps/Classes/SampleSchemas';
 import { SNIPPET_TEMPLATE_DATA_SOURCE_TYPES } from '../../src/constants/Constants';
@@ -57,7 +58,7 @@ const utils = {
     const possible = 'ABCDEFabcdef0123456789';
     let apiKey = '';
 
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i < length; i += 1) {
       apiKey += possible.charAt(Math.floor(Math.random() * possible.length));
     }
 
@@ -91,7 +92,7 @@ const utils = {
   },
 
   splitTestBaseEmail() {
-    const email = process.env.TEST_BASE_EMAIL;
+    const email = process.env.CI_BASE_EMAIL || process.env.E2E_EMAIL;
     const splittedEmail = {};
 
     [splittedEmail.emailName, splittedEmail.emailDomain] = email.split('@');

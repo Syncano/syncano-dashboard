@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import _ from 'lodash';
 
-import PricingPlansUtil from '../../utils/PricingPlansUtil.js';
+import PricingPlansUtil from '../../utils/PricingPlansUtil';
 
 import Store from '../../apps/Profile/ProfileBillingPlanStore';
 import PlanDialogActions from '../../apps/Profile/ProfileBillingPlanDialogActions';
@@ -11,20 +11,18 @@ import { RaisedButton } from 'material-ui';
 import PricingPlansPlan from './PricingPlansPlan';
 
 class PricingPlans extends Component {
-  getStyles() {
-    return {
-      container: {
-        textAlign: 'center',
-        flexWrap: 'nowrap'
-      },
-      main: {
-        display: 'inline-flex'
-      },
-      footer: {
-        textAlign: 'center'
-      }
-    };
-  }
+  getStyles = () => ({
+    container: {
+      textAlign: 'center',
+      flexWrap: 'nowrap'
+    },
+    main: {
+      display: 'inline-flex'
+    },
+    footer: {
+      textAlign: 'center'
+    }
+  })
 
   redirectToPlanView = () => {
     const { router } = this.props;
@@ -50,7 +48,7 @@ class PricingPlans extends Component {
     );
   }
 
-  renderCurrentPlan() {
+  renderCurrentPlan = () => {
     const currentAPIPrice = Store.getCurrentPlanValue('api');
     const currentScriptsPrice = Store.getCurrentPlanValue('cbx');
     const plans = PricingPlansUtil.getPlans(currentAPIPrice, currentScriptsPrice);

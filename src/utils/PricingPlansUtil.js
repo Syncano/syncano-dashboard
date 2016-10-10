@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import BillingPlans from '../constants/BillingPlans';
+import BillingPlans from '../constants/BillingPlans.json';
 
 const PricingPlansUtil = {
   getKeyName() {

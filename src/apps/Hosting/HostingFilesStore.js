@@ -47,7 +47,7 @@ export default Reflux.createStore({
     const { items } = this.data;
     const isChecked = folder.checked;
 
-    _.forEach(items, item => {
+    _.forEach(items, (item) => {
       if (_.some(folder.files, { id: item.id })) {
         item.checked = !isChecked;
       }

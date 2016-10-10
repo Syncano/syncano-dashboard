@@ -8,18 +8,16 @@ import ListItem from './DemoAppListItem';
 import InstallDetailsDialog from './DemoAppsIntallationDetailsDialog';
 
 class DemoAppsList extends Component {
-  getStyles() {
-    return {
-      container: {
-        margin: 100
-      },
-      list: {
-        display: 'flex',
-        justifyContent: 'center',
-        flexWrap: 'wrap'
-      }
-    };
-  }
+  getStyles = () => ({
+    container: {
+      margin: 100
+    },
+    list: {
+      display: 'flex',
+      justifyContent: 'center',
+      flexWrap: 'wrap'
+    }
+  })
 
   handleRedirectToDemoApp(item) {
     const { router } = this.props;

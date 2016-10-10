@@ -10,20 +10,18 @@ class HeaderGettingStartedDropdown extends Component {
     };
   }
 
-  getStyles() {
-    return {
-      flatButtonLabelStyle: {
-        paddingLeft: 0,
-        color: '#fff',
-        fontSize: 15,
-        fontWeight: 400,
-        textTransform: 'none'
-      },
-      fontIconColor: {
-        color: '#fff'
-      }
-    };
-  }
+  getStyles = () => ({
+    flatButtonLabelStyle: {
+      paddingLeft: 0,
+      color: '#fff',
+      fontSize: 15,
+      fontWeight: 400,
+      textTransform: 'none'
+    },
+    fontIconColor: {
+      color: '#fff'
+    }
+  })
 
   handleTouchTap = (event) => {
     // this prevents ghost click
