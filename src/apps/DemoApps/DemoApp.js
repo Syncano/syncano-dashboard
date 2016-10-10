@@ -10,6 +10,7 @@ import SessionStore from '../Session/SessionStore';
 
 import { RaisedButton, FontIcon } from 'material-ui';
 import { InnerToolbar, Dialog, Show, Notification } from '../../common';
+import DemoAppBlogLink from './DemoAppBlogLink';
 
 const DemoApp = React.createClass({
   mixins: [
@@ -206,24 +207,7 @@ const DemoApp = React.createClass({
                 </div>
               </div>
             </li>
-            <li>
-              <div style={styles.listItem}>
-                <img
-                  src="/img/syncano-symbol.svg"
-                  alt="demo app"
-                  style={styles.icon}
-                />
-                <div>
-                  {'Full Tutorial: '}
-                  <a
-                    href={appTutorialSrc}
-                    target="_blank"
-                  >
-                    {appTutorialSrc}
-                  </a>
-                </div>
-              </div>
-            </li>
+            { appTutorialSrc && <DemoAppBlogLink linkSrc={appTutorialSrc} /> }
           </ul>
         </div>
         <div style={styles.subHeader}>
