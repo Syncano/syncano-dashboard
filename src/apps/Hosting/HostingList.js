@@ -68,7 +68,7 @@ const HostingList = React.createClass({
     return (
       <ColumnList.Header>
         <Column.ColumnHeader
-          className="col-sm-9"
+          className="col-sm-12"
           primary={true}
           columnName="CHECK_ICON"
           handleClick={handleTitleClick}
@@ -78,7 +78,7 @@ const HostingList = React.createClass({
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
-          className="col-sm-7"
+          className="col-flex-1"
         >
           Description
         </Column.ColumnHeader>

@@ -71,7 +71,7 @@ class HostingListItem extends Component {
           key={item.id}
         >
           <Column.CheckIcon.Socket
-            className="col-sm-9"
+            className="col-sm-12"
             id={item.id}
             iconClassName="socket-hosting"
             iconColor={Colors.orange600}
@@ -80,7 +80,7 @@ class HostingListItem extends Component {
             primaryText={item.label}
           />
           <Column.Desc
-            className="col-sm-7"
+            className="col-flex-1"
             data-e2e={`${item.description}-hosting-list-item-description`}
           >
             {item.description}
