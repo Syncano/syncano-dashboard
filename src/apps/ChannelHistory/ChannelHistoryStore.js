@@ -50,9 +50,5 @@ export default Reflux.createStore({
 
   onFetchChannelHistoryCompleted(channelHistory) {
     this.setChannelHistory(channelHistory.objects);
-  },
-
-  onFetchChannelHistoryFailure(err) {
-    console.log('onFetchChannelHistoryFailure', err);
   }
 });
