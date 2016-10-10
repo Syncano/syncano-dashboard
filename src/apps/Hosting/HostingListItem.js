@@ -114,9 +114,9 @@ class HostingListItem extends Component {
             />
             <MenuItem
               onTouchTap={showPublishDialog}
-              primaryText="Publish"
+              primaryText="Set as default"
               disabled={isDefaultHosting}
-              data-e2e="dropdown-hosting-item-publish"
+              data-e2e="dropdown-hosting-item-set-default"
             />
             <MenuItem
               onTouchTap={showDeleteDialog}

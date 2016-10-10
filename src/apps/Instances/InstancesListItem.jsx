@@ -29,6 +29,7 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
       checked={item.checked}
       id={item.name}
       key={item.name}
+      data-e2e={`${item.name}-list-row-name`}
     >
       <Column.CheckIcon
         id={item.name}

@@ -1,23 +1,20 @@
-import Utils from '../utils';
+import commonElementsPage from './commonElementsPage';
+import utils from '../utils';
 
 export default {
-  url: `${Utils.testBaseUrl()}/#/account/authentication/`,
+  url: `${utils.testBaseUrl()}/#/account/authentication/`,
   elements: {
     updateButton: {
-      selector: '//div[@class="raised-button"]',
-      locateStrategy: 'xpath'
+      selector: '[data-e2e="authentication-update-button"]'
     },
     accountKey: {
-      selector: '//div[text()="Account key"]/../div[@class="row"]/div[1]',
-      locateStrategy: 'xpath'
+      selector: '[data-e2e="authentication-account-key"]'
     },
     copyButton: {
-      selector: '//span[text()="COPY"]',
-      locateStrategy: 'xpath'
+      selector: '[data-e2e="authentication-reset-button"]'
     },
     resetButton: {
-      selector: '//span[text()="RESET"]',
-      locateStrategy: 'xpath'
+      selector: '[data-e2e="authentication-reset-button"]'
     },
     currentPassword: {
       selector: 'input[name="currentPassword"]'
@@ -28,9 +25,6 @@ export default {
     confirmNewPassword: {
       selector: 'input[name="confirmNewPassword"]'
     },
-    notificationMessage: {
-      selector: '//span[text()="Password changed successfully"]',
-      locateStrategy: 'xpath'
-    }
+    ...commonElementsPage
   }
 };
