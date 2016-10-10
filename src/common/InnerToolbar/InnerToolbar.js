@@ -40,7 +40,7 @@ const InnerToolbar = Radium(React.createClass({
       },
       iconButton: {
         width: 36,
-        marginTop: 4,
+        margin: '4px 6px 0 0',
         paddingLeft: 0
       }
     };
