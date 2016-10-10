@@ -44,7 +44,7 @@ class HostingListItem extends Component {
     });
   }
 
-  render = () => {
+  render() {
     const { areLinksVisible } = this.state;
     const { item, onIconClick, params, showDeleteDialog, showPublishDialog, showEditDialog } = this.props;
     const styles = this.getStyles();
