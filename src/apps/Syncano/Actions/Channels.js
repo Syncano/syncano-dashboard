@@ -67,8 +67,8 @@ export default {
     const poll = this.NewLibConnection.Channel.please().poll({ name }, { room }, false);
 
     poll.on('start', () => this.completed(poll));
-    poll.on('message', message => this.completed(poll, message, room));
-    poll.on('error', error => this.failure(error));
+    poll.on('message', (message) => this.completed(poll, message, room));
+    poll.on('error', (error) => this.failure(error));
     poll.start();
   }
 };

@@ -223,7 +223,7 @@ const SendChannelMessageDialog = React.createClass({
     const styles = this.getStyles();
     const { messagesHistory } = this.state;
 
-    return _.map(messagesHistory, message => (
+    return _.map(messagesHistory, (message) => (
       <div
         key={`message${message.id}-${shortid.generate()}`}
         className="vm-2-b vp-2-b"

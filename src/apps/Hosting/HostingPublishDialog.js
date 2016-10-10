@@ -55,7 +55,7 @@ const PublishDialog = React.createClass({
       >
         <div style={containerStyles}>
           <strong>
-            {"This action will set this website as default."}
+            {'This action will set this website as default.'}
           </strong>
           <div>
             Website will be available at:
