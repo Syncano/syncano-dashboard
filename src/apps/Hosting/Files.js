@@ -89,14 +89,15 @@ const HostingFilesView = React.createClass({
     const hasFilesToUpload = filesToUpload.length > 0;
     const isDefaultHosting = this.isDefaultHosting();
     const hostingLabel = hostingDetails ? hostingDetails.label : '';
+    const pageTitle = `Website Hosting: ${hostingLabel}`;
 
     return (
       <div>
-        <Helmet title={`Website Hosting: ${hostingLabel}`} />
+        <Helmet title={pageTitle} />
         <HostingDialog />
         <HostingPublishDialog />
 
-        <InnerToolbar title={`Website Hosting: ${hostingLabel}`}>
+        <InnerToolbar title={pageTitle}>
           <Show if={items.length && !isLoading}>
             <RaisedButton
               label={isDefaultHosting ? 'Published' : 'Publish'}
