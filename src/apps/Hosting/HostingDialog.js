@@ -43,7 +43,7 @@ const CreateHostingDialog = React.createClass({
       domainsArray = _.map(domains, 'value');
     }
 
-    if (newDomain && newDomain.value.length) {
+    if (newDomain && newDomain.length) {
       domainsArray.push(newDomain);
     }
 

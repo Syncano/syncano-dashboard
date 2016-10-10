@@ -5,7 +5,10 @@ import HostingDialogDomainRow from './HostingDialogDomainRow';
 
 class HostingDialogDomainsList extends Component {
   componentDidUpdate(prevProps) {
-    if (prevProps.domains.length < this.props.domains.length) {
+    const areDomainsInPrevProps = prevProps.domains && prevProps.domains.length;
+    const areDomainsInProps = this.props.domains && this.props.domains.length;
+
+    if (areDomainsInPrevProps < areDomainsInProps) {
       this.refs.hostingDialogDomainsList.scrollIntoView(false);
     }
   }

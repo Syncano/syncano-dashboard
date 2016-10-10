@@ -36,6 +36,7 @@ const HostingDialogDomainRow = ({
   const handleDomainRemove = () => handleRemoveDomain(domain);
   const addButton = (
     <FlatButton
+      data-e2e="domain-add-button"
       label="Add"
       secondary={true}
       disabled={!domain}
@@ -56,7 +57,7 @@ const HostingDialogDomainRow = ({
       <TableRowColumn style={styles.tableRowColumn}>
         {`https://${currentInstanceName}--`}
         <TextField
-          name="domain"
+          name={handleChangeNewDomain ? 'newDomain' : `domain-${domain}`}
           hintText="domain"
           fullWidth={true}
           value={domain}

@@ -53,6 +53,7 @@ const HostingList = React.createClass({
     const { checkItem } = this.props;
 
     const showEditDialog = () => {
+      item.domains = _.without(item.domains, 'default');
       item.domains = _.map(item.domains, (domain) => {
         if (_.isString(domain)) return ({ id: shortid.generate(), value: domain });
         return domain;
