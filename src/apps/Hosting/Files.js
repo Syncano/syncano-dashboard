@@ -104,6 +104,7 @@ const HostingFilesView = React.createClass({
     const {
       isLoading,
       hideDialogs,
+      hostingDetails,
       items,
       filesToUpload,
       lastFileIndex,
@@ -113,13 +114,16 @@ const HostingFilesView = React.createClass({
 
     const hasFilesToUpload = filesToUpload.length > 0;
     const hostingUrl = this.getHostingUrl();
+    const hostingLabel = hostingDetails ? hostingDetails.label : '';
+    const pageTitle = `Website Hosting: ${hostingLabel}`;
 
     return (
       <div>
-        <Helmet title="Website Hosting" />
+        <Helmet title={pageTitle} />
         <HostingDialog />
         <HostingPublishDialog />
-        <InnerToolbar title="Website Hosting">
+
+        <InnerToolbar title={pageTitle}>
           <Show if={items.length && !isLoading}>
             <RaisedButton
               label="Go to site"
