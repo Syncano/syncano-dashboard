@@ -221,7 +221,7 @@ const Script = React.createClass({
         lineHeight: 1
       },
       resultIcon: {
-        paddingTop: '10px'
+        paddingTop: 10
       }
     };
   },
@@ -246,6 +246,20 @@ const Script = React.createClass({
     const runtimeName = currentScript && RuntimeStore.getRuntimeByName(currentScript.runtime_name);
 
     return runtimeName ? runtimeName.packages : '';
+  },
+
+  getLastTrace(callback) {
+    const { currentScript, traces } = this.state;
+    const lastTrace = traces && traces[0];
+
+    Actions.fetchScriptTrace(currentScript.id, lastTrace.id);
+    const lastTraceResult = this.state.traces[0].result;
+
+    if (_.has(lastTraceResult, '__error__')) {
+      setTimeout(() => this.getLastTrace(callback), 250);
+    } else {
+      callback(lastTraceResult);
+    }
   },
 
   isSaved() {
@@ -808,22 +822,27 @@ const Script = React.createClass({
   },
 
   renderLastTraceResultInNewTab() {
-    const { currentScript, lastTraceResult, lastTraceStatus } = this.state;
-    const rawResultPage = window.open();
-    const pageContent = `
-      <title>
-        ${currentScript.label} || ${lastTraceStatus}
-      </title>
-      <pre>${lastTraceResult}</pre>
-    `;
+    const { currentScript, lastTraceStatus } = this.state;
 
-    rawResultPage.document.write(pageContent);
+    this.getLastTrace((pageContent) => {
+      const rawResultPage = window.open();
+      const documentContent = `
+        <title>
+          ${currentScript.label} || ${lastTraceStatus}
+        </title>
+        <pre>${pageContent.stdout}</pre>
+        <pre>${pageContent.stderr}</pre>
+      `;
+
+      rawResultPage.document.write(documentContent);
+    });
   },
 
   renderSidebarResultSection() {
     const styles = this.getStyles();
     const { lastTraceResult } = this.state;
-    const rightContent = (
+    const showRightContent = lastTraceResult && lastTraceResult !== 'Success';
+    const rightContent = showRightContent && (
       <IconButton
         onTouchTap={this.renderLastTraceResultInNewTab}
         iconStyle={styles.linkIcon}
