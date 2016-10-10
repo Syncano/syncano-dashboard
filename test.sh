@@ -1,4 +1,3 @@
-
 #!/bin/bash
 set -e
 
@@ -51,9 +50,7 @@ function http_server_start {
 
 function ci_cleanup {
     rm -rf ./dist_e2e
-    babel-node ./test/scripts/files/removeCertificate.js
-    # Commented out as for now waiting for tests change
-    # babel-node ./test/setup/files/removeCertificate.js
+    babel-node ./test/setup/files/removeCertificate.js
 }
 
 function ci_setup {
@@ -62,9 +59,7 @@ function ci_setup {
     npm run build
     mv ./dist ./dist_e2e
 
-    babel-node ./test/scripts/createTempAccounts.js
-    # Commented out as for now waiting for tests change
-    # babel-node ./test/setup/createTestInstances.js
+    babel-node ./test/setup/createTestInstances.js
     npm run lint-tests
 
     selenium_start
@@ -94,8 +89,7 @@ function ci_tests {
 
 function local_cleanup {
     message "Closing selenium server. Please wait..."
-    # Commented out as for now waiting for tests change
-    # babel-node ./test/setup/deleteTestInstances.js
+    babel-node ./test/setup/deleteTestInstances.js
     kill $(ps aux | grep '[.]selenium' | awk '{print $2}') \
       && message "Done"
 }
@@ -104,9 +98,7 @@ function local_setup {
     selenium_install
 
     message "Creating temporary accounts for tests..."
-    babel-node ./test/scripts/createTempAccounts.js
-    # Commented out as for now waiting for tests change
-    # babel-node ./test/setup/createTestInstances.js
+    babel-node ./test/setup/createTestInstances.js
 
     message "Starting Selenium in background..."
     trap local_cleanup EXIT

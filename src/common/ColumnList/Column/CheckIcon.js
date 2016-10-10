@@ -8,14 +8,6 @@ import _ from 'lodash';
 export default Radium(React.createClass({
   displayName: 'ColumnCheckIcon',
 
-  propTypes: {
-    id: React.PropTypes.string,
-    color: React.PropTypes.string,
-    hoverColor: React.PropTypes.string,
-    checkable: React.PropTypes.bool,
-    handleIconClick: React.PropTypes.func
-  },
-
   getDefaultProps() {
     return {
       color: '#4a4a4a',
@@ -55,21 +47,18 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const { iconElement, primaryText, secondaryText, handleIconClick, className, ...other } = this.props;
+    const { iconElement: Icon, primaryText, secondaryText, handleIconClick, className, ...other } = this.props;
 
     return (
       <div
         className={className}
         style={styles.container}
       >
-        {React.createElement(
-          iconElement,
-          {
-            ...other,
-            handleClick: handleIconClick,
-            'data-e2e': _.isString(primaryText) ? `${primaryText}-check-icon` : this.props['data-e2e']
-          }
-        )}
+        <Icon
+          {...other}
+          handleClick={handleIconClick}
+          data-e2e={_.isString(primaryText) ? `${primaryText}-check-icon` : this.props['data-e2e']}
+        />
         <div style={{ flex: 1, maxWidth: 'calc(100% - 66px)' }}>
           <div data-e2e={`${primaryText}-list-item-name`} style={styles.primaryText}>
             {typeof primaryText === 'string' ? <Truncate text={primaryText} /> : primaryText}

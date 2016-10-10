@@ -1,23 +1,23 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
+import _ from 'lodash';
 
 export default addTestNamePrefixes({
   tags: ['planUsage'],
   beforeEach: (client) => {
-    const { accountKey } = accounts.instanceUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
       .setResolution(client);
   },
-  afterEach: (client, done) => {
-    client.end(done);
-  },
+  afterEach: (client, done) => client.end(done),
   'User views Plan Usage': (client) => {
-    const planusagePage = client.page.planUsagePage();
-    const usageChartsSelector = planusagePage.elements.usageCharts.selector;
+    const planUsagePage = client.page.planUsagePage();
+    const randomInstance = _.sample(instances).instanceName;
+    const usageChartsSelector = planUsagePage.elements.usageCharts.selector;
 
-    planusagePage
+    planUsagePage
       .navigate()
       .waitForElementPresent('@planUsageTitle')
       .waitForElementPresent('@usageWithCurrentPlanText')
@@ -25,8 +25,8 @@ export default addTestNamePrefixes({
       .waitForElementVisible('@apiCallsText')
       .assert.containsText('@apiCallsText', 'API calls')
       .assert.containsText('@scriptSecondsText', 'Script seconds')
-      .selectDropdownValue('@instancePlanDropdown', accounts.instanceUser.instanceName)
-      .assert.containsText('@instancePlanDropdown', accounts.instanceUser.instanceName)
+      .selectDropdownValue('@instancePlanDropdown', randomInstance)
+      .assert.containsText('@instancePlanDropdown', randomInstance)
       .waitForElementVisible('@usageCharts')
       .assertSelectedCount('xpath', usageChartsSelector, 3);
   }

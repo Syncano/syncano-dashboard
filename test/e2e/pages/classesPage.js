@@ -7,8 +7,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addClassButton: {
-      selector: '//span[text()="Add"]',
-      locateStrategy: 'xpath'
+      selector: '[data-e2e="classes-add-button"]'
     },
     createModalNameInput: {
       selector: 'input[name=class]'
@@ -24,12 +23,10 @@ export default {
       selector: 'input[name="description"]'
     },
     confirmButton: {
-      selector: '//button//span[text()="Confirm"]',
-      locateStrategy: 'xpath'
+      selector: '[data-e2e="class-dialog-confirm-button"]'
     },
     addButton: {
-      selector: '//table//button',
-      locateStrategy: 'xpath'
+      selector: '[data-e2e="class-add-field-button"]'
     },
     classTableRows: {
       selector: '//div[@class="classes-list"]/div[2]/div',
@@ -40,13 +37,13 @@ export default {
       locateStrategy: 'xpath'
     },
     userProfileClassName: {
-      selector: 'div[data-e2e="user_profile-list-item-name"]'
+      selector: '[data-e2e="user_profile-list-item-name"]'
     },
     selectUserClass: {
-      selector: 'button[data-e2e="user_profile-check-icon"]'
+      selector: '[data-e2e="user_profile-check-icon"]'
     },
     userClassListItem: {
-      selector: 'div[data-e2e="user_profile-data-objects"]'
+      selector: '[data-e2e="user_profile-data-objects"]'
     },
     userClassDropDown: {
       selector: '//div[text()="user_profile"]/../../../../div[@class="col-menu"]//button',
@@ -100,8 +97,7 @@ export default {
       locateStrategy: 'xpath'
     },
     summaryDialogCloseButton: {
-      selector: '//span[@class="synicon-close"]',
-      locateStrategy: 'xpath'
+      selector: '[data-e2e="class-summary-dialog-close-button"]'
     }
   }
 };

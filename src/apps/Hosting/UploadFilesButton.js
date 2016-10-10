@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-
 import { RaisedButton, FlatButton } from 'material-ui';
 
 class UploadFilesButton extends Component {
+  static defaultProps = {
+    hasFiles: false
+  };
+
   componentDidMount() {
     this.setInputAttributes();
   }
@@ -10,6 +13,13 @@ class UploadFilesButton extends Component {
   componentDidUpdate() {
     this.setInputAttributes();
   }
+
+  getStyles = () => ({
+    chooseFilesButton: {
+      display: 'none',
+      position: 'absolute'
+    }
+  })
 
   handleClickButton = () => {
     this.refs.dirSelect.click();
@@ -26,12 +36,9 @@ class UploadFilesButton extends Component {
     }
   }
 
-  render = () => {
-    const inputStyles = {
-      display: 'none',
-      position: 'absolute'
-    };
+  render() {
     const { hasFiles, handleSendFiles, handleUploadFiles, handleClearFiles } = this.props;
+    const styles = this.getStyles();
 
     if (hasFiles) {
       return (
@@ -51,24 +58,20 @@ class UploadFilesButton extends Component {
     }
 
     return (
-      <RaisedButton
+      <FlatButton
         label="Choose files from disk"
         primary={true}
         onTouchTap={this.handleClickButton}
       >
         <input
-          style={inputStyles}
+          style={styles.chooseFilesButton}
           type="file"
           ref="dirSelect"
           onChange={handleUploadFiles}
         />
-      </RaisedButton>
+      </FlatButton>
     );
   }
 }
-
-UploadFilesButton.defaultProps = {
-  hasFiles: false
-};
 
 export default UploadFilesButton;

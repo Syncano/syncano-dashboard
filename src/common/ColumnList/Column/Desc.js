@@ -5,11 +5,6 @@ import ColumnListConstans from '../ColumnListConstans';
 export default Radium(React.createClass({
   displayName: 'ColumnDesc',
 
-  propTypes: {
-    id: React.PropTypes.string,
-    handleClick: React.PropTypes.func
-  },
-
   getDefaultProps() {
     return {
       className: ColumnListConstans.DEFAULT_CLASSNAME.DESC

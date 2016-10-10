@@ -4,8 +4,8 @@ import { Dialog } from '../../common/';
 const TriggerDialogSidebar = () => (
   <Dialog.SidebarBox>
     <Dialog.SidebarSection>
-      Trigger Sockets execute a Script when a Data Object inside selected Data Class is created,
-       updated or deleted (depends on "signal" field value).
+      {`Trigger Sockets execute a Script when a Data Object inside selected Data Class is created,
+       updated or deleted (depends on "signal" field value).`}
     </Dialog.SidebarSection>
     <Dialog.SidebarSection title="Signal">
       Signal indicates which operation performed on Data Object should execute the Trigger.

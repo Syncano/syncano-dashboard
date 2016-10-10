@@ -1,22 +1,20 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['templateView'],
-  before(client) {
-    const { accountKey } = accounts.alternativeUser;
+  before: (client) => {
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
       .setResolution(client);
   },
-  after(client) {
-    client.end();
-  },
+  after: (client) => client.end(),
   'Test Admin Edits and Saves Template Code': (client) => {
     const templateViewPage = client.page.templateViewPage();
     const controlTimestamp = utils.addSuffix('template');
-    const { instanceName } = accounts.alternativeUser;
+    const { instanceName } = instances.secondInstance;
 
     templateViewPage
       .goToUrl(instanceName, 'templates')
@@ -29,7 +27,7 @@ export default addTestNamePrefixes({
       .waitForElementVisible('@snackBarNotification');
   },
   'Test Admin Renders Template Using Data Url and Context': (client) => {
-    const { instanceName } = accounts.alternativeUser;
+    const { instanceName } = instances.secondInstance;
     const templateViewPage = client.page.templateViewPage();
     const controlTimestamp = utils.addSuffix('template');
     const dataSourceUrl = utils.templateDataSourceUrl(instanceName);
@@ -43,7 +41,7 @@ export default addTestNamePrefixes({
       .verify.containsText('@previewEditorContent', expectedPreviewResult);
   },
   'Test Admin Renders Template in Tab': (client) => {
-    const { instanceName } = accounts.alternativeUser;
+    const { instanceName } = instances.secondInstance;
     const templateViewPage = client.page.templateViewPage();
     const dataSourceUrl = utils.templateDataSourceUrl(instanceName);
     const controlTimestamp = utils.addSuffix('template');

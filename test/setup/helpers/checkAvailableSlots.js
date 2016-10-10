@@ -25,7 +25,7 @@ const checkAvailableSlots = () => {
       const maximumInstancesCount = response;
       const availableInstanceSlots = maximumInstancesCount - accountInfo.existingInstancesCount;
 
-      console.log('checkAvailableSlots::countAfterCreating', availableInstanceSlots);
+      console.log('checkAvailableSlots::availableInstanceSlots', availableInstanceSlots);
 
       if (availableInstanceSlots < 3) {
         throw new Error(`You have ${availableInstanceSlots} slot(s) for instances.

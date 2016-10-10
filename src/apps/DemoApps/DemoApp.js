@@ -10,6 +10,7 @@ import SessionStore from '../Session/SessionStore';
 
 import { RaisedButton, FontIcon } from 'material-ui';
 import { InnerToolbar, Dialog, Show, Notification } from '../../common';
+import DemoAppBlogLink from './DemoAppBlogLink';
 
 const DemoApp = React.createClass({
   mixins: [
@@ -196,7 +197,7 @@ const DemoApp = React.createClass({
                   style={styles.icon}
                 />
                 <div>
-                  {"App Code: "}
+                  {'App Code: '}
                   <a
                     href={appGithubSrc}
                     target="_blank"
@@ -206,33 +207,16 @@ const DemoApp = React.createClass({
                 </div>
               </div>
             </li>
-            <li>
-              <div style={styles.listItem}>
-                <img
-                  src="/img/syncano-symbol.svg"
-                  alt="demo app"
-                  style={styles.icon}
-                />
-                <div>
-                  {"Full Tutorial: "}
-                  <a
-                    href={appTutorialSrc}
-                    target="_blank"
-                  >
-                    {appTutorialSrc}
-                  </a>
-                </div>
-              </div>
-            </li>
+            { appTutorialSrc && <DemoAppBlogLink linkSrc={appTutorialSrc} /> }
           </ul>
         </div>
         <div style={styles.subHeader}>
           Description
         </div>
-          {`When you click the Install button, Syncano will set up the backend needed for
-          the application to work. It'll also deploy the front-end and connect it to the database.
-          Click on the Hosting socket url to view your app. Browse through Classes and Sockets to 
-          understand the data schema.`}
+        {`When you click the Install button, Syncano will set up the backend needed for
+        the application to work. It'll also deploy the front-end and connect it to the database.
+        Click on the Hosting socket url to view your app. Browse through Classes and Sockets to
+        understand the data schema.`}
         <div style={styles.subHeader}>
           App Data Schema
         </div>

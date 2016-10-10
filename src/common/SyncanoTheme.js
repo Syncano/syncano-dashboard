@@ -32,7 +32,7 @@ export default {
   },
   palette,
   flatButton: {
-    primaryTextColor: palette.primary1Color,
+    primaryTextColor: palette.primary2Color,
     textColor: 'rgba(0, 0, 0, 0.54)'
   },
   raisedButton: {

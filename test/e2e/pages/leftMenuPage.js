@@ -1,4 +1,4 @@
-import accounts from '../tempAccounts';
+import instances from '../tempInstances';
 
 export default {
   elements: {
@@ -9,14 +9,14 @@ export default {
       selector: '[data-e2e="instances-dropdown"]'
     },
     userInstanceName: {
-      selector: `span[data-e2e="${accounts.instanceUser.tempInstanceNames[0]}"]`
+      selector: `span[data-e2e="${instances.firstInstance.instanceName}"]`
     },
     instancesDropdownName: {
       selector: '//span[@class="synicon-menu-down"]/preceding-sibling::div',
       locateStrategy: 'xpath'
     },
-    currentIinstanceName: {
-      selector: `div[data-e2e="current-instanceName-${accounts.instanceUser.tempInstanceNames[0]}"]`
+    currentInstanceName: {
+      selector: `div[data-e2e="current-instanceName-${instances.firstInstance.instanceName}"]`
     },
     instancesListSecondItem: {
       selector: '//div[@class="my-instances-list"]/div[2]',
