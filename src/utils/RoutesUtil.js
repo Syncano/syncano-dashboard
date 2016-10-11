@@ -68,7 +68,7 @@ const RoutesUtil = {
     }
 
     let name = 'app';
-    const names = nextState.routes.map((route) => route.name).filter((routeName) => typeof routeName !== 'undefined');
+    const names = nextState.routes.map(route => route.name).filter(routeName => typeof routeName !== 'undefined');
 
     if (names.length > 0) {
       name = names[names.length - 1];
@@ -123,7 +123,7 @@ const RoutesUtil = {
 
     if (lastInstanceName) {
       this.isInstanceAvailable(lastInstanceName)
-        .then(replace({ pathname: `/instances/${lastInstanceName}/sockets` }));
+        .then(replace({ pathname: `/instances/${lastInstanceName}/sockets/` }));
     }
   },
 
