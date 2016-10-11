@@ -8,7 +8,7 @@ import Actions from './HostingActions';
 import Store from './HostingStore';
 import SessionStore from '../Session/SessionStore';
 
-import { TextField } from 'material-ui';
+import { TextField, Checkbox } from 'material-ui';
 import { Dialog, Show, Notification, SelectWrapper } from '../../common';
 
 const CreateHostingDialog = React.createClass({
@@ -32,6 +32,18 @@ const CreateHostingDialog = React.createClass({
     }
   },
 
+  getStyles() {
+    return {
+      checkBox: {
+        marginTop: 15,
+        outline: '#bababa'
+      },
+      checkBoxLabel: {
+        color: '#bababa'
+      }
+    };
+  },
+
   getHostingParams() {
     const { label, description, domains = [], id } = this.state;
     let domainsArray = domains;
@@ -50,20 +62,21 @@ const CreateHostingDialog = React.createClass({
   },
 
   handleAddSubmit() {
-    const { items } = this.state;
+    const { shouldBeSetAsDefault, items } = this.state;
     const params = this.getHostingParams();
 
     if (_.isEmpty(items)) {
       params.domains.push('default');
     }
 
-    Actions.createHosting(params);
+    Actions.createHosting(params, shouldBeSetAsDefault);
   },
 
   handleEditSubmit() {
+    const { shouldBeSetAsDefault } = this.state;
     const params = this.getHostingParams();
 
-    Actions.updateHosting(params.id, params);
+    Actions.updateHosting(params.id, params, shouldBeSetAsDefault);
   },
 
   handleChangeLabel(event, value) {
@@ -74,12 +87,18 @@ const CreateHostingDialog = React.createClass({
     this.setState({ description: value });
   },
 
+  handleDefaultDomainCheck(event, checked) {
+    this.setState({ shouldBeSetAsDefault: checked });
+  },
+
   render() {
-    const { isLoading, open, label, description, canSubmit, domains } = this.state;
+    const { isLoading, open, label, description, canSubmit, domains, shouldBeSetAsDefault } = this.state;
     const title = this.hasEditMode() ? 'Edit Hosting' : 'Add Hosting';
+    const styles = this.getStyles();
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const defaultLink = `https://${currentInstanceName}.syncano.site`;
+    const valueWithoutDefault = _.pull(domains, 'default');
 
     return (
       <Dialog.FullPage
@@ -146,11 +165,18 @@ const CreateHostingDialog = React.createClass({
             floatingLabelText="Description"
             data-e2e="hosting-dialog-description-input"
           />
+          <Checkbox
+            style={styles.checkBox}
+            label="Set as default hosting"
+            checked={shouldBeSetAsDefault}
+            labelStyle={styles.checkBoxLabel}
+            onCheck={this.handleDefaultDomainCheck}
+          />
           <SelectWrapper
             errorText={this.getValidationMessages('domains').join(' ')}
-            className="vm-5-t"
+            className="vm-3-t"
             multi={true}
-            value={domains}
+            value={valueWithoutDefault}
             allowCreate={true}
             placeholder="Domains"
             onChange={this.handleChangeDomain}

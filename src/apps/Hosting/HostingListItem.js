@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
+// import _ from 'lodash';
 import { Link, withRouter } from 'react-router';
 
 import { MenuItem } from 'material-ui';
@@ -48,7 +48,7 @@ class HostingListItem extends Component {
     const { areLinksVisible } = this.state;
     const { item, onIconClick, params, showDeleteDialog, showPublishDialog, showEditDialog } = this.props;
     const styles = this.getStyles();
-    const isDefaultHosting = _.includes(item.domains, 'default');
+    const isDefaultHosting = item.shouldBeSetAsDefault === true;
     const defaultLink = `https://${params.instanceName}.syncano.site`;
     const domainsCount = item.domains.length;
     const customDomainLink = domainsCount ? `https://${params.instanceName}--${item.domains[0]}.syncano.site` : '';
