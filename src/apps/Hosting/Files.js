@@ -6,6 +6,7 @@ import _ from 'lodash';
 
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
+import SessionStore from '../Session/SessionStore';
 import HostingPublishDialogActions from './HostingPublishDialogActions';
 
 import { RaisedButton } from 'material-ui';
@@ -79,6 +80,8 @@ const HostingFilesView = React.createClass({
     const { isLoading, hideDialogs, items, filesToUpload, lastFileIndex, currentFileIndex, isUploading } = this.state;
     const hasFilesToUpload = filesToUpload.length > 0;
     const isDefaultHosting = this.isDefaultHosting();
+    const currentInstance = SessionStore.getInstance();
+    const currentInstanceName = currentInstance && currentInstance.name;
 
     return (
       <div>
@@ -101,6 +104,7 @@ const HostingFilesView = React.createClass({
 
         <Container>
           <HostingFilesList
+            currentInstanceName={currentInstanceName}
             isUploading={isUploading}
             lastFileIndex={lastFileIndex}
             currentFileIndex={currentFileIndex}
