@@ -68,7 +68,7 @@ const RoutesUtil = {
     }
 
     let name = 'app';
-    const names = nextState.routes.map((route) => route.name).filter((routeName) => typeof routeName !== 'undefined');
+    const names = nextState.routes.map(route => route.name).filter(routeName => typeof routeName !== 'undefined');
 
     if (names.length > 0) {
       name = names[names.length - 1];
@@ -87,7 +87,7 @@ const RoutesUtil = {
       });
     }
 
-    if (nextState.location.pathname === '/' && !query.token) {
+    if (auth.loggedIn() && nextState.location.pathname === '/' && !query.token) {
       return this.redirectToLastPathname(nextState, replace);
     }
 
@@ -103,7 +103,9 @@ const RoutesUtil = {
   },
 
   onDashboardEnter(nextState, replace) {
-    if (!auth.loggedIn()) {
+    const { signUpMode } = nextState.location.query;
+
+    if (!auth.loggedIn() && !signUpMode) {
       return this.redirectToLogin(nextState, replace);
     }
 
@@ -121,7 +123,7 @@ const RoutesUtil = {
 
     if (lastInstanceName) {
       this.isInstanceAvailable(lastInstanceName)
-        .then(replace({ pathname: `/instances/${lastInstanceName}/` }));
+        .then(replace({ pathname: `/instances/${lastInstanceName}/sockets/` }));
     }
   },
 
