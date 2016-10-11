@@ -11,6 +11,7 @@ const HostingDialogDomainTable = ({
   handleRemoveDomain,
   handleChangeDomains,
   handleChangeNewDomain,
+  isDefault,
   newDomain
 }) => {
   const styles = {
@@ -45,6 +46,7 @@ const HostingDialogDomainTable = ({
             handleAddNewDomain={handleAddNewDomain}
             handleRemoveDomain={handleRemoveDomain}
             handleChangeDomains={handleChangeDomains}
+            isDefault={isDefault}
           />
         </TableBody>
       </Table>

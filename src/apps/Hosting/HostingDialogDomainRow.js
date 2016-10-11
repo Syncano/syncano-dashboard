@@ -14,6 +14,7 @@ const HostingDialogDomainRow = ({
   handleChangeCurrentDomain,
   handleChangeNewDomain,
   handleAddNewDomain,
+  handleInputFocus,
   handleRemoveDomain
 }) => {
   const currentInstance = SessionStore.getInstance();
@@ -63,6 +64,7 @@ const HostingDialogDomainRow = ({
           fullWidth={true}
           value={domain}
           onChange={handleDomainChange}
+          onFocus={handleInputFocus}
           data-e2e={handleChangeNewDomain ? 'hosting-dialog-new-domain-input' : `hosting-dialog-${domain}-input`}
         />
         .syncano.site/

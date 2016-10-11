@@ -60,7 +60,7 @@ const CreateHostingDialog = React.createClass({
 
   handleChangeNewDomain(event, newDomain) {
     this.setState({ newDomain });
-    if (newDomain === 'default') {
+    if (newDomain.toLowerCase() === 'default') {
       this.setState({ errors: { feedback: "You can't add 'Default' domain" } });
     } else {
       this.setState({
@@ -74,7 +74,7 @@ const CreateHostingDialog = React.createClass({
     const { domains, newDomain } = this.state;
     const newDomains = _.unionBy(domains, [{ id: shortid.generate(), value: newDomain }], 'value');
 
-    if (newDomain !== 'default') {
+    if (newDomain.toLowerCase() !== 'default') {
       this.setState({
         domains: newDomains,
         newDomain: ''
@@ -86,7 +86,17 @@ const CreateHostingDialog = React.createClass({
     const { domains } = this.state;
 
     domains[index].value = domain;
-    this.setState({ domains });
+    if (domain.toLowerCase() === 'default') {
+      this.setState({
+        errors: { feedback: "You can't add 'Default' domain" },
+        domains
+      });
+    } else {
+      this.setState({
+        errors: {},
+        domains
+      });
+    }
   },
 
   handleRemoveDomain(domain) {
@@ -208,26 +218,22 @@ const CreateHostingDialog = React.createClass({
           <Dialog.ContentSection title="Domains">
             <HostingDialogDomainTable
               domains={domains}
-              newDomain={newDomain}
               handleChangeNewDomain={this.handleChangeNewDomain}
               handleAddNewDomain={this.handleAddNewDomain}
               handleChangeDomains={this.handleChangeDomains}
               handleRemoveDomain={this.handleRemoveDomain}
+              isDefault={isDefault}
+              newDomain={newDomain}
             />
-            <Show if={this.getValidationMessages('domains').length}>
-              <Notification
-                className="vm-2-t"
-                type="error"
-              >
-                {this.getValidationMessages('domains').join(' ')}
-              </Notification>
-            </Show>
           </Dialog.ContentSection>
         </div>
         <div className="vm-2-t">
           {this.renderFormNotifications()}
-        </div>
-        <div className="vm-2-b">
+          <Show if={this.getValidationMessages('domains').length}>
+            <Notification type="error">
+              {this.getValidationMessages('domains').join(' ')}
+            </Notification>
+          </Show>
           <Show if={this.getValidationMessages('detail').length}>
             <Notification type="error">
               {this.getValidationMessages('detail').join(' ')}
