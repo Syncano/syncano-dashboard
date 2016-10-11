@@ -2,12 +2,12 @@ import Reflux from 'reflux';
 
 import { StoreLoadingMixin } from '../../mixins';
 
-import Actions from './ChannelHistoryActions';
+import ChannelHistoryActions from './ChannelHistoryActions';
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 
 export default Reflux.createStore({
-  listenables: Actions,
+  listenables: ChannelHistoryActions,
 
   mixins: [StoreLoadingMixin],
 
@@ -33,7 +33,7 @@ export default Reflux.createStore({
 
   refreshData() {
     if (SessionStore.instance && this.data.channelName) {
-      Actions.fetchChannelHistory(this.data.channelName);
+      ChannelHistoryActions.fetchChannelHistory(this.data.channelName);
     }
   },
 

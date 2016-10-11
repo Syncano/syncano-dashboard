@@ -1,25 +1,17 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import Reflux from 'reflux';
-import Radium from 'radium';
 import Helmet from 'react-helmet';
 
-// Stores and Actions
-import Store from './ChannelHistoryStore';
-import Actions from './ChannelHistoryActions';
+import ChannelHistoryStore from './ChannelHistoryStore';
+import ChannelHistoryActions from './ChannelHistoryActions';
 
-// Components
 import { Container, InnerToolbar } from '../../common/';
 
-// Local components
 import ChannelHistoryList from './ChannelHistoryList';
 
-const ChannelHistory = Radium(React.createClass({
-  propTypes: {
-    channelName: React.PropTypes.string
-  },
-
-  mixins: [Reflux.connect(Store)],
+const ChannelHistory = React.createClass({
+  mixins: [Reflux.connect(ChannelHistoryStore)],
 
   getDefaultProps() {
     return {
@@ -28,7 +20,7 @@ const ChannelHistory = Radium(React.createClass({
   },
 
   componentDidMount() {
-    Actions.getChannelHistory(this.props.channelName);
+    ChannelHistoryActions.getChannelHistory(this.props.channelName);
   },
 
   getStyles() {
@@ -71,6 +63,6 @@ const ChannelHistory = Radium(React.createClass({
       </div>
     );
   }
-}));
+});
 
 export default withRouter(ChannelHistory);

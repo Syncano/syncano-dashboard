@@ -22,7 +22,7 @@ class DemoAppsList extends Component {
   handleRedirectToDemoApp(item) {
     const { router } = this.props;
 
-    router.push(`/demo-apps/${item.name}`);
+    router.push(`/demo-apps/${item.name}/`);
   }
 
   renderItems() {
@@ -55,4 +55,3 @@ class DemoAppsList extends Component {
 }
 
 export default withRouter(DemoAppsList);
-
