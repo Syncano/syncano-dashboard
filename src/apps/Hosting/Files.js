@@ -121,7 +121,6 @@ const HostingFilesView = React.createClass({
     } = this.state;
 
     const hasFilesToUpload = filesToUpload.length > 0;
-    const isDefaultHosting = this.isDefaultHosting();
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const hostingUrl = this.getHostingUrl();
