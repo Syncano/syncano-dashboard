@@ -4,13 +4,14 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
 
+import { SnackbarNotificationMixin } from '../../mixins';
+
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
 import SessionStore from '../Session/SessionStore';
 import HostingPublishDialogActions from './HostingPublishDialogActions';
 
-import { RaisedButton } from 'material-ui';
-import { colors as Colors } from 'material-ui/styles';
+import { FontIcon, RaisedButton } from 'material-ui';
 import { InnerToolbar, Container, Show } from '../../common';
 import HostingFilesList from './HostingFilesList';
 import HostingDialog from './HostingDialog';
@@ -18,7 +19,8 @@ import HostingPublishDialog from './HostingPublishDialog';
 
 const HostingFilesView = React.createClass({
   mixins: [
-    Reflux.connect(HostingFilesStore)
+    Reflux.connect(HostingFilesStore),
+    SnackbarNotificationMixin
   ],
 
   componentDidMount() {
@@ -26,6 +28,17 @@ const HostingFilesView = React.createClass({
 
     HostingFilesActions.setHostingId(hostingId);
     HostingFilesActions.fetch();
+  },
+
+  getHostingUrl() {
+    const { hostingDetails } = this.state;
+    const { instanceName } = this.props.params;
+    const defaultHostingUrl = `https://${instanceName}.syncano.site/`;
+    const hasDomains = hostingDetails && hostingDetails.domains.length > 0;
+    const customDomainUrl = hasDomains ? `https://${instanceName}--${hostingDetails.domains[0]}.syncano.site/` : null;
+    const hostingUrl = this.isDefaultHosting() ? defaultHostingUrl : customDomainUrl;
+
+    return hostingUrl;
   },
 
   isDefaultHosting() {
@@ -36,6 +49,13 @@ const HostingFilesView = React.createClass({
     }
 
     return false;
+  },
+
+  handleBackClick() {
+    const { router, params } = this.props;
+    const redirectPath = `/instances/${params.instanceName}/hosting/`;
+
+    router.push(redirectPath);
   },
 
   handleUploadFiles(event) {
@@ -68,6 +88,18 @@ const HostingFilesView = React.createClass({
     HostingFilesActions.uploadFiles(hostingId, filesToUpload);
   },
 
+  handleOnTouchTap(url) {
+    const hasHostingUrl = !_.isEmpty(url);
+
+    return !hasHostingUrl && this.showMissingDomainsSnackbar;
+  },
+
+  showMissingDomainsSnackbar() {
+    this.setSnackbarNotification({
+      message: "You don't have any domains yet. Please add some or set Hosting as default."
+    });
+  },
+
   extendFilePath(file) {
     const firstSlashIndex = file.webkitRelativePath.indexOf('/');
 
@@ -77,27 +109,46 @@ const HostingFilesView = React.createClass({
   },
 
   render() {
-    const { isLoading, hideDialogs, items, filesToUpload, lastFileIndex, currentFileIndex, isUploading } = this.state;
+    const {
+      isLoading,
+      hideDialogs,
+      hostingDetails,
+      items,
+      filesToUpload,
+      lastFileIndex,
+      currentFileIndex,
+      isUploading
+    } = this.state;
+
     const hasFilesToUpload = filesToUpload.length > 0;
     const isDefaultHosting = this.isDefaultHosting();
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
+    const hostingUrl = this.getHostingUrl();
+    const hostingLabel = hostingDetails ? hostingDetails.label : '';
+    const pageTitle = `Website Hosting: ${hostingLabel}`;
 
     return (
       <div>
-        <Helmet title="Website Hosting" />
+        <Helmet title={pageTitle} />
         <HostingDialog />
         <HostingPublishDialog />
 
-        <InnerToolbar title="Website Hosting">
+        <InnerToolbar
+          title={pageTitle}
+          backButton={true}
+          backFallback={this.handleBackClick}
+          forceBackFallback={true}
+          backButtonTooltip="Go back to Hostings List"
+        >
           <Show if={items.length && !isLoading}>
             <RaisedButton
-              label={isDefaultHosting ? 'Published' : 'Publish'}
-              onTouchTap={this.handleShowPublishDialog}
+              label="Go to site"
               primary={true}
-              disabled={isDefaultHosting}
-              disabledBackgroundColor={Colors.green500}
-              disabledLabelColor="#FFF"
+              icon={<FontIcon className="synicon-open-in-new" style={{ marginTop: 4 }} />}
+              onTouchTap={this.handleOnTouchTap(hostingUrl)}
+              href={hostingUrl}
+              target="_blank"
             />
           </Show>
         </InnerToolbar>

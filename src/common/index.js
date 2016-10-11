@@ -54,7 +54,6 @@ import { TraceResult, TraceBigResult } from './TraceResult';
 import Truncate from './Truncate';
 import UpgradeButton from './UpgradeButton';
 import UpgradeNowToolbar from './UpgradeNowToolbar';
-import UnsupportedBrowserView from './UnsupportedBrowserView';
 import StatusLabel from './StatusLabel';
 import LinkWithIcon from './LinkWithIcon';
 
@@ -116,7 +115,6 @@ export { Truncate };
 export { UpgradeButton };
 export { UpgradeNowToolbar };
 export { StatusLabel };
-export { UnsupportedBrowserView };
 export { LinkWithIcon };
 
 export default {
@@ -176,7 +174,6 @@ export default {
   TraceBigResult,
   Truncate,
   UpgradeButton,
-  UnsupportedBrowserView,
   StatusLabel,
   LinkWithIcon,
   UpgradeNowToolbar

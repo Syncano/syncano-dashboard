@@ -1,4 +1,4 @@
-import Hello from '../../Account/Hello.js';
+import Hello from '../../Account/Hello';
 
 export default {
   resendActivationEmail(email) {

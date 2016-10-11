@@ -47,7 +47,7 @@ export default Reflux.createStore({
     const { items } = this.data;
     const isChecked = folder.checked;
 
-    _.forEach(items, item => {
+    _.forEach(items, (item) => {
       if (_.some(folder.files, { id: item.id })) {
         item.checked = !isChecked;
       }
@@ -66,6 +66,15 @@ export default Reflux.createStore({
     this.data.currentHostingId = hostingId;
   },
 
+  handleCloseOnUpload(event) {
+    event.preventDefault();
+    event.returnValue = 'Are you sure you want to close?';
+  },
+
+  onUploadFiles() {
+    window.addEventListener('beforeunload', this.handleCloseOnUpload);
+  },
+
   onUploadFilesCompleted(uploadingStatus) {
     if (uploadingStatus.isFinished) {
       this.data.filesToUpload = [];
@@ -75,6 +84,7 @@ export default Reflux.createStore({
     this.data.isUploading = !uploadingStatus.isFinished;
     this.data.currentFileIndex = uploadingStatus.currentFileIndex;
     this.data.lastFileIndex = uploadingStatus.lastFileIndex;
+    uploadingStatus.isFinished && removeEventListener('beforeunload', this.handleCloseOnUpload);
     this.trigger(this.data);
   },
 

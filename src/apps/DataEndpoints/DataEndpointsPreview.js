@@ -58,7 +58,7 @@ const DataEndpointsPreview = React.createClass({
   handleBackClick() {
     const { router, params } = this.props;
 
-    router.push(`/instances/${params.instanceName}/data-endpoints`);
+    router.push(`/instances/${params.instanceName}/data-endpoints/`);
   },
 
   handleRowSelection(selectedRows) {

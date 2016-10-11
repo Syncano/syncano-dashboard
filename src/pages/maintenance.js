@@ -37,7 +37,7 @@ export default class extends Component {
     axios.get(url).then((response) => this.setState({ status: response.data }));
   };
 
-  render = () => {
+  render() {
     const { status } = this.state;
 
     return (
@@ -75,5 +75,5 @@ export default class extends Component {
         }
       />
     );
-  };
+  }
 }

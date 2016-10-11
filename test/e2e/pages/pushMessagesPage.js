@@ -1,4 +1,5 @@
-import accounts from '../tempAccounts.js';
+import instances from '../tempInstances';
+import commonElementsPage from './commonElementsPage';
 
 export default {
   elements: {
@@ -18,16 +19,17 @@ export default {
       selector: 'button[data-e2e="push-message-cancel"]'
     },
     gcmDeviceRow: {
-      selector: `tr[data-e2e="${accounts.alternativeUser.tempGCMDevicesNames[0]}-device-row"]`
+      selector: `[data-e2e="${instances.secondInstance.gcmDevicesNames[0]}-device-row"]`
     },
     apnsDeviceRow: {
-      selector: `tr[data-e2e="${accounts.alternativeUser.tempAPNSDevicesNames[0]}-device-row"]`
+      selector: `[data-e2e="${instances.secondInstance.apnsDevicesNames[0]}-device-row"]`
     },
     deviceNumberInput: {
       selector: 'input[name="deviceNumber"]'
     },
-    snackBarNotification: {
-      selector: 'div[data-e2e="snackbar-notifcation"]'
-    }
+    messageListItem: {
+      selector: '[data-e2e="push-message-list-item"]'
+    },
+    ...commonElementsPage
   }
 };

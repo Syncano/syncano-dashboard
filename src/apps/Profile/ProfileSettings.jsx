@@ -108,6 +108,7 @@ export default React.createClass({
               className="raised-button"
               disabled={!canSubmit}
               primary={true}
+              data-e2e="profile-update-button"
             />
           </form>
         </Container>

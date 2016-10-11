@@ -44,7 +44,7 @@ class HostingListItem extends Component {
     });
   }
 
-  render = () => {
+  render() {
     const { areLinksVisible } = this.state;
     const { item, onIconClick, params, showDeleteDialog, showPublishDialog, showEditDialog } = this.props;
     const styles = this.getStyles();
@@ -71,7 +71,7 @@ class HostingListItem extends Component {
           key={item.id}
         >
           <Column.CheckIcon.Socket
-            className="col-sm-9"
+            className="col-sm-12"
             id={item.id}
             iconClassName="socket-hosting"
             iconColor={Colors.orange600}
@@ -80,12 +80,12 @@ class HostingListItem extends Component {
             primaryText={item.label}
           />
           <Column.Desc
-            className="col-sm-7"
+            className="col-sm-5"
             data-e2e={`${item.description}-hosting-list-item-description`}
           >
             {item.description}
           </Column.Desc>
-          <Column.Desc className="col-sm-12">
+          <Column.Desc className="col-flex-1">
             <Show if={domainsCount}>
               <div style={styles.websiteUrlContainerStyles}>
                 <LinkWithIcon url={visibleLink} />
@@ -114,8 +114,9 @@ class HostingListItem extends Component {
             />
             <MenuItem
               onTouchTap={showPublishDialog}
-              primaryText="Publish"
-              data-e2e="dropdown-hosting-item-publish"
+              primaryText="Set as default"
+              disabled={isDefaultHosting}
+              data-e2e="dropdown-hosting-item-set-default"
             />
             <MenuItem
               onTouchTap={showDeleteDialog}

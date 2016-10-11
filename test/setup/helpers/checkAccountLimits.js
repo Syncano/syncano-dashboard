@@ -19,7 +19,6 @@ const checkAccountLimits = () => {
     const currentPlan = plans[0];
     const currentLimit = plansLimits[currentPlan];
 
-    console.log('checkAccountLimits::Subscriptions', currentLimit);
     return currentLimit;
   });
 };
