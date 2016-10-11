@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import { withRouter } from 'react-router';
+import Isvg from 'react-inlinesvg';
 
 import { DialogsMixin, FormMixin } from '../../mixins';
 
@@ -165,7 +166,7 @@ const DemoApp = React.createClass({
   renderDescContainer() {
     const styles = this.getStyles();
     const { appName, appTitle, appDesc, appGithubSrc, appTutorialSrc, feedback } = this.state;
-    const appImageSrc = `/img/demo-app-${appName}.png`;
+    const appImageSrc = `/img/DemoApps/${appName}.jpg`;
 
     return (
       <div style={styles.descContainer}>
@@ -227,11 +228,12 @@ const DemoApp = React.createClass({
   renderSchemaContainer() {
     const styles = this.getStyles();
     const { appName } = this.state;
-    const appSchemaSrc = `/img/demo-app-${appName}-schema.svg`;
+    const appSchemaSrc = `/img/DemoApps/${appName}-schema.svg`;
 
     return (
       <div style={styles.schemaContainer}>
-        <img
+        <Isvg
+          wrapper={React.DOM.div}
           src={appSchemaSrc}
           alt="demo app schema"
         />
