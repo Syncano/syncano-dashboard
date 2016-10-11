@@ -4,6 +4,7 @@ import Syncano from 'syncano';
 
 import SessionStore from '../apps/Session/SessionStore';
 import InstanceDialogStore from '../apps/Instances/InstanceDialogStore';
+
 import { Dialog, Loading } from '../common/';
 
 class SetupPage extends Component {
@@ -29,7 +30,7 @@ class SetupPage extends Component {
     const name = InstanceDialogStore.genUniqueName();
 
     connection.Instance.please().create({ name })
-      .then(instance => {
+      .then((instance) => {
         router.push(`/instances/${instance.name}/sockets/`);
       })
       .catch(() => {

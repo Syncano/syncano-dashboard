@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 import localStorage from 'local-storage-fallback';
@@ -7,19 +7,19 @@ import _ from 'lodash';
 import { DialogsMixin, FormMixin, MousetrapMixin, SnackbarNotificationMixin } from '../../mixins';
 import AutosaveMixin from '../Script/ScriptAutosaveMixin';
 
-import Store from './TemplateStore';
-import Actions from './TemplateActions';
+import TemplateStore from './TemplateStore';
+import TemplateActions from './TemplateActions';
 
 import { Checkbox, FontIcon, RaisedButton, TextField } from 'material-ui';
 import { Editor, InnerToolbar, Loading, Notification, Show, TogglePanel } from '../../common/';
 
 const Template = React.createClass({
   contextTypes: {
-    params: React.PropTypes.object
+    params: PropTypes.object
   },
 
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(TemplateStore),
     AutosaveMixin,
     DialogsMixin,
     FormMixin,
@@ -71,7 +71,7 @@ const Template = React.createClass({
   },
 
   componentDidMount() {
-    Actions.fetch();
+    TemplateActions.fetch();
     this.bindShortcut(['command+s', 'ctrl+s'], () => {
       this.handleUpdate();
       return false;
@@ -91,7 +91,7 @@ const Template = React.createClass({
   },
 
   componentWillUnmount() {
-    Store.clearTemplate();
+    TemplateStore.clearTemplate();
   },
 
   getStyles() {
@@ -171,8 +171,8 @@ const Template = React.createClass({
 
     if (this.areEditorsLoaded()) {
       this.clearAutosaveTimer();
-      Actions.setDataSource(this.refs.dataSourceUrl.getValue());
-      Actions.updateTemplate(template.name, { content, context });
+      TemplateActions.setDataSource(this.refs.dataSourceUrl.getValue());
+      TemplateActions.updateTemplate(template.name, { content, context });
       this.setSnackbarNotification({ message: 'Saving...' });
     }
   },
@@ -207,10 +207,10 @@ const Template = React.createClass({
     const { dataSourceUrl } = this.refs;
 
     if (dataSourceUrl && dataSourceUrl.getValue().length) {
-      return Actions.renderFromEndpoint(template.name, dataSourceUrl.getValue());
+      return TemplateActions.renderFromEndpoint(template.name, dataSourceUrl.getValue());
     }
 
-    return Actions.renderTemplate(template.name, template.context);
+    return TemplateActions.renderTemplate(template.name, template.context);
   },
 
   handleDataSourceUrlChange(event, value) {
@@ -222,7 +222,7 @@ const Template = React.createClass({
   },
 
   setFlag(successValidationAction) {
-    Actions.setFlag(successValidationAction, this.handleFormValidation);
+    TemplateActions.setFlag(successValidationAction, this.handleFormValidation);
   },
 
   showSidebar() {
@@ -302,7 +302,6 @@ const Template = React.createClass({
         value={template.content}
         width="100%"
         height="100%"
-        style={{ position: 'absolute' }}
         isEditorErrorVisible={this.getValidationMessages('content').length}
       />
     );
