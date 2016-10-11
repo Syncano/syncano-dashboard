@@ -289,9 +289,27 @@ const Template = React.createClass({
     );
   },
 
+  renderCodeEditor() {
+    const { template } = this.state;
+
+    return (
+      <Editor
+        ref="contentEditor"
+        name="contentEditor"
+        mode="django"
+        onChange={this.handleOnSourceChange}
+        onLoad={this.clearAutosaveTimer}
+        value={template.content}
+        width="100%"
+        height="100%"
+        style={{ position: 'absolute' }}
+        isEditorErrorVisible={this.getValidationMessages('content').length}
+      />
+    );
+  },
+
   renderCode() {
     const styles = this.getStyles();
-    const { template } = this.state;
 
     return (
       <div
@@ -314,23 +332,14 @@ const Template = React.createClass({
           <Show if={this.getValidationMessages('content').length}>
             <Notification
               type="error"
+              isCloseButtonVisible={false}
               className="vm-2-b"
             >
               {this.getValidationMessages('content').join(' ')}
             </Notification>
           </Show>
           <div style={styles.codeEditorContainer}>
-            <Editor
-              ref="contentEditor"
-              name="contentEditor"
-              mode="django"
-              onChange={this.handleOnSourceChange}
-              onLoad={this.clearAutosaveTimer}
-              value={template.content}
-              width="100%"
-              height="100%"
-              style={{ position: 'absolute' }}
-            />
+            {this.renderCodeEditor()}
           </div>
         </TogglePanel>
       </div>

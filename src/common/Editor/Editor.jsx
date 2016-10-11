@@ -15,25 +15,6 @@ import 'brace/mode/django';
 import 'brace/theme/tomorrow';
 
 export default React.createClass({
-  propTypes: {
-    mode: React.PropTypes.oneOf([
-      'text', 'python', 'javascript', 'ruby', 'golang', 'swift', 'php', 'json', 'django', 'html'
-    ]),
-    theme: React.PropTypes.string,
-    name: React.PropTypes.string,
-    height: React.PropTypes.string,
-    width: React.PropTypes.string,
-    fontSize: React.PropTypes.number,
-    showGutter: React.PropTypes.bool,
-    onChange: React.PropTypes.func,
-    value: React.PropTypes.string,
-    onLoad: React.PropTypes.func,
-    minLines: React.PropTypes.number,
-    maxLines: React.PropTypes.node,
-    readOnly: React.PropTypes.bool,
-    highlightActiveLine: React.PropTypes.bool
-  },
-
   getDefaultProps() {
     return {
       name: 'brace-editor',
@@ -79,6 +60,18 @@ export default React.createClass({
 
     if (this.props.onLoad) {
       this.props.onLoad(this.editor);
+    }
+  },
+
+  componentDidUpdate(prevProps) {
+    const { isEditorErrorVisible } = this.props;
+
+    if (isEditorErrorVisible === null) {
+      return;
+    }
+
+    if (isEditorErrorVisible !== prevProps.isEditorErrorVisible) {
+      this.editor.resize();
     }
   },
 

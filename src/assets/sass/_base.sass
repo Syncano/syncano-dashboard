@@ -45,8 +45,14 @@ body
 input:-webkit-autofill
   -webkit-box-shadow: 0 0 0px 1000px white inset
 
-.Select.Select--multi > div:nth-last-child(1)
-  position: relative
+[style*="cursor: not-allowed"]
+  cursor: default !important
+
+  svg
+    display: none !important
+
+.ace_editor
+  -webkit-font-smoothing: antialiased
 
 .full-page-dialog
   padding: 0 !important
@@ -64,8 +70,5 @@ input:-webkit-autofill
       > div
         box-shadow: none !important
 
-[style*="cursor: not-allowed"]
-  cursor: default !important
-
-  svg
-    display: none !important
+.Select.Select--multi > div:nth-last-child(1)
+  position: relative

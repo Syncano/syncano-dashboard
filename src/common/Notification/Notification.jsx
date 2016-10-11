@@ -76,6 +76,24 @@ const Notification = React.createClass({
     this.setState({ isNotificationVisible: false });
   },
 
+  renderCloseButton() {
+    const styles = this.getStyles();
+    const { isCloseButtonVisible } = this.props;
+
+    if (!isCloseButtonVisible) {
+      return null;
+    }
+
+    return (
+      <div
+        style={styles.closeButton}
+        onClick={this.handleCloseNotification}
+      >
+        x
+      </div>
+    );
+  },
+
   render() {
     const styles = this.getStyles();
     const { className, type, children } = this.props;
@@ -94,12 +112,7 @@ const Notification = React.createClass({
         data-e2e="notification-bar"
       >
         <div style={{ ...styles[notificationStyle], ...styles.notificationContent }}>
-          <div
-            style={styles.closeButton}
-            onClick={this.handleCloseNotification}
-          >
-            x
-          </div>
+          {this.renderCloseButton()}
           <div style={styles.notificationContentIcon}>
             <FontIcon
               className={`synicon-${iconClass}`}
