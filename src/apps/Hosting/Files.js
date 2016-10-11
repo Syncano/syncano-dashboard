@@ -57,12 +57,12 @@ const HostingFilesView = React.createClass({
     router.push(redirectPath);
   },
 
-  handleUploadFiles(event) {
+  handleUploadFiles(directory, event) {
     event.stopPropagation();
     const { files } = event.target;
 
     if (files && files.length) {
-      const filesToUpload = _.map(files, this.extendFilePath);
+      const filesToUpload = _.map(files, (file) => this.extendFilePath(file, directory));
 
       this.setState({ filesToUpload });
     }
@@ -99,10 +99,10 @@ const HostingFilesView = React.createClass({
     });
   },
 
-  extendFilePath(file) {
+  extendFilePath(file, directory) {
     const firstSlashIndex = file.webkitRelativePath.indexOf('/');
 
-    file.path = file.webkitRelativePath.substring(firstSlashIndex + 1);
+    file.path = `${directory}/${file.webkitRelativePath.substring(firstSlashIndex + 1)}`;
 
     return file;
   },

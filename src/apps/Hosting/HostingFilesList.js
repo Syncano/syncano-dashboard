@@ -216,12 +216,14 @@ const HostingFilesList = React.createClass({
   },
 
   renderUploadFilesButton() {
-    const { hasFiles, ...other } = this.props;
+    const { hasFiles, handleUploadFiles, ...other } = this.props;
+    const { currentFolderName } = this.state;
 
     return (
       <div className="row align-center vm-3-t">
         <UploadFilesButton
           {...other}
+          handleUploadFiles={(event) => handleUploadFiles(currentFolderName, event)}
           hasFiles={hasFiles}
         />
       </div>
