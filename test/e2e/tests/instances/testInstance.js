@@ -15,7 +15,7 @@ export default addTestNamePrefixes({
     const instancesPage = client.page.instancesPage();
 
     instancesPage
-      .waitForElementNotPresent('@setupText')
+      .waitForElementNotPresent('@setupPageContent')
       .navigate()
       .waitForElementNotPresent('@emptyListItem')
       .waitForElementVisible('@selectInstance');
