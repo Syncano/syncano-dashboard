@@ -24,7 +24,7 @@ const InnerToolbar = Radium(React.createClass({
     return {
       toolbar: {
         background: 'rgba(243, 243, 243, .90)',
-        padding: '0 24px 0 12px',
+        padding: '0 24px 0 14px',
         zIndex: 6,
         justifyContent: 'flex-start'
       },
