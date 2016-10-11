@@ -13,7 +13,7 @@ class SetupPage extends Component {
     if (SessionStore.getSignUpMode()) {
       this.createFirstInstance();
     } else {
-      router.push('/instances');
+      router.push('/instances/');
     }
   }
 
@@ -30,10 +30,10 @@ class SetupPage extends Component {
 
     connection.Instance.please().create({ name })
       .then(instance => {
-        router.push(`/instances/${instance.name}/sockets`);
+        router.push(`/instances/${instance.name}/sockets/`);
       })
       .catch(() => {
-        router.push('/instances');
+        router.push('/instances/');
       });
 
     SessionStore.removeSignUpMode();
