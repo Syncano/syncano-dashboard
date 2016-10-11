@@ -81,6 +81,11 @@ export default (
       onEnter={RoutesUtil.redirectToDashboard}
     />
     <Route
+      name="setup"
+      component={SetupPage}
+      path="setup"
+    />
+    <Route
       name="activate"
       component={Account.Activate}
       path="/activate/:uid/:token"
@@ -113,12 +118,6 @@ export default (
         onEnter={RoutesUtil.checkActiveSubscriptions}
         component={Instances}
         path="instances"
-      />
-
-      <Route
-        name="setup"
-        component={SetupPage}
-        path="setup"
       />
 
       <Route

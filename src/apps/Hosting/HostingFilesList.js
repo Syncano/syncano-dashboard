@@ -8,7 +8,7 @@ import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
 
 import { RaisedButton } from 'material-ui';
-import { ColumnList, Lists, Dialog, Loading, UnsupportedBrowserView } from '../../common';
+import { ColumnList, Lists, Dialog, Loading } from '../../common';
 import HostingFilesEmptyView from './HostingFilesEmptyView';
 import UploadFilesButton from './UploadFilesButton';
 import ListItem from './HostingFilesListItem';
@@ -216,8 +216,21 @@ const HostingFilesList = React.createClass({
   },
 
   renderUploadFilesButton() {
-    const { hasFiles, handleUploadFiles, ...other } = this.props;
+    const { hasFiles, isLoading, isUploading, handleUploadFiles, ...other } = this.props;
     const { currentFolderName } = this.state;
+
+    if (!isLoading && !isUploading && !this.isSupportedBrowser()) {
+      return (
+        <div className="row align-center vm-3-t">
+          <RaisedButton
+            label="Download CLI"
+            href="https://github.com/Syncano/syncano-cli"
+            target="_blank"
+            primary={true}
+          />
+        </div>
+      );
+    }
 
     return (
       <div className="row align-center vm-3-t">
@@ -232,23 +245,6 @@ const HostingFilesList = React.createClass({
 
   render() {
     const { items, isLoading, hasFiles, isUploading, ...other } = this.props;
-
-    if (!isLoading && !isUploading && !this.isSupportedBrowser()) {
-      const actionButton = (
-        <RaisedButton
-          label="Download CLI"
-          href="https://github.com/Syncano/syncano-cli"
-          target="_blank"
-          primary={true}
-        />
-      );
-
-      return (
-        <Loading show={isLoading}>
-          <UnsupportedBrowserView actionButton={actionButton} />
-        </Loading>
-      );
-    }
 
     if (!items.length || hasFiles || isUploading) {
       return (
