@@ -35,7 +35,7 @@ const ChannelHistory = React.createClass({
   handleBackClick() {
     const { router, params } = this.props;
 
-    router.push(`/instances/${params.instanceName}/channels`);
+    router.push(`/instances/${params.instanceName}/channels/`);
   },
 
   render() {

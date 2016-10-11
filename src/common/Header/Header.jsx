@@ -211,7 +211,7 @@ const Header = Radium(React.createClass({
         id="upgrade-button"
         style={{ ...styles.toolbarListItem, ...{ paddingRight: 0 } }}
       >
-        <UpgradeButton onTouchTap={() => router.push('/account/plan')} />
+        <UpgradeButton onTouchTap={() => router.push('/account/plan/')} />
       </li>
     );
   },

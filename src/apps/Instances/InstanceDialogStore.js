@@ -53,7 +53,7 @@ export default Reflux.createStore({
 
     InstancesActions.fetch();
     SessionActions.fetchInstance(name);
-    SessionStore.getRouter().push(`/instances/${name}/sockets`);
+    SessionStore.getRouter().push(`/instances/${name}/sockets/`);
     this.dismissDialog();
   },
 
