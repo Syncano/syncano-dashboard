@@ -36,10 +36,14 @@ const CreateHostingDialog = React.createClass({
 
   getHostingParams() {
     const { description, domains = [], id, isDefault, label, newDomain } = this.state;
-    const domainsArray = _.map(domains, 'value');
+    let domainsArray = _.map(domains, 'value');
 
     if (newDomain && newDomain.length) {
       domainsArray.push(newDomain);
+    }
+
+    if (!isDefault) {
+      domainsArray = _.without(domainsArray, 'default');
     }
 
     return { label, description, id, isDefault, domains: domainsArray };
