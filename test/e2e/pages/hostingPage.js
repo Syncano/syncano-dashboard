@@ -12,7 +12,7 @@ export default {
       selector: '[data-e2e="hosting-dialog-description-input"]'
     },
     newDomainInput: {
-      selector: '[name="newDomain"]'
+      selector: '[data-e2e="hosting-dialog-new-domain-input"]'
     },
     addNewDomainButton: {
       selector: '[data-e2e="domain-add-button"]'

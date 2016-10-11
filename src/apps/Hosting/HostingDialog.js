@@ -5,13 +5,12 @@ import _ from 'lodash';
 
 import { DialogMixin, FormMixin } from '../../mixins';
 
-import Actions from './HostingActions';
 import Store from './HostingStore';
+import Actions from './HostingActions';
 import SessionStore from '../Session/SessionStore';
 
-import { TextField } from 'material-ui';
+import { TextField, Toggle } from 'material-ui';
 import { Dialog, Show, Notification } from '../../common';
-
 import HostingDialogDomainTable from './HostingDialogDomainTable';
 
 const CreateHostingDialog = React.createClass({
@@ -36,32 +35,47 @@ const CreateHostingDialog = React.createClass({
   },
 
   getHostingParams() {
-    const { description, domains = [], id, label, newDomain } = this.state;
-    let domainsArray = domains;
-
-    if (domains && domains.length && _.isObject(domains[0])) {
-      domainsArray = _.map(domains, 'value');
-    }
+    const { description, domains = [], id, isDefault, label, newDomain } = this.state;
+    const domainsArray = _.map(domains, 'value');
 
     if (newDomain && newDomain.length) {
       domainsArray.push(newDomain);
     }
 
-    return { label, description, id, domains: domainsArray };
+    return { label, description, id, isDefault, domains: domainsArray };
   },
 
-  handleChangeNewDomain(event, domain) {
-    this.setState({ newDomain: domain });
+  getStyles() {
+    return {
+      checkBox: {
+        margin: '20px 0',
+        maxWidth: 250
+      }
+    };
+  },
+
+  handleChangeNewDomain(event, newDomain) {
+    this.setState({ newDomain });
+    if (newDomain === 'default') {
+      this.setState({ errors: { feedback: "You can't add 'Default' domain" } });
+    } else {
+      this.setState({
+        errors: {},
+        newDomain
+      });
+    }
   },
 
   handleAddNewDomain() {
     const { domains, newDomain } = this.state;
-    const newDomains = _.union(domains, [{ id: shortid.generate(), value: newDomain }]);
+    const newDomains = _.unionBy(domains, [{ id: shortid.generate(), value: newDomain }], 'value');
 
-    this.setState({
-      domains: newDomains,
-      newDomain: ''
-    });
+    if (newDomain !== 'default') {
+      this.setState({
+        domains: newDomains,
+        newDomain: ''
+      });
+    }
   },
 
   handleChangeDomains(domain, index) {
@@ -82,7 +96,7 @@ const CreateHostingDialog = React.createClass({
     const params = this.getHostingParams();
 
     if (_.isEmpty(items)) {
-      params.domains.push('default');
+      params.isDefault = true;
     }
 
     Actions.createHosting(params);
@@ -102,12 +116,20 @@ const CreateHostingDialog = React.createClass({
     this.setState({ description: value });
   },
 
+  handleDefaultDomain() {
+    let { isDefault } = this.state;
+
+    isDefault = !isDefault;
+    this.setState({ isDefault });
+  },
+
   render() {
-    const { isLoading, open, label, description, canSubmit, newDomain, domains } = this.state;
+    const { isDefault, isLoading, open, label, description, canSubmit, newDomain, domains } = this.state;
     const title = this.hasEditMode() ? 'Edit Hosting' : 'Add Hosting';
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const defaultLink = `https://${currentInstanceName}.syncano.site`;
+    const styles = this.getStyles();
 
     return (
       <Dialog.FullPage
@@ -173,22 +195,30 @@ const CreateHostingDialog = React.createClass({
             floatingLabelText="Description"
             data-e2e="hosting-dialog-description-input"
           />
-          <HostingDialogDomainTable
-            domains={domains}
-            newDomain={newDomain}
-            handleChangeNewDomain={this.handleChangeNewDomain}
-            handleAddNewDomain={this.handleAddNewDomain}
-            handleChangeDomains={this.handleChangeDomains}
-            handleRemoveDomain={this.handleRemoveDomain}
+          <Toggle
+            label="Set as default hosting"
+            style={styles.checkBox}
+            toggled={isDefault}
+            onToggle={this.handleDefaultDomain}
           />
-          <Show if={this.getValidationMessages('domains').length}>
-            <Notification
-              className="vm-2-t"
-              type="error"
-            >
-              {this.getValidationMessages('domains').join(' ')}
-            </Notification>
-          </Show>
+          <Dialog.ContentSection title="Domains">
+            <HostingDialogDomainTable
+              domains={domains}
+              newDomain={newDomain}
+              handleChangeNewDomain={this.handleChangeNewDomain}
+              handleAddNewDomain={this.handleAddNewDomain}
+              handleChangeDomains={this.handleChangeDomains}
+              handleRemoveDomain={this.handleRemoveDomain}
+            />
+            <Show if={this.getValidationMessages('domains').length}>
+              <Notification
+                className="vm-2-t"
+                type="error"
+              >
+                {this.getValidationMessages('domains').join(' ')}
+              </Notification>
+            </Show>
+          </Dialog.ContentSection>
         </div>
         <div className="vm-2-t">
           {this.renderFormNotifications()}

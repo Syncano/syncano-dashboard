@@ -53,7 +53,9 @@ class HostingListItem extends Component {
     const domainsCount = item.domains.length;
     let customDomainLink = '';
 
-    if (domainsCount) customDomainLink = `https://${params.instanceName}--${item.domains[0].value}.syncano.site`;
+    if (domainsCount) {
+      customDomainLink = `https://${params.instanceName}--${item.domains[0].value}.syncano.site`;
+    }
     const visibleLink = isDefaultHosting ? defaultLink : customDomainLink;
     const moreLinksLabel = areLinksVisible ? 'Hide Links' : 'More Links';
     const filesRedirectPath = `/instances/${params.instanceName}/hosting/${item.id}/files/`;

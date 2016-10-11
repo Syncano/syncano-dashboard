@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow } from 'material-ui';
+import { Table, TableBody } from 'material-ui';
 
 import HostingDialogDomainRow from './HostingDialogDomainRow';
 import HostingDialogDomainsList from './HostingDialogDomainsList';
 
 const HostingDialogDomainTable = ({
+  domains,
   handleAddNewDomain,
   handleRemoveDomain,
   handleChangeDomains,
-  domains,
   handleChangeNewDomain,
   newDomain
 }) => {
@@ -33,26 +33,9 @@ const HostingDialogDomainTable = ({
     }
   };
 
-  const renderTableHeader = () => (
-    <TableHeader
-      adjustForCheckbox={false}
-      displaySelectAll={false}
-    >
-      <TableRow style={styles.tableRow}>
-        <TableHeaderColumn style={styles.tableHeaderColumn}>
-          Domain
-        </TableHeaderColumn>
-        <TableHeaderColumn style={{ ...styles.tableHeaderColumn, ...styles.tableHeaderColumnButton }}>
-          Action
-        </TableHeaderColumn>
-      </TableRow>
-    </TableHeader>
-  );
-
   return (
     <div>
       <Table>
-        {renderTableHeader()}
         <TableBody
           displayRowCheckbox={false}
           style={styles.tableBody}

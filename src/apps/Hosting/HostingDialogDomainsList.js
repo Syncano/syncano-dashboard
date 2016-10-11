@@ -18,7 +18,7 @@ class HostingDialogDomainsList extends Component {
     const items = _.map((domains), (domain, index) => {
       const handleChangeCurrentDomain = (event, value) => handleChangeDomains(value, index);
 
-      return (
+      return domain.value !== 'default' && (
         <HostingDialogDomainRow
           key={domain.id}
           domain={domain.value}

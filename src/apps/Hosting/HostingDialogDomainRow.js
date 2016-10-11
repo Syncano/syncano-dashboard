@@ -28,7 +28,8 @@ const HostingDialogDomainRow = ({
     tableRowColumn: {
       display: 'flex',
       alignItems: 'center',
-      fontSize: 14
+      fontSize: 14,
+      paddingLeft: 9
     }
   };
 
@@ -36,11 +37,11 @@ const HostingDialogDomainRow = ({
   const handleDomainRemove = () => handleRemoveDomain(domain);
   const addButton = (
     <FlatButton
-      data-e2e="domain-add-button"
       label="Add"
       secondary={true}
       disabled={!domain}
       onClick={handleAddNewDomain}
+      data-e2e="domain-add-button"
     />
   );
   const deleteButton = (
@@ -57,11 +58,12 @@ const HostingDialogDomainRow = ({
       <TableRowColumn style={styles.tableRowColumn}>
         {`https://${currentInstanceName}--`}
         <TextField
-          name={handleChangeNewDomain ? 'newDomain' : `domain-${domain}`}
+          name="domain"
           hintText="Type domain"
           fullWidth={true}
           value={domain}
           onChange={handleDomainChange}
+          data-e2e={handleChangeNewDomain ? 'hosting-dialog-new-domain-input' : `hosting-dialog-${domain}-input`}
         />
         .syncano.site/
       </TableRowColumn>
