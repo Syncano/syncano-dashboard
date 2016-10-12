@@ -40,7 +40,7 @@ const HostingFilesEmptyView = ({
     />
   );
 
-  const defaultDescription = 'Choose folder with your website files from your disk.';
+  const defaultDescription = 'Choose your website files from your disk.';
   const uploadingFilesDescription = `Uploading ${uploadingFilesCount} files...`;
   const descriptionWithFiles = isUploading ? uploadingFilesDescription : `${filesCount} files ready for upload.`;
   const bashSnippets = [
@@ -54,7 +54,7 @@ const HostingFilesEmptyView = ({
       iconClassName={hasFiles || isUploading ? 'synicon-cloud-upload' : 'synicon-hosting-files-types'}
       iconColor={hasFiles || isUploading ? Colors.blue500 : Colors.grey600}
       mainTitle="Hosting Socket Files"
-      showDocsUrl={!hasFiles}
+      showDocsUrl={false}
       urlLabel="Hosting Socket"
       description={hasFiles || isUploading ? descriptionWithFiles : defaultDescription}
       docsUrl="http://docs.syncano.io/docs/"
