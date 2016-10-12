@@ -216,7 +216,8 @@ const HostingFilesList = React.createClass({
   },
 
   renderUploadFilesButton() {
-    const { hasFiles, isLoading, isUploading, ...other } = this.props;
+    const { hasFiles, isLoading, isUploading, handleUploadFiles, ...other } = this.props;
+    const { currentFolderName } = this.state;
 
     if (!isLoading && !isUploading && !this.isSupportedBrowser()) {
       return (
@@ -235,6 +236,7 @@ const HostingFilesList = React.createClass({
       <div className="row align-center vm-3-t">
         <UploadFilesButton
           {...other}
+          handleUploadFiles={(event) => handleUploadFiles(currentFolderName, event)}
           hasFiles={hasFiles}
         />
       </div>
