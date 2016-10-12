@@ -50,14 +50,26 @@ const HostingList = React.createClass({
   renderItem(item) {
     const { checkItem } = this.props;
 
+    const showEditDialog = () => {
+      HostingActions.showDialog(item);
+    };
+
+    const showPublishDialog = () => {
+      HostingPublishDialogActions.showDialog(item);
+    };
+
+    const showDeleteDialog = () => {
+      this.showDialog('removeHostingDialog', item);
+    };
+
     return (
       <ListItem
         key={`hosting-list-item-${item.id}`}
         onIconClick={checkItem}
         item={item}
-        showEditDialog={() => HostingActions.showDialog(item)}
-        showPublishDialog={() => HostingPublishDialogActions.showDialog(item)}
-        showDeleteDialog={() => this.showDialog('removeHostingDialog', item)}
+        showEditDialog={showEditDialog}
+        showPublishDialog={showPublishDialog}
+        showDeleteDialog={showDeleteDialog}
       />
     );
   },
