@@ -138,7 +138,7 @@ const CreateHostingDialog = React.createClass({
   },
 
   render() {
-    const { isDefault, isLoading, open, label, description, canSubmit, newDomain, domains } = this.state;
+    const { isDefault, isLoading, open, label, description, canSubmit, newDomain, domains, items } = this.state;
     const title = this.hasEditMode() ? 'Edit Hosting' : 'Add Hosting';
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
@@ -209,12 +209,14 @@ const CreateHostingDialog = React.createClass({
             floatingLabelText="Description"
             data-e2e="hosting-dialog-description-input"
           />
-          <Toggle
-            label="Set as default hosting"
-            style={styles.checkBox}
-            toggled={isDefault}
-            onToggle={this.handleDefaultDomain}
-          />
+          <Show if={items.length !== 0}>
+            <Toggle
+              label="Set as default hosting"
+              style={styles.checkBox}
+              toggled={isDefault}
+              onToggle={this.handleDefaultDomain}
+            />
+          </Show>
           <Dialog.ContentSection title="Domains">
             <HostingDialogDomainTable
               domains={domains}
