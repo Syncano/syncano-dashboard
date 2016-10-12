@@ -85,8 +85,7 @@ const Header = Radium(React.createClass({
         cursor: 'pointer'
       },
       toolbarDropdownListItem: {
-        paddingLeft: 0,
-        paddingRight: 0
+        padding: 0
       },
       accountKeyIcon: {
         zIndex: -1
