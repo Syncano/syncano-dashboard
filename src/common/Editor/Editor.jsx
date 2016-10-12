@@ -34,8 +34,21 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    const { name, mode, theme, fontSize, onChange, value, showGutter, minLines, maxLines, readOnly, highlightActiveLine,
-      setShowPrintMargin, onLoad } = this.props;
+    const {
+      name,
+      mode,
+      theme,
+      fontSize,
+      onChange,
+      value,
+      showGutter,
+      minLines,
+      maxLines,
+      readOnly,
+      highlightActiveLine,
+      setShowPrintMargin,
+      onLoad
+    } = this.props;
 
     this.editor = ace.edit(name);
     this.editor.$blockScrolling = Infinity;
