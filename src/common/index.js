@@ -1,5 +1,6 @@
 import AlertPageContent from './AlertPageContent';
 import AutoCompleteWrapper from './AutoCompleteWrapper';
+import BashSnippet from './BashSnippet';
 import Billing from './Billing';
 import CheckIcon from './CheckIcon';
 import Clipboard from './Clipboard';
@@ -58,6 +59,7 @@ import LinkWithIcon from './LinkWithIcon';
 
 export { AlertPageContent };
 export { AutoCompleteWrapper };
+export { BashSnippet };
 export { Billing };
 export { CheckIcon };
 export { Clipboard };
@@ -118,6 +120,7 @@ export { LinkWithIcon };
 export default {
   AlertPageContent,
   AutoCompleteWrapper,
+  BashSnippet,
   Billing,
   CheckIcon,
   Clipboard,

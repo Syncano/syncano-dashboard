@@ -48,10 +48,14 @@ class HostingListItem extends Component {
     const { areLinksVisible } = this.state;
     const { item, onIconClick, params, showDeleteDialog, showPublishDialog, showEditDialog } = this.props;
     const styles = this.getStyles();
-    const isDefaultHosting = _.includes(item.domains, 'default');
+    const isDefaultHosting = _.some(item.domains, { value: 'default' });
     const defaultLink = `https://${params.instanceName}.syncano.site`;
     const domainsCount = item.domains.length;
-    const customDomainLink = domainsCount ? `https://${params.instanceName}--${item.domains[0]}.syncano.site` : '';
+    let customDomainLink = '';
+
+    if (domainsCount) {
+      customDomainLink = `https://${params.instanceName}--${item.domains[0].value}.syncano.site`;
+    }
     const visibleLink = isDefaultHosting ? defaultLink : customDomainLink;
     const moreLinksLabel = areLinksVisible ? 'Hide Links' : 'More Links';
     const filesRedirectPath = `/instances/${params.instanceName}/hosting/${item.id}/files/`;
@@ -80,12 +84,12 @@ class HostingListItem extends Component {
             primaryText={item.label}
           />
           <Column.Desc
-            className="col-sm-5"
+            className="col-flex-1"
             data-e2e={`${item.description}-hosting-list-item-description`}
           >
             {item.description}
           </Column.Desc>
-          <Column.Desc className="col-flex-1">
+          <Column.Desc className="col-sm-11">
             <Show if={domainsCount}>
               <div style={styles.websiteUrlContainerStyles}>
                 <LinkWithIcon url={visibleLink} />

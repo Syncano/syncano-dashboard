@@ -11,11 +11,11 @@ export default {
     descriptionInput: {
       selector: '[data-e2e="hosting-dialog-description-input"]'
     },
-    domainsInput: {
-      selector: '[data-e2e="hosting-dialog-domains-input"]'
+    newDomainInput: {
+      selector: '[data-e2e="hosting-dialog-new-domain-input"]'
     },
-    enteredDomainHintOption: {
-      selector: '[class="Select-menu-outer"]'
+    addNewDomainButton: {
+      selector: '[data-e2e="domain-add-button"]'
     },
     addHostingConfirmButton: {
       selector: '[data-e2e="hosting-dialog-submit-button"]'

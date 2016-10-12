@@ -8,6 +8,7 @@ import { SnackbarNotificationMixin } from '../../mixins';
 
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
+import SessionStore from '../Session/SessionStore';
 import HostingPublishDialogActions from './HostingPublishDialogActions';
 
 import { FontIcon, RaisedButton } from 'material-ui';
@@ -57,12 +58,12 @@ const HostingFilesView = React.createClass({
     router.push(redirectPath);
   },
 
-  handleUploadFiles(event) {
+  handleUploadFiles(directory, event) {
     event.stopPropagation();
     const { files } = event.target;
 
     if (files && files.length) {
-      const filesToUpload = _.map(files, this.extendFilePath);
+      const filesToUpload = _.map(files, (file) => this.extendFilePath(file, directory));
 
       this.setState({ filesToUpload });
     }
@@ -99,10 +100,17 @@ const HostingFilesView = React.createClass({
     });
   },
 
-  extendFilePath(file) {
-    const firstSlashIndex = file.webkitRelativePath.indexOf('/');
+  extendFilePath(file, directory) {
+    if (file.webkitRelativePath) {
+      const firstSlashIndex = file.webkitRelativePath.indexOf('/');
 
-    file.path = file.webkitRelativePath.substring(firstSlashIndex + 1);
+      file.path = directory ? `${directory}/` : '';
+      file.path += file.webkitRelativePath.substring(firstSlashIndex + 1);
+
+      return file;
+    }
+
+    file.path = directory ? `${directory}/${file.name}` : file.name;
 
     return file;
   },
@@ -120,6 +128,8 @@ const HostingFilesView = React.createClass({
     } = this.state;
 
     const hasFilesToUpload = filesToUpload.length > 0;
+    const currentInstance = SessionStore.getInstance();
+    const currentInstanceName = currentInstance && currentInstance.name;
     const hostingUrl = this.getHostingUrl();
     const hostingLabel = hostingDetails ? hostingDetails.label : '';
     const pageTitle = `Website Hosting: ${hostingLabel}`;
@@ -135,7 +145,7 @@ const HostingFilesView = React.createClass({
           backButton={true}
           backFallback={this.handleBackClick}
           forceBackFallback={true}
-          backButtonTooltip="Go back to Hostings List"
+          backButtonTooltip="Go Back to Hosting Sockets"
         >
           <Show if={items.length && !isLoading}>
             <RaisedButton
@@ -151,6 +161,7 @@ const HostingFilesView = React.createClass({
 
         <Container>
           <HostingFilesList
+            currentInstanceName={currentInstanceName}
             isUploading={isUploading}
             lastFileIndex={lastFileIndex}
             currentFileIndex={currentFileIndex}

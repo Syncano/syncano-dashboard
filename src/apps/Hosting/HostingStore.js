@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import shortid from 'shortid';
 import _ from 'lodash';
 
 import {
@@ -49,44 +50,40 @@ export default Reflux.createStore({
     });
   },
 
-  getDefaultHosting(objects) {
-    const defaultHosting = _.find(objects, (hosting) => _.includes(hosting.domains, 'default'));
-
-    return defaultHosting;
-  },
-
   setHosting(data) {
-    this.data.items = data;
-    this.data.defaultHosting = this.getDefaultHosting(data);
+    const addIdToDomain = (domain) => ({ id: shortid.generate(), value: domain });
+    const setHosting = (hosting) => {
+      hosting.domains = _.map(hosting.domains, addIdToDomain);
+      hosting.isDefault = _.some(hosting.domains, { value: 'default' });
+      return hosting;
+    };
+    const hostings = _.forEach(data, setHosting);
+
+    this.data.items = hostings;
     this.trigger(this.data);
   },
 
   refreshData() {
-    console.debug('HostingStore::refreshData');
     Actions.fetchHosting();
   },
 
   onFetchHostingCompleted(data) {
-    console.debug('HostingStore::onFetchHostigCompleted');
     Actions.setHosting(data);
   },
 
   onCreateHostingCompleted(payload) {
-    console.debug('HostingStore::onCreateHostingCompleted');
     this.refreshData();
     this.dismissDialog();
     this.sendHostingAnalytics('add', payload);
   },
 
   onUpdateHostingCompleted(payload) {
-    console.debug('HostingStore::onUpdateHostingCompleted');
     this.refreshData();
     this.dismissDialog();
     this.sendHostingAnalytics('edit', payload);
   },
 
   onRemoveHostingsCompleted(payload) {
-    console.debug('HostingStore::onRemoveHostingCompleted');
     this.refreshData();
     this.sendHostingAnalytics('delete', payload);
   }

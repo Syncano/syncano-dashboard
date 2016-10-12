@@ -7,10 +7,8 @@ import { DialogsMixin } from '../../mixins';
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
 
-import { RaisedButton } from 'material-ui';
 import { ColumnList, Lists, Dialog, Loading } from '../../common';
 import HostingFilesEmptyView from './HostingFilesEmptyView';
-import UploadFilesButton from './UploadFilesButton';
 import ListItem from './HostingFilesListItem';
 import DotsListItem from './DotsListItem';
 
@@ -60,6 +58,13 @@ const HostingFilesList = React.createClass({
     const { directoryDepth, currentFolderName } = this.state;
 
     HostingFilesActions.checkFolder(folder, directoryDepth, currentFolderName);
+  },
+
+  handleUploadFiles(event) {
+    const { handleUploadFiles } = this.props;
+    const { currentFolderName } = this.state;
+
+    return handleUploadFiles(currentFolderName, event);
   },
 
   initDialogs() {
@@ -215,29 +220,12 @@ const HostingFilesList = React.createClass({
     return listItems;
   },
 
-  renderUploadFilesButton() {
-    const { hasFiles, isLoading, isUploading, ...other } = this.props;
-
-    if (!isLoading && !isUploading && !this.isSupportedBrowser()) {
-      return (
-        <div className="row align-center vm-3-t">
-          <RaisedButton
-            label="Download CLI"
-            href="https://github.com/Syncano/syncano-cli"
-            target="_blank"
-            primary={true}
-          />
-        </div>
-      );
-    }
-
+  renderEmptyView() {
     return (
-      <div className="row align-center vm-3-t">
-        <UploadFilesButton
-          {...other}
-          hasFiles={hasFiles}
-        />
-      </div>
+      <HostingFilesEmptyView
+        {...this.props}
+        handleUploadFiles={this.handleUploadFiles}
+      />
     );
   },
 
@@ -249,6 +237,7 @@ const HostingFilesList = React.createClass({
         <Loading show={isLoading}>
           <HostingFilesEmptyView
             {...other}
+            handleUploadFiles={this.handleUploadFiles}
             isUploading={isUploading}
             hasFiles={hasFiles}
           />
@@ -266,7 +255,7 @@ const HostingFilesList = React.createClass({
           key="hosting-files-list"
         >
           {this.renderItems()}
-          {this.renderUploadFilesButton()}
+          {this.renderEmptyView()}
         </Lists.List>
       </div>
     );

@@ -17,7 +17,17 @@ export default {
       .Hosting
       .please()
       .create(params)
-      .then(this.completed)
+      .then((createdHosting) => {
+        if (params.isDefault) {
+          return this.NewLibConnection
+            .Hosting
+            .please()
+            .setDefault({ id: createdHosting.id })
+            .then(this.completed)
+            .catch(this.failure);
+        }
+        return this.completed(createdHosting);
+      })
       .catch(this.failure);
   },
 
@@ -26,7 +36,17 @@ export default {
       .Hosting
       .please()
       .update({ id }, params)
-      .then(this.completed)
+      .then((updatedHosting) => {
+        if (params.isDefault) {
+          return this.NewLibConnection
+            .Hosting
+            .please()
+            .setDefault({ id: updatedHosting.id })
+            .then(this.completed)
+            .catch(this.failure);
+        }
+        return this.completed(updatedHosting);
+      })
       .catch(this.failure);
   },
 

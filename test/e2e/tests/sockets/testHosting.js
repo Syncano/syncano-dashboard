@@ -22,23 +22,21 @@ export default addTestNamePrefixes({
       .clickElement('@addHostingButton')
       .fillInput('@labelInput', hosting)
       .fillInput('@descriptionInput', hosting)
-      .clickElement('@domainsInput');
-
-    client.keys(domain.split(''));
-
-    hostingPage
-      .clickElement('@enteredDomainHintOption')
+      .fillInput('@newDomainInput', domain)
       .clickElement('@addHostingConfirmButton')
       .waitForElementVisible('@hostingList');
   },
   'Administrator edits a Hosting Socket': (client) => {
     const hostingPage = client.page.hostingPage();
     const dropdownOption = hostingPage.elements.hostingListItemDropdownEditOption.selector;
+    const domain = `${utils.randomString(10)}editedDomain`;
 
     hostingPage
       .clickDropdown('@hostingDropdownIcon', dropdownOption)
       .fillInput('@labelInput', utils.addSuffix('edited'))
       .fillInput('@descriptionInput', utils.addSuffix('edited'))
+      .fillInput('@newDomainInput', domain)
+      .clickElement('@addNewDomainButton')
       .clickElement('@addHostingConfirmButton')
       .waitForElementPresent('@hostingList')
       .assert.containsText('@hostingListItemLabel', utils.addSuffix('edited'))

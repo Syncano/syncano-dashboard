@@ -50,14 +50,26 @@ const HostingList = React.createClass({
   renderItem(item) {
     const { checkItem } = this.props;
 
+    const showEditDialog = () => {
+      HostingActions.showDialog(item);
+    };
+
+    const showPublishDialog = () => {
+      HostingPublishDialogActions.showDialog(item);
+    };
+
+    const showDeleteDialog = () => {
+      this.showDialog('removeHostingDialog', item);
+    };
+
     return (
       <ListItem
         key={`hosting-list-item-${item.id}`}
         onIconClick={checkItem}
         item={item}
-        showEditDialog={() => HostingActions.showDialog(item)}
-        showPublishDialog={() => HostingPublishDialogActions.showDialog(item)}
-        showDeleteDialog={() => this.showDialog('removeHostingDialog', item)}
+        showEditDialog={showEditDialog}
+        showPublishDialog={showPublishDialog}
+        showDeleteDialog={showDeleteDialog}
       />
     );
   },
@@ -78,13 +90,13 @@ const HostingList = React.createClass({
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
-          className="col-sm-5"
+          className="col-flex-1"
         >
           Description
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
-          className="col-flex-1"
+          className="col-sm-11"
         >
           Website Url
         </Column.ColumnHeader>
