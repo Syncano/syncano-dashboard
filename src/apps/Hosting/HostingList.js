@@ -78,13 +78,13 @@ const HostingList = React.createClass({
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
-          className="col-sm-5"
+          className="col-flex-1"
         >
           Description
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
-          className="col-flex-1"
+          className="col-sm-11"
         >
           Website Url
         </Column.ColumnHeader>
