@@ -6,12 +6,6 @@ import Sticky from 'react-stickydiv';
 import { Toolbar, ToolbarGroup, ToolbarTitle, IconButton } from 'material-ui';
 
 const InnerToolbar = Radium(React.createClass({
-  displayName: 'InnerToolbar',
-
-  propTypes: {
-    children: React.PropTypes.node
-  },
-
   getDefaultProps() {
     return {
       backButton: false,
@@ -24,9 +18,14 @@ const InnerToolbar = Radium(React.createClass({
     return {
       toolbar: {
         background: 'rgba(243, 243, 243, .90)',
-        padding: '0px 24px',
+        padding: '0 24px',
         zIndex: 6,
         justifyContent: 'flex-start'
+      },
+      backButtonToolbarGroup: {
+        alignItems: 'center',
+        marginLeft: -16,
+        marginRight: 10
       },
       toolbarRight: {
         height: '100%',
@@ -37,11 +36,6 @@ const InnerToolbar = Radium(React.createClass({
       },
       icon: {
         color: 'rgba(0, 0, 0, .4)'
-      },
-      iconButton: {
-        width: 36,
-        margin: '4px 6px 0 0',
-        paddingLeft: 0
       }
     };
   },
@@ -57,17 +51,16 @@ const InnerToolbar = Radium(React.createClass({
   },
 
   renderBackButton() {
-    const { backButtonTooltip, backButtonTooltipPosition } = this.props;
     const styles = this.getStyles();
+    const { backButtonTooltip, backButtonTooltipPosition } = this.props;
 
     return (
-      <ToolbarGroup>
+      <ToolbarGroup style={styles.backButtonToolbarGroup}>
         <IconButton
           iconClassName="synicon-arrow-left"
           tooltip={backButtonTooltip}
           tooltipPosition={backButtonTooltipPosition}
           onClick={this.handleBackButtonTouchTap}
-          style={styles.iconButton}
           iconStyle={styles.icon}
         />
       </ToolbarGroup>
@@ -95,10 +88,7 @@ const InnerToolbar = Radium(React.createClass({
   renderTitle(title) {
     return (
       <ToolbarGroup>
-        <ToolbarTitle
-          text={title}
-          style={{ paddingRight: 0 }}
-        />
+        <ToolbarTitle text={title} />
       </ToolbarGroup>
     );
   },
