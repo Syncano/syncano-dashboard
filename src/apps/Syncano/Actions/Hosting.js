@@ -117,14 +117,22 @@ export default {
   },
 
   removeFiles(files, hostingId) {
-    bluebird.mapSeries(files, (file) => (
-      this.NewLibConnection
+    const lastFileIndex = files.length - 1;
+
+    bluebird.mapSeries(files, (file, currentFileIndex) => {
+      const hasNextFile = files.length > currentFileIndex + 1;
+
+      return this.NewLibConnection
         .HostingFile
         .please()
         .delete({ hostingId, id: file.id })
-    ))
-    .then(this.completed)
-    .catch(this.failure);
+        .then(() => this.completed({
+          isFinished: !hasNextFile,
+          currentFileIndex,
+          lastFileIndex
+        }))
+        .catch(this.failure);
+    });
   },
 
   publish(id) {
