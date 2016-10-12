@@ -18,18 +18,17 @@ const CustomSocketCodeExamples = ({ socketName, currentLanguage, endpointName, m
         `-H "X-API-KEY: ${accountKey}" \\\n` +
         `-H "Content-type: application/json" \\\n` +
         `${!isGetMethod ? "-d '{ \"data\": \"something\"}, \\\n" : ''}` +
-
-        `\n${baseUrl}instances/your_instance/endpoints/sockets/${socketName}/${endpointName}/`,
+        `"${baseUrl}instances/your_instance/endpoints/sockets/${socketName}/${endpointName}/"`,
       javascript: dedent(`
         var Syncano = require('syncano');
         var connection = Syncano({
-          accountKey: ${accountKey}
+          accountKey: '${accountKey}'
         });
 
         var params = {
-          name: ${endpointName},
+          name: '${endpointName}',
           instanceName: 'your_instance',
-          socket_name: ${socketName}
+          socket_name: '${socketName}'
         };
 
         var endpoint = connection.Endpoint(params);
@@ -37,11 +36,14 @@ const CustomSocketCodeExamples = ({ socketName, currentLanguage, endpointName, m
         endpoint.run(${!isGetMethod ? `'${methodType}', { data: 'something' }` : ''});
       `),
       python: dedent(`
-        from syncano.models import (CustomSocket)
+        import syncano
+        from syncano.models import CustomSocket
 
-        cs = CustomSocket.please.get(name='${socketName}')
-        result = cs.run('${endpointName}'${!isGetMethod ? `, method='${methodType}', data='something'` : ''})
-        print(result)
+        syncano.connect(api_key="${accountKey}")
+
+        custom_socket = CustomSocket.please.get(instance_name="your_instance", name="${socketName}")
+        result = custom_socket.run("${endpointName}"${!isGetMethod ? `, method="${methodType}", data="something"` : ''})
+        print result
       `),
       cli: dedent(`
         syncano sockets run ${socketName}/${endpointName} ${!isGetMethod ? `${methodType} -d data=something` : ''}
@@ -91,7 +93,7 @@ const CustomSocketCodeExamples = ({ socketName, currentLanguage, endpointName, m
   };
 
   const renderExampleResponses = () => {
-    const responses = _.map(codeExamples, (code) => (
+    const responses = _.map(codeExamples, code => (
       <div
         className="vm-4-t"
         key={shortId.generate()}

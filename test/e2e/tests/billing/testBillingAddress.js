@@ -8,7 +8,8 @@ export default addTestNamePrefixes({
 
     client
       .loginUsingLocalStorage(accountKey)
-      .setResolution(client);
+      .setResolution(client)
+      .pause(600);
   },
   after: (client, done) => client.end(done),
   'User adds Billing Address': (client) => {
