@@ -18,21 +18,38 @@ class UploadFilesButton extends Component {
     chooseFilesButton: {
       display: 'none',
       position: 'absolute'
+    },
+    folderDescription: {
+      padding: '8px 0'
     }
   })
 
-  handleClickButton = () => {
+  isSupportedBrowser = () => (
+    !!window.chrome && !!window.chrome.webstore
+  )
+
+  handleClickFilesButton = () => {
+    this.refs.fileSelect.click();
+  }
+
+  handleClickFoldersButton = () => {
     this.refs.dirSelect.click();
   }
 
   setInputAttributes = () => {
-    if (this.refs.dirSelect) {
-      this.refs.dirSelect.setAttribute('webkitdirectory', true);
-      this.refs.dirSelect.setAttribute('multiple', true);
-      this.refs.dirSelect.setAttribute('directory', true);
-      this.refs.dirSelect.setAttribute('odirectory', true);
-      this.refs.dirSelect.setAttribute('msdirectory', true);
-      this.refs.dirSelect.setAttribute('mozdirectory', true);
+    const { fileSelect, dirSelect } = this.refs;
+
+    if (fileSelect) {
+      fileSelect.setAttribute('multiple', true);
+    }
+
+    if (dirSelect) {
+      dirSelect.setAttribute('webkitdirectory', true);
+      dirSelect.setAttribute('multiple', true);
+      dirSelect.setAttribute('directory', true);
+      dirSelect.setAttribute('odirectory', true);
+      dirSelect.setAttribute('msdirectory', true);
+      dirSelect.setAttribute('mozdirectory', true);
     }
   }
 
@@ -57,19 +74,58 @@ class UploadFilesButton extends Component {
       );
     }
 
+    if (this.isSupportedBrowser()) {
+      return (
+        <div>
+          <div>
+            <RaisedButton
+              label="Choose files from disk"
+              primary={true}
+              onTouchTap={this.handleClickFilesButton}
+              style={{ marginRight: 10 }}
+            >
+              <input
+                style={styles.chooseFilesButton}
+                type="file"
+                ref="fileSelect"
+                onChange={handleUploadFiles}
+              />
+            </RaisedButton>
+            <RaisedButton
+              label="Choose whole folder from disk*"
+              primary={true}
+              onTouchTap={this.handleClickFoldersButton}
+            >
+              <input
+                style={styles.chooseFilesButton}
+                type="file"
+                ref="dirSelect"
+                onChange={handleUploadFiles}
+              />
+            </RaisedButton>
+          </div>
+          <div style={styles.folderDescription}>
+            * only content of the folder will be uploaded
+          </div>
+        </div>
+      );
+    }
+
     return (
-      <FlatButton
-        label="Choose files from disk"
-        primary={true}
-        onTouchTap={this.handleClickButton}
-      >
-        <input
-          style={styles.chooseFilesButton}
-          type="file"
-          ref="dirSelect"
-          onChange={handleUploadFiles}
-        />
-      </FlatButton>
+      <div>
+        <RaisedButton
+          label="Choose files from disk"
+          primary={true}
+          onTouchTap={this.handleClickFilesButton}
+        >
+          <input
+            style={styles.chooseFilesButton}
+            type="file"
+            ref="fileSelect"
+            onChange={handleUploadFiles}
+          />
+        </RaisedButton>
+      </div>
     );
   }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 
 import Show from '../Show';
-import { FontIcon, RaisedButton } from 'material-ui';
+import { FontIcon, FlatButton, RaisedButton } from 'material-ui';
 import { BashSnippet } from '../../common';
 
 const EmptyViewCLI = ({
@@ -119,7 +119,7 @@ const EmptyViewCLI = ({
           </a>
         </div>
         {renderSnippets(bashSnippets)}
-        <RaisedButton
+        <FlatButton
           label={hostingDocsButtonLabel}
           primary={true}
           href={hostingDocsUrl}

@@ -18,6 +18,12 @@ const styles = {
     background: 'rgb(56, 56, 56)',
     padding: 10,
     marginTop: 8
+  },
+  dollarSign: {
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    msUserSelect: 'none',
+    userSelect: 'none'
   }
 };
 
@@ -27,7 +33,8 @@ const BashSnippet = ({ description, snippet, style }) => (
       {description}
     </div>
     <div style={{ ...styles.snippet, ...style }}>
-      {`$ ${snippet}`}
+      <span style={styles.dollarSign}>{`$ `}</span>
+      {snippet}
     </div>
   </div>
 );
