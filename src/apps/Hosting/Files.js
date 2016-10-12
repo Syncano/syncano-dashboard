@@ -8,6 +8,7 @@ import { SnackbarNotificationMixin } from '../../mixins';
 
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
+import SessionStore from '../Session/SessionStore';
 import HostingPublishDialogActions from './HostingPublishDialogActions';
 
 import { FontIcon, RaisedButton } from 'material-ui';
@@ -120,6 +121,8 @@ const HostingFilesView = React.createClass({
     } = this.state;
 
     const hasFilesToUpload = filesToUpload.length > 0;
+    const currentInstance = SessionStore.getInstance();
+    const currentInstanceName = currentInstance && currentInstance.name;
     const hostingUrl = this.getHostingUrl();
     const hostingLabel = hostingDetails ? hostingDetails.label : '';
     const pageTitle = `Website Hosting: ${hostingLabel}`;
@@ -151,6 +154,7 @@ const HostingFilesView = React.createClass({
 
         <Container>
           <HostingFilesList
+            currentInstanceName={currentInstanceName}
             isUploading={isUploading}
             lastFileIndex={lastFileIndex}
             currentFileIndex={currentFileIndex}
