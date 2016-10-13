@@ -11,6 +11,16 @@ const PricingPlansUtil = {
 
   getPricingParams(planName) {
     const pricingParams = {
+      Founder: {
+        apiCalls: {
+          minPrice: 6,
+          maxPrice: 6
+        },
+        scripts: {
+          minPrice: 3,
+          maxPrice: 3
+        }
+      },
       Developer: {
         apiCalls: {
           minPrice: 20,
@@ -122,6 +132,20 @@ const PricingPlansUtil = {
         ],
         price: 'Free',
         disabled: true
+      },
+      Founder: {
+        isHidden: true,
+        title: 'Founder',
+        apiCallsOptions: this.getPlanOptions('apiCalls', 'Founder', currentAPIPrice),
+        scriptsOptions: this.getPlanOptions('scripts', 'Founder', currentScriptsPrice),
+        features: [
+          'Full access to all features',
+          '60 requests per second',
+          'Unlimited storage',
+          '16 Instances (apps)',
+          '8 concurrent Scripts',
+          'Unlimited users'
+        ]
       },
       Developer: {
         isHidden: this.isPlanHidden('Developer', currentAPIPrice, currentScriptsPrice),
