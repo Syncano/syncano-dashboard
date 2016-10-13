@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import PricingPlansUtil from '../../utils/PricingPlansUtil';
 
-import Store from '../../apps/Profile/ProfileBillingPlanStore';
+import ProfileBillingPlanStore from '../../apps/Profile/ProfileBillingPlanStore';
 import PlanDialogActions from '../../apps/Profile/ProfileBillingPlanDialogActions';
 
 import { RaisedButton } from 'material-ui';
@@ -49,11 +49,11 @@ class PricingPlans extends Component {
   }
 
   renderCurrentPlan = () => {
-    const currentAPIPrice = Store.getCurrentPlanValue('api');
-    const currentScriptsPrice = Store.getCurrentPlanValue('cbx');
+    const currentAPIPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
+    const currentScriptsPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
     const plans = PricingPlansUtil.getPlans(currentAPIPrice, currentScriptsPrice);
-    const pricingPlanName = Store.getPricingPlanName();
-    const price = Store.getPlanTotalValue();
+    const pricingPlanName = ProfileBillingPlanStore.getPricingPlanName();
+    const price = ProfileBillingPlanStore.getPlanTotalValue();
 
     if (!price) {
       return null;
@@ -75,8 +75,8 @@ class PricingPlans extends Component {
   render() {
     const styles = this.getStyles();
     const { isDowngrade } = this.context;
-    const currentAPIPrice = Store.getCurrentPlanValue('api');
-    const currentScriptsPrice = Store.getCurrentPlanValue('cbx');
+    const currentAPIPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
+    const currentScriptsPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
     const plans = PricingPlansUtil.getPlans(currentAPIPrice, currentScriptsPrice, isDowngrade);
 
     return (

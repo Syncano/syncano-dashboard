@@ -171,7 +171,7 @@ export default Reflux.createStore({
 
     const apiLimit = this.data.profile.subscription.pricing.api.included;
 
-    if (_.inRange(apiLimit, 999999, 2000001)) {
+    if (_.inRange(apiLimit, 199999, 2000001)) {
       PricingPlanName = 'Developer';
     }
 

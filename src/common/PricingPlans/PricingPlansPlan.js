@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import PricingPlansUtil from '../../utils/PricingPlansUtil';
 
-import Store from '../../apps/Profile/ProfileBillingPlanStore';
+import ProfileBillingPlanStore from '../../apps/Profile/ProfileBillingPlanStore';
 import PlanDialogActions from '../../apps/Profile/ProfileBillingPlanDialogActions';
 
 import { Paper, Subheader, SelectField, List, ListItem, MenuItem, RaisedButton } from 'material-ui';
@@ -41,7 +41,7 @@ class PricingPlansPlan extends Component {
       return options[0].price;
     }
 
-    if (isDowngrade && title === Store.getPricingPlanName()) {
+    if (isDowngrade && title === ProfileBillingPlanStore.getPricingPlanName()) {
       return options[options.length - 2].price;
     }
 
@@ -49,7 +49,7 @@ class PricingPlansPlan extends Component {
       return _.last(options).price;
     }
 
-    if (title === Store.getPricingPlanName()) {
+    if (title === ProfileBillingPlanStore.getPricingPlanName()) {
       return options[1].price;
     }
 
@@ -146,20 +146,20 @@ class PricingPlansPlan extends Component {
     const { price } = this.props;
 
     if (price === 'Free') {
-      const subscriptionEndDate = Store.getActiveSubscriptionEndDate();
+      const subscriptionEndDate = ProfileBillingPlanStore.getActiveSubscriptionEndDate();
 
       return `(will expire at ${subscriptionEndDate})`;
     }
 
-    const isNewSubscriptionVisible = Store.isNewSubscriptionVisible();
+    const isNewSubscriptionVisible = ProfileBillingPlanStore.isNewSubscriptionVisible();
 
     if (isNewSubscriptionVisible) {
-      const newSubscriptionPrice = Store.getNewPlanTotalValue();
+      const newSubscriptionPrice = ProfileBillingPlanStore.getNewPlanTotalValue();
 
       return `Your new plan (${newSubscriptionPrice}) starts next month`;
     }
 
-    const isPlanCanceled = Store.isPlanCanceled();
+    const isPlanCanceled = ProfileBillingPlanStore.isPlanCanceled();
 
     if (isPlanCanceled) {
       return '(will expire at the end of the month)';
@@ -170,10 +170,10 @@ class PricingPlansPlan extends Component {
 
   isButtonDisabled() {
     const { apiCallsPrice, scriptsPrice } = this.state;
-    const currentAPIPrice = Store.getCurrentPlanValue('api');
-    const currentScriptsPrice = Store.getCurrentPlanValue('cbx');
-    const newAPIPrice = Store.getNewPlanValue('api');
-    const newScriptsPrice = Store.getNewPlanValue('cbx');
+    const currentAPIPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
+    const currentScriptsPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
+    const newAPIPrice = ProfileBillingPlanStore.getNewPlanValue('api');
+    const newScriptsPrice = ProfileBillingPlanStore.getNewPlanValue('cbx');
 
     if (apiCallsPrice === currentAPIPrice && scriptsPrice === currentScriptsPrice) {
       return true;
@@ -325,7 +325,7 @@ class PricingPlansPlan extends Component {
   renderCurrentPlanFooter() {
     const styles = this.getStyles();
     const lowestPrice = PricingPlansUtil.getLowestPrice();
-    const price = Store.getPlanTotalValue();
+    const price = ProfileBillingPlanStore.getPlanTotalValue();
 
     let content = (
       <div>

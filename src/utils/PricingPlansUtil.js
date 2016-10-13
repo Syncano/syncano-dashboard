@@ -65,12 +65,12 @@ const PricingPlansUtil = {
 
   getOptions(field, minPrice, maxPrice) {
     const keyName = this.getKeyName();
-    const options = _.filter(BillingPlans.objects[0].options[keyName[field]], (value) => (
+    const options = _.filter(BillingPlans.options[keyName[field]], (value) => (
       _.inRange(value, minPrice - 1, maxPrice + 1)
     ));
 
     return _.map(options, (option) => (
-      _.merge({}, { price: parseInt(option, 10) }, BillingPlans.objects[0].pricing[keyName[field]][option])
+      _.merge({}, { price: parseInt(option, 10) }, BillingPlans.pricing[keyName[field]][option])
     ));
   },
 
