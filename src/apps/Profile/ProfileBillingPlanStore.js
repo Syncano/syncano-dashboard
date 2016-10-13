@@ -175,11 +175,11 @@ export default Reflux.createStore({
       PricingPlanName = 'Founder';
     }
 
-    if (_.inRange(apiLimit, 999999, 2000001)) {
+    if (_.inRange(apiLimit, 1000000, 2000001)) {
       PricingPlanName = 'Developer';
     }
 
-    if (_.inRange(apiLimit, 4499999, 100000001)) {
+    if (_.inRange(apiLimit, 4500000, 100000001)) {
       PricingPlanName = 'Business';
     }
 
