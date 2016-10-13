@@ -101,9 +101,16 @@ const HostingFilesView = React.createClass({
   },
 
   extendFilePath(file, directory) {
-    const firstSlashIndex = file.webkitRelativePath.indexOf('/');
+    if (file.webkitRelativePath) {
+      const firstSlashIndex = file.webkitRelativePath.indexOf('/');
 
-    file.path = `${directory}/${file.webkitRelativePath.substring(firstSlashIndex + 1)}`;
+      file.path = directory ? `${directory}/` : '';
+      file.path += file.webkitRelativePath.substring(firstSlashIndex + 1);
+
+      return file;
+    }
+
+    file.path = directory ? `${directory}/${file.name}` : file.name;
 
     return file;
   },

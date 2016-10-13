@@ -29,7 +29,7 @@ class SetupPage extends Component {
     const name = InstanceDialogStore.genUniqueName();
 
     connection.Instance.please().create({ name })
-      .then(instance => {
+      .then((instance) => {
         router.push(`/instances/${instance.name}/sockets`);
       })
       .catch(() => {
