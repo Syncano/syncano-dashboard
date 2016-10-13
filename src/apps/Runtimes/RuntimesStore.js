@@ -47,7 +47,7 @@ export default Reflux.createStore({
     }
 
     return _.find(this.data.runtimes, runtime => (
-      runtime.name.toLowerCase() === runtimeName.toLowerCase()) && !runtime.deprecated
+      runtime.key.toLowerCase() === runtimeName.toLowerCase()) && !runtime.deprecated
     );
   },
 
