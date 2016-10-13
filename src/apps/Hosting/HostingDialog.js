@@ -63,7 +63,7 @@ const CreateHostingDialog = React.createClass({
         color: 'rgba(68,68,68, .8)'
       },
       defaultExplanation: {
-        margin: 30
+        margin: '30px 0'
       }
     };
   },
@@ -153,6 +153,7 @@ const CreateHostingDialog = React.createClass({
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const defaultLink = `https://${currentInstanceName}.syncano.site`;
+    const labelLink = `https://${label}--${currentInstanceName}.syncano.site`;
     const styles = this.getStyles();
     const itemsLength = items.length !== 0;
 
@@ -239,7 +240,13 @@ const CreateHostingDialog = React.createClass({
                   </a>
                   <br />
                   {'Each instance can have one default hosting. '}
-                  {`Setting this as a default will not affect <label.domainName>.`}
+                  {'Setting this as a default will not affect '}
+                  <a
+                    href={labelLink}
+                    target="_blank"
+                  >
+                    {`${labelLink}.`}
+                  </a>
                 </Notification>
               </div>
               <Toggle
