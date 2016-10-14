@@ -2,24 +2,22 @@ import React from 'react';
 import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
+import ProfileBillingInvoicesStore from './ProfileBillingInvoicesStore';
+import ProfileActions from './ProfileActions';
 import SessionStore from '../Session/SessionStore';
-import Actions from './ProfileActions';
-import Store from './ProfileBillingInvoicesStore';
 
 import { RaisedButton } from 'material-ui';
 import { ColumnList, Container, Loading, Show, InnerToolbar, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
-export default React.createClass({
-  displayName: 'ProfileBillingInvoices',
-
+const ProfileBillingInvoices = React.createClass({
   mixins: [
-    Reflux.connect(Store)
+    Reflux.connect(ProfileBillingInvoicesStore)
   ],
 
   componentDidMount() {
-    Actions.fetchInvoices();
+    ProfileActions.fetchInvoices();
   },
 
   handlePDFClick(invoice) {
@@ -30,7 +28,7 @@ export default React.createClass({
   },
 
   handleRetryPaymentClick(invoice) {
-    Actions.retryPayment(invoice);
+    ProfileActions.retryPayment(invoice);
   },
 
   renderActionButton(invoice) {
@@ -100,3 +98,5 @@ export default React.createClass({
     );
   }
 });
+
+export default ProfileBillingInvoices;

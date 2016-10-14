@@ -2,41 +2,34 @@ import _ from 'lodash';
 import BillingPlans from '../constants/BillingPlans.json';
 
 const PricingPlansUtil = {
-  getKeyName() {
-    return {
-      apiCalls: 'api',
-      scripts: 'cbx'
-    };
-  },
-
   getPricingParams(planName) {
     const pricingParams = {
       Founder: {
-        apiCalls: {
+        api: {
           minPrice: 6,
           maxPrice: 6
         },
-        scripts: {
+        cbx: {
           minPrice: 3,
           maxPrice: 3
         }
       },
       Developer: {
-        apiCalls: {
+        api: {
           minPrice: 20,
           maxPrice: 40
         },
-        scripts: {
+        cbx: {
           minPrice: 5,
           maxPrice: 10
         }
       },
       Business: {
-        apiCalls: {
+        api: {
           minPrice: 80,
           maxPrice: 1500
         },
-        scripts: {
+        cbx: {
           minPrice: 5,
           maxPrice: 1500
         }
@@ -54,33 +47,39 @@ const PricingPlansUtil = {
     const pricingParams = this.getPricingParams();
     const firstPlan = pricingParams[Object.keys(pricingParams)[0]];
 
-    return firstPlan.apiCalls.minPrice + firstPlan.scripts.minPrice;
+    return firstPlan.api.minPrice + firstPlan.cbx.minPrice;
   },
 
-  isPlanHidden(planName, currentAPIPrice, currentScriptsPrice) {
+  // getLegendItems(type) {
+  //   console.log('type', type);
+  //   return ['$4', '$40', '$400', '$4000', '$40000', '$400000'];
+  // },
+
+  isPlanHidden(planName, currentApiPrice, currentCbxPrice) {
     const pricingParams = this.getPricingParams(planName);
-    const pricingParamsMaxTotal = pricingParams.apiCalls.maxPrice + pricingParams.scripts.maxPrice;
-    const currentTotal = currentAPIPrice + currentScriptsPrice;
+    const pricingParamsMaxTotal = pricingParams.api.maxPrice + pricingParams.cbx.maxPrice;
+    const currentTotal = currentApiPrice + currentCbxPrice;
 
     return currentTotal >= pricingParamsMaxTotal;
   },
 
-  isDowngradePlanHidden(planName, currentAPIPrice, currentScriptsPrice) {
+  isDowngradePlanHidden(planName, currentApiPrice, currentCbxPrice) {
     const pricingParams = this.getPricingParams(planName);
-    const pricingParamsMinTotal = pricingParams.apiCalls.minPrice + pricingParams.scripts.minPrice;
-    const currentTotal = currentAPIPrice + currentScriptsPrice;
+    const pricingParamsMinTotal = pricingParams.api.minPrice + pricingParams.cbx.minPrice;
+    const currentTotal = currentApiPrice + currentCbxPrice;
 
     return currentTotal <= pricingParamsMinTotal;
   },
 
   getOptions(field, minPrice, maxPrice) {
-    const keyName = this.getKeyName();
-    const options = _.filter(BillingPlans.options[keyName[field]], (value) => (
+    // console.log('getOptions', field, minPrice, maxPrice);
+    // console.log('BillingPlans.options', BillingPlans.options);
+    const options = _.filter(BillingPlans.options[field], (value) => (
       _.inRange(value, minPrice - 1, maxPrice + 1)
     ));
 
     return _.map(options, (option) => (
-      _.merge({}, { price: parseInt(option, 10) }, BillingPlans.pricing[keyName[field]][option])
+      _.merge({}, { price: parseInt(option, 10) }, BillingPlans.pricing[field][option])
     ));
   },
 
@@ -104,21 +103,21 @@ const PricingPlansUtil = {
     return this.getOptions(field, minPrice, maxPrice);
   },
 
-  getPlans(currentAPIPrice, currentScriptsPrice, isDowngrade) {
+  getPlans(currentApiPrice, currentCbxPrice, isDowngrade) {
     if (isDowngrade) {
-      return this.getDowngradePlans(currentAPIPrice, currentScriptsPrice);
+      return this.getDowngradePlans(currentApiPrice, currentCbxPrice);
     }
 
     return {
       Starter: {
         isCurrent: true,
-        isHidden: currentAPIPrice > 0,
+        isHidden: currentApiPrice > 0,
         title: 'Starter',
-        apiCallsOptions: [{
+        apiOptions: [{
           price: 0,
           included: 100000
         }],
-        scriptsOptions: [{
+        cbxOptions: [{
           price: 0,
           included: 10000
         }],
@@ -136,8 +135,8 @@ const PricingPlansUtil = {
       Founder: {
         isHidden: true,
         title: 'Founder',
-        apiCallsOptions: this.getPlanOptions('apiCalls', 'Founder', currentAPIPrice),
-        scriptsOptions: this.getPlanOptions('scripts', 'Founder', currentScriptsPrice),
+        apiOptions: this.getPlanOptions('api', 'Founder', currentApiPrice),
+        cbxOptions: this.getPlanOptions('cbx', 'Founder', currentCbxPrice),
         features: [
           'Full access to all features',
           '60 requests per second',
@@ -148,10 +147,10 @@ const PricingPlansUtil = {
         ]
       },
       Developer: {
-        isHidden: this.isPlanHidden('Developer', currentAPIPrice, currentScriptsPrice),
+        isHidden: this.isPlanHidden('Developer', currentApiPrice, currentCbxPrice),
         title: 'Developer',
-        apiCallsOptions: this.getPlanOptions('apiCalls', 'Developer', currentAPIPrice),
-        scriptsOptions: this.getPlanOptions('scripts', 'Developer', currentScriptsPrice),
+        apiOptions: this.getPlanOptions('api', 'Developer', currentApiPrice),
+        cbxOptions: this.getPlanOptions('cbx', 'Developer', currentCbxPrice),
         features: [
           'Full access to all features',
           '60 requests per second',
@@ -162,10 +161,10 @@ const PricingPlansUtil = {
         ]
       },
       Business: {
-        isHidden: this.isPlanHidden('Business', currentAPIPrice, currentScriptsPrice),
+        isHidden: this.isPlanHidden('Business', currentApiPrice, currentCbxPrice),
         title: 'Business',
-        apiCallsOptions: this.getPlanOptions('apiCalls', 'Business', currentAPIPrice),
-        scriptsOptions: this.getPlanOptions('scripts', 'Business', currentScriptsPrice),
+        apiOptions: this.getPlanOptions('api', 'Business', currentApiPrice),
+        cbxOptions: this.getPlanOptions('cbx', 'Business', currentCbxPrice),
         features: [
           'Full access to all features',
           '60 requests per second',
@@ -178,21 +177,21 @@ const PricingPlansUtil = {
     };
   },
 
-  getDowngradePlans(currentAPIPrice, currentScriptsPrice) {
+  getDowngradePlans(currentApiPrice, currentCbxPrice) {
     const plans = this.getPlans();
     const downgradePlansDiffs = {
       Starter: {
         isHidden: true
       },
       Developer: {
-        isHidden: this.isDowngradePlanHidden('Developer', currentAPIPrice, currentScriptsPrice),
-        apiCallsOptions: this.getPlanOptions('apiCalls', 'Developer', currentAPIPrice, true),
-        scriptsOptions: this.getPlanOptions('scripts', 'Developer', currentScriptsPrice, true)
+        isHidden: this.isDowngradePlanHidden('Developer', currentApiPrice, currentCbxPrice),
+        apiOptions: this.getPlanOptions('api', 'Developer', currentApiPrice, true),
+        cbxOptions: this.getPlanOptions('cbx', 'Developer', currentCbxPrice, true)
       },
       Business: {
-        isHidden: this.isDowngradePlanHidden('Business', currentAPIPrice, currentScriptsPrice),
-        apiCallsOptions: this.getPlanOptions('apiCalls', 'Business', currentAPIPrice, true),
-        scriptsOptions: this.getPlanOptions('scripts', 'Business', currentScriptsPrice, true)
+        isHidden: this.isDowngradePlanHidden('Business', currentApiPrice, currentCbxPrice),
+        apiOptions: this.getPlanOptions('api', 'Business', currentApiPrice, true),
+        cbxOptions: this.getPlanOptions('cbx', 'Business', currentCbxPrice, true)
       }
     };
     const downgradePlans = {
@@ -203,6 +202,21 @@ const PricingPlansUtil = {
 
     return downgradePlans;
   }
+
+  // getStoreBillingPlans() {
+  //   const plans = BillingPlans;
+  //
+  //   // console.log('BillingPlans', BillingPlans);
+  //
+  //   plans.options.api = _.tail(plans.options.api);
+  //   plans.options.cbx = _.tail(plans.options.cbx);
+  //   plans.pricing.api = _.tail(plans.pricing.api);
+  //   plans.pricing.cbx = _.tail(plans.pricing.cbx);
+  //
+  //   console.log('plans', plans);
+  //
+  //   return plans;
+  // }
 };
 
 export default PricingPlansUtil;

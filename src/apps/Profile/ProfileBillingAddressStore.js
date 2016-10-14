@@ -2,10 +2,10 @@ import Reflux from 'reflux';
 
 import { StoreFormMixin, SnackbarNotificationMixin } from '../../mixins';
 
-import Actions from './ProfileActions';
+import ProfileActions from './ProfileActions';
 
 export default Reflux.createStore({
-  listenables: Actions,
+  listenables: ProfileActions,
 
   mixins: [
     StoreFormMixin,

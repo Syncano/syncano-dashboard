@@ -7,17 +7,15 @@ import valid from 'card-validator';
 
 import { DialogsMixin, FormMixin } from '../../mixins';
 
-import Actions from './ProfileActions';
-import Store from './ProfileBillingPaymentStore';
+import ProfileBillingPaymentStore from './ProfileBillingPaymentStore';
+import ProfileActions from './ProfileActions';
 
 import { FontIcon, RaisedButton } from 'material-ui';
 import { CreditCardForm, Container, CreditCard, Dialog, Show, Loading, InnerToolbar } from '../../common/';
 
-export default Radium(React.createClass({
-  displayName: 'ProfileBillingPayment',
-
+const ProfileBillingPayment = Radium(React.createClass({
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(ProfileBillingPaymentStore),
     DialogsMixin,
     FormMixin
   ],
@@ -65,7 +63,7 @@ export default Radium(React.createClass({
   },
 
   componentDidMount() {
-    Actions.fetchBillingCard();
+    ProfileActions.fetchBillingCard();
   },
 
   getStyles() {
@@ -114,10 +112,10 @@ export default Radium(React.createClass({
     };
 
     if (_.isEmpty(card)) {
-      return Actions.addBillingCard(params);
+      return ProfileActions.addBillingCard(params);
     }
 
-    return Actions.updateBillingCard(params);
+    return ProfileActions.updateBillingCard(params);
   },
 
   initDialogs() {
@@ -128,7 +126,7 @@ export default Radium(React.createClass({
         key: 'deleteBillingCard',
         ref: 'deleteBillingCard',
         title: 'Remove Billing Card',
-        handleConfirm: Actions.deleteBillingCard,
+        handleConfirm: ProfileActions.deleteBillingCard,
         modal: true,
         children: ['Are you sure you want to remove your billing card?']
       }
@@ -205,12 +203,12 @@ export default Radium(React.createClass({
                     />
                   </Show>
                   <RaisedButton
-                    data-e2e="payment-add-button"
                     type="submit"
                     primary={true}
                     className="raised-button"
                     style={{ margin: '0 0 0 auto' }}
                     label={formSubmitButtonLabel}
+                    data-e2e="payment-add-button"
                   />
                 </div>
               </div>
@@ -227,17 +225,17 @@ export default Radium(React.createClass({
               <div className="row vm-3-t">
                 <div className="col-flex-1">
                   <RaisedButton
-                    data-e2e="payment-remove-button"
                     label="Remove payment"
                     style={{ marginRight: 10 }}
                     onClick={() => this.showDialog('deleteBillingCard', {})}
+                    data-e2e="payment-remove-button"
                   />
                   <RaisedButton
-                    data-e2e="payment-update-button"
                     type="submit"
                     primary={true}
                     label="Update payment"
                     onClick={() => this.toggleForm(true)}
+                    data-e2e="payment-update-button"
                   />
                 </div>
               </div>
@@ -248,3 +246,5 @@ export default Radium(React.createClass({
     );
   }
 }));
+
+export default ProfileBillingPayment;

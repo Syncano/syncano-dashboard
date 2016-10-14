@@ -3,17 +3,18 @@ import moment from 'moment';
 import d3 from 'd3';
 import _ from 'lodash';
 
-import Actions from './ProfileBillingChartActions';
-import PlanActions from './ProfileBillingPlanActions';
+import ProfileBillingChartActions from './ProfileBillingChartActions';
+import ProfileBillingPlanActions from './ProfileBillingPlanActions';
 
 export default Reflux.createStore({
-  listenables: Actions,
+  listenables: ProfileBillingChartActions,
+
   format: 'YYYY-MM-DD',
 
   init() {
     this.joinTrailing(
-      Actions.fetchBillingProfile.completed,
-      Actions.fetchTotalDailyUsage.completed,
+      ProfileBillingChartActions.fetchBillingProfile.completed,
+      ProfileBillingChartActions.fetchTotalDailyUsage.completed,
       this.prepareChartData
     );
   },
@@ -206,8 +207,8 @@ export default Reflux.createStore({
       showPercents: plan === 'paid-commitment'
     };
 
-    PlanActions.setOverage(state.overage);
-    PlanActions.setChartLegend(state.chartLegend);
+    ProfileBillingPlanActions.setOverage(state.overage);
+    ProfileBillingPlanActions.setChartLegend(state.chartLegend);
 
     this.trigger(state);
   },
@@ -282,7 +283,6 @@ export default Reflux.createStore({
   },
 
   onFetchTotalDailyUsage() {
-    console.debug('ProfileBillingChartStore::onFetchTotalDailyUsage');
     this.trigger({ isLoading: true });
   }
 });

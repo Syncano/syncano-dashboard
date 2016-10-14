@@ -1,8 +1,6 @@
 import React from 'react';
 
-export default React.createClass({
-  displayName: 'SliderSection',
-
+const SliderSection = React.createClass({
   getStyles() {
     return {
       sectionTopic: {
@@ -49,3 +47,5 @@ export default React.createClass({
     );
   }
 });
+
+export default SliderSection;

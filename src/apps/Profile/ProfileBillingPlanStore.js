@@ -4,10 +4,10 @@ import _ from 'lodash';
 
 import { SnackbarNotificationMixin, StoreLoadingMixin } from '../../mixins';
 
-import Actions from './ProfileBillingPlanActions';
+import ProfileBillingPlanActions from './ProfileBillingPlanActions';
 
 export default Reflux.createStore({
-  listenables: Actions,
+  listenables: ProfileBillingPlanActions,
 
   mixins: [
     SnackbarNotificationMixin,
@@ -42,10 +42,9 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    console.debug('ProfileBillingPlanStore::refreshData');
     const join = this.joinTrailing(
-      Actions.fetchBillingProfile.completed,
-      Actions.fetchBillingSubscriptions.completed,
+      ProfileBillingPlanActions.fetchBillingProfile.completed,
+      ProfileBillingPlanActions.fetchBillingSubscriptions.completed,
       () => {
         join.stop();
         this.data.isReady = true;
@@ -54,8 +53,8 @@ export default Reflux.createStore({
       }
     );
 
-    Actions.fetchBillingProfile();
-    Actions.fetchBillingSubscriptions();
+    ProfileBillingPlanActions.fetchBillingProfile();
+    ProfileBillingPlanActions.fetchBillingSubscriptions();
   },
 
   setProfile(profile) {

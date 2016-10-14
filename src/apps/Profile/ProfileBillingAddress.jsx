@@ -4,17 +4,15 @@ import Helmet from 'react-helmet';
 
 import { FormMixin } from '../../mixins';
 
-import Actions from './ProfileActions';
-import Store from './ProfileBillingAddressStore';
+import ProfileActions from './ProfileActions';
+import ProfileBillingAddressStore from './ProfileBillingAddressStore';
 
 import { TextField, RaisedButton } from 'material-ui';
 import { Container, InnerToolbar } from '../../common/';
 
-export default React.createClass({
-  displayName: 'ProfileBillingAddress',
-
+const ProfileBillingAddress = React.createClass({
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(ProfileBillingAddressStore),
     FormMixin
   ],
 
@@ -70,7 +68,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    Actions.fetchBillingProfile();
+    ProfileActions.fetchBillingProfile();
   },
 
   handleSuccessfullValidation() {
@@ -88,7 +86,7 @@ export default React.createClass({
       canSubmit
     } = this.state;
 
-    Actions.updateBillingProfile({
+    ProfileActions.updateBillingProfile({
       company_name,
       first_name,
       last_name,
@@ -261,3 +259,5 @@ export default React.createClass({
     );
   }
 });
+
+export default ProfileBillingAddress;

@@ -6,10 +6,11 @@ import numeral from 'numeral';
 import valid from 'card-validator';
 
 import { DialogMixin, FormMixin } from '../../mixins';
+// import PricingPlansUtil from '../../utils/PricingPlansUtil';
 
-import Store from './ProfileBillingPlanDialogStore';
-import PlanStore from './ProfileBillingPlanStore';
-import Actions from './ProfileBillingPlanDialogActions';
+import ProfileBillingPlanDialogStore from './ProfileBillingPlanDialogStore';
+import ProfileBillingPlanStore from './ProfileBillingPlanStore';
+import ProfileBillingPlanDialogActions from './ProfileBillingPlanDialogActions';
 
 import {
   FontIcon,
@@ -26,10 +27,8 @@ import { CreditCardForm, CreditCard, Dialog, Loading, Show, Slider } from '../..
 import SliderSection from './SliderSection';
 
 const ProfileBillingPlanDialog = React.createClass({
-  displayName: 'ProfileBillingPlanDialog',
-
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(ProfileBillingPlanDialogStore),
     DialogMixin,
     FormMixin
   ],
@@ -198,7 +197,7 @@ const ProfileBillingPlanDialog = React.createClass({
   },
 
   handleDismiss() {
-    Store.resetSelectedPricingPlan();
+    ProfileBillingPlanDialogStore.resetSelectedPricingPlan();
     this.handleCancel();
     if (typeof this.props.onDismiss === 'function') {
       this.props.onDismiss();
@@ -206,17 +205,16 @@ const ProfileBillingPlanDialog = React.createClass({
   },
 
   handleAddSubmit() {
-    Actions.submitPlan(this.getValidatorAttributes());
+    ProfileBillingPlanDialogActions.submitPlan(this.getValidatorAttributes());
   },
 
   handleEditSubmit() {
-    Actions.submitPlan(this.getValidatorAttributes());
+    ProfileBillingPlanDialogActions.submitPlan(this.getValidatorAttributes());
   },
 
   handleDialogShow() {
-    console.debug('ProfileBillingPlanDialog::handleDialogShow');
-    Actions.fetchBillingPlans();
-    Actions.fetchBillingCard();
+    ProfileBillingPlanDialogActions.fetchBillingPlans();
+    ProfileBillingPlanDialogActions.fetchBillingCard();
   },
 
   renderFormNotificationsBlock() {
@@ -336,8 +334,8 @@ const ProfileBillingPlanDialog = React.createClass({
         value={typeof selected !== 'undefined' ? selected : defaultValue}
         type={type}
         legendItems={options}
-        optionClick={Actions.sliderLabelsClick}
-        onChange={Actions.sliderChange}
+        optionClick={ProfileBillingPlanDialogActions.sliderLabelsClick}
+        onChange={ProfileBillingPlanDialogActions.sliderChange}
       />
     );
   },
@@ -359,7 +357,7 @@ const ProfileBillingPlanDialog = React.createClass({
 
   renderFeatures() {
     const styles = this.getStyles();
-    const features = Store.getFeatures();
+    const features = ProfileBillingPlanDialogStore.getFeatures();
 
     if (!features) {
       return null;
@@ -398,11 +396,11 @@ const ProfileBillingPlanDialog = React.createClass({
   render() {
     const styles = this.getStyles();
     const { canSubmit } = this.state;
-    const apiInfo = Store.getInfo('api');
-    const cbxInfo = Store.getInfo('cbx');
+    const apiInfo = ProfileBillingPlanDialogStore.getInfo('api');
+    const cbxInfo = ProfileBillingPlanDialogStore.getInfo('cbx');
     const sum = parseInt(apiInfo.total, 10) + parseInt(cbxInfo.total, 10);
-    const isSelectedPricingPlan = Store.isSelectedPricingPlan();
-    const selectedPricingPlanName = Store.getSelectedPricingPlanName();
+    const isSelectedPricingPlan = ProfileBillingPlanDialogStore.isSelectedPricingPlan();
+    const selectedPricingPlanName = ProfileBillingPlanDialogStore.getSelectedPricingPlanName();
     const dialogCustomActions = [
       <div style={isSelectedPricingPlan && styles.narrowWrapper}>
         <RaisedButton
@@ -411,8 +409,8 @@ const ProfileBillingPlanDialog = React.createClass({
           primary={true}
           onTouchTap={this.handleFormValidation}
           ref="submit"
-          data-e2e="confirm-button"
           disabled={!canSubmit}
+          data-e2e="confirm-button"
         />
       </div>
     ];
@@ -443,7 +441,7 @@ const ProfileBillingPlanDialog = React.createClass({
     let paymentComment = `Your monthly billing cycle will start on the 1st day of every month. Your payment for the
       current month will be prorated and charged immediately.`;
 
-    if (PlanStore.getPlanTotalValue()) {
+    if (ProfileBillingPlanStore.getPlanTotalValue()) {
       paymentComment = 'We will charge your new monthly Plan price when the next billing period starts.';
     }
 
@@ -478,19 +476,39 @@ const ProfileBillingPlanDialog = React.createClass({
               <div className="col-md-24">
                 <div style={styles.sectionTopic}>Summary</div>
                 <div style={styles.table}>
-                  <div className="row" style={styles.tableRow}>
-                    <div className="col-flex-1">API calls</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>
+                  <div
+                    className="row"
+                    style={styles.tableRow}
+                  >
+                    <div className="col-flex-1">
+                      API calls
+                    </div>
+                    <div
+                      className="col-md-10"
+                      style={styles.tableColumnSummary}
+                    >
                       {parseInt(apiInfo.included, 10).toLocaleString()}
                     </div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>${apiInfo.total}/Month</div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>
+                      ${apiInfo.total}/Month
+                    </div>
                   </div>
                   <div className="row" style={styles.tableRow}>
-                    <div className="col-flex-1">Script seconds</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>
+                    <div className="col-flex-1">
+                      Script seconds
+                    </div>
+                    <div
+                      className="col-md-10"
+                      style={styles.tableColumnSummary}
+                    >
                       {parseInt(cbxInfo.included, 10).toLocaleString()}
                     </div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>${cbxInfo.total}/Month</div>
+                    <div
+                      className="col-md-10"
+                      style={styles.tableColumnSummary}
+                    >
+                      ${cbxInfo.total}/Month
+                    </div>
                   </div>
                 </div>
                 <div style={{ marginTop: 30 }}>
@@ -498,10 +516,8 @@ const ProfileBillingPlanDialog = React.createClass({
                 </div>
               </div>
               <div className="col-md-11" style={{ paddingLeft: 35 }}>
-
                 <div style={styles.sectionTopic}>New plan:</div>
                 <div style={{ marginTop: 20, background: '#CBEDA5' }}>
-
                   <div style={styles.sectionTotalSummary}>
                     <div><strong>${sum}</strong>/month</div>
                     <div>+ overage</div>

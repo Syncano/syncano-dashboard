@@ -8,7 +8,6 @@ export default CreateActions(
     sliderChange: {},
     sliderLabelsClick: {},
     submitPlan: {},
-
     fetchBillingPlans: {
       asyncResult: true,
       loading: true,

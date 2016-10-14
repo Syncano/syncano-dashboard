@@ -26,11 +26,11 @@ class PricingPlansPlan extends Component {
   }
 
   getInitialPrices(props, isDowngrade) {
-    const { apiCallsOptions, scriptsOptions } = props;
+    const { apiOptions, cbxOptions } = props;
 
     return {
-      apiCallsPrice: this.getInitialOption(apiCallsOptions, isDowngrade),
-      scriptsPrice: this.getInitialOption(scriptsOptions, isDowngrade)
+      apiPrice: this.getInitialOption(apiOptions, isDowngrade),
+      cbxPrice: this.getInitialOption(cbxOptions, isDowngrade)
     };
   }
 
@@ -169,17 +169,17 @@ class PricingPlansPlan extends Component {
   }
 
   isButtonDisabled() {
-    const { apiCallsPrice, scriptsPrice } = this.state;
-    const currentAPIPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
-    const currentScriptsPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
-    const newAPIPrice = ProfileBillingPlanStore.getNewPlanValue('api');
-    const newScriptsPrice = ProfileBillingPlanStore.getNewPlanValue('cbx');
+    const { apiPrice, cbxPrice } = this.state;
+    const currentApiPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
+    const currentCbxPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
+    const newApiPrice = ProfileBillingPlanStore.getNewPlanValue('api');
+    const newCbxPrice = ProfileBillingPlanStore.getNewPlanValue('cbx');
 
-    if (apiCallsPrice === currentAPIPrice && scriptsPrice === currentScriptsPrice) {
+    if (apiPrice === currentApiPrice && cbxPrice === currentCbxPrice) {
       return true;
     }
 
-    if (apiCallsPrice === newAPIPrice && scriptsPrice === newScriptsPrice) {
+    if (apiPrice === newApiPrice && cbxPrice === newCbxPrice) {
       return true;
     }
 
@@ -191,12 +191,12 @@ class PricingPlansPlan extends Component {
   }
 
   handleButtonTouchTap = () => {
-    const { apiCallsPrice, scriptsPrice } = this.state;
-    const { apiCallsOptions, scriptsOptions, features } = this.props;
-    const apiCallsOption = _.find(apiCallsOptions, { price: apiCallsPrice });
-    const scriptsOption = _.find(scriptsOptions, { price: scriptsPrice });
+    const { apiPrice, cbxPrice } = this.state;
+    const { apiOptions, cbxOptions, features } = this.props;
+    const apiOption = _.find(apiOptions, { price: apiPrice });
+    const cbxOption = _.find(cbxOptions, { price: cbxPrice });
 
-    PlanDialogActions.selectPricingPlan(apiCallsOption, scriptsOption, features);
+    PlanDialogActions.selectPricingPlan(apiOption, cbxOption, features);
     PlanDialogActions.showDialog();
   }
 
@@ -215,8 +215,8 @@ class PricingPlansPlan extends Component {
 
   formatSelectLabel = (field, option) => {
     const label = {
-      apiCallsPrice: 'API calls',
-      scriptsPrice: 'Script seconds'
+      apiPrice: 'API calls',
+      cbxPrice: 'Script seconds'
     };
 
     return `
@@ -247,9 +247,9 @@ class PricingPlansPlan extends Component {
 
   renderPrice() {
     const styles = this.getStyles();
-    const { apiCallsPrice, scriptsPrice } = this.state;
+    const { apiPrice, cbxPrice } = this.state;
     const { price } = this.props;
-    const value = price || apiCallsPrice + scriptsPrice;
+    const value = price || apiPrice + cbxPrice;
 
     if (price === 'Free') {
       return (
@@ -270,10 +270,10 @@ class PricingPlansPlan extends Component {
   }
 
   renderSelect(field) {
-    const { apiCallsOptions, scriptsOptions } = this.props;
+    const { apiOptions, cbxOptions } = this.props;
     const options = {
-      apiCallsPrice: apiCallsOptions,
-      scriptsPrice: scriptsOptions
+      apiPrice: apiOptions,
+      cbxPrice: cbxOptions
     };
     const count = options[field].length;
 
@@ -404,8 +404,8 @@ class PricingPlansPlan extends Component {
             <Subheader style={styles.includes}>
               Includes:
             </Subheader>
-            {this.renderSelect('apiCallsPrice')}
-            {this.renderSelect('scriptsPrice')}
+            {this.renderSelect('apiPrice')}
+            {this.renderSelect('cbxPrice')}
             <RaisedButton
               label={isCurrent ? 'Current Plan' : defaultButtonLabel}
               backgroundColor="#FFCC01"

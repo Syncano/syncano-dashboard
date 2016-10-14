@@ -49,9 +49,9 @@ class PricingPlans extends Component {
   }
 
   renderCurrentPlan = () => {
-    const currentAPIPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
-    const currentScriptsPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
-    const plans = PricingPlansUtil.getPlans(currentAPIPrice, currentScriptsPrice);
+    const currentApiPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
+    const currentCbxPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
+    const plans = PricingPlansUtil.getPlans(currentApiPrice, currentCbxPrice);
     const pricingPlanName = ProfileBillingPlanStore.getPricingPlanName();
     const price = ProfileBillingPlanStore.getPlanTotalValue();
 
@@ -64,8 +64,8 @@ class PricingPlans extends Component {
         {...plans[pricingPlanName]}
         isCurrent={true}
         isHidden={false}
-        apiCallsOptions={PricingPlansUtil.getOptions('apiCalls', currentAPIPrice, currentAPIPrice)}
-        scriptsOptions={PricingPlansUtil.getOptions('scripts', currentScriptsPrice, currentScriptsPrice)}
+        apiOptions={PricingPlansUtil.getOptions('api', currentApiPrice, currentApiPrice)}
+        cbxOptions={PricingPlansUtil.getOptions('cbx', currentCbxPrice, currentCbxPrice)}
         price={price}
         disabled={true}
       />
@@ -75,9 +75,9 @@ class PricingPlans extends Component {
   render() {
     const styles = this.getStyles();
     const { isDowngrade } = this.context;
-    const currentAPIPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
-    const currentScriptsPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
-    const plans = PricingPlansUtil.getPlans(currentAPIPrice, currentScriptsPrice, isDowngrade);
+    const currentApiPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
+    const currentCbxPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
+    const plans = PricingPlansUtil.getPlans(currentApiPrice, currentCbxPrice, isDowngrade);
 
     return (
       <div>
