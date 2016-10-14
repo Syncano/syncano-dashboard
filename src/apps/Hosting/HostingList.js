@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 import { DialogsMixin } from '../../mixins';
 
@@ -49,6 +50,9 @@ const HostingList = React.createClass({
 
   renderItem(item) {
     const { checkItem } = this.props;
+    const cname = _.reject(item.domains, { value: 'default' })[0];
+
+    item.cname = cname && cname.value;
 
     const showEditDialog = () => {
       HostingActions.showDialog(item);

@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import shortid from 'shortid';
 import _ from 'lodash';
 
 import { DialogMixin, FormMixin } from '../../mixins';
@@ -11,7 +10,7 @@ import SessionStore from '../Session/SessionStore';
 
 import { TextField, Toggle } from 'material-ui';
 import { Dialog, Show, Notification } from '../../common';
-import HostingDialogDomainTable from './HostingDialogDomainTable';
+// import HostingDialogDomainTable from './HostingDialogDomainTable';
 
 const CreateHostingDialog = React.createClass({
   mixins: [
@@ -27,6 +26,11 @@ const CreateHostingDialog = React.createClass({
         maximum: 64
       }
     },
+    cname: {
+      length: {
+        maximum: 64
+      }
+    },
     description: {
       length: {
         maximum: 256
@@ -35,15 +39,14 @@ const CreateHostingDialog = React.createClass({
   },
 
   getHostingParams() {
-    const { description, domains = [], id, isDefault, label, newDomain } = this.state;
+    const { description, domains = [], id, isDefault, label, cname, newCname } = this.state;
     let domainsArray = _.map(domains, 'value');
 
-    if (newDomain && newDomain.length) {
-      domainsArray.push(newDomain);
-    }
-
-    if (!isDefault) {
-      domainsArray = _.without(domainsArray, 'default');
+    domainsArray = _.without(domainsArray, 'default');
+    if (_.includes(domainsArray, cname)) {
+      domainsArray = _.map(domainsArray, (domain) => domain === cname && (newCname || cname));
+    } else {
+      domainsArray.push(newCname);
     }
 
     return { label, description, id, isDefault, domains: domainsArray };
@@ -56,53 +59,6 @@ const CreateHostingDialog = React.createClass({
         maxWidth: 250
       }
     };
-  },
-
-  handleChangeNewDomain(event, newDomain) {
-    this.setState({ newDomain });
-    if (newDomain.toLowerCase() === 'default') {
-      this.setState({ errors: { feedback: "You can't add 'Default' domain" } });
-    } else {
-      this.setState({
-        errors: {},
-        newDomain
-      });
-    }
-  },
-
-  handleAddNewDomain() {
-    const { domains, newDomain } = this.state;
-    const newDomains = _.unionBy(domains, [{ id: shortid.generate(), value: newDomain }], 'value');
-
-    if (newDomain.toLowerCase() !== 'default') {
-      this.setState({
-        domains: newDomains,
-        newDomain: ''
-      });
-    }
-  },
-
-  handleChangeDomains(domain, index) {
-    const { domains } = this.state;
-
-    domains[index].value = domain;
-    if (domain.toLowerCase() === 'default') {
-      this.setState({
-        errors: { feedback: "You can't add 'Default' domain" },
-        domains
-      });
-    } else {
-      this.setState({
-        errors: {},
-        domains
-      });
-    }
-  },
-
-  handleRemoveDomain(domain) {
-    const domains = _.reject(this.state.domains, { value: domain });
-
-    this.setState({ domains });
   },
 
   handleAddSubmit() {
@@ -126,6 +82,10 @@ const CreateHostingDialog = React.createClass({
     this.setState({ label: value });
   },
 
+  handleChangeCName(event, value) {
+    this.setState({ newCname: value });
+  },
+
   handleChangeDescription(event, value) {
     this.setState({ description: value });
   },
@@ -138,12 +98,13 @@ const CreateHostingDialog = React.createClass({
   },
 
   render() {
-    const { isDefault, isLoading, open, label, description, canSubmit, newDomain, domains } = this.state;
+    const { isDefault, isLoading, open, label, description, canSubmit, cname, newCname } = this.state;
     const title = this.hasEditMode() ? 'Edit Hosting' : 'Add Hosting';
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const defaultLink = `https://${currentInstanceName}.syncano.site`;
     const styles = this.getStyles();
+    const cnameValue = newCname || cname;
 
     return (
       <Dialog.FullPage
@@ -215,17 +176,17 @@ const CreateHostingDialog = React.createClass({
             toggled={isDefault}
             onToggle={this.handleDefaultDomain}
           />
-          <Dialog.ContentSection title="Domains">
-            <HostingDialogDomainTable
-              domains={domains}
-              handleChangeNewDomain={this.handleChangeNewDomain}
-              handleAddNewDomain={this.handleAddNewDomain}
-              handleChangeDomains={this.handleChangeDomains}
-              handleRemoveDomain={this.handleRemoveDomain}
-              isDefault={isDefault}
-              newDomain={newDomain}
-            />
-          </Dialog.ContentSection>
+          <TextField
+            autoFocus={true}
+            fullWidth={true}
+            value={cnameValue}
+            name="CNAME"
+            onChange={this.handleChangeCName}
+            errorText={this.getValidationMessages('cname').join(' ')}
+            hintText="Hosting's CNAME"
+            floatingLabelText="CNAME"
+            data-e2e="hosting-dialog-cname-input"
+          />
         </div>
         <div className="vm-2-t">
           {this.renderFormNotifications()}
