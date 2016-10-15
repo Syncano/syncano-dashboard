@@ -73,8 +73,8 @@ const DeviceListItem = React.createClass({
         />
         <Column.Desc />
         <Column.Desc
-          data-e2e="push-notification-config"
           className="col-sm-6"
+          data-e2e={`${item.name.toLowerCase()}-push-notification-config`}
         >
           <div
             style={{ color: iconColor, cursor: 'pointer', width: '100%' }}

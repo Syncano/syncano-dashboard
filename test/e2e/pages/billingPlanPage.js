@@ -53,6 +53,12 @@ export default {
     },
     setLimitsButton: {
       selector: '[data-e2e="set-limits-button"]'
+    },
+    planReceiptDialogCurrent: {
+      selector: '[data-e2e="plan-receipt-dialog-current"]'
+    },
+    twentyFiveDolarPlanUpgradeButton: {
+      selector: '[data-e2e="25-plan-upgrade-button"]'
     }
   }
 };
