@@ -1,5 +1,6 @@
 import AlertPageContent from './AlertPageContent';
 import AutoCompleteWrapper from './AutoCompleteWrapper';
+import BashSnippet from './BashSnippet';
 import Billing from './Billing';
 import CheckIcon from './CheckIcon';
 import Clipboard from './Clipboard';
@@ -53,13 +54,13 @@ import { TraceResult, TraceBigResult } from './TraceResult';
 import Truncate from './Truncate';
 import UpgradeButton from './UpgradeButton';
 import UpgradeNowToolbar from './UpgradeNowToolbar';
-import UnsupportedBrowserView from './UnsupportedBrowserView';
 import StatusLabel from './StatusLabel';
 import LinkWithIcon from './LinkWithIcon';
 import MethodLabel from './MethodLabel';
 
 export { AlertPageContent };
 export { AutoCompleteWrapper };
+export { BashSnippet };
 export { Billing };
 export { CheckIcon };
 export { Clipboard };
@@ -116,12 +117,12 @@ export { Truncate };
 export { UpgradeButton };
 export { UpgradeNowToolbar };
 export { StatusLabel };
-export { UnsupportedBrowserView };
 export { LinkWithIcon };
 
 export default {
   AlertPageContent,
   AutoCompleteWrapper,
+  BashSnippet,
   Billing,
   CheckIcon,
   Clipboard,
@@ -176,7 +177,6 @@ export default {
   TraceBigResult,
   Truncate,
   UpgradeButton,
-  UnsupportedBrowserView,
   StatusLabel,
   LinkWithIcon,
   UpgradeNowToolbar

@@ -6,8 +6,6 @@ export default React.createClass({
   displayName: 'CheckIcon',
 
   propTypes: {
-    iconClassName: React.PropTypes.string,
-    iconColor: React.PropTypes.string,
     circleColor: React.PropTypes.string,
     checked: React.PropTypes.bool,
     checkable: React.PropTypes.bool,

@@ -91,6 +91,7 @@ const Notification = React.createClass({
       <div
         className={className}
         style={{ ...styles.notificationContainer }}
+        data-e2e="notification-bar"
       >
         <div style={{ ...styles[notificationStyle], ...styles.notificationContent }}>
           <div

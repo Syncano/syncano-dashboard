@@ -7,10 +7,8 @@ import { DialogsMixin } from '../../mixins';
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
 
-import { RaisedButton } from 'material-ui';
-import { ColumnList, Lists, Dialog, Loading, UnsupportedBrowserView } from '../../common';
+import { ColumnList, Lists, Dialog, Loading } from '../../common';
 import HostingFilesEmptyView from './HostingFilesEmptyView';
-import UploadFilesButton from './UploadFilesButton';
 import ListItem from './HostingFilesListItem';
 import DotsListItem from './DotsListItem';
 
@@ -41,7 +39,7 @@ const HostingFilesList = React.createClass({
     const { items } = this.props;
     const { directoryDepth } = this.state;
     const fileFolderName = file.path.split('/')[directoryDepth];
-    const folderFiles = _.filter(items, item => {
+    const folderFiles = _.filter(items, (item) => {
       const itemFolders = item.path.split('/');
       const hasSubFolders = directoryDepth > itemFolders.length;
       const isFileInCurrentFolder = _.includes(itemFolders, fileFolderName);
@@ -60,6 +58,13 @@ const HostingFilesList = React.createClass({
     const { directoryDepth, currentFolderName } = this.state;
 
     HostingFilesActions.checkFolder(folder, directoryDepth, currentFolderName);
+  },
+
+  handleUploadFiles(event) {
+    const { handleUploadFiles } = this.props;
+    const { currentFolderName } = this.state;
+
+    return handleUploadFiles(currentFolderName, event);
   },
 
   initDialogs() {
@@ -105,7 +110,7 @@ const HostingFilesList = React.createClass({
 
   filterByCurrentDirectoryDepth(items) {
     const { directoryDepth, currentFolderName } = this.state;
-    const filteredItems = _.filter(items, item => {
+    const filteredItems = _.filter(items, (item) => {
       const isInFolder = directoryDepth < item.folders.length;
       const isInRootFolder = currentFolderName === '';
       const isInSubfolder = _.includes(item.folders, currentFolderName);
@@ -118,7 +123,7 @@ const HostingFilesList = React.createClass({
 
   filterFolders(items) {
     const { directoryDepth } = this.state;
-    let extendedItems = _.map(items, item => {
+    let extendedItems = _.map(items, (item) => {
       const itemFolders = item.path.split('/');
 
       item.isFolder = _.isString(itemFolders[directoryDepth + 1]);
@@ -131,8 +136,8 @@ const HostingFilesList = React.createClass({
 
     extendedItems = this.filterByCurrentDirectoryDepth(extendedItems);
 
-    const splitedByType = _.partition(extendedItems, item => item.isFolder);
-    const uniqueFolders = _.uniqBy(splitedByType[0], item => item.folderName);
+    const splitedByType = _.partition(extendedItems, (item) => item.isFolder);
+    const uniqueFolders = _.uniqBy(splitedByType[0], (item) => item.folderName);
 
     return [...uniqueFolders, ...splitedByType[1]];
   },
@@ -191,7 +196,7 @@ const HostingFilesList = React.createClass({
     const { checkItem, items } = this.props;
     const { directoryDepth } = this.state;
     const filteredItems = this.filterFolders(items);
-    const listItems = _.map(filteredItems, item => {
+    const listItems = _.map(filteredItems, (item) => {
       const filesToRemove = item.isFolder ? item.files : item;
 
       return (
@@ -215,44 +220,24 @@ const HostingFilesList = React.createClass({
     return listItems;
   },
 
-  renderUploadFilesButton() {
-    const { hasFiles, ...other } = this.props;
-
+  renderEmptyView() {
     return (
-      <div className="row align-center vm-3-t">
-        <UploadFilesButton
-          {...other}
-          hasFiles={hasFiles}
-        />
-      </div>
+      <HostingFilesEmptyView
+        {...this.props}
+        handleUploadFiles={this.handleUploadFiles}
+      />
     );
   },
 
   render() {
     const { items, isLoading, hasFiles, isUploading, ...other } = this.props;
 
-    if (!isLoading && !isUploading && !this.isSupportedBrowser()) {
-      const actionButton = (
-        <RaisedButton
-          label="Download CLI"
-          href="https://github.com/Syncano/syncano-cli"
-          target="_blank"
-          primary={true}
-        />
-      );
-
-      return (
-        <Loading show={isLoading}>
-          <UnsupportedBrowserView actionButton={actionButton} />
-        </Loading>
-      );
-    }
-
     if (!items.length || hasFiles || isUploading) {
       return (
         <Loading show={isLoading}>
           <HostingFilesEmptyView
             {...other}
+            handleUploadFiles={this.handleUploadFiles}
             isUploading={isUploading}
             hasFiles={hasFiles}
           />
@@ -270,7 +255,7 @@ const HostingFilesList = React.createClass({
           key="hosting-files-list"
         >
           {this.renderItems()}
-          {this.renderUploadFilesButton()}
+          {this.renderEmptyView()}
         </Lists.List>
       </div>
     );

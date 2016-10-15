@@ -90,8 +90,6 @@ export default React.createClass({
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={`my_trigger = Trigger.please.get(id=${item.id}, instance_name=` +
-                        `"${currentInstance.name}")\n\nprint(my_trigger.label)`}
                         code={`import syncano\n` +
                               `from syncano.models import APNSDevice\n\n` +
                               `syncano.connect(api_key="${token}")\n\n` +
@@ -138,8 +136,6 @@ export default React.createClass({
                       <CodePreview.Item
                         title="Python"
                         languageClassName="python"
-                        code={`my_trigger = Trigger.please.get(id=${item.id}, instance_name=` +
-                        `"${currentInstance.name}")\n\nprint(my_trigger.label)`}
                         code={`import syncano\n` +
                               `from syncano.models import APNSMessage\n\n` +
                               `syncano.connect(api_key="${token}")\n\n` +

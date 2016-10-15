@@ -74,13 +74,14 @@ const AccountSignup = React.createClass({
   getBottomContent() {
     return (
       <p className="vm-0-b text--center">
-        By signing up you agree to our
+        {'By signing up you agree to our '}
         <a
           href="http://www.syncano.com/terms-of-service/"
           target="_blank"
         >
-          {' Terms of Use and Privacy Policy'}
-        </a>.
+          Terms of Use and Privacy Policy
+        </a>
+        .
       </p>
     );
   },
@@ -112,8 +113,9 @@ const AccountSignup = React.createClass({
         <div className="account-container__content__header vm-3-b">
           <p className="vm-2-b">Start Building Now</p>
           <small>
-            Simply enter your email, create a password and you're in!<br />
-            No credit card required.
+            {`Simply enter your email, create a password and you're in!`}
+            <br />
+            {`No credit card required.`}
           </small>
         </div>
         {this.renderFormNotifications()}

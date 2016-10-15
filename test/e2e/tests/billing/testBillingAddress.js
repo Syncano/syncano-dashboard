@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['billingAddress'],
   before: (client) => {
-    const { accountKey } = accounts.instanceUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -15,10 +15,8 @@ export default addTestNamePrefixes({
   'User adds Billing Address': (client) => {
     const billingAddressPage = client.page.billingAddressPage();
 
-    billingAddressPage.navigate();
-    client.pause(500);
-
     billingAddressPage
+      .navigate()
       .fillInput('@companyNameInput', 'E2E Inc.')
       .fillInput('@firstNameInput', 'John')
       .fillInput('@lastNameInput', 'Smith')
@@ -30,7 +28,8 @@ export default addTestNamePrefixes({
       .fillInput('@zipCodeInput', '00-007')
       .fillInput('@cityInput', 'Norcia')
       .click('@updateButton')
-      .waitForElementVisible('@successfulUpdateMessage');
+      .waitForElementVisible('@snackBarNotification')
+      .assert.containsText('@snackBarNotification', 'Billing address changed successfully');
   },
   'User updates Billing Address': (client) => {
     const billingAddressPage = client.page.billingAddressPage();
@@ -41,7 +40,8 @@ export default addTestNamePrefixes({
       .fillInput('@taxNumberInput', '555-111-555')
       .fillInput('@secondAddressInput', '67/890')
       .click('@updateButton')
-      .waitForElementVisible('@successfulUpdateMessage');
+      .waitForElementVisible('@snackBarNotification')
+      .assert.containsText('@snackBarNotification', 'Billing address changed successfully');
   },
   'User verifies that Billing Address updated': (client) => {
     const billingAddressPage = client.page.billingAddressPage();

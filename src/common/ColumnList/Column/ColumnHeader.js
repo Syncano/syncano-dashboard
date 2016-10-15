@@ -10,7 +10,6 @@ export default Radium(React.createClass({
     handleClick: React.PropTypes.func,
     className: React.PropTypes.string,
     columnName: React.PropTypes.string.isRequired,
-    styles: React.PropTypes.object,
     primary: React.PropTypes.bool,
     children: React.PropTypes.oneOfType([
       React.PropTypes.string,

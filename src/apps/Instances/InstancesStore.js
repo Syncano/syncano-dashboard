@@ -1,7 +1,6 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-// Utils & Mixins
 import {
   StoreHelpersMixin,
   CheckListStoreMixin,
@@ -10,13 +9,12 @@ import {
   StoreLoadingMixin
 } from '../../mixins';
 
-// Stores & Actions
-import SessionActions from '../Session/SessionActions';
+import InstancesActions from './InstancesActions';
 import SessionStore from '../Session/SessionStore';
-import Actions from './InstancesActions';
+import SessionActions from '../Session/SessionActions';
 
 export default Reflux.createStore({
-  listenables: Actions,
+  listenables: InstancesActions,
 
   mixins: [
     StoreHelpersMixin,
@@ -52,8 +50,7 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    console.debug('InstancesStore::refreshData');
-    Actions.fetchInstances();
+    InstancesActions.fetchInstances();
   },
 
   amIOwner(item) {
@@ -71,8 +68,8 @@ export default Reflux.createStore({
 
   onSelectAll(key) {
     const uncheckOthers = {
-      sharedInstances: () => Actions.uncheckAll('myInstances'),
-      myInstances: () => Actions.uncheckAll('sharedInstances')
+      sharedInstances: () => InstancesActions.uncheckAll('myInstances'),
+      myInstances: () => InstancesActions.uncheckAll('sharedInstances')
     };
 
     uncheckOthers[key]();
@@ -131,7 +128,6 @@ export default Reflux.createStore({
   },
 
   setInstances(items) {
-    console.debug('InstancesStore::setInstances');
     const instances = this.fillInstanceDefaultMeta(items);
 
     this.data.myInstances = _.filter(instances, (instance) => this.amIOwner(instance));
@@ -150,12 +146,10 @@ export default Reflux.createStore({
   },
 
   onFetchInstancesCompleted(items) {
-    console.debug('InstancesStore::onFetchInstancesCompleted');
-    Actions.setInstances(items);
+    InstancesActions.setInstances(items);
   },
 
   onFetchInstancesFailure(result) {
-    console.debug('InstancesStore::onFetchInstancesFailure');
     this.data.blocked = result;
     this.trigger(this.data);
   },

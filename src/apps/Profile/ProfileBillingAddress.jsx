@@ -249,6 +249,7 @@ export default React.createClass({
                       className="raised-button"
                       disabled={!canSubmit}
                       primary={true}
+                      data-e2e="billing-address-update-button"
                     />
                   </div>
                 </div>

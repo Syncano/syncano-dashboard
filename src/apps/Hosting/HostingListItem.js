@@ -44,14 +44,18 @@ class HostingListItem extends Component {
     });
   }
 
-  render = () => {
+  render() {
     const { areLinksVisible } = this.state;
     const { item, onIconClick, params, showDeleteDialog, showPublishDialog, showEditDialog } = this.props;
     const styles = this.getStyles();
-    const isDefaultHosting = _.includes(item.domains, 'default');
+    const isDefaultHosting = _.some(item.domains, { value: 'default' });
     const defaultLink = `https://${params.instanceName}.syncano.site`;
     const domainsCount = item.domains.length;
-    const customDomainLink = domainsCount ? `https://${params.instanceName}--${item.domains[0]}.syncano.site` : '';
+    let customDomainLink = '';
+
+    if (domainsCount) {
+      customDomainLink = `https://${params.instanceName}--${item.domains[0].value}.syncano.site`;
+    }
     const visibleLink = isDefaultHosting ? defaultLink : customDomainLink;
     const moreLinksLabel = areLinksVisible ? 'Hide Links' : 'More Links';
     const filesRedirectPath = `/instances/${params.instanceName}/hosting/${item.id}/files/`;
@@ -71,7 +75,7 @@ class HostingListItem extends Component {
           key={item.id}
         >
           <Column.CheckIcon.Socket
-            className="col-sm-9"
+            className="col-sm-12"
             id={item.id}
             iconClassName="socket-hosting"
             iconColor={Colors.orange600}
@@ -80,12 +84,12 @@ class HostingListItem extends Component {
             primaryText={item.label}
           />
           <Column.Desc
-            className="col-sm-7"
+            className="col-flex-1"
             data-e2e={`${item.description}-hosting-list-item-description`}
           >
             {item.description}
           </Column.Desc>
-          <Column.Desc className="col-sm-12">
+          <Column.Desc className="col-sm-11">
             <Show if={domainsCount}>
               <div style={styles.websiteUrlContainerStyles}>
                 <LinkWithIcon url={visibleLink} />
@@ -114,8 +118,9 @@ class HostingListItem extends Component {
             />
             <MenuItem
               onTouchTap={showPublishDialog}
-              primaryText="Publish"
-              data-e2e="dropdown-hosting-item-publish"
+              primaryText="Set as default"
+              disabled={isDefaultHosting}
+              data-e2e="dropdown-hosting-item-set-default"
             />
             <MenuItem
               onTouchTap={showDeleteDialog}

@@ -7,7 +7,6 @@ export default Radium(React.createClass({
   displayName: 'PlanExplorerButton',
 
   propTypes: {
-    plan: React.PropTypes.string,
     isNewSubscription: React.PropTypes.bool,
     onDeleteSubscription: React.PropTypes.func,
     onPlanDialog: React.PropTypes.func
