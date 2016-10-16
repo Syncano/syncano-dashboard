@@ -33,13 +33,11 @@ export default addTestNamePrefixes({
 
     hostingPage
       .clickDropdown('@hostingDropdownIcon', dropdownOption)
-      .fillInput('@labelInput', utils.addSuffix('edited'))
       .fillInput('@descriptionInput', utils.addSuffix('edited'))
       .fillInput('@newDomainInput', domain)
       .clickElement('@addNewDomainButton')
       .clickElement('@addHostingConfirmButton')
       .waitForElementPresent('@hostingList')
-      .assert.containsText('@hostingListItemLabel', utils.addSuffix('edited'))
       .assert.containsText('@hostingListItemDescription', utils.addSuffix('edited'));
   },
   'Administrator deletes a Hosting Socket': (client) => {
