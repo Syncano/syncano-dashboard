@@ -45,7 +45,7 @@ export default addTestNamePrefixes({
     const dropdownOption = hostingPage.elements.hostingListItemDropdownDeleteOption.selector;
 
     hostingPage
-      .clickDropdown('@editedHostingDropdownIcon', dropdownOption)
+      .clickDropdown('@hostingDropdownIcon', dropdownOption)
       .clickElement('@deleteHostingConfirmButton');
   }
 });
