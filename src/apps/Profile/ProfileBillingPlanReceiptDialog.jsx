@@ -49,7 +49,6 @@ const ProfileBillingPlanReceiptDialog = React.createClass({
   },
 
   handleDialogShow() {
-    console.debug('ProfileBillingPlanReceiptDialog::handleDialogShow');
     PlanDialogActions.fetchBillingCard();
   },
 
@@ -66,7 +65,7 @@ const ProfileBillingPlanReceiptDialog = React.createClass({
     const selectedPricingPlanPrice = PlanDialogStore.getTotalPlanValue();
 
     let title = (
-      <span>
+      <span data-e2e="plan-receipt-dialog-current">
         Your Current Plan is: <strong>{selectedPricingPlanName}</strong> (${selectedPricingPlanPrice} per month)
       </span>
     );
@@ -75,7 +74,7 @@ const ProfileBillingPlanReceiptDialog = React.createClass({
 
     if (PlanStore.getPlanTotalValue()) {
       title = (
-        <span>
+        <span data-e2e="plan-receipt-dialog-next">
           Your Next Plan will be: <strong>{selectedPricingPlanName}</strong> (${selectedPricingPlanPrice} per month)
         </span>
       );
