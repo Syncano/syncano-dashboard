@@ -106,7 +106,7 @@ export default React.createClass({
                               `var connection = Syncano({accountKey: '${token}'});\n` +
                               'var GCMDevice = connection.GCMDevice;\n\n' +
                               'var device = { \n' +
-                              `  instanceName: \'${currentInstance.name}\',\n` +
+                              `  instanceName: '${currentInstance.name}',\n` +
                               '  label=DEVICE_NAME\n' +
                               '  registration_id=REGISTRATION_ID,\n' +
                               '  user=USER_ID\n' +
@@ -152,7 +152,7 @@ export default React.createClass({
                         code={'var Syncano = require("syncano");\n' +
                               `var connection = Syncano({accountKey: '${token}'});\n` +
                               'var GCMDevice = connection.GCMDevice;\n\n' +
-                              `var query = {instanceName: \'${currentInstance.name}\'} \n` +
+                              `var query = {instanceName: '${currentInstance.name}'} \n` +
                               'var message = { \n' +
                               '    content: {\n' +
                               '    registration_ids: [ID, ID],\n' +
