@@ -1,10 +1,8 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-// Utils & Mixins
 import { WaitForStoreMixin } from '../../mixins';
 
-// Stores & Actions
 import Actions from './RuntimesActions';
 import SessionActions from '../Session/SessionActions';
 
@@ -15,7 +13,7 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      runtimes: [],
+      runtimes: {},
       isLoading: false
     };
   },
@@ -29,7 +27,6 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    console.debug('RuntimesStore::refreshData');
     Actions.fetchScriptRuntimes();
   },
 
@@ -38,7 +35,7 @@ export default Reflux.createStore({
   },
 
   getRuntimeByKey(runtimeKey) {
-    return _.find(this.data.runtimes, { key: runtimeKey });
+    return this.data.runtimes[runtimeKey];
   },
 
   getRuntimeByName(runtimeName) {
@@ -53,14 +50,14 @@ export default Reflux.createStore({
 
   getDividedRuntimes() {
     const { runtimes } = this.data;
-    const deprecated = _.filter(runtimes, (runtime) => runtime.deprecated);
-    const latest = _.filter(runtimes, (runtime) => !runtime.deprecated);
+    const deprecated = _.pickBy(runtimes, { deprecated: true });
+    const latest = _.pickBy(runtimes, { deprecated: false });
 
     return { latest, deprecated };
   },
 
-  getEditorMode(runtimeName) {
-    const runtimeDict = this.getRuntimeByKey(runtimeName);
+  getEditorMode(runtimeKey) {
+    const runtimeDict = this.getRuntimeByKey(runtimeKey);
     const runtimeDictName = runtimeDict.name;
     const name = runtimeDictName.toLowerCase().split(' ')[0];
     const editorMode = name === 'nodejs' ? 'javascript' : name;
@@ -68,10 +65,11 @@ export default Reflux.createStore({
     return editorMode;
   },
 
-  buildRuntimesIconsInfo(runtime, key) {
+  getRuntimeIconInfo(runtime) {
     const runtimeName = runtime.name.toLowerCase().split(' ')[0];
-    const runtimeIcon = `language-${runtimeName}`;
-    const runtimeColor = {
+
+    runtime.icon = `language-${runtimeName}`;
+    runtime.color = {
       golang: '#95DCF4',
       nodejs: '#80BD01',
       php: '#6C7EB7',
@@ -80,17 +78,15 @@ export default Reflux.createStore({
       swift: '#FC8737'
     }[runtimeName];
 
-    return { ...runtime, key, icon: runtimeIcon, color: runtimeColor };
+    return runtime;
   },
 
   onFetchScriptRuntimes() {
-    console.debug('RuntimesStore::onFetchScriptRuntimes');
     this.trigger({ isLoading: true });
   },
 
   onFetchScriptRuntimesCompleted(runtimes) {
-    console.debug('RuntimesStore::onFetchScriptRuntimesCompleted');
-    const runtimesDict = _.map(runtimes, this.buildRuntimesIconsInfo);
+    const runtimesDict = _.forEach(runtimes, this.getRuntimeIconInfo);
 
     this.data.runtimes = runtimesDict;
     this.trigger({ runtimes: runtimesDict, isLoading: false });
