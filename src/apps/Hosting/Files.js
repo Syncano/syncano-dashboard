@@ -129,6 +129,7 @@ const HostingFilesView = React.createClass({
       filesToUpload,
       lastFileIndex,
       currentFileIndex,
+      isDeleting,
       isUploading
     } = this.state;
 
@@ -166,6 +167,7 @@ const HostingFilesView = React.createClass({
         <Container>
           <HostingFilesList
             currentInstanceName={currentInstanceName}
+            isDeleting={isDeleting}
             isUploading={isUploading}
             lastFileIndex={lastFileIndex}
             currentFileIndex={currentFileIndex}
