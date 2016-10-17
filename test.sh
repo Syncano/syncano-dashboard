@@ -97,7 +97,7 @@ function local_cleanup {
 function local_setup {
     selenium_install
 
-    message "Creating temporary accounts for tests..."
+    message "Creating temporary instances for tests..."
     babel-node ./test/setup/createTestInstances.js
 
     message "Starting Selenium in background..."
