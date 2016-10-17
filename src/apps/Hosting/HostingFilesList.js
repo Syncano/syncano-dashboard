@@ -72,11 +72,10 @@ const HostingFilesList = React.createClass({
 
     _.forEach(filteredItems, (filteredItem) => {
       if (filteredItem.isFolder && !filteredItem.checked) {
-        this.handleCheckFolder(filteredItem);
+        return this.handleCheckFolder(filteredItem);
       }
-      if (!filteredItem.isFolder && !filteredItem.checked) {
-        checkItem(filteredItem.id, true);
-      }
+
+      return checkItem(filteredItem.id, true);
     });
   },
 
