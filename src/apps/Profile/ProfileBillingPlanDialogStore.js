@@ -1,8 +1,7 @@
 import Reflux from 'reflux';
-import _ from 'lodash';
 
+import { PricingPlansUtil } from '../../utils';
 import { DialogStoreMixin, SnackbarNotificationMixin, StoreFormMixin, WaitForStoreMixin } from '../../mixins';
-// import PricingPlansUtil from '../../utils/PricingPlansUtil';
 
 import ProfileBillingPlanDialogActions from './ProfileBillingPlanDialogActions';
 import ProfileBillingPlanReceiptDialogActions from './ProfileBillingPlanReceiptDialogActions';
@@ -28,7 +27,7 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    ProfileBillingPlanDialogActions.fetchBillingPlans();
+    ProfileBillingPlanDialogActions.getBillingPlans();
     ProfileBillingPlanDialogActions.fetchBillingSubscriptions();
   },
 
@@ -50,26 +49,13 @@ export default Reflux.createStore({
       return info;
     }
 
-    // const storeBillingPlans = PricingPlansUtil.getStoreBillingPlans();
-
     const pricing = this.data.plan.pricing[type];
     const options = this.data.plan.options[type];
-    // const pricing = storeBillingPlans.pricing[type];
-    // const options = storeBillingPlans.options[type];
-    const sliderValue = this.data[`${type}Selected`];
+    const sliderValue = this.data[`${type}Selected`] || 0;
+    const value = String(parseFloat(sliderValue));
 
-    if (sliderValue) {
-      const value = String(parseFloat(sliderValue));
-
-      info = pricing[options[value]];
-      info.total = options[value];
-
-      return info;
-    }
-
-    info = pricing[Object.keys(pricing)[0]];
-    info.total = Object.keys(pricing)[0];
-    // info.total = 123;
+    info = pricing[options[value]];
+    info.total = options[value];
 
     return info;
   },
@@ -85,17 +71,7 @@ export default Reflux.createStore({
       apiLimit = this.data.selectedPricingPlan.api.included;
     }
 
-    let selectedPricingPlanName = 'Starter';
-
-    if (_.inRange(apiLimit, 999999, 2000001)) {
-      selectedPricingPlanName = 'Developer';
-    }
-
-    if (_.inRange(apiLimit, 4499999, 100000001)) {
-      selectedPricingPlanName = 'Business';
-    }
-
-    return selectedPricingPlanName;
+    return PricingPlansUtil.getPlanName(apiLimit);
   },
 
   resetSelectedPricingPlan() {
@@ -110,23 +86,12 @@ export default Reflux.createStore({
     return this.data.selectedPricingPlan.features;
   },
 
-  setPlans(plans) {
-    console.log('setPlans::plans', plans);
-    this.data.plan = plans[Object.keys(plans)[0]];
-    this.trigger(this.data);
-  },
-
   onSelectPricingPlan(api, cbx, features) {
     this.data.selectedPricingPlan = { api, cbx, features };
     this.trigger(this.data);
   },
 
-  onSliderChange(type, event, value) {
-    this.data[`${type}Selected`] = value;
-    this.trigger(this.data);
-  },
-
-  onSliderLabelsClick(value, type) {
+  onSliderChange(type, value) {
     this.data[`${type}Selected`] = value;
     this.trigger(this.data);
   },
@@ -161,13 +126,10 @@ export default Reflux.createStore({
     }
   },
 
-  onFetchBillingPlansCompleted(payload) {
-    // const plans = PricingPlansUtil.getStoreData(payload);
-
-    console.log('payload', payload);
-
+  onGetBillingPlans() {
+    this.data.plan = PricingPlansUtil.getStoreBillingPlans();
     this.isLoading = false;
-    this.setPlans(payload);
+    this.trigger(this.data);
   },
 
   onFetchBillingCardCompleted(payload) {

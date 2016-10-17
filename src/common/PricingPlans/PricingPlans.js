@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import _ from 'lodash';
 
-import PricingPlansUtil from '../../utils/PricingPlansUtil';
+import { PricingPlansUtil } from '../../utils';
 
 import ProfileBillingPlanStore from '../../apps/Profile/ProfileBillingPlanStore';
 import PlanDialogActions from '../../apps/Profile/ProfileBillingPlanDialogActions';

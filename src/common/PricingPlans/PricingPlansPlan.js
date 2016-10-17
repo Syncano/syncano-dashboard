@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import numeral from 'numeral';
 import _ from 'lodash';
 
-import PricingPlansUtil from '../../utils/PricingPlansUtil';
+import { PricingPlansUtil } from '../../utils';
 
 import ProfileBillingPlanStore from '../../apps/Profile/ProfileBillingPlanStore';
 import PlanDialogActions from '../../apps/Profile/ProfileBillingPlanDialogActions';
@@ -22,7 +22,7 @@ class PricingPlansPlan extends Component {
   componentWillReceiveProps(nextProps, nextContext) {
     const { isDowngrade } = nextContext;
 
-    this.state = this.getInitialPrices(nextProps, isDowngrade);
+    this.setState(this.getInitialPrices(nextProps, isDowngrade));
   }
 
   getInitialPrices(props, isDowngrade) {
@@ -36,6 +36,10 @@ class PricingPlansPlan extends Component {
 
   getInitialOption(options, isDowngrade) {
     const { title } = this.props;
+
+    if (!options.length) {
+      return null;
+    }
 
     if (options.length === 1) {
       return options[0].price;
@@ -156,7 +160,7 @@ class PricingPlansPlan extends Component {
     if (isNewSubscriptionVisible) {
       const newSubscriptionPrice = ProfileBillingPlanStore.getNewPlanTotalValue();
 
-      return `Your new plan (${newSubscriptionPrice}) starts next month`;
+      return `Your new plan ($${newSubscriptionPrice}) starts next month`;
     }
 
     const isPlanCanceled = ProfileBillingPlanStore.isPlanCanceled();
@@ -348,7 +352,7 @@ class PricingPlansPlan extends Component {
       </div>
     );
 
-    if (price === lowestPrice) {
+    if (price <= lowestPrice) {
       content = (
         <div>
           {'You can '}

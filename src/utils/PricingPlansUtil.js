@@ -45,15 +45,10 @@ const PricingPlansUtil = {
 
   getLowestPrice() {
     const pricingParams = this.getPricingParams();
-    const firstPlan = pricingParams[Object.keys(pricingParams)[0]];
+    const params = pricingParams.Developer;
 
-    return firstPlan.api.minPrice + firstPlan.cbx.minPrice;
+    return params.api.minPrice + params.cbx.minPrice;
   },
-
-  // getLegendItems(type) {
-  //   console.log('type', type);
-  //   return ['$4', '$40', '$400', '$4000', '$40000', '$400000'];
-  // },
 
   isPlanHidden(planName, currentApiPrice, currentCbxPrice) {
     const pricingParams = this.getPricingParams(planName);
@@ -72,10 +67,8 @@ const PricingPlansUtil = {
   },
 
   getOptions(field, minPrice, maxPrice) {
-    // console.log('getOptions', field, minPrice, maxPrice);
-    // console.log('BillingPlans.options', BillingPlans.options);
     const options = _.filter(BillingPlans.options[field], (value) => (
-      _.inRange(value, minPrice - 1, maxPrice + 1)
+      _.inRange(value, minPrice, maxPrice + 1)
     ));
 
     return _.map(options, (option) => (
@@ -201,22 +194,37 @@ const PricingPlansUtil = {
     };
 
     return downgradePlans;
-  }
+  },
 
-  // getStoreBillingPlans() {
-  //   const plans = BillingPlans;
-  //
-  //   // console.log('BillingPlans', BillingPlans);
-  //
-  //   plans.options.api = _.tail(plans.options.api);
-  //   plans.options.cbx = _.tail(plans.options.cbx);
-  //   plans.pricing.api = _.tail(plans.pricing.api);
-  //   plans.pricing.cbx = _.tail(plans.pricing.cbx);
-  //
-  //   console.log('plans', plans);
-  //
-  //   return plans;
-  // }
+  getStoreBillingPlans() {
+    const founderParams = this.getPricingParams().Founder;
+    /* eslint-disable prefer-const */
+    let plans = BillingPlans;
+    /* eslint-enable prefer-const */
+
+    plans.options.api = _.filter(plans.options.api, (value) => value > founderParams.api.maxPrice);
+    plans.options.cbx = _.filter(plans.options.cbx, (value) => value > founderParams.cbx.maxPrice);
+
+    return plans;
+  },
+
+  getPlanName(apiLimit) {
+    let planName = 'Starter';
+
+    if (apiLimit === 200000) {
+      planName = 'Founder';
+    }
+
+    if (_.inRange(apiLimit, 1000000, 2000001)) {
+      planName = 'Developer';
+    }
+
+    if (_.inRange(apiLimit, 4500000, 100000001)) {
+      planName = 'Business';
+    }
+
+    return planName;
+  }
 };
 
 export default PricingPlansUtil;

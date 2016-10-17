@@ -2,6 +2,7 @@ import Reflux from 'reflux';
 import Moment from 'moment';
 import _ from 'lodash';
 
+import { PricingPlansUtil } from '../../utils';
 import { SnackbarNotificationMixin, StoreLoadingMixin } from '../../mixins';
 
 import ProfileBillingPlanActions from './ProfileBillingPlanActions';
@@ -158,31 +159,17 @@ export default Reflux.createStore({
   },
 
   getPricingPlanName() {
-    let PricingPlanName = 'Starter';
-
     if (!this.data.profile) {
       return null;
     }
 
     if (!this.data.profile.subscription || !this.data.profile.subscription.pricing.api) {
-      return PricingPlanName;
+      return PricingPlansUtil.getPlanName();
     }
 
     const apiLimit = this.data.profile.subscription.pricing.api.included;
 
-    if (apiLimit === 200000) {
-      PricingPlanName = 'Founder';
-    }
-
-    if (_.inRange(apiLimit, 1000000, 2000001)) {
-      PricingPlanName = 'Developer';
-    }
-
-    if (_.inRange(apiLimit, 4500000, 100000001)) {
-      PricingPlanName = 'Business';
-    }
-
-    return PricingPlanName;
+    return PricingPlansUtil.getPlanName(apiLimit);
   },
 
   getLimitsData(subscription, plan) {

@@ -1,12 +1,11 @@
 import React from 'react';
-import { withRouter } from 'react-router';
 import Reflux from 'reflux';
+import { withRouter } from 'react-router';
 import _ from 'lodash';
 import numeral from 'numeral';
 import valid from 'card-validator';
 
 import { DialogMixin, FormMixin } from '../../mixins';
-// import PricingPlansUtil from '../../utils/PricingPlansUtil';
 
 import ProfileBillingPlanDialogStore from './ProfileBillingPlanDialogStore';
 import ProfileBillingPlanStore from './ProfileBillingPlanStore';
@@ -24,7 +23,6 @@ import {
   TableRowColumn
 } from 'material-ui';
 import { CreditCardForm, CreditCard, Dialog, Loading, Show, Slider } from '../../common/';
-import SliderSection from './SliderSection';
 
 const ProfileBillingPlanDialog = React.createClass({
   mixins: [
@@ -213,8 +211,16 @@ const ProfileBillingPlanDialog = React.createClass({
   },
 
   handleDialogShow() {
-    ProfileBillingPlanDialogActions.fetchBillingPlans();
+    ProfileBillingPlanDialogActions.getBillingPlans();
     ProfileBillingPlanDialogActions.fetchBillingCard();
+  },
+
+  handleSliderChange(type, event, value) {
+    ProfileBillingPlanDialogActions.sliderChange(type, value);
+  },
+
+  handleSliderOptionClick(value, type) {
+    ProfileBillingPlanDialogActions.sliderChange(type, value);
   },
 
   renderFormNotificationsBlock() {
@@ -320,6 +326,7 @@ const ProfileBillingPlanDialog = React.createClass({
     if (!this.state.plan) {
       return true;
     }
+
     const defaultValue = 0;
     const selected = this.state[`${type}Selected`];
     let options = this.state.plan.options[type];
@@ -334,8 +341,8 @@ const ProfileBillingPlanDialog = React.createClass({
         value={typeof selected !== 'undefined' ? selected : defaultValue}
         type={type}
         legendItems={options}
-        optionClick={ProfileBillingPlanDialogActions.sliderLabelsClick}
-        onChange={ProfileBillingPlanDialogActions.sliderChange}
+        onChange={this.handleSliderChange}
+        optionClick={this.handleSliderOptionClick}
       />
     );
   },
@@ -460,18 +467,17 @@ const ProfileBillingPlanDialog = React.createClass({
             <div style={{ color: '#9B9B9B' }}>move the sliders to choose your plan</div>
           </div>
           <div style={{ paddingTop: 34 }}>
-            <SliderSection
+            <Slider.Section
               title="API calls"
               slider={this.renderSlider('api')}
               sliderSummary={apiSliderSummary}
             />
-            <SliderSection
+            <Slider.Section
               style={{ paddingTop: 50 }}
               title="Script seconds"
               slider={this.renderSlider('cbx')}
               sliderSummary={cbxSliderSummary}
             />
-
             <div className="row" style={{ marginTop: 40 }}>
               <div className="col-md-24">
                 <div style={styles.sectionTopic}>Summary</div>
