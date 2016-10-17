@@ -68,10 +68,11 @@ export default {
         const hasNextFile = files.length > currentFileIndex + 1;
         const fileToUpdate = _.find(fetchedFiles, { path: file.path });
         const payload = { file: this.NewLibConnection.file(file), path: file.path };
-        const errorCallback = ({ errors }) => {
+        const errorCallback = ({ errors, response }) => {
           this.failure({
             isFinished: !hasNextFile,
             errors,
+            response,
             file,
             currentFileIndex,
             lastFileIndex

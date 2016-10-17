@@ -93,7 +93,8 @@ export default Reflux.createStore({
   onUploadFilesFailure(uploadingStatus) {
     this.data.uploadErrors.push({
       file: uploadingStatus.file,
-      errors: uploadingStatus.errors
+      errors: uploadingStatus.errors,
+      responseText: uploadingStatus.response.statusText
     });
     this.data.currentFileIndex = uploadingStatus.currentFileIndex;
     this.data.lastFileIndex = uploadingStatus.lastFileIndex;

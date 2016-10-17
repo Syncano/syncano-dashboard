@@ -111,7 +111,8 @@ const EmptyViewCLI = ({
     },
     alignCenter: {
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
+      flexWrap: 'wrap'
     },
     errorsBackButton: {
       marginTop: 15
@@ -135,8 +136,7 @@ const EmptyViewCLI = ({
           {error.file.path}
         </TableRowColumn>
         <TableRowColumn style={{ ...styles.tableRowColumnRight, ...styles.alignCenter }}>
-          {error.errors.path}
-          {error.errors.file}
+          {error.errors.path || error.errors.file || error.responseText}
         </TableRowColumn>
       </TableRow>
     ))
