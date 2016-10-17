@@ -67,7 +67,7 @@ const CustomSocketsRegistryList = React.createClass({
     const searchTerm = term && term.toLowerCase();
 
     if (filterBySyncano === 'all') {
-      const filterByType = _.filter(items, item => {
+      const filterByType = _.filter(items, (item) => {
         const isName = _.includes(item.author.toLowerCase(), searchTerm);
         const isAuthor = _.includes(item.description.toLowerCase(), searchTerm);
         const isDescription = _.includes(item.name.toLowerCase(), searchTerm);
@@ -77,7 +77,7 @@ const CustomSocketsRegistryList = React.createClass({
 
       return filterByType;
     }
-    const filterByType = _.filter(items, item => _.includes(item[filterBySyncano].toLowerCase(), searchTerm));
+    const filterByType = _.filter(items, (item) => _.includes(item[filterBySyncano].toLowerCase(), searchTerm));
 
     return filterByType;
   },

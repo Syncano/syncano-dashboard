@@ -51,7 +51,7 @@ const styles = {
 };
 
 const CustomSocketsRegistrySummary = ({ item }) => {
-  const renderCallMethodsLabel = call => {
+  const renderCallMethodsLabel = (call) => {
     const methods = call.methods[0] === '*' ? ['get', 'post', 'put', 'patch'] : call.methods;
 
     return _.map(methods, (method, index) => (

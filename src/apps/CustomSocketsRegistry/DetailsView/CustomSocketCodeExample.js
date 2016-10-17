@@ -93,7 +93,7 @@ const CustomSocketCodeExamples = ({ socketName, currentLanguage, endpointName, m
   };
 
   const renderExampleResponses = () => {
-    const responses = _.map(codeExamples, code => (
+    const responses = _.map(codeExamples, (code) => (
       <div
         className="vm-4-t"
         key={shortId.generate()}

@@ -75,7 +75,7 @@ const CustomSocketsRegistryDetailsView = React.createClass({
         'nodejs_library_v1.0': 'NodeJS',
         'nodejs_library_v0.4': 'NodeJS'
       };
-      const runtimes = _.map(scripts, scriptInfo => runtimesNamesLang[scriptInfo.runtime_name]);
+      const runtimes = _.map(scripts, (scriptInfo) => runtimesNamesLang[scriptInfo.runtime_name]);
 
       return runtimes;
     }
@@ -97,7 +97,7 @@ const CustomSocketsRegistryDetailsView = React.createClass({
       const isAllMethodsAllowed = _.includes(availableMethods, 'script');
 
       if (availableMethods.length && !isAllMethodsAllowed) {
-        const endpointMethodsList = _.map(availableMethods, method => (
+        const endpointMethodsList = _.map(availableMethods, (method) => (
           {
             type: method,
             info: currentEndpoint[method]
@@ -109,7 +109,7 @@ const CustomSocketsRegistryDetailsView = React.createClass({
         return allEndpoints;
       }
 
-      const allEndpointMethodsList = _.map(allMethodsNames, method => (
+      const allEndpointMethodsList = _.map(allMethodsNames, (method) => (
         {
           type: method,
           info: {}

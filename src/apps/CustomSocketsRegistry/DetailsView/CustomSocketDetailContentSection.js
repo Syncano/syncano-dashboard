@@ -81,7 +81,7 @@ const CustomSocketsRegistryContentSection = ({
   };
   const renderLanguageButtons = () => {
     const availableLanguages = ['cURL', 'NodeJS', 'Python', 'CLI'];
-    const runtimeButtons = _.map(availableLanguages, language => {
+    const runtimeButtons = _.map(availableLanguages, (language) => {
       const languageName = language.toLowerCase();
       const isCurrentLanguage = languageName === currentLanguage;
 
@@ -134,7 +134,7 @@ const CustomSocketsRegistryContentSection = ({
   );
   const renderEndpoints = () => {
     const endpointsList = _.map(endpoints, (methods, endpointName) => (
-      _.map(methods, method => (
+      _.map(methods, (method) => (
         <div className="row col-flex-1">
           <div className="col-sm-18">
             <div style={{ ...styles.nameContainer, ...styles.header }}>

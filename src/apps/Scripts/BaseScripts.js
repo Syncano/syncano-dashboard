@@ -71,6 +71,6 @@ const baseScripts = {
 
 export default baseScripts;
 
-const getBaseScript = scriptName => dedent(baseScripts[scriptName].source);
+const getBaseScript = (scriptName) => dedent(baseScripts[scriptName].source);
 
 export { getBaseScript };
