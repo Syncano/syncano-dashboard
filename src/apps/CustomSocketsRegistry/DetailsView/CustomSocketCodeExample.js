@@ -14,10 +14,10 @@ const CustomSocketCodeExamples = ({ socketName, currentLanguage, endpointName, m
     const accountKey = SessionStore.getToken();
     const baseUrl = `${SYNCANO_BASE_URL}/v1.1/`;
     const examplesLang = {
-      curl: `curl${!isGetMethod ? ` -X ${methodType}` : ''} \\\n` +
+      curl: `curl -X ${methodType} \\\n` +
         `-H "X-API-KEY: ${accountKey}" \\\n` +
         `-H "Content-type: application/json" \\\n` +
-        `${!isGetMethod ? "-d '{ \"data\": \"something\"}, \\\n" : ''}` +
+        `${!isGetMethod ? "-d '{ \"data\": \"something\"}' \\\n" : ''}` +
         `"${baseUrl}instances/your_instance/endpoints/sockets/${socketName}/${endpointName}/"`,
       javascript: dedent(`
         var Syncano = require('syncano');
@@ -93,7 +93,7 @@ const CustomSocketCodeExamples = ({ socketName, currentLanguage, endpointName, m
   };
 
   const renderExampleResponses = () => {
-    const responses = _.map(codeExamples, code => (
+    const responses = _.map(codeExamples, (code) => (
       <div
         className="vm-4-t"
         key={shortId.generate()}

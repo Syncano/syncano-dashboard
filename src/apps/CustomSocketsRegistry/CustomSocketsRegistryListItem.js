@@ -55,8 +55,7 @@ const CustomSocketsRegistryListItem = ({ item, onIconClick, router }) => {
 };
 
 CustomSocketsRegistryListItem.propTypes = {
-  onIconClick: React.PropTypes.func.isRequired,
-  showDeleteDialog: React.PropTypes.func.isRequired
+  onIconClick: React.PropTypes.func.isRequired
 };
 
 export default withRouter(CustomSocketsRegistryListItem);

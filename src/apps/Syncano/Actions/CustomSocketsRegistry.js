@@ -18,13 +18,13 @@ export default {
       .DataObject
       .please()
       .list()
-      .then(sockets => {
+      .then((sockets) => {
         const socket = _.find(sockets, ['id', Number(id)]);
 
         if (socket) {
           return this.Promise
             .get(socket.url)
-            .then(socketDataObject => {
+            .then((socketDataObject) => {
               const { url } = socket;
               const licenseFileUrl = `${url.slice(0, _.lastIndexOf(url, '/'))}/LICENSE`;
 
@@ -34,7 +34,7 @@ export default {
 
               this.Promise
                 .get(licenseFileUrl)
-                .then(licenseFile => {
+                .then((licenseFile) => {
                   socketDataObject.license = licenseFile.data.split(' ')[0];
                   this.completed(socketObj);
                 })
@@ -68,7 +68,7 @@ export default {
       .CustomSocket
       .please()
       .installFromUrl(payload, name, install_url)
-      .then(createdCustomSocketRegistry => this.completed(createdCustomSocketRegistry, payload.instanceName))
+      .then((createdCustomSocketRegistry) => this.completed(createdCustomSocketRegistry, payload.instanceName))
       .catch(this.failure);
   },
 
@@ -77,7 +77,7 @@ export default {
       .CustomSocket
       .please()
       .get({ instanceName, name })
-      .then(createdCustomSocketRegistry => this.completed(createdCustomSocketRegistry, instanceName, action))
+      .then((createdCustomSocketRegistry) => this.completed(createdCustomSocketRegistry, instanceName, action))
       .catch(this.failure);
   }
 };
