@@ -230,19 +230,12 @@ const HostingFilesList = React.createClass({
   },
 
   render() {
-    const { items, isLoading, handleErrorsButtonClick, hasFiles, isUploading, uploadErrors, ...other } = this.props;
+    const { items, isLoading, hasFiles, isDeleting, isUploading, ...other } = this.props;
 
-    if (!items.length || hasFiles || isUploading) {
+    if (!items.length || hasFiles || isUploading || isDeleting) {
       return (
         <Loading show={isLoading}>
-          <HostingFilesEmptyView
-            {...other}
-            handleErrorsButtonClick={handleErrorsButtonClick}
-            uploadErrors={uploadErrors}
-            handleUploadFiles={this.handleUploadFiles}
-            isUploading={isUploading}
-            hasFiles={hasFiles}
-          />
+          {this.renderEmptyView()}
         </Loading>
       );
     }

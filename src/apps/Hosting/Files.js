@@ -41,6 +41,12 @@ const HostingFilesView = React.createClass({
     return hostingUrl;
   },
 
+  getToolbarTitle() {
+    const { hostingDetails, isLoading } = this.state;
+
+    return hostingDetails && !isLoading ? `Website Hosting: ${hostingDetails.label} (id: ${hostingDetails.id})` : '';
+  },
+
   isDefaultHosting() {
     const { hostingDetails } = this.state;
 
@@ -119,12 +125,12 @@ const HostingFilesView = React.createClass({
     const {
       isLoading,
       hideDialogs,
-      hostingDetails,
       items,
       filesToUpload,
       lastFileIndex,
       currentFileIndex,
       isUploading,
+      isDeleting,
       uploadErrors
     } = this.state;
 
@@ -132,8 +138,7 @@ const HostingFilesView = React.createClass({
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const hostingUrl = this.getHostingUrl();
-    const hostingLabel = hostingDetails ? hostingDetails.label : '';
-    const pageTitle = `Website Hosting: ${hostingLabel}`;
+    const pageTitle = this.getToolbarTitle();
 
     return (
       <div>
@@ -163,6 +168,7 @@ const HostingFilesView = React.createClass({
         <Container>
           <HostingFilesList
             currentInstanceName={currentInstanceName}
+            isDeleting={isDeleting}
             isUploading={isUploading}
             lastFileIndex={lastFileIndex}
             currentFileIndex={currentFileIndex}

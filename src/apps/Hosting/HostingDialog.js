@@ -197,6 +197,7 @@ const CreateHostingDialog = React.createClass({
             errorText={this.getValidationMessages('label').join(' ')}
             hintText="Hosting's label"
             floatingLabelText="Label"
+            disabled={this.hasEditMode()}
             data-e2e="hosting-dialog-label-input"
           />
           <TextField

@@ -105,7 +105,7 @@ export default React.createClass({
                               `var connection = Syncano({accountKey: '${token}'});\n` +
                               'var APNSDevice = connection.APNSDevice;\n\n' +
                               'var device = { \n' +
-                              `  instanceName: \'${currentInstance.name}\',\n` +
+                              `  instanceName: '${currentInstance.name}',\n` +
                               '  label=DEVICE_NAME\n' +
                               '  registration_id=REGISTRATION_ID,\n' +
                               '  user=USER_ID\n' +
@@ -153,7 +153,7 @@ export default React.createClass({
                               `var connection = Syncano({accountKey: '${token}'});\n` +
                               'var APNSMessage = connection.APNSMessage;\n\n' +
                               'var message = { \n' +
-                              `  instanceName: \'${currentInstance.name}\',\n` +
+                              `  instanceName: '${currentInstance.name}',\n` +
                               '  content: {\n' +
                               '    registration_ids: [ID, ID],\n' +
                               '    environment: \'development\',\n' +

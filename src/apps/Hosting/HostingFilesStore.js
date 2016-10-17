@@ -21,7 +21,8 @@ export default Reflux.createStore({
       filesToUpload: [],
       isLoading: true,
       isUploading: false,
-      uploadErrors: []
+      uploadErrors: [],
+      isDeleting: false
     };
   },
 
@@ -106,8 +107,15 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onRemoveHostingFilesCompleted() {
-    this.refreshData();
+  onRemoveHostingFilesCompleted(deletingStatus) {
+    if (deletingStatus.isFinished) {
+      this.data.isDeleting = false;
+      this.refreshData();
+    }
+    this.data.isDeleting = !deletingStatus.isFinished;
+    this.data.currentFileIndex = deletingStatus.currentFileIndex;
+    this.data.lastFileIndex = deletingStatus.lastFileIndex;
+    this.trigger(this.data);
   },
 
   onFinishUploading() {
@@ -115,7 +123,5 @@ export default Reflux.createStore({
     this.data.uploadErrors = [];
     this.data.isUploading = false;
     this.refreshData();
-
-    this.trigger(this.data);
   }
 });

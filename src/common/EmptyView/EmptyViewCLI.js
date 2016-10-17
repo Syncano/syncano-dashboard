@@ -29,6 +29,7 @@ const EmptyViewCLI = ({
   hostingDocsButtonLabel,
   iconClassName,
   iconColor,
+  isUploadFinished,
   mainTitle,
   showDocsUrl = true,
   uploadErrors,
@@ -184,6 +185,7 @@ const EmptyViewCLI = ({
         primary={true}
         style={styles.errorsBackButton}
         onTouchTap={handleErrorsButtonClick}
+        disabled={!isUploadFinished}
       />
     </div>
   );
