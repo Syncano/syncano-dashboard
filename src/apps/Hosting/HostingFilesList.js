@@ -7,8 +7,9 @@ import { DialogsMixin } from '../../mixins';
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
 
-import { ColumnList, Lists, Dialog, Loading } from '../../common';
+import { ColumnList, Dialog, Lists, Loading } from '../../common';
 import HostingFilesEmptyView from './HostingFilesEmptyView';
+import HostingUploadDialog from './HostingUploadDialog';
 import ListItem from './HostingFilesListItem';
 import DotsListItem from './DotsListItem';
 
@@ -220,19 +221,10 @@ const HostingFilesList = React.createClass({
     return listItems;
   },
 
-  renderEmptyView() {
-    return (
-      <HostingFilesEmptyView
-        {...this.props}
-        handleUploadFiles={this.handleUploadFiles}
-      />
-    );
-  },
-
   render() {
     const { items, isLoading, hasFiles, isUploading, ...other } = this.props;
 
-    if (!items.length || hasFiles || isUploading) {
+    if (!items.length || isUploading) {
       return (
         <Loading show={isLoading}>
           <HostingFilesEmptyView
@@ -247,6 +239,10 @@ const HostingFilesList = React.createClass({
 
     return (
       <div>
+        <HostingUploadDialog
+          {...this.props}
+          handleUploadFiles={this.handleUploadFiles}
+        />
         {this.getDialogs()}
         {this.renderHeader()}
         <Lists.List
@@ -255,7 +251,6 @@ const HostingFilesList = React.createClass({
           key="hosting-files-list"
         >
           {this.renderItems()}
-          {this.renderEmptyView()}
         </Lists.List>
       </div>
     );

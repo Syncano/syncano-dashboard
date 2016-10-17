@@ -4,7 +4,7 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
 
-import { SnackbarNotificationMixin } from '../../mixins';
+import { DialogsMixin, SnackbarNotificationMixin } from '../../mixins';
 
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
@@ -20,6 +20,7 @@ import HostingPublishDialog from './HostingPublishDialog';
 const HostingFilesView = React.createClass({
   mixins: [
     Reflux.connect(HostingFilesStore),
+    DialogsMixin,
     SnackbarNotificationMixin
   ],
 
@@ -79,6 +80,10 @@ const HostingFilesView = React.createClass({
     const { hostingId, instanceName } = this.props.params;
 
     HostingPublishDialogActions.showDialog({ id: hostingId, instanceName });
+  },
+
+  handleShowUploadDialog() {
+    HostingFilesActions.showDialog();
   },
 
   handleSendFiles() {
@@ -149,7 +154,14 @@ const HostingFilesView = React.createClass({
         >
           <Show if={items.length && !isLoading}>
             <RaisedButton
-              label="Go to site"
+              label="Upload files"
+              primary={true}
+              icon={<FontIcon className="synicon-cloud-upload" style={{ marginTop: 4 }} />}
+              style={{ marginRight: 10 }}
+              onTouchTap={this.handleShowUploadDialog}
+            />
+            <RaisedButton
+              label="Go to sites"
               primary={true}
               icon={<FontIcon className="synicon-open-in-new" style={{ marginTop: 4 }} />}
               onTouchTap={this.handleOnTouchTap(hostingUrl)}

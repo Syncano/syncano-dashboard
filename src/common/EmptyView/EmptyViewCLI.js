@@ -67,8 +67,9 @@ const EmptyViewCLI = ({
   };
 
   const renderSnippets = (items) => (
-    _.map(items, (item) => (
+    _.map(items, (item, key) => (
       <BashSnippet
+        key={key}
         description={item.description}
         snippet={item.snippet}
       />
