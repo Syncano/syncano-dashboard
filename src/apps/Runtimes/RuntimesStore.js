@@ -39,13 +39,13 @@ export default Reflux.createStore({
   },
 
   getRuntimeByName(runtimeName) {
+    const isRuntimeMatched = (runtime, key) => key.toLowerCase() === runtimeName.toLowerCase();
+
     if (!runtimeName) {
       return null;
     }
 
-    return _.pickBy(this.data.runtimes, (runtime, key) => (
-      key.toLowerCase() === runtimeName.toLowerCase()) && !runtime.deprecated
-    );
+    return _.pickBy(this.data.runtimes, (runtime, key) => isRuntimeMatched(runtime, key) && !runtime.deprecated);
   },
 
   getDividedRuntimes() {
