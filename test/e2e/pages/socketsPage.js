@@ -51,8 +51,8 @@ export default {
     developmentDropZoneDescription: {
       selector: '[data-e2e="development-dropzone-description"]'
     },
-    configPushItem: {
-      selector: '[data-e2e="push-notification-config"]'
+    apnsPushConfig: {
+      selector: '[data-e2e="apns-push-notification-config"]'
     },
     devicesPushItem: {
       selector: '[data-e2e="push-notification-device-list"]'
