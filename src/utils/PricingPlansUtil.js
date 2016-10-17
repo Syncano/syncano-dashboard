@@ -197,7 +197,7 @@ const PricingPlansUtil = {
   },
 
   getStoreBillingPlans() {
-    const founderParams = this.getPricingParams().Founder;
+    const founderParams = this.getPricingParams('Founder');
     const plans = BillingPlans;
 
     plans.options.api = _.filter(plans.options.api, (value) => value > founderParams.api.maxPrice);
