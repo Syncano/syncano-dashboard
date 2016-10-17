@@ -198,9 +198,7 @@ const PricingPlansUtil = {
 
   getStoreBillingPlans() {
     const founderParams = this.getPricingParams().Founder;
-    /* eslint-disable prefer-const */
-    let plans = BillingPlans;
-    /* eslint-enable prefer-const */
+    const plans = BillingPlans;
 
     plans.options.api = _.filter(plans.options.api, (value) => value > founderParams.api.maxPrice);
     plans.options.cbx = _.filter(plans.options.cbx, (value) => value > founderParams.cbx.maxPrice);
