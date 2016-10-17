@@ -18,8 +18,7 @@ const CustomSocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
       alignItems: 'center'
     },
     button: {
-      borderRadius: 5,
-      outline: '1px solid red'
+      borderRadius: 0
     },
     border: {
       border: '1px solid #244273',
