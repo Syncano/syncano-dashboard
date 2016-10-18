@@ -1,129 +1,97 @@
-import React from 'react';
-import classNames from 'classnames';
+import React, { Component } from 'react';
 import _ from 'lodash';
 
 import { FontIcon } from 'material-ui';
 
-const Notification = React.createClass({
-  propTypes: {
-    type: React.PropTypes.string.isRequired,
-    children: React.PropTypes.any.isRequired
-  },
+import NotificationCloseButton from './NotificationCloseButton';
 
-  getDefaultProps() {
-    return {
-      type: 'info',
-      isCloseButtonVisible: true
-    };
-  },
+class Notification extends Component {
+  static defaultProps = {
+    type: 'info',
+    hasCloseButtonVisible: true
+  };
 
-  getInitialState() {
-    return {
-      isNotificationVisible: true
-    };
-  },
+  constructor() {
+    super();
 
-  getStyles() {
-    const { type, isCloseButtonVisible } = this.props;
-    const iconColor = type === 'warning' ? '#ffcc01' : 'inherit';
+    this.state = { isVisible: true };
+  }
+
+  getStyles = () => {
+    const { type, hasCloseButtonVisible } = this.props;
 
     return {
-      icon: {
-        fontSize: 26,
-        lineHeight: 1,
-        color: iconColor,
-        display: 'inline-flex',
-        verticalAlign: 'middle'
-      },
-      notificationContainer: {
-        overflow: 'hidden'
-      },
-      notificationContent: {
-        padding: isCloseButtonVisible ? '20px 30px 20px 10px' : '10px 10px',
-        borderRadius: '2px',
+      root: {
+        padding: hasCloseButtonVisible ? '10px 30px 10px 10px' : 10,
+        borderRadius: 2,
         display: 'flex',
-        fontSize: '16px',
+        fontSize: 16,
         alignItems: 'center',
         lineHeight: '1.4',
         position: 'relative'
       },
-      notificationContentIcon: {
-        minWidth: '34px'
-      },
-      notificationInfo: {
+      themeInfo: {
         backgroundColor: '#E1F5FE',
         color: '#00B0FF'
       },
-      notificationWarning: {
+      themeWarning: {
         backgroundColor: 'rgba(255, 203, 0, .1)',
-        color: '#c9a206'
+        color: '#C9A206'
       },
-      notificationError: {
+      themeError: {
         backgroundColor: '#FCE4EC',
         color: '#F50057'
       },
-      closeButton: {
-        position: 'absolute',
-        top: 4,
-        right: 8,
-        cursor: 'pointer',
-        fontWeight: 700
+      icon: {
+        minWidth: 34
+      },
+      fontIcon: {
+        fontSize: 26,
+        color: type === 'warning' ? '#FFCC01' : 'inherit',
+        display: 'flex'
       }
     };
-  },
+  }
 
-  handleCloseNotification() {
-    this.setState({ isNotificationVisible: false });
-  },
-
-  renderCloseButton() {
-    const styles = this.getStyles();
-    const { isCloseButtonVisible } = this.props;
-
-    if (!isCloseButtonVisible) {
-      return null;
-    }
-
-    return (
-      <div
-        style={styles.closeButton}
-        onClick={this.handleCloseNotification}
-      >
-        x
-      </div>
-    );
-  },
+  closeNotification = () => {
+    this.setState({ isVisible: false });
+  }
 
   render() {
     const styles = this.getStyles();
-    const { className, type, children } = this.props;
-    const { isNotificationVisible } = this.state;
-    const notificationStyle = `notification${_.capitalize(type)}`;
-    const iconClass = classNames({
-      information: type === 'info',
-      'alert-circle': type === 'error',
-      alert: type === 'warning'
-    });
+    const { isVisible } = this.state;
+    const { type, className, children, hasCloseButtonVisible } = this.props;
+    const theme = styles[`theme${_.capitalize(type)}`];
+    const syniconClass = {
+      info: 'information',
+      error: 'alert-circle',
+      warning: 'alert'
+    }[type];
 
-    return isNotificationVisible && (
-      <div
-        className={className}
-        style={{ ...styles.notificationContainer }}
-        data-e2e="notification-bar"
-      >
-        <div style={{ ...styles[notificationStyle], ...styles.notificationContent }}>
-          {this.renderCloseButton()}
-          <div style={styles.notificationContentIcon}>
+    if (isVisible) {
+      return (
+        <div
+          className={className}
+          style={{ ...styles.root, ...theme }}
+          data-e2e="notification-bar"
+        >
+          <NotificationCloseButton
+            isVisible={hasCloseButtonVisible}
+            onClick={this.closeNotification}
+          />
+          <div style={styles.icon}>
             <FontIcon
-              className={`synicon-${iconClass}`}
-              style={styles.icon}
+              className={`synicon-${syniconClass}`}
+              style={styles.fontIcon}
             />
           </div>
           <div>{children}</div>
         </div>
-      </div>
-    );
+      );
+    }
+
+    return null;
   }
-});
+}
 
 export default Notification;

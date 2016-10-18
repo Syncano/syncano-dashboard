@@ -91,7 +91,7 @@ const Template = React.createClass({
   },
 
   componentWillUnmount() {
-    TemplateStore.clearTemplate();
+    TemplateActions.clearTemplate();
   },
 
   getStyles() {
@@ -331,8 +331,8 @@ const Template = React.createClass({
           <Show if={this.getValidationMessages('content').length}>
             <Notification
               type="error"
-              isCloseButtonVisible={false}
               className="vm-2-b"
+              hasCloseButtonVisible={false}
             >
               {this.getValidationMessages('content').join(' ')}
             </Notification>
