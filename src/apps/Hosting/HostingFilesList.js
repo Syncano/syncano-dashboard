@@ -30,7 +30,6 @@ const HostingFilesList = React.createClass({
       getCheckedItems: HostingFilesStore.getCheckedItems,
       checkItem: HostingFilesActions.checkItem,
       checkFolder: this.handleCheckFolder,
-      handleSelectAll: HostingFilesActions.selectAll,
       handleUnselectAll: HostingFilesActions.uncheckAll
     };
   },
@@ -65,6 +64,19 @@ const HostingFilesList = React.createClass({
     const { currentFolderName } = this.state;
 
     return handleUploadFiles(currentFolderName, event);
+  },
+
+  handleSelectAll() {
+    const { checkItem, items } = this.props;
+    const filteredItems = this.filterFolders(items);
+
+    _.forEach(filteredItems, (filteredItem) => {
+      if (filteredItem.isFolder && !filteredItem.checked) {
+        return this.handleCheckFolder(filteredItem);
+      }
+
+      return checkItem(filteredItem.id, true);
+    });
   },
 
   initDialogs() {
@@ -147,7 +159,7 @@ const HostingFilesList = React.createClass({
   },
 
   renderHeader() {
-    const { handleTitleClick, handleSelectAll, handleUnselectAll, items, getCheckedItems } = this.props;
+    const { handleTitleClick, handleUnselectAll, items, getCheckedItems } = this.props;
 
     return (
       <ColumnList.Header>
@@ -175,7 +187,7 @@ const HostingFilesList = React.createClass({
         <Column.ColumnHeader columnName="MENU">
           <Lists.Menu
             checkedItemsCount={getCheckedItems().length}
-            handleSelectAll={handleSelectAll}
+            handleSelectAll={this.handleSelectAll}
             handleUnselectAll={handleUnselectAll}
             itemsCount={items.length}
           >
@@ -230,17 +242,12 @@ const HostingFilesList = React.createClass({
   },
 
   render() {
-    const { items, isLoading, hasFiles, isUploading, ...other } = this.props;
+    const { items, isLoading, hasFiles, isDeleting, isUploading, ...other } = this.props;
 
-    if (!items.length || hasFiles || isUploading) {
+    if (!items.length || hasFiles || isUploading || isDeleting) {
       return (
         <Loading show={isLoading}>
-          <HostingFilesEmptyView
-            {...other}
-            handleUploadFiles={this.handleUploadFiles}
-            isUploading={isUploading}
-            hasFiles={hasFiles}
-          />
+          {this.renderEmptyView()}
         </Loading>
       );
     }

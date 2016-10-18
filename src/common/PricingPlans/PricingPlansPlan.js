@@ -376,6 +376,7 @@ class PricingPlansPlan extends Component {
     const styles = this.getStyles();
     const { isCurrent, isHidden, title, price, disabled } = this.props;
     const { isDowngrade } = this.context;
+    const { apiCallsPrice, scriptsPrice } = this.state;
     const defaultButtonLabel = isDowngrade ? 'Downgrade' : 'Upgrade';
     const period = (price === 'Free') ? null : 'per month';
 
@@ -414,6 +415,7 @@ class PricingPlansPlan extends Component {
               style={styles.button}
               onTouchTap={this.handleButtonTouchTap}
               disabled={disabled || this.isButtonDisabled()}
+              data-e2e={`${apiCallsPrice + scriptsPrice}-plan-upgrade-button`}
             />
           </div>
           {this.renderFeatures()}
