@@ -7,12 +7,14 @@ import UploadFilesButton from './UploadFilesButton';
 
 const HostingFilesEmptyView = ({
   currentInstanceName,
+  handleErrorsButtonClick,
   hasFiles,
   filesCount,
   isDeleting,
   isUploading,
   lastFileIndex,
   currentFileIndex,
+  errorResponses,
   ...other
 }) => {
   const progressBarStyles = {
@@ -29,6 +31,8 @@ const HostingFilesEmptyView = ({
   })();
   const isActionInProgress = isDeleting || isUploading;
   const uploadingFilesCount = lastFileIndex + 1;
+  const uploadingProgressCount = currentFileIndex + 1;
+  const isUploadFinished = currentFileIndex === lastFileIndex;
   const progressBar = (
     <div style={progressBarStyles}>
       <LinearProgress
@@ -36,10 +40,10 @@ const HostingFilesEmptyView = ({
         mode="determinate"
         min={0}
         max={uploadingFilesCount}
-        value={currentFileIndex}
+        value={uploadingProgressCount}
       />
       <div className="vm-2-t">
-        {`${action} file ${currentFileIndex} / ${uploadingFilesCount}`}
+        Uploading file {uploadingProgressCount} / {uploadingFilesCount}
       </div>
     </div>
   );
@@ -66,6 +70,9 @@ const HostingFilesEmptyView = ({
 
   return (
     <EmptyView.CLI
+      handleErrorsButtonClick={handleErrorsButtonClick}
+      isUploadFinished={isUploadFinished}
+      errorResponses={errorResponses}
       iconClassName={iconClassName}
       iconColor={iconColor}
       mainTitle="Hosting Socket Files"
