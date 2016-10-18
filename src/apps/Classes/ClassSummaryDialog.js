@@ -5,11 +5,24 @@ import SessionStore from '../Session/SessionStore';
 import { CodePreview, Dialog } from '../../common/';
 import { Card, CardTitle, CardText } from 'material-ui';
 
+const handleSchemaFields = (schemaArray) => {
+  const schemaFormating = {
+    curl: schemaArray,
+    python: schemaArray.slice(1, -1).replace(/(},)/g, '},\n  ').replace(/:true/g, ':True').replace(/:false/g, ':False'),
+    javascript: schemaArray.slice(1, -1).replace(/(},)/g, '},\n    ')
+  };
+
+  console.error('testing', schemaFormating.python);
+
+  return schemaFormating;
+};
+
 const ClassSummaryDialog = ({ item, hasEditMode }) => {
   const token = SessionStore.getToken();
   const currentInstance = SessionStore.getInstance();
   const stringSchemaFields = item && JSON.stringify(item.schema);
   const headingText = !hasEditMode ? 'Data Class you just created can always be modified later. ' : '';
+  const formatedSchemaFields = handleSchemaFields(stringSchemaFields);
 
   return (
     <div>
@@ -35,7 +48,7 @@ const ClassSummaryDialog = ({ item, hasEditMode }) => {
                   title="cURL"
                   languageClassName="markup"
                   code={`curl -X PATCH \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" ` +
-                  `\\\n-d '{"schema":${stringSchemaFields}}' \\\n` +
+                  `\\\n-d '{"schema":${formatedSchemaFields.curl}}' \\\n` +
                   `"${SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/classes/${item.name}"/`}
                 />
                 <CodePreview.Item
@@ -44,14 +57,14 @@ const ClassSummaryDialog = ({ item, hasEditMode }) => {
                   code={`import syncano\nfrom syncano.models import Class\n\nsyncano.connect(api_key=` +
                   `'${token}')\n\nclass_instance = Class.please.get(instance_name='${currentInstance.name}', ` +
                   `name='${item.name}') \n\nclass_instance.schema.add(\n` +
-                  `  ${stringSchemaFields.slice(1, -1).replace(/(},)/g, '},\n  ')}\n)\nclass_instance_save()`}
+                  `  ${formatedSchemaFields.python}\n)\nclass_instance_save()`}
                 />
                 <CodePreview.Item
                   title="JavaScript"
                   languageClassName="javascript"
                   code={`var Syncano = require('syncano');\nvar connection = Syncano({accountKey: ` +
                   `'${token}'});\nvar Class = connection.Class;\n\nvar update = {\n  "schema": [\n    ` +
-                  `${stringSchemaFields.slice(1, -1).replace(/(},)/g, '},\n    ')}\n  ]\n};\n\n` +
+                  `${formatedSchemaFields.javascript}\n  ]\n};\n\n` +
                   `Class\n  .please()\n  .update({name: '${item.name}', instanceName: '` +
                   `${currentInstance.name}'}, update)\n  .then(calback);`}
                 />
