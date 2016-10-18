@@ -245,9 +245,9 @@ const Header = Radium(React.createClass({
               className="toolbar-list left"
               style={styles.toolbarList}
             >
-              <li style={styles.toolbarListItem}>
+              {/* <li style={styles.toolbarListItem}>
                 <Link to="demo-apps">Demo Apps</Link>
-              </li>
+              </li> */}
               <li
                 id="menu-solutions"
                 style={styles.toolbarListItem}

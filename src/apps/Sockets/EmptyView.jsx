@@ -2,14 +2,14 @@ import React from 'react';
 import { withRouter } from 'react-router';
 
 import ChannelsActions from '../Channels/ChannelsActions';
-import CustomSocketsActions from '../CustomSockets/CustomSocketsActions';
+// import CustomSocketsActions from '../CustomSockets/CustomSocketsActions';
 import DataEndpointsActions from '../DataEndpoints/DataEndpointsActions';
 import ScriptEndpointsActions from '../ScriptEndpoints/ScriptEndpointsActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
 import { APNSActions, GCMActions } from '../PushNotifications';
 import SocketsStore from './SocketsStore';
-import HostingActions from '../Hosting/HostingActions';
+// import HostingActions from '../Hosting/HostingActions';
 import EmptyListItem from './EmptyListItem';
 
 const EmptyView = () => {
@@ -61,20 +61,20 @@ const EmptyView = () => {
         description="Get real-time updates to keep your data synchronized."
         documentationUrl="http://docs.syncano.io/docs/realtime-communication/"
       />
-      <EmptyListItem
+      {/* <EmptyListItem
         handleCreate={HostingActions.showDialog}
         socketName="Hosting"
         title="Hosting"
         description="Host, deploy and publish your websites using Syncano platform."
         documentationUrl="http://docs.syncano.io/docs/"
-      />
-      <EmptyListItem
+      /> */}
+      {/* <EmptyListItem
         handleCreate={CustomSocketsActions.showDialog}
         socketName="CustomSocket"
         title="Custom Sockets (BETA)"
         description="Some text about Custom Sockets to be REPLACED."
         documentationUrl="http://docs.syncano.io/docs/"
-      />
+      /> */}
       <EmptyListItem
         handleCreate={APNSActions.showDialog}
         label={SocketsStore.hasAPNSConfig() ? 'Edit' : 'Add'}
