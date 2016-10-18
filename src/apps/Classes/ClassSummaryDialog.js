@@ -12,8 +12,6 @@ const handleSchemaFields = (schemaArray) => {
     javascript: schemaArray.slice(1, -1).replace(/(},)/g, '},\n    ')
   };
 
-  console.error('testing', schemaFormating.python);
-
   return schemaFormating;
 };
 
