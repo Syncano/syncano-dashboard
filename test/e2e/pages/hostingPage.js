@@ -24,7 +24,7 @@ export default {
       selector: '[data-e2e="hosting-list-container"]'
     },
     hostingListItemLabel: {
-      selector: `[data-e2e="${utils.addSuffix('edited')}-list-item-name"]`
+      selector: `[data-e2e="label-list-item-name"]`
     },
     hostingListItemDescription: {
       selector: `[data-e2e="${utils.addSuffix('edited')}-hosting-list-item-description"]`
@@ -33,7 +33,7 @@ export default {
       selector: '[data-e2e="hosting-delete-dialog-confirm"]'
     },
     hostingDropdownIcon: {
-      selector: `[data-e2e="${utils.addSuffix('hosting')}-hosting-dropdown-icon"]`
+      selector: '[data-e2e="label-hosting-dropdown-icon"]'
     },
     editedHostingDropdownIcon: {
       selector: `[data-e2e="${utils.addSuffix('edited')}-hosting-dropdown-icon"]`
