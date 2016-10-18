@@ -63,6 +63,7 @@ const Notification = React.createClass({
         color: '#F50057'
       },
       closeButton: {
+        display: isCloseButtonVisible ? 'block' : 'none',
         position: 'absolute',
         top: 4,
         right: 8,

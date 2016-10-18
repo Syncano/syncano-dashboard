@@ -30,7 +30,6 @@ const HostingFilesList = React.createClass({
       getCheckedItems: HostingFilesStore.getCheckedItems,
       checkItem: HostingFilesActions.checkItem,
       checkFolder: this.handleCheckFolder,
-      handleSelectAll: HostingFilesActions.selectAll,
       handleUnselectAll: HostingFilesActions.uncheckAll
     };
   },
@@ -67,6 +66,19 @@ const HostingFilesList = React.createClass({
     return handleUploadFiles(currentFolderName, event);
   },
 
+  handleSelectAll() {
+    const { checkItem, items } = this.props;
+    const filteredItems = this.filterFolders(items);
+
+    _.forEach(filteredItems, (filteredItem) => {
+      if (filteredItem.isFolder && !filteredItem.checked) {
+        return this.handleCheckFolder(filteredItem);
+      }
+
+      return checkItem(filteredItem.id, true);
+    });
+  },
+
   initDialogs() {
     const { isLoading, getCheckedItems } = this.props;
     const { hostingId } = this.props.params;
@@ -94,26 +106,27 @@ const HostingFilesList = React.createClass({
     this.setState({
       directoryDepth: directoryDepth - 1,
       currentFolderName: previousFolders[directoryDepth - 1] || '',
-      previousFolders: _.slice(previousFolders, 0, directoryDepth)
+      previousFolders: _.dropRight(previousFolders, 1)
     });
   },
 
   moveDirectoryDown(nextFolderName) {
-    const { directoryDepth, currentFolderName, previousFolders } = this.state;
+    const { directoryDepth, previousFolders } = this.state;
 
     this.setState({
       directoryDepth: directoryDepth + 1,
       currentFolderName: nextFolderName,
-      previousFolders: [...previousFolders, currentFolderName]
+      previousFolders: [...previousFolders, nextFolderName]
     });
   },
 
   filterByCurrentDirectoryDepth(items) {
-    const { directoryDepth, currentFolderName } = this.state;
+    const { currentFolderName, directoryDepth, previousFolders } = this.state;
+
     const filteredItems = _.filter(items, (item) => {
       const isInFolder = directoryDepth < item.folders.length;
       const isInRootFolder = currentFolderName === '';
-      const isInSubfolder = _.includes(item.folders, currentFolderName);
+      const isInSubfolder = _.isMatch(item.folders, previousFolders);
 
       return isInFolder && isInSubfolder || isInRootFolder;
     });
@@ -147,7 +160,7 @@ const HostingFilesList = React.createClass({
   },
 
   renderHeader() {
-    const { handleTitleClick, handleSelectAll, handleUnselectAll, items, getCheckedItems } = this.props;
+    const { handleTitleClick, handleUnselectAll, items, getCheckedItems } = this.props;
 
     return (
       <ColumnList.Header>
@@ -175,7 +188,7 @@ const HostingFilesList = React.createClass({
         <Column.ColumnHeader columnName="MENU">
           <Lists.Menu
             checkedItemsCount={getCheckedItems().length}
-            handleSelectAll={handleSelectAll}
+            handleSelectAll={this.handleSelectAll}
             handleUnselectAll={handleUnselectAll}
             itemsCount={items.length}
           >
@@ -198,6 +211,8 @@ const HostingFilesList = React.createClass({
     const filteredItems = this.filterFolders(items);
     const listItems = _.map(filteredItems, (item) => {
       const filesToRemove = item.isFolder ? item.files : item;
+
+      console.error(item.path);
 
       return (
         <ListItem

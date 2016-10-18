@@ -4,7 +4,7 @@ export default CreateActions(
   {
     fetch: {},
     setHosting: {},
-    fetchHosting: {
+    fetchHostings: {
       asyncResult: true,
       loading: true,
       redirectOnFailure: true,

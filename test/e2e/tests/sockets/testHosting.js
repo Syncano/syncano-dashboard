@@ -20,9 +20,9 @@ export default addTestNamePrefixes({
     hostingPage
       .goToUrl(instanceName, 'hosting')
       .clickElement('@addHostingButton')
-      .fillInput('@labelInput', hosting)
+      .fillInput('@labelInput', 'label')
       .fillInput('@descriptionInput', hosting)
-      .fillInput('@newDomainInput', domain)
+      .fillInput('@cnameInput', domain)
       .clickElement('@addHostingConfirmButton')
       .waitForElementVisible('@hostingList');
   },
@@ -34,8 +34,7 @@ export default addTestNamePrefixes({
     hostingPage
       .clickDropdown('@hostingDropdownIcon', dropdownOption)
       .fillInput('@descriptionInput', utils.addSuffix('edited'))
-      .fillInput('@newDomainInput', domain)
-      .clickElement('@addNewDomainButton')
+      .fillInput('@cnameInput', domain)
       .clickElement('@addHostingConfirmButton')
       .waitForElementPresent('@hostingList')
       .assert.containsText('@hostingListItemDescription', utils.addSuffix('edited'));
