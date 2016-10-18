@@ -63,7 +63,7 @@ const CreateHostingDialog = React.createClass({
         color: 'rgba(68,68,68, .8)'
       },
       defaultExplanation: {
-        margin: '30px 0'
+        margin: '30px 0 10px',
       }
     };
   },
@@ -230,7 +230,9 @@ const CreateHostingDialog = React.createClass({
               style={styles.contentSection}
             >
               <div style={styles.defaultExplanation}>
-                <Notification>
+                <Notification
+                  isCloseButtonVisible={false}
+                >
                   {'Default hosting is available at '}
                   <a
                     href={defaultLink}
@@ -250,7 +252,7 @@ const CreateHostingDialog = React.createClass({
                 </Notification>
               </div>
               <Toggle
-                label={`Toogle on to release files to your default hosting.`}
+                label="Set as default hosting"
                 style={styles.toggle}
                 toggled={isDefault}
                 onToggle={this.handleDefaultDomain}
