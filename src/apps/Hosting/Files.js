@@ -10,6 +10,7 @@ import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
 import SessionStore from '../Session/SessionStore';
 import HostingPublishDialogActions from './HostingPublishDialogActions';
+import HostingUploadDialogActions from './HostingUploadDialogActions';
 
 import { FontIcon, RaisedButton } from 'material-ui';
 import { InnerToolbar, Container, Show } from '../../common';
@@ -89,7 +90,7 @@ const HostingFilesView = React.createClass({
   },
 
   handleShowUploadDialog() {
-    HostingFilesActions.showDialog();
+    HostingUploadDialogActions.showDialog();
   },
 
   handleSendFiles() {

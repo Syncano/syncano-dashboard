@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import Store from './HostingFilesStore';
+import Store from './HostingUploadDialogStore';
 
 import HostingFilesEmptyView from './HostingFilesEmptyView';
 

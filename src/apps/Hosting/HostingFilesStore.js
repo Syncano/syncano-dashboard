@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin, DialogStoreMixin } from '../../mixins';
+import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
 
 import Actions from './HostingFilesActions';
 import SessionActions from '../Session/SessionActions';
@@ -12,8 +12,7 @@ export default Reflux.createStore({
   mixins: [
     CheckListStoreMixin,
     StoreLoadingMixin,
-    WaitForStoreMixin,
-    DialogStoreMixin
+    WaitForStoreMixin
   ],
 
   getInitialState() {
