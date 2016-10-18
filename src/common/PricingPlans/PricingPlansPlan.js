@@ -36,16 +36,13 @@ class PricingPlansPlan extends Component {
 
   getInitialOption(options, isDowngrade) {
     const { title } = this.props;
-
-    if (!options.length) {
-      return null;
-    }
+    const pricingPlanName = _.upperFirst(ProfileBillingPlanStore.getPricingPlanKey());
 
     if (options.length === 1) {
       return options[0].price;
     }
 
-    if (isDowngrade && title === ProfileBillingPlanStore.getPricingPlanName()) {
+    if (isDowngrade && title === pricingPlanName) {
       return options[options.length - 2].price;
     }
 
@@ -53,7 +50,7 @@ class PricingPlansPlan extends Component {
       return _.last(options).price;
     }
 
-    if (title === ProfileBillingPlanStore.getPricingPlanName()) {
+    if (title === pricingPlanName) {
       return options[1].price;
     }
 

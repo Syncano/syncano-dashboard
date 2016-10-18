@@ -224,7 +224,7 @@ const ProfileBillingPlan = Radium(React.createClass({
 
   render() {
     const { isLoading } = this.state;
-    const pricingPlanName = ProfileBillingPlanStore.getPricingPlanName();
+    const pricingPlanName = _.upperFirst(ProfileBillingPlanStore.getPricingPlanKey());
 
     return (
       <Loading show={isLoading}>

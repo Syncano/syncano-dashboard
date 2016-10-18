@@ -158,18 +158,18 @@ export default Reflux.createStore({
     return this.data.profile.subscription.plan;
   },
 
-  getPricingPlanName() {
+  getPricingPlanKey() {
     if (!this.data.profile) {
       return null;
     }
 
     if (!this.data.profile.subscription || !this.data.profile.subscription.pricing.api) {
-      return PricingPlansUtil.getPlanName();
+      return PricingPlansUtil.getPlanKey();
     }
 
     const apiLimit = this.data.profile.subscription.pricing.api.included;
 
-    return PricingPlansUtil.getPlanName(apiLimit);
+    return PricingPlansUtil.getPlanKey(apiLimit);
   },
 
   getLimitsData(subscription, plan) {

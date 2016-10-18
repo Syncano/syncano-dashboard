@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 import { PricingPlansUtil } from '../../utils';
 import { DialogStoreMixin, SnackbarNotificationMixin, StoreFormMixin, WaitForStoreMixin } from '../../mixins';
@@ -71,7 +72,7 @@ export default Reflux.createStore({
       apiLimit = this.data.selectedPricingPlan.api.included;
     }
 
-    return PricingPlansUtil.getPlanName(apiLimit);
+    return _.upperFirst(PricingPlansUtil.getPlanKey(apiLimit));
   },
 
   resetSelectedPricingPlan() {

@@ -52,7 +52,7 @@ class PricingPlans extends Component {
     const currentApiPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
     const currentCbxPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
     const plans = PricingPlansUtil.getPlans(currentApiPrice, currentCbxPrice);
-    const pricingPlanName = ProfileBillingPlanStore.getPricingPlanName();
+    const pricingPlanKey = ProfileBillingPlanStore.getPricingPlanKey();
     const price = ProfileBillingPlanStore.getPlanTotalValue();
 
     if (!price) {
@@ -61,7 +61,7 @@ class PricingPlans extends Component {
 
     return (
       <PricingPlansPlan
-        {...plans[pricingPlanName]}
+        {...plans[pricingPlanKey]}
         isCurrent={true}
         isHidden={false}
         apiOptions={PricingPlansUtil.getOptions('api', currentApiPrice, currentApiPrice)}

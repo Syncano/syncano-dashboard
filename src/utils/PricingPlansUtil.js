@@ -4,7 +4,7 @@ import BillingPlans from '../constants/BillingPlans.json';
 const PricingPlansUtil = {
   getPricingParams(planName) {
     const pricingParams = {
-      Founder: {
+      founder: {
         api: {
           minPrice: 6,
           maxPrice: 6
@@ -14,7 +14,7 @@ const PricingPlansUtil = {
           maxPrice: 3
         }
       },
-      Developer: {
+      developer: {
         api: {
           minPrice: 20,
           maxPrice: 40
@@ -24,7 +24,7 @@ const PricingPlansUtil = {
           maxPrice: 10
         }
       },
-      Business: {
+      business: {
         api: {
           minPrice: 80,
           maxPrice: 1500
@@ -45,7 +45,7 @@ const PricingPlansUtil = {
 
   getLowestPrice() {
     const pricingParams = this.getPricingParams();
-    const params = pricingParams.Developer;
+    const params = pricingParams.developer;
 
     return params.api.minPrice + params.cbx.minPrice;
   },
@@ -102,7 +102,7 @@ const PricingPlansUtil = {
     }
 
     return {
-      Starter: {
+      starter: {
         isCurrent: true,
         isHidden: currentApiPrice > 0,
         title: 'Starter',
@@ -125,11 +125,11 @@ const PricingPlansUtil = {
         price: 'Free',
         disabled: true
       },
-      Founder: {
+      founder: {
         isHidden: true,
         title: 'Founder',
-        apiOptions: this.getPlanOptions('api', 'Founder', currentApiPrice),
-        cbxOptions: this.getPlanOptions('cbx', 'Founder', currentCbxPrice),
+        apiOptions: this.getPlanOptions('api', 'founder', currentApiPrice),
+        cbxOptions: this.getPlanOptions('cbx', 'founder', currentCbxPrice),
         features: [
           'Full access to all features',
           '60 requests per second',
@@ -139,11 +139,11 @@ const PricingPlansUtil = {
           'Unlimited users'
         ]
       },
-      Developer: {
-        isHidden: this.isPlanHidden('Developer', currentApiPrice, currentCbxPrice),
+      developer: {
+        isHidden: this.isPlanHidden('developer', currentApiPrice, currentCbxPrice),
         title: 'Developer',
-        apiOptions: this.getPlanOptions('api', 'Developer', currentApiPrice),
-        cbxOptions: this.getPlanOptions('cbx', 'Developer', currentCbxPrice),
+        apiOptions: this.getPlanOptions('api', 'developer', currentApiPrice),
+        cbxOptions: this.getPlanOptions('cbx', 'developer', currentCbxPrice),
         features: [
           'Full access to all features',
           '60 requests per second',
@@ -153,11 +153,11 @@ const PricingPlansUtil = {
           'Unlimited users'
         ]
       },
-      Business: {
-        isHidden: this.isPlanHidden('Business', currentApiPrice, currentCbxPrice),
+      business: {
+        isHidden: this.isPlanHidden('business', currentApiPrice, currentCbxPrice),
         title: 'Business',
-        apiOptions: this.getPlanOptions('api', 'Business', currentApiPrice),
-        cbxOptions: this.getPlanOptions('cbx', 'Business', currentCbxPrice),
+        apiOptions: this.getPlanOptions('api', 'business', currentApiPrice),
+        cbxOptions: this.getPlanOptions('cbx', 'business', currentCbxPrice),
         features: [
           'Full access to all features',
           '60 requests per second',
@@ -173,52 +173,59 @@ const PricingPlansUtil = {
   getDowngradePlans(currentApiPrice, currentCbxPrice) {
     const plans = this.getPlans();
     const downgradePlansDiffs = {
-      Starter: {
+      starter: {
         isHidden: true
       },
-      Developer: {
-        isHidden: this.isDowngradePlanHidden('Developer', currentApiPrice, currentCbxPrice),
-        apiOptions: this.getPlanOptions('api', 'Developer', currentApiPrice, true),
-        cbxOptions: this.getPlanOptions('cbx', 'Developer', currentCbxPrice, true)
+      developer: {
+        isHidden: this.isDowngradePlanHidden('developer', currentApiPrice, currentCbxPrice),
+        apiOptions: this.getPlanOptions('api', 'developer', currentApiPrice, true),
+        cbxOptions: this.getPlanOptions('cbx', 'developer', currentCbxPrice, true)
       },
-      Business: {
-        isHidden: this.isDowngradePlanHidden('Business', currentApiPrice, currentCbxPrice),
-        apiOptions: this.getPlanOptions('api', 'Business', currentApiPrice, true),
-        cbxOptions: this.getPlanOptions('cbx', 'Business', currentCbxPrice, true)
+      business: {
+        isHidden: this.isDowngradePlanHidden('business', currentApiPrice, currentCbxPrice),
+        apiOptions: this.getPlanOptions('api', 'business', currentApiPrice, true),
+        cbxOptions: this.getPlanOptions('cbx', 'business', currentCbxPrice, true)
       }
     };
     const downgradePlans = {
-      Starter: _.defaults(downgradePlansDiffs.Starter, plans.Starter),
-      Developer: _.defaults(downgradePlansDiffs.Developer, plans.Developer),
-      Business: _.defaults(downgradePlansDiffs.Business, plans.Business)
+      starter: _.defaults(downgradePlansDiffs.starter, plans.starter),
+      developer: _.defaults(downgradePlansDiffs.developer, plans.developer),
+      business: _.defaults(downgradePlansDiffs.business, plans.business)
     };
 
     return downgradePlans;
   },
 
   getStoreBillingPlans() {
-    const founderParams = this.getPricingParams('Founder');
-    const plans = BillingPlans;
-
-    plans.options.api = _.filter(plans.options.api, (value) => value > founderParams.api.maxPrice);
-    plans.options.cbx = _.filter(plans.options.cbx, (value) => value > founderParams.cbx.maxPrice);
+    const founderParams = this.getPricingParams('founder');
+    const apiOptions = _.filter(BillingPlans.options.api, (value) => value > founderParams.api.maxPrice);
+    const cbxOptions = _.filter(BillingPlans.options.cbx, (value) => value > founderParams.cbx.maxPrice);
+    const plans = {
+      options: {
+        api: apiOptions,
+        cbx: cbxOptions
+      },
+      name: BillingPlans.name,
+      links: BillingPlans.links,
+      pricing: BillingPlans.pricing
+    };
 
     return plans;
   },
 
-  getPlanName(apiLimit) {
-    let planName = 'Starter';
+  getPlanKey(apiLimit) {
+    let planName = 'starter';
 
     if (apiLimit === 200000) {
-      planName = 'Founder';
+      planName = 'founder';
     }
 
     if (_.inRange(apiLimit, 1000000, 2000001)) {
-      planName = 'Developer';
+      planName = 'developer';
     }
 
     if (_.inRange(apiLimit, 4500000, 100000001)) {
-      planName = 'Business';
+      planName = 'business';
     }
 
     return planName;
