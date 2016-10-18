@@ -68,6 +68,20 @@ export default {
         const hasNextFile = files.length > currentFileIndex + 1;
         const fileToUpdate = _.find(fetchedFiles, { path: file.path });
         const payload = { file: this.NewLibConnection.file(file), path: file.path };
+        const errorCallback = ({ errors, message }) => {
+          this.failure(
+            {
+              isFinished: !hasNextFile,
+              currentFileIndex,
+              lastFileIndex
+            },
+            {
+              file,
+              errors,
+              message
+            }
+          );
+        };
 
         if (fileToUpdate) {
           return this.NewLibConnection
@@ -79,7 +93,7 @@ export default {
               currentFileIndex,
               lastFileIndex
             }))
-            .catch(this.failure);
+            .catch(errorCallback);
         }
 
         return this.NewLibConnection
@@ -91,7 +105,7 @@ export default {
             currentFileIndex,
             lastFileIndex
           }))
-          .catch(this.failure);
+          .catch(errorCallback);
       });
     });
   },
@@ -117,14 +131,22 @@ export default {
   },
 
   removeFiles(files, hostingId) {
-    bluebird.mapSeries(files, (file) => (
-      this.NewLibConnection
+    const lastFileIndex = files.length - 1;
+
+    bluebird.mapSeries(files, (file, currentFileIndex) => {
+      const hasNextFile = files.length > currentFileIndex + 1;
+
+      return this.NewLibConnection
         .HostingFile
         .please()
         .delete({ hostingId, id: file.id })
-    ))
-    .then(this.completed)
-    .catch(this.failure);
+        .then(() => this.completed({
+          isFinished: !hasNextFile,
+          currentFileIndex,
+          lastFileIndex
+        }))
+        .catch(this.failure);
+    });
   },
 
   publish(id) {
