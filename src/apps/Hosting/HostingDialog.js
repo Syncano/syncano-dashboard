@@ -4,17 +4,17 @@ import _ from 'lodash';
 
 import { DialogMixin, FormMixin } from '../../mixins';
 
-import Store from './HostingStore';
-import Actions from './HostingActions';
+import HostingDialogStore from './HostingDialogStore';
+import HostingStore from './HostingStore';
+import HostingActions from './HostingActions';
 import SessionStore from '../Session/SessionStore';
 
 import { TextField, Toggle } from 'material-ui';
 import { Dialog, Show, Notification } from '../../common';
-// import HostingDialogDomainTable from './HostingDialogDomainTable';
 
 const CreateHostingDialog = React.createClass({
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(HostingDialogStore),
     DialogMixin,
     FormMixin
   ],
@@ -22,11 +22,10 @@ const CreateHostingDialog = React.createClass({
   validatorConstraints: {
     label: {
       presence: true,
-      length: {
-        maximum: 64
-      }
-    },
-    cname: {
+      format: {
+        pattern: '[a-z]+',
+        message: 'can only contain a-z'
+      },
       length: {
         maximum: 64
       }
@@ -39,17 +38,9 @@ const CreateHostingDialog = React.createClass({
   },
 
   getHostingParams() {
-    const { description, domains = [], id, isDefault, label, cname, newCname } = this.state;
-    let domainsArray = _.map(domains, 'value');
+    const { description, domains = [], id, isDefault, label } = this.state;
 
-    domainsArray = _.without(domainsArray, 'default');
-    if (_.includes(domainsArray, cname)) {
-      domainsArray = _.map(domainsArray, (domain) => domain === cname && (newCname || cname));
-    } else {
-      domainsArray.push(newCname);
-    }
-
-    return { label, description, id, isDefault, domains: domainsArray };
+    return { label, description, id, isDefault, domains };
   },
 
   getStyles() {
@@ -62,20 +53,40 @@ const CreateHostingDialog = React.createClass({
   },
 
   handleAddSubmit() {
-    const { items } = this.state;
-    const params = this.getHostingParams();
+    const { description, domains = [], isDefault, label, cname } = this.state;
+    const hostingCount = HostingStore.data.items.length;
+    const params = { description, domains, isDefault, label };
 
-    if (_.isEmpty(items)) {
+    params.domains.push(label);
+    cname && params.domains.push(cname);
+
+    if (!hostingCount) {
       params.isDefault = true;
     }
 
-    Actions.createHosting(params);
+    HostingActions.createHosting(params);
   },
 
   handleEditSubmit() {
+    const { cname, cnameIndex } = this.state;
     const params = this.getHostingParams();
+    const pristineCname = cname && cnameIndex < 0;
+    const updateCname = cname && cnameIndex > -1;
+    const removeCname = !cname && cnameIndex > -1;
 
-    Actions.updateHosting(params.id, params);
+    if (pristineCname) {
+      params.domains.push(cname);
+    }
+
+    if (updateCname) {
+      params.domains[cnameIndex] = cname;
+    }
+
+    if (removeCname) {
+      _.remove(params.domains, (value, index) => index === cnameIndex);
+    }
+
+    HostingActions.updateHosting(params.id, params);
   },
 
   handleChangeLabel(event, value) {
@@ -83,7 +94,7 @@ const CreateHostingDialog = React.createClass({
   },
 
   handleChangeCName(event, value) {
-    this.setState({ newCname: value });
+    this.setState({ cname: value });
   },
 
   handleChangeDescription(event, value) {
@@ -91,20 +102,18 @@ const CreateHostingDialog = React.createClass({
   },
 
   handleDefaultDomain() {
-    let { isDefault } = this.state;
+    const { isDefault } = this.state;
 
-    isDefault = !isDefault;
-    this.setState({ isDefault });
+    this.setState({ isDefault: !isDefault });
   },
 
   render() {
-    const { isDefault, isLoading, open, label, description, canSubmit, cname, newCname } = this.state;
+    const { isDefault, isLoading, open, label, description, canSubmit, domains = [], cname, cnameIndex } = this.state;
     const title = this.hasEditMode() ? 'Edit Hosting' : 'Add Hosting';
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const defaultLink = `https://${currentInstanceName}.syncano.site`;
     const styles = this.getStyles();
-    const cnameValue = newCname || cname;
 
     return (
       <Dialog.FullPage
@@ -178,12 +187,11 @@ const CreateHostingDialog = React.createClass({
             onToggle={this.handleDefaultDomain}
           />
           <TextField
-            autoFocus={true}
             fullWidth={true}
-            value={cnameValue}
+            defaultValue={domains[cnameIndex]}
+            value={cname}
             name="CNAME"
             onChange={this.handleChangeCName}
-            errorText={this.getValidationMessages('cname').join(' ')}
             hintText="Hosting's CNAME"
             floatingLabelText="CNAME"
             data-e2e="hosting-dialog-cname-input"

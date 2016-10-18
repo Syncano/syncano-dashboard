@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { DialogMixin } from '../../mixins';
 
 import HostingPublishDialogActions from './HostingPublishDialogActions';
-import HostinPublishDialogStore from './HostinPublishDialogStore';
+import HostinPublishDialogStore from './HostingPublishDialogStore';
 
 import { Dialog } from '../../common';
 import { colors as Colors } from 'material-ui/styles';
