@@ -9,6 +9,7 @@ const HostingFilesEmptyView = ({
   currentInstanceName,
   hasFiles,
   filesCount,
+  isDeleting,
   isUploading,
   lastFileIndex,
   currentFileIndex,
@@ -17,6 +18,16 @@ const HostingFilesEmptyView = ({
   const progressBarStyles = {
     width: '100%'
   };
+  const action = (() => {
+    if (isUploading) {
+      return 'Uploading';
+    }
+    if (isDeleting) {
+      return 'Deleting';
+    }
+    return '';
+  })();
+  const isActionInProgress = isDeleting || isUploading;
   const uploadingFilesCount = lastFileIndex + 1;
   const progressBar = (
     <div style={progressBarStyles}>
@@ -28,11 +39,11 @@ const HostingFilesEmptyView = ({
         value={currentFileIndex}
       />
       <div className="vm-2-t">
-        Uploading file {currentFileIndex} / {uploadingFilesCount}
+        {`${action} file ${currentFileIndex} / ${uploadingFilesCount}`}
       </div>
     </div>
   );
-  const actionButton = (
+  const actionButton = isActionInProgress ? progressBar : (
     <UploadFilesButton
       {...other}
       hasFiles={hasFiles}
@@ -41,8 +52,12 @@ const HostingFilesEmptyView = ({
   );
 
   const defaultDescription = 'Choose your website files from your disk.';
-  const uploadingFilesDescription = `Uploading ${uploadingFilesCount} files...`;
-  const descriptionWithFiles = isUploading ? uploadingFilesDescription : `${filesCount} files ready for upload.`;
+  const uploadingFilesDescription = `${action} ${uploadingFilesCount} files...`;
+  const descriptionWithFiles = isActionInProgress ? uploadingFilesDescription : `${filesCount} files ready for upload.`;
+  const description = hasFiles || isActionInProgress ? descriptionWithFiles : defaultDescription;
+  const isFilesQueue = hasFiles || isUploading;
+  const iconClassName = isFilesQueue ? 'synicon-cloud-upload' : 'synicon-hosting-files-types';
+  const iconColor = isFilesQueue ? Colors.blue500 : Colors.grey600;
   const bashSnippets = [
     { description: 'Install Syncano CLI:', snippet: 'pip install syncano-cli' },
     { description: 'Login to your Syncano account:', snippet: `syncano login --instance-name ${currentInstanceName}` },
@@ -51,14 +66,14 @@ const HostingFilesEmptyView = ({
 
   return (
     <EmptyView.CLI
-      iconClassName={hasFiles || isUploading ? 'synicon-cloud-upload' : 'synicon-hosting-files-types'}
-      iconColor={hasFiles || isUploading ? Colors.blue500 : Colors.grey600}
+      iconClassName={iconClassName}
+      iconColor={iconColor}
       mainTitle="Hosting Socket Files"
       showDocsUrl={false}
       urlLabel="Hosting Socket"
-      description={hasFiles || isUploading ? descriptionWithFiles : defaultDescription}
+      description={description}
       docsUrl="http://docs.syncano.io/docs/"
-      actionButton={isUploading ? progressBar : actionButton}
+      actionButton={actionButton}
       CLITitle="Use Syncano CLI"
       CLIDescription="The best way to manage your hosting files is with "
       bashSnippets={bashSnippets}
