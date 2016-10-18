@@ -51,9 +51,19 @@ const CreateHostingDialog = React.createClass({
 
   getStyles() {
     return {
-      checkBox: {
-        margin: '20px 0',
-        maxWidth: 250
+      contentSection: {
+        margin: '0 0 20px'
+      },
+      toggle: {
+        maxWidth: 400,
+        margin: '10px 0'
+      },
+      labelStyle: {
+        lineHeight: 1.4,
+        color: 'rgba(68,68,68, .8)'
+      },
+      defaultExplanation: {
+        margin: '30px 0 10px',
       }
     };
   },
@@ -138,12 +148,14 @@ const CreateHostingDialog = React.createClass({
   },
 
   render() {
-    const { isDefault, isLoading, open, label, description, canSubmit, newDomain, domains } = this.state;
+    const { isDefault, isLoading, open, label, description, canSubmit, newDomain, domains, items } = this.state;
     const title = this.hasEditMode() ? 'Edit Hosting' : 'Add Hosting';
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const defaultLink = `https://${currentInstanceName}.syncano.site`;
+    const labelLink = `https://${label}--${currentInstanceName}.syncano.site`;
     const styles = this.getStyles();
+    const itemsLength = items.length !== 0;
 
     return (
       <Dialog.FullPage
@@ -175,10 +187,12 @@ const CreateHostingDialog = React.createClass({
               The domains will be linked to your hosting at
               https://{currentInstanceName}--<em>domain</em>.syncano.site
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection title="Default hosting">
-              You can also check <em>Set as default hosting</em> then it will be connected directly to your current
-              Instance and avaliable at {defaultLink}
-            </Dialog.SidebarSection>
+            <Show if={itemsLength}>
+              <Dialog.SidebarSection title="Default hosting">
+                You can also toogle on <em>Default hosting </em> then it will be connected directly to your current
+                Instance and avaliable at {defaultLink}
+              </Dialog.SidebarSection>
+            </Show>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/hosting/">
                 Learn more
@@ -209,13 +223,43 @@ const CreateHostingDialog = React.createClass({
             hintText="Hosting's description"
             floatingLabelText="Description"
             data-e2e="hosting-dialog-description-input"
+            style={styles.contentSection}
           />
-          <Toggle
-            label="Set as default hosting"
-            style={styles.checkBox}
-            toggled={isDefault}
-            onToggle={this.handleDefaultDomain}
-          />
+          <Show if={itemsLength}>
+            <Dialog.ContentSection
+              title="Default Hosting"
+              style={styles.contentSection}
+            >
+              <div style={styles.defaultExplanation}>
+                <Notification
+                  isCloseButtonVisible={false}
+                >
+                  {'Default hosting is available at '}
+                  <a
+                    href={defaultLink}
+                    target="_blank"
+                  >
+                    {`${defaultLink}.`}
+                  </a>
+                  <br />
+                  {'Each instance can have one default hosting. '}
+                  {'Setting this as a default will not affect '}
+                  <a
+                    href={labelLink}
+                    target="_blank"
+                  >
+                    {`${labelLink}.`}
+                  </a>
+                </Notification>
+              </div>
+              <Toggle
+                label="Set as default hosting"
+                style={styles.toggle}
+                toggled={isDefault}
+                onToggle={this.handleDefaultDomain}
+              />
+            </Dialog.ContentSection>
+          </Show>
           <Dialog.ContentSection title="Domains">
             <HostingDialogDomainTable
               domains={domains}
