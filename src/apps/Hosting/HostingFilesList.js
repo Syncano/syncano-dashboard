@@ -231,7 +231,18 @@ const HostingFilesList = React.createClass({
   },
 
   render() {
-    const { items, isLoading, isDeleting, isUploading, ...other } = this.props;
+    const {
+      currentFileIndex,
+      currentInstanceName,
+      filesCount,
+      hasFiles,
+      items,
+      isLoading,
+      isDeleting,
+      isUploading,
+      lastFileIndex,
+      ...other
+    } = this.props;
 
     if (!items.length || isUploading || isDeleting) {
       return (
@@ -244,8 +255,15 @@ const HostingFilesList = React.createClass({
     return (
       <div>
         <HostingUploadDialog
-          {...this.props}
+          {...other}
+          currentFileIndex={currentFileIndex}
+          currentInstanceName={currentInstanceName}
+          filesCount={filesCount}
           handleUploadFiles={this.handleUploadFiles}
+          hasFiles={hasFiles}
+          isDeleting={isDeleting}
+          isUploading={isUploading}
+          lastFileIndex={lastFileIndex}
         />
         {this.getDialogs()}
         {this.renderHeader()}

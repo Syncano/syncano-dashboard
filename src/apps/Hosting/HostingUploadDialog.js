@@ -8,7 +8,6 @@ import HostingFilesEmptyView from './HostingFilesEmptyView';
 import { DialogMixin } from '../../mixins';
 import { Dialog } from '../../common';
 
-
 const HostingUploadDialog = React.createClass({
   mixins: [
     Reflux.connect(Store),
@@ -16,8 +15,19 @@ const HostingUploadDialog = React.createClass({
   ],
 
   render() {
-    const { handleUploadFiles } = this.props;
+    const {
+      currentFileIndex,
+      currentInstanceName,
+      filesCount,
+      hasFiles,
+      isDeleting,
+      isUploading,
+      lastFileIndex,
+      ...other
+    } = this.props;
     const { open } = this.state;
+
+    console.error(this.props);
 
     return (
       <Dialog.FullPage
@@ -27,8 +37,14 @@ const HostingUploadDialog = React.createClass({
         open={open}
       >
         <HostingFilesEmptyView
-          {...this.props}
-          handleUploadFiles={handleUploadFiles}
+          currentFileIndex={currentFileIndex}
+          currentInstanceName={currentInstanceName}
+          filesCount={filesCount}
+          hasFiles={hasFiles}
+          isDeleting={isDeleting}
+          isUploading={isUploading}
+          lastFileIndex={lastFileIndex}
+          {...other}
         />
       </Dialog.FullPage>
     );
