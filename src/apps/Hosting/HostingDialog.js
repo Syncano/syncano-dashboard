@@ -194,16 +194,6 @@ const CreateHostingDialog = React.createClass({
             data-e2e="hosting-dialog-description-input"
             style={styles.contentSection}
           />
-          <TextField
-            fullWidth={true}
-            defaultValue={domains[cnameIndex]}
-            value={cname}
-            name="CNAME"
-            onChange={this.handleChangeCName}
-            hintText="Hosting's CNAME"
-            floatingLabelText="CNAME"
-            data-e2e="hosting-dialog-cname-input"
-          />
           <Show if={this.hasEditMode()}>
             <Dialog.ContentSection
               title="Default Hosting"
@@ -239,6 +229,16 @@ const CreateHostingDialog = React.createClass({
               />
             </Dialog.ContentSection>
           </Show>
+          <TextField
+            fullWidth={true}
+            defaultValue={domains[cnameIndex]}
+            value={cname}
+            name="CNAME"
+            onChange={this.handleChangeCName}
+            hintText="Hosting's CNAME"
+            floatingLabelText="CNAME"
+            data-e2e="hosting-dialog-cname-input"
+          />
         </div>
         <div className="vm-2-t">
           {this.renderFormNotifications()}
