@@ -22,7 +22,7 @@ export default addTestNamePrefixes({
       .clickElement('@addHostingButton')
       .fillInput('@labelInput', hosting)
       .fillInput('@descriptionInput', hosting)
-      .fillInput('@newDomainInput', domain)
+      .fillInput('@cnameInput', domain)
       .clickElement('@addHostingConfirmButton')
       .waitForElementVisible('@hostingList');
   },
@@ -34,7 +34,7 @@ export default addTestNamePrefixes({
     hostingPage
       .clickDropdown('@hostingDropdownIcon', dropdownOption)
       .fillInput('@descriptionInput', utils.addSuffix('edited'))
-      .fillInput('@newDomainInput', domain)
+      .fillInput('@cnameInput', domain)
       .clickElement('@addNewDomainButton')
       .clickElement('@addHostingConfirmButton')
       .waitForElementPresent('@hostingList')

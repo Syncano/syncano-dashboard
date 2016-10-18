@@ -11,8 +11,8 @@ export default {
     descriptionInput: {
       selector: '[data-e2e="hosting-dialog-description-input"]'
     },
-    newDomainInput: {
-      selector: '[data-e2e="hosting-dialog-new-domain-input"]'
+    cnameInput: {
+      selector: '[data-e2e="hosting-dialog-cname-input"]'
     },
     addNewDomainButton: {
       selector: '[data-e2e="domain-add-button"]'
