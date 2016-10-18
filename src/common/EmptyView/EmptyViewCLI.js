@@ -188,7 +188,7 @@ const EmptyViewCLI = ({
         </TableBody>
       </Table>
       <FlatButton
-        label="Back"
+        label="Close"
         primary={true}
         style={styles.errorsBackButton}
         onTouchTap={handleErrorsButtonClick}
