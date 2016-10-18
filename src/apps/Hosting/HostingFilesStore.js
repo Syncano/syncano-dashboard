@@ -21,7 +21,7 @@ export default Reflux.createStore({
       filesToUpload: [],
       isLoading: true,
       isUploading: false,
-      uploadErrors: [],
+      errorResponses: [],
       isDeleting: false
     };
   },
@@ -90,12 +90,8 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onUploadFilesFailure(uploadingStatus) {
-    this.data.uploadErrors.push({
-      file: uploadingStatus.file,
-      errors: uploadingStatus.errors,
-      responseText: uploadingStatus.response.statusText
-    });
+  onUploadFilesFailure(uploadingStatus, response) {
+    this.data.errorResponses = [...this.data.errorResponses, response];
     this.data.currentFileIndex = uploadingStatus.currentFileIndex;
     this.data.lastFileIndex = uploadingStatus.lastFileIndex;
     uploadingStatus.isFinished && removeEventListener('beforeunload', this.handleCloseOnUpload);

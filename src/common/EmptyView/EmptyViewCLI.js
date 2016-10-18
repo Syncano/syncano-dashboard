@@ -32,7 +32,7 @@ const EmptyViewCLI = ({
   isUploadFinished,
   mainTitle,
   showDocsUrl = true,
-  uploadErrors,
+  errorResponses,
   urlLabel,
   actionButton = (
     <RaisedButton
@@ -130,16 +130,23 @@ const EmptyViewCLI = ({
   );
 
   const renderErrors = (
-    _.map(uploadErrors, (error) => (
-      <TableRow style={styles.tableRow}>
-        <TableRowColumn style={{ ...styles.tableRowColumnLeft, ...styles.alignCenter }}>
-          {error.file.path}
-        </TableRowColumn>
-        <TableRowColumn style={{ ...styles.tableRowColumnRight, ...styles.alignCenter }}>
-          {error.errors.path || error.errors.file || error.responseText}
-        </TableRowColumn>
-      </TableRow>
-    ))
+    _.map(errorResponses, (errorResponse) => {
+      const fieldsErrors = errorResponse.errors && (errorResponse.errors.path || errorResponse.errors.file);
+
+      errorResponse.message = errorResponse.message[0].toUpperCase() + errorResponse.message.slice(1);
+      const error = fieldsErrors || errorResponse.message;
+
+      return (
+        <TableRow style={styles.tableRow}>
+          <TableRowColumn style={{ ...styles.tableRowColumnLeft, ...styles.alignCenter }}>
+            {errorResponse.file.path}
+          </TableRowColumn>
+          <TableRowColumn style={{ ...styles.tableRowColumnRight, ...styles.alignCenter }}>
+            {error}
+          </TableRowColumn>
+        </TableRow>
+      );
+    })
   );
 
   const renderErrorsView = (
@@ -153,7 +160,7 @@ const EmptyViewCLI = ({
         <span>Errors</span>
       </div>
       <div style={styles.description}>
-        The following {uploadErrors.length} files had problems while uploading.
+        The following {errorResponses.length} files had problems while uploading.
       </div>
       <Table style={styles.table}>
         <TableHeader
@@ -245,7 +252,7 @@ const EmptyViewCLI = ({
           </div>
         </Show>
         {actionButton}
-        {!uploadErrors.length ? renderCLIUsage : renderErrorsView}
+        {!errorResponses.length ? renderCLIUsage : renderErrorsView}
       </div>
     </div>
   );

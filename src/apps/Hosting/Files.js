@@ -131,7 +131,7 @@ const HostingFilesView = React.createClass({
       currentFileIndex,
       isUploading,
       isDeleting,
-      uploadErrors
+      errorResponses
     } = this.state;
 
     const hasFilesToUpload = filesToUpload.length > 0;
@@ -180,7 +180,7 @@ const HostingFilesView = React.createClass({
             isLoading={isLoading}
             items={items}
             hideDialogs={hideDialogs}
-            uploadErrors={uploadErrors}
+            errorResponses={errorResponses}
             handleErrorsButtonClick={HostingFilesActions.finishUploading}
           />
         </Container>

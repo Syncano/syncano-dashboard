@@ -14,7 +14,7 @@ const HostingFilesEmptyView = ({
   isUploading,
   lastFileIndex,
   currentFileIndex,
-  uploadErrors,
+  errorResponses,
   ...other
 }) => {
   const progressBarStyles = {
@@ -72,7 +72,7 @@ const HostingFilesEmptyView = ({
     <EmptyView.CLI
       handleErrorsButtonClick={handleErrorsButtonClick}
       isUploadFinished={isUploadFinished}
-      uploadErrors={uploadErrors}
+      errorResponses={errorResponses}
       iconClassName={iconClassName}
       iconColor={iconColor}
       mainTitle="Hosting Socket Files"
