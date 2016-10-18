@@ -48,7 +48,7 @@ class HostingListItem extends Component {
     const { areLinksVisible } = this.state;
     const { item, onIconClick, params, showDeleteDialog, showPublishDialog, showEditDialog } = this.props;
     const styles = this.getStyles();
-    const isDefaultHosting = _.some(item.domains, { value: 'default' });
+    const isDefaultHosting = _.includes(item.domains, 'default');
     const defaultLink = `https://${params.instanceName}.syncano.site`;
     const domainsCount = item.domains.length;
     let customDomainLink = '';
