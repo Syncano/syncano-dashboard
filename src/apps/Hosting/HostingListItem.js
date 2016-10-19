@@ -100,7 +100,10 @@ class HostingListItem extends Component {
             </Show>
           </Column.Desc>
           <Column.Desc className="col-sm-3">
-            <Link to={{ pathname: filesRedirectPath }}>
+            <Link
+              to={{ pathname: filesRedirectPath }}
+              data-e2e={`${item.label}-hosting-lit-item-files`}
+            >
               Files
             </Link>
           </Column.Desc>

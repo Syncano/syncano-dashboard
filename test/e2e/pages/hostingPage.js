@@ -43,6 +43,27 @@ export default {
     },
     hostingListItemDropdownDeleteOption: {
       selector: '[data-e2e="dropdown-hosting-item-delete"]'
+    },
+    hostingListItemFilesLink: {
+      selector: '[data-e2e="label-hosting-lit-item-files"]'
+    },
+    hostingUploadFilesInput: {
+      selector: '[data-e2e="hosting-upload-files"]'
+    },
+    hostingSendFilesButton: {
+      selector: '[data-e2e="hosting-send-files"]'
+    },
+    hostingFilesListItem: {
+      selector: '[data-e2e="simplefilename.testfile-list-item-name"]'
+    },
+    hostingFilesListItemDescription: {
+      selector: '[data-e2e="simplefilename.testfile-list-item-description"]'
+    },
+    innerToolbarBackButton: {
+      selector: '[data-e2e="innertoolbar-back-button"]'
+    },
+    hostingFilesAlertIcon: {
+      selector: '[data-e2e="hosting-files-alert-icon"]'
     }
   }
 };
