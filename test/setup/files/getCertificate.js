@@ -6,16 +6,21 @@ import globals from '../../e2e/globals.js';
 
 const getCertFile = () => {
   const baseUrl = globals.apiBaseUrl;
-  const certName = 'cert.p12';
   const credentials = {
     email: process.env.NIGHTWATCH_EMAIL,
     password: process.env.NIGHTWATCH_PASSWORD
   };
+  const certTargetInfo = {
+    certClassName: 'apns_cert',
+    dataObjectWithCertId: 3163,
+    certFileName: 'cert.p12',
+    instanceName: 'long-frost-7585'
+  };
   const connection = Syncano({
     baseUrl,
     defaults: {
-      instanceName: 'long-frost-7585',
-      className: 'apns_cert'
+      instanceName: certTargetInfo.instanceName,
+      className: certTargetInfo.certClassName
     }
   });
 
@@ -28,17 +33,17 @@ const getCertFile = () => {
       return connection
         .DataObject
         .please()
-        .get({ id: 3163 });
+        .get({ id: certTargetInfo.dataObjectWithCertId });
     })
     .then((dataObject) => {
-      const certFile = fs.createWriteStream(certName);
+      const certFile = fs.createWriteStream(certTargetInfo.certFileName);
 
       https.get(dataObject.cert.value, (resp) => {
         resp.on('data', (data) => {
           certFile.write(data);
         });
 
-        resp.on('end', () => console.log(`\n> Downloaded: ./${certName}\n`));
+        resp.on('end', () => console.log(`\n> Downloaded: ./${certTargetInfo.certFileName}\n`));
       });
     });
   return;
