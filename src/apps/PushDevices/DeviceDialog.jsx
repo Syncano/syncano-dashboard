@@ -230,10 +230,10 @@ export default (type, Store, Actions, sidebar) => {
                 hasEditMode={this.hasEditMode()}
                 item={createdDevice}
               /> :
-              <GCMDeviceSummary
-                hasEditMode={this.hasEditMode()}
-                item={createdDevice}
-              />
+                <GCMDeviceSummary
+                  hasEditMode={this.hasEditMode()}
+                  item={createdDevice}
+                />
             }
           </Loading>
         )

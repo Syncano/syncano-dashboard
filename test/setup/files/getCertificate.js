@@ -2,7 +2,7 @@ import Syncano from 'syncano';
 import fs from 'fs';
 import https from 'https';
 
-import globals from '../../e2e/globals.js';
+import globals from '../../e2e/globals';
 
 const getCertFile = () => {
   const baseUrl = globals.apiBaseUrl;
