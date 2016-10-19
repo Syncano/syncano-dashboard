@@ -6,15 +6,8 @@ export default CreateActions(
     selectPricingPlan: {},
     setInstances: {},
     sliderChange: {},
-    sliderLabelsClick: {},
     submitPlan: {},
-
-    fetchBillingPlans: {
-      asyncResult: true,
-      loading: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Billing.listPlans'
-    },
+    getBillingPlans: {},
     updateBillingProfile: {
       asyncResult: true,
       children: ['completed', 'failure'],

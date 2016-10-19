@@ -1,14 +1,15 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
+import { PricingPlansUtil } from '../../utils';
 import { DialogStoreMixin, SnackbarNotificationMixin, StoreFormMixin, WaitForStoreMixin } from '../../mixins';
 
+import ProfileBillingPlanDialogActions from './ProfileBillingPlanDialogActions';
+import ProfileBillingPlanReceiptDialogActions from './ProfileBillingPlanReceiptDialogActions';
 import SessionActions from '../Session/SessionActions';
-import Actions from './ProfileBillingPlanDialogActions';
-import BillingPlanReceiptDialogActions from './ProfileBillingPlanReceiptDialogActions';
 
 export default Reflux.createStore({
-  listenables: Actions,
+  listenables: ProfileBillingPlanDialogActions,
 
   mixins: [
     DialogStoreMixin,
@@ -27,9 +28,8 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    console.debug('ProfileBillingPlanDialogStore::refreshData');
-    Actions.fetchBillingPlans();
-    Actions.fetchBillingSubscriptions();
+    ProfileBillingPlanDialogActions.getBillingPlans();
+    ProfileBillingPlanDialogActions.fetchBillingSubscriptions();
   },
 
   getInfo(type) {
@@ -52,19 +52,11 @@ export default Reflux.createStore({
 
     const pricing = this.data.plan.pricing[type];
     const options = this.data.plan.options[type];
-    const sliderValue = this.data[`${type}Selected`];
+    const sliderValue = this.data[`${type}Selected`] || 0;
+    const value = String(parseFloat(sliderValue));
 
-    if (sliderValue) {
-      const value = String(parseFloat(sliderValue));
-
-      info = pricing[options[value]];
-      info.total = options[value];
-
-      return info;
-    }
-
-    info = pricing[Object.keys(pricing)[0]];
-    info.total = Object.keys(pricing)[0];
+    info = pricing[options[value]];
+    info.total = options[value];
 
     return info;
   },
@@ -80,17 +72,7 @@ export default Reflux.createStore({
       apiLimit = this.data.selectedPricingPlan.api.included;
     }
 
-    let selectedPricingPlanName = 'Starter';
-
-    if (_.inRange(apiLimit, 999999, 2000001)) {
-      selectedPricingPlanName = 'Developer';
-    }
-
-    if (_.inRange(apiLimit, 4499999, 100000001)) {
-      selectedPricingPlanName = 'Business';
-    }
-
-    return selectedPricingPlanName;
+    return _.upperFirst(PricingPlansUtil.getPlanKey(apiLimit));
   },
 
   resetSelectedPricingPlan() {
@@ -105,39 +87,25 @@ export default Reflux.createStore({
     return this.data.selectedPricingPlan.features;
   },
 
-  setPlans(plans) {
-    this.data.plan = plans[Object.keys(plans)[0]];
-  },
-
-  onSelectPricingPlan(apiCalls, scripts, features) {
-    this.data.selectedPricingPlan = {
-      api: apiCalls,
-      cbx: scripts,
-      features
-    };
-
+  onSelectPricingPlan(api, cbx, features) {
+    this.data.selectedPricingPlan = { api, cbx, features };
     this.trigger(this.data);
   },
 
-  onSliderChange(type, event, value) {
-    this.data[`${type}Selected`] = value;
-    this.trigger(this.data);
-  },
-
-  onSliderLabelsClick(value, type) {
+  onSliderChange(type, value) {
     this.data[`${type}Selected`] = value;
     this.trigger(this.data);
   },
 
   setLimits() {
-    Actions.updateBillingProfile({
+    ProfileBillingPlanDialogActions.updateBillingProfile({
       hard_limit: parseInt(this.data.total * 3, 10),
       soft_limit: parseInt(this.data.total * 1.5, 10)
     });
   },
 
   subscribe() {
-    Actions.subscribePlan(this.data.plan.name, JSON.stringify({
+    ProfileBillingPlanDialogActions.subscribePlan(this.data.plan.name, JSON.stringify({
       api: String(this.data.apiTotal),
       cbx: String(this.data.cbxTotal)
     }));
@@ -155,13 +123,14 @@ export default Reflux.createStore({
     if (this.data.card) {
       this.subscribe();
     } else {
-      Actions.addCard(cardInfo);
+      ProfileBillingPlanDialogActions.addCard(cardInfo);
     }
   },
 
-  onFetchBillingPlansCompleted(payload) {
+  onGetBillingPlans() {
+    this.data.plan = PricingPlansUtil.getStoreBillingPlans();
     this.isLoading = false;
-    this.setPlans(payload);
+    this.trigger(this.data);
   },
 
   onFetchBillingCardCompleted(payload) {
@@ -183,7 +152,7 @@ export default Reflux.createStore({
 
   onSubscribePlanCompleted() {
     this.setLimits();
-    BillingPlanReceiptDialogActions.showDialog();
+    ProfileBillingPlanReceiptDialogActions.showDialog();
     this.data.isLoading = false;
     this.trigger(this.data);
   },

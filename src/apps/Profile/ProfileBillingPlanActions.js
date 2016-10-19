@@ -5,7 +5,6 @@ export default CreateActions({
   setBillingPlan: {},
   setChartLegend: {},
   setOverage: {},
-
   cancelSubscriptionRequest: {
     asyncResult: true,
     asyncForm: true,

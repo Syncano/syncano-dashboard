@@ -4,8 +4,8 @@ import Radium from 'radium';
 import { withRouter } from 'react-router';
 import _ from 'lodash';
 
-import Store from './ProfileBillingPlanStore';
-import Actions from './ProfileBillingPlanActions';
+import ProfileBillingPlanStore from './ProfileBillingPlanStore';
+import ProfileBillingPlanActions from './ProfileBillingPlanActions';
 import SessionStore from '../Session/SessionStore';
 
 import { FormMixin } from '../../mixins';
@@ -14,11 +14,9 @@ import Constants from '../../constants/Constants';
 import { RadioButton, RadioButtonGroup, TextField, FlatButton, RaisedButton } from 'material-ui';
 
 const ProfileBillingPlanCancelForm = Radium(React.createClass({
-  displayName: 'ProfileBillingPlanCancelForm',
-
   mixins: [
     FormMixin,
-    Reflux.connect(Store)
+    Reflux.connect(ProfileBillingPlanStore)
   ],
 
   validatorConstraints() {
@@ -71,7 +69,7 @@ const ProfileBillingPlanCancelForm = Radium(React.createClass({
     const { reason, competitor, other, additionalFeedback, _gotcha, _subject, _replyto } = this.state;
     const data = { reason, competitor, other, additionalFeedback, _gotcha, _subject, _replyto };
 
-    Actions.cancelSubscriptionRequest(data);
+    ProfileBillingPlanActions.cancelSubscriptionRequest(data);
   },
 
   handleFailedValidation(errors) {

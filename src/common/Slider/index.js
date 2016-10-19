@@ -1,6 +1,6 @@
 import Slider from './Slider';
-import Section from './SliderSection';
+import SliderSection from './SliderSection';
 
-Slider.Section = Section;
+Slider.Section = SliderSection;
 
 export default Slider;
