@@ -116,6 +116,7 @@ export default React.createClass({
         onChange={this.onChange}
         onFocus={onFocus}
         onBlur={onBlur}
+        data-e2e={this.props['data-e2e']}
       />
     );
   }
