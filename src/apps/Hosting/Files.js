@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import Reflux from 'reflux';
 import Helmet from 'react-helmet';
@@ -24,6 +24,15 @@ const HostingFilesView = React.createClass({
     DialogsMixin,
     SnackbarNotificationMixin
   ],
+
+  getChildContext() {
+    const { errorResponses } = this.state;
+
+    return {
+      errorResponses,
+      handleErrorsButtonClick: HostingFilesActions.finishUploading
+    };
+  },
 
   componentDidMount() {
     const { hostingId } = this.props.params;
@@ -160,21 +169,23 @@ const HostingFilesView = React.createClass({
           backButtonTooltip="Go Back to Hosting Sockets"
         >
           <Show if={items.length && !isLoading}>
-            <RaisedButton
-              label="Upload files"
-              primary={true}
-              icon={<FontIcon className="synicon-cloud-upload" style={{ marginTop: 4 }} />}
-              style={{ marginRight: 10 }}
-              onTouchTap={this.handleShowUploadDialog}
-            />
-            <RaisedButton
-              label="Go to sites"
-              primary={true}
-              icon={<FontIcon className="synicon-open-in-new" style={{ marginTop: 4 }} />}
-              onTouchTap={this.handleOnTouchTap(hostingUrl)}
-              href={hostingUrl}
-              target="_blank"
-            />
+            <div style={{ display: 'flex' }}>
+              <RaisedButton
+                label="Upload files"
+                primary={true}
+                icon={<FontIcon className="synicon-cloud-upload" />}
+                style={{ marginRight: 10 }}
+                onTouchTap={this.handleShowUploadDialog}
+              />
+              <RaisedButton
+                label="Go to site"
+                primary={true}
+                icon={<FontIcon className="synicon-open-in-new" />}
+                onTouchTap={this.handleOnTouchTap(hostingUrl)}
+                href={hostingUrl}
+                target="_blank"
+              />
+            </div>
           </Show>
         </InnerToolbar>
 
@@ -194,12 +205,16 @@ const HostingFilesView = React.createClass({
             items={items}
             hideDialogs={hideDialogs}
             errorResponses={errorResponses}
-            handleErrorsButtonClick={HostingFilesActions.finishUploading}
           />
         </Container>
       </div>
     );
   }
 });
+
+HostingFilesView.childContextTypes = {
+  errorResponses: PropTypes.array,
+  handleErrorsButtonClick: PropTypes.func
+};
 
 export default withRouter(HostingFilesView);

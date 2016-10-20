@@ -235,13 +235,28 @@ const HostingFilesList = React.createClass({
   },
 
   renderEmptyView() {
-    const { errorResponses } = this.props;
+    const {
+      currentFileIndex,
+      currentInstanceName,
+      filesCount,
+      hasFiles,
+      isDeleting,
+      isUploading,
+      lastFileIndex,
+      ...other
+    } = this.props;
 
     return (
       <HostingFilesEmptyView
-        {...this.props}
-        errorResponses={errorResponses}
+        {...other}
+        currentFileIndex={currentFileIndex}
+        currentInstanceName={currentInstanceName}
+        filesCount={filesCount}
         handleUploadFiles={this.handleUploadFiles}
+        hasFiles={hasFiles}
+        isDeleting={isDeleting}
+        isUploading={isUploading}
+        lastFileIndex={lastFileIndex}
       />
     );
   },
@@ -250,9 +265,7 @@ const HostingFilesList = React.createClass({
     const {
       currentFileIndex,
       currentInstanceName,
-      errorResponses,
       filesCount,
-      handleErrorsButtonClick,
       hasFiles,
       items,
       isLoading,
@@ -262,7 +275,7 @@ const HostingFilesList = React.createClass({
       ...other
     } = this.props;
 
-    if (!items.length || isUploading || isDeleting) {
+    if (!items.length || isDeleting) {
       return (
         <Loading show={isLoading}>
           {this.renderEmptyView()}
@@ -276,9 +289,7 @@ const HostingFilesList = React.createClass({
           {...other}
           currentFileIndex={currentFileIndex}
           currentInstanceName={currentInstanceName}
-          errorResponses={errorResponses}
           filesCount={filesCount}
-          handleErrorsButtonClick={handleErrorsButtonClick}
           handleUploadFiles={this.handleUploadFiles}
           hasFiles={hasFiles}
           isDeleting={isDeleting}

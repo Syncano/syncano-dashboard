@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
 
 import Actions from './HostingFilesActions';
+import HostingUploadDialogActions from './HostingUploadDialogActions';
 import SessionActions from '../Session/SessionActions';
 
 export default Reflux.createStore({
@@ -17,12 +18,12 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items: [],
+      errorResponses: [],
       filesToUpload: [],
       isLoading: true,
       isUploading: false,
-      errorResponses: [],
-      isDeleting: false
+      isDeleting: false,
+      items: []
     };
   },
 
@@ -82,6 +83,7 @@ export default Reflux.createStore({
       this.data.filesToUpload = [];
       this.data.isUploading = false;
       this.refreshData();
+      HostingUploadDialogActions.dismissDialog();
     }
     this.data.isUploading = !uploadingStatus.isFinished;
     this.data.currentFileIndex = uploadingStatus.currentFileIndex;
@@ -117,8 +119,9 @@ export default Reflux.createStore({
   },
 
   onFinishUploading() {
+    HostingUploadDialogActions.dismissDialog();
     this.data.filesToUpload = [];
-    this.data.uploadErrors = [];
+    this.data.errorResponses = [];
     this.data.isUploading = false;
     this.refreshData();
   }

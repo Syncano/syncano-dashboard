@@ -18,7 +18,6 @@ const HostingUploadDialog = React.createClass({
     const {
       currentFileIndex,
       currentInstanceName,
-      errorResponses,
       filesCount,
       hasFiles,
       isDeleting,
@@ -38,7 +37,6 @@ const HostingUploadDialog = React.createClass({
         <HostingFilesEmptyView
           currentFileIndex={currentFileIndex}
           currentInstanceName={currentInstanceName}
-          errorResponses={errorResponses}
           filesCount={filesCount}
           hasFiles={hasFiles}
           isDeleting={isDeleting}

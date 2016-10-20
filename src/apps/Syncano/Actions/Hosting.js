@@ -65,13 +65,13 @@ export default {
     all.on('stop', (fetchedFiles) => {
       bluebird.mapSeries(files, (file, currentFileIndex) => {
         const lastFileIndex = files.length - 1;
-        const hasNextFile = files.length > currentFileIndex + 1;
+        const isFinished = currentFileIndex === lastFileIndex;
         const fileToUpdate = _.find(fetchedFiles, { path: file.path });
         const payload = { file: this.NewLibConnection.file(file), path: file.path };
         const errorCallback = ({ errors, message }) => {
           this.failure(
             {
-              isFinished: !hasNextFile,
+              isFinished,
               currentFileIndex,
               lastFileIndex
             },
@@ -89,7 +89,7 @@ export default {
             .please()
             .update({ id: fileToUpdate.id, hostingId }, payload)
             .then(() => this.completed({
-              isFinished: !hasNextFile,
+              isFinished,
               currentFileIndex,
               lastFileIndex
             }))
@@ -101,7 +101,7 @@ export default {
           .please()
           .upload({ hostingId }, payload)
           .then(() => this.completed({
-            isFinished: !hasNextFile,
+            isFinished,
             currentFileIndex,
             lastFileIndex
           }))

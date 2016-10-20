@@ -16,34 +16,34 @@ import {
 import { colors as Colors } from 'material-ui/styles';
 import { BashSnippet } from '../../common';
 
-const EmptyViewCLI = ({
-  bashSnippets,
-  buttonLabel,
-  CLITitle,
-  CLIDescription,
-  docsUrl,
-  description,
-  handleClick,
-  handleErrorsButtonClick,
-  hostingDocsUrl,
-  hostingDocsButtonLabel,
-  iconClassName,
-  iconColor,
-  isUploadFinished,
-  mainTitle,
-  showDocsUrl = true,
-  errorResponses,
-  urlLabel,
-  actionButton = (
-    <RaisedButton
-      label={buttonLabel}
-      primary={true}
-      onTouchTap={handleClick}
-      data-e2e="zero-state-add-button"
-    />
-  ),
-  ...other
-}) => {
+const EmptyViewCLI = (props, { errorResponses, handleErrorsButtonClick }) => {
+  const {
+    bashSnippets,
+    buttonLabel,
+    CLITitle,
+    CLIDescription,
+    docsUrl,
+    description,
+    handleClick,
+    hostingDocsUrl,
+    hostingDocsButtonLabel,
+    iconClassName,
+    iconColor,
+    isUploadFinished,
+    mainTitle,
+    showDocsUrl = true,
+    urlLabel,
+    actionButton = (
+      <RaisedButton
+        label={buttonLabel}
+        primary={true}
+        onTouchTap={handleClick}
+        data-e2e="zero-state-add-button"
+      />
+    ),
+    ...other
+  } = props;
+
   const styles = {
     container: {
       display: 'flex',
@@ -256,6 +256,11 @@ const EmptyViewCLI = ({
       </div>
     </div>
   );
+};
+
+EmptyViewCLI.contextTypes = {
+  errorResponses: React.PropTypes.array,
+  handleErrorsButtonClick: React.PropTypes.func
 };
 
 export default EmptyViewCLI;
