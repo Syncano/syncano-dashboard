@@ -17,6 +17,15 @@ const Column = ColumnList.Column;
 const HostingFilesList = React.createClass({
   mixins: [DialogsMixin],
 
+  componentWillUpdate(nextProps) {
+    const { directoryDepth } = this.state;
+    const filteredItems = this.filterFolders(nextProps.items);
+
+    if (directoryDepth > 0 && filteredItems < 1) {
+      this.moveDirectoryUp();
+    }
+  },
+
   getInitialState() {
     return {
       directoryDepth: 0,
@@ -211,8 +220,6 @@ const HostingFilesList = React.createClass({
     const filteredItems = this.filterFolders(items);
     const listItems = _.map(filteredItems, (item) => {
       const filesToRemove = item.isFolder ? item.files : item;
-
-      console.error(item.path);
 
       return (
         <ListItem
