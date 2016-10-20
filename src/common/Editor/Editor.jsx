@@ -39,7 +39,6 @@ export default React.createClass({
       mode,
       theme,
       fontSize,
-      onChange,
       value,
       showGutter,
       minLines,
@@ -55,7 +54,7 @@ export default React.createClass({
     this.editor.getSession().setMode(`ace/mode/${mode}`);
     this.editor.setTheme(`ace/theme/${theme}`);
     this.editor.setFontSize(fontSize);
-    this.editor.on('change', onChange);
+    this.editor.on('change', this.onChange);
     this.editor.setValue(value);
     this.editor.renderer.setShowGutter(showGutter);
     this.editor.setOption('minLines', minLines);

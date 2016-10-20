@@ -23,7 +23,7 @@ export default addTestNamePrefixes({
     globalConfigPage
       .waitForElementPresent('@globalConfigEditor')
       .clearInput('@globalConfigEditor')
-      .setValue('@globalConfigTextarea', '{\n"value1": "test1",\n"value2": "test2"}')
+      .setValue('@globalConfigTextarea', '{\n"value1": "test1",\n"value2": "test2"')
       .clickElement('@globalConfigConfirmButton')
       .waitForElementNotPresent('@globalConfigEditor');
 
