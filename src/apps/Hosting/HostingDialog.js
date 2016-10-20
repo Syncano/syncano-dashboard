@@ -54,10 +54,10 @@ const CreateHostingDialog = React.createClass({
       },
       labelStyle: {
         lineHeight: 1.4,
-        color: 'rgba(68,68,68, .8)'
+        color: 'rgba(68, 68, 68, .8)'
       },
       defaultExplanation: {
-        margin: '30px 0 10px',
+        margin: '30px 0 10px'
       }
     };
   },
