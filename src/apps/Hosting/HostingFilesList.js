@@ -159,53 +159,54 @@ const HostingFilesList = React.createClass({
     this.showDialog('removeHostingFilesDialog');
   },
 
-  renderHeader() {
+  renderDirectoryNavigation() {
     const { previousFolders, directoryDepth } = this.state;
+
+    return (
+      <DirectoryNavigation
+        previousFolders={previousFolders}
+        directoryDepth={directoryDepth}
+        moveDirectoryUp={this.moveDirectoryUp}
+      />
+    );
+  },
+
+  renderHeader() {
     const { handleTitleClick, handleUnselectAll, items, getCheckedItems } = this.props;
 
     return (
-      <div>
-        <DirectoryNavigation
-          previousFolders={previousFolders}
-          directoryDepth={directoryDepth}
-          moveDirectoryUp={this.moveDirectoryUp}
-        />
-
-        <ColumnList.Header>
-          <Column.ColumnHeader
-            className="col-flex-1"
-            primary={true}
-            columnName="CHECK_ICON"
-            handleClick={handleTitleClick}
-            data-e2e="hosting-files-list-title"
+      <ColumnList.Header>
+        <Column.ColumnHeader
+          className="col-flex-1"
+          primary={true}
+          columnName="CHECK_ICON"
+          handleClick={handleTitleClick}
+          data-e2e="hosting-files-list-title"
+        >
+          File
+        </Column.ColumnHeader>
+        <Column.ColumnHeader
+          columnName="DESC"
+          className="col-sm-4"
+        >
+          Size
+        </Column.ColumnHeader>
+        <Column.ColumnHeader columnName="MENU">
+          <Lists.Menu
+            checkedItemsCount={getCheckedItems().length}
+            handleSelectAll={this.handleSelectAll}
+            handleUnselectAll={handleUnselectAll}
+            itemsCount={items.length}
           >
-            File
-          </Column.ColumnHeader>
-          <Column.ColumnHeader
-            columnName="DESC"
-            className="col-sm-4"
-          >
-            Size
-          </Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU">
-            <Lists.Menu
-              checkedItemsCount={getCheckedItems().length}
-              handleSelectAll={this.handleSelectAll}
-              handleUnselectAll={handleUnselectAll}
-              itemsCount={items.length}
-            >
-              <Lists.MenuItem onTouchTap={this.showRemoveDialog} />
-            </Lists.Menu>
-          </Column.ColumnHeader>
-        </ColumnList.Header>
-      </div>
+            <Lists.MenuItem onTouchTap={this.showRemoveDialog} />
+          </Lists.Menu>
+        </Column.ColumnHeader>
+      </ColumnList.Header>
     );
   },
 
   renderDotsListItem() {
-    return (
-      <DotsListItem onClickDots={() => this.moveDirectoryUp()} />
-    );
+    return <DotsListItem onClickDots={() => this.moveDirectoryUp()} />;
   },
 
   renderItems() {
@@ -258,6 +259,7 @@ const HostingFilesList = React.createClass({
     return (
       <div>
         {this.getDialogs()}
+        {this.renderDirectoryNavigation()}
         {this.renderHeader()}
         <Lists.List
           {...other}
