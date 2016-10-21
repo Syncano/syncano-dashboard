@@ -66,6 +66,22 @@ const baseScripts = {
       # )
 
       # print (new_user)`
+  },
+  base_php: {
+    source: `
+      // Start coding!
+      // Note: You do not need opening / closing PHP tags in this script
+
+      $count = count($CONFIG);
+
+      foreach ($CONFIG as $key => $val) {
+        if (--$count < 0) {
+          break;
+        }
+
+        echo "$key = $val\n";
+      }
+      `
   }
 };
 
