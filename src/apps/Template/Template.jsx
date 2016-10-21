@@ -302,12 +302,13 @@ const Template = React.createClass({
         value={template.content}
         width="100%"
         height="100%"
+        style={{ position: 'absolute' }}
         isEditorErrorVisible={this.getValidationMessages('content').length}
       />
     );
   },
 
-  renderCode() {
+  renderContent() {
     const styles = this.getStyles();
 
     return (
@@ -411,8 +412,7 @@ const Template = React.createClass({
             mode="html"
             readOnly={true}
             width="100%"
-            height="100%"
-            style={{ position: 'absolute' }}
+            height="200px"
           />
         </div>
       </TogglePanel>
@@ -465,7 +465,7 @@ const Template = React.createClass({
             className="row"
             style={{ flex: 1 }}
           >
-            {this.renderCode()}
+            {this.renderContent()}
             {this.renderSidebar()}
           </div>
         </Loading>
