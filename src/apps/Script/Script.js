@@ -199,7 +199,7 @@ const Script = React.createClass({
         color: '#444',
         fontFamily: "Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace",
         fontSize: 12,
-        whiteSpace: !isWrapResult && 'pre'
+        whiteSpace: isWrapResult ? 'pre-line' : 'pre'
       },
       resultContainer: {
         display: 'flex',
