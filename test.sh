@@ -51,6 +51,7 @@ function http_server_start {
 function ci_cleanup {
     rm -rf ./dist_e2e
     babel-node ./test/setup/files/removeCertificate.js
+    rm simplefilename.testfile
 }
 
 function ci_setup {
@@ -60,6 +61,7 @@ function ci_setup {
     mv ./dist ./dist_e2e
 
     babel-node ./test/setup/createTestInstances.js
+    touch simplefilename.testfile
     npm run lint-tests
 
     selenium_start
@@ -99,6 +101,7 @@ function local_setup {
 
     message "Creating temporary instances for tests..."
     babel-node ./test/setup/createTestInstances.js
+    touch simplefilename.testfile
 
     message "Starting Selenium in background..."
     trap local_cleanup EXIT
