@@ -5,13 +5,17 @@ import { ColumnList } from '../../common/';
 
 const Column = ColumnList.Column;
 
-const DotsListItem = ({ onClickDots }) => {
+const DotsListItem = ({ onDotsClick }) => {
   const styles = {
     color: Colors.blue500,
     cursor: 'pointer',
     paddingLeft: 16,
     marginBottom: 10,
     fontSize: 34
+  };
+
+  const handleDotsClick = () => {
+    onDotsClick && onDotsClick();
   };
 
   return (
@@ -21,7 +25,7 @@ const DotsListItem = ({ onClickDots }) => {
         data-e2e="hosting-files-dots-list-item"
       >
         <div
-          onClick={onClickDots}
+          onClick={handleDotsClick}
           style={styles}
         >
           ...

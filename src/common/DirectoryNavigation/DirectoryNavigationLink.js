@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { FontIcon } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
 
-const DirectoryNavigationLink = ({ label, onClick }) => {
+const DirectoryNavigationLink = ({ label, sideLettersCount, onClick }) => {
   const styles = {
     root: {
       marginLeft: 10,
@@ -31,8 +31,6 @@ const DirectoryNavigationLink = ({ label, onClick }) => {
   };
 
   const truncateLabel = (text) => {
-    const sideLettersCount = 8;
-
     if (text.length > sideLettersCount * 2) {
       const left = _.take(text, sideLettersCount).join('');
       const right = _.takeRight(text, sideLettersCount).join('');

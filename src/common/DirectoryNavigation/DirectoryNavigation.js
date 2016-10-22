@@ -54,22 +54,21 @@ const DirectoryNavigation = ({ previousFolders, directoryDepth, moveDirectoryUp 
 
   const handleFontIconClick = () => moveDirectoryUp(directoryDepth);
 
-  const renderLinks = () => {
-    const links = [];
-
-    _.forEach(previousFolders, (folderName, index) => {
+  const renderLinks = () => (
+    _.map(previousFolders, (folderName, index) => {
       const step = directoryDepth - index - 1;
       const handleDirectoryNavigationLinkClick = () => moveDirectoryUp(step);
 
-      links.push(<DirectoryNavigationLink
-        key={folderName}
-        label={folderName}
-        onClick={handleDirectoryNavigationLinkClick}
-      />);
-    });
-
-    return links;
-  };
+      return (
+        <DirectoryNavigationLink
+          key={index}
+          label={folderName}
+          sideLettersCount={8}
+          onClick={handleDirectoryNavigationLinkClick}
+        />
+      );
+    })
+  );
 
   return (
     <div style={styles.root}>

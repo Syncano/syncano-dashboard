@@ -206,7 +206,7 @@ const HostingFilesList = React.createClass({
   },
 
   renderDotsListItem() {
-    return <DotsListItem onClickDots={() => this.moveDirectoryUp()} />;
+    return <DotsListItem onDotsClick={this.moveDirectoryUp} />;
   },
 
   renderItems() {
