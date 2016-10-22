@@ -42,6 +42,11 @@ html
 body
   overflow-x: hidden
 
+// fix strange border on Safari
+// https://github.com/callemall/material-ui/issues/5410
+div
+  -webkit-appearance: none !important
+
 input:-webkit-autofill
   -webkit-box-shadow: 0 0 0px 1000px white inset
 

@@ -98,6 +98,10 @@ const utils = {
     [splittedEmail.emailName, splittedEmail.emailDomain] = email.split('@');
 
     return splittedEmail;
+  },
+
+  getTestFileLocation() {
+    return require('path').resolve(`${__dirname}/../../simplefilename.testfile`);
   }
 };
 
