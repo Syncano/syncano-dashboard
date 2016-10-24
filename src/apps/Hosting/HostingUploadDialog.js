@@ -31,7 +31,7 @@ const HostingUploadDialog = React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        onRequestClose={this.handleCancel}
+        onRequestClose={!isUploading && this.handleCancel}
         open={open}
       >
         <HostingFilesEmptyView

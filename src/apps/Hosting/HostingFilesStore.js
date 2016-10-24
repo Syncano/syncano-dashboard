@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
+import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin, SnackbarNotificationMixin } from '../../mixins';
 
 import Actions from './HostingFilesActions';
 import HostingUploadDialogActions from './HostingUploadDialogActions';
@@ -13,7 +13,8 @@ export default Reflux.createStore({
   mixins: [
     CheckListStoreMixin,
     StoreLoadingMixin,
-    WaitForStoreMixin
+    WaitForStoreMixin,
+    SnackbarNotificationMixin
   ],
 
   getInitialState() {
@@ -83,7 +84,15 @@ export default Reflux.createStore({
       this.data.filesToUpload = [];
       this.data.isUploading = false;
       this.refreshData();
-      HostingUploadDialogActions.dismissDialog();
+      if (!this.data.errorResponses.length) {
+        HostingUploadDialogActions.dismissDialog();
+        this.setSnackbarNotification({
+          message: 'Your files have been successfully uploaded.',
+          autoHideDuration: null,
+          onActionTouchTap: this.dismissSnackbarNotification,
+          action: 'DISMISS'
+        });
+      }
     }
     this.data.isUploading = !uploadingStatus.isFinished;
     this.data.currentFileIndex = uploadingStatus.currentFileIndex;

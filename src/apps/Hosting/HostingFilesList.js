@@ -1,4 +1,5 @@
 import React from 'react';
+import Reflux from 'reflux';
 import _ from 'lodash';
 import { withRouter } from 'react-router';
 
@@ -6,6 +7,7 @@ import { DialogsMixin } from '../../mixins';
 
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
+import HostingUploadDialogStore from './HostingUploadDialogStore';
 
 import { ColumnList, Dialog, Lists, Loading } from '../../common';
 import HostingFilesEmptyView from './HostingFilesEmptyView';
@@ -16,7 +18,10 @@ import DotsListItem from './DotsListItem';
 const Column = ColumnList.Column;
 
 const HostingFilesList = React.createClass({
-  mixins: [DialogsMixin],
+  mixins: [
+    Reflux.connect(HostingUploadDialogStore),
+    DialogsMixin
+  ],
 
   getInitialState() {
     return {
@@ -265,6 +270,7 @@ const HostingFilesList = React.createClass({
     const {
       currentFileIndex,
       currentInstanceName,
+      errorResponses,
       filesCount,
       hasFiles,
       items,
@@ -275,7 +281,9 @@ const HostingFilesList = React.createClass({
       ...other
     } = this.props;
 
-    if (!items.length || isDeleting) {
+    const { _dialogVisible } = this.state;
+
+    if (!items.length || (items.length && errorResponses.length && !_dialogVisible)) {
       return (
         <Loading show={isLoading}>
           {this.renderEmptyView()}
