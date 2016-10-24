@@ -718,7 +718,7 @@ const Script = React.createClass({
     );
   },
 
-  renderCode() {
+  renderContent() {
     const styles = this.getStyles();
     const { currentScript } = this.state;
     const linkToPackages = currentScript && this.getLinkToPackages(currentScript);
@@ -928,7 +928,7 @@ const Script = React.createClass({
             className="row"
             style={{ flex: 1 }}
           >
-            {this.renderCode()}
+            {this.renderContent()}
             {this.renderSidebar()}
           </div>
         </Loading>

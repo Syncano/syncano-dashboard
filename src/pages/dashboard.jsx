@@ -18,7 +18,7 @@ const Dashboard = React.createClass({
     const { router } = this.props;
 
     if (SessionStore.getSignUpMode()) {
-      router.push('/setup');
+      router.push('/setup/');
     }
 
     ProfileBillingPlanStore.init();

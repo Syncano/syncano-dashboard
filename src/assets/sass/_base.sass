@@ -42,16 +42,22 @@ html
 body
   overflow-x: hidden
 
-input:-webkit-autofill
-  -webkit-box-shadow: 0 0 0px 1000px white inset
-
-// Fix strange border on Safari
+// fix strange border on Safari
 // https://github.com/callemall/material-ui/issues/5410
 div
   -webkit-appearance: none !important
 
-.Select.Select--multi > div:nth-last-child(1)
-  position: relative
+input:-webkit-autofill
+  -webkit-box-shadow: 0 0 0px 1000px white inset
+
+[style*="cursor: not-allowed"]
+  cursor: default !important
+
+  svg
+    display: none !important
+
+.ace_editor
+  -webkit-font-smoothing: antialiased
 
 .full-page-dialog
   padding: 0 !important
@@ -69,8 +75,5 @@ div
       > div
         box-shadow: none !important
 
-[style*="cursor: not-allowed"]
-  cursor: default !important
-
-  svg
-    display: none !important
+.Select.Select--multi > div:nth-last-child(1)
+  position: relative
