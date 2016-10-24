@@ -57,7 +57,7 @@ export default React.createClass({
   componentDidMount() {
     this.editor = ace.edit(this.props.name);
     this.editor.$blockScrolling = Infinity;
-    this.editor.getSession().setMode(`ace/mode/${this.props.mode}`);
+    this.editor.getSession().setMode({ path: `ace/mode/${this.props.mode}`, inline: true });
     this.editor.setTheme(`ace/theme/${this.props.theme}`);
     this.editor.setFontSize(this.props.fontSize);
     this.editor.on('change', this.onChange);
