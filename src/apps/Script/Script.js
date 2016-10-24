@@ -91,7 +91,7 @@ const Script = React.createClass({
   getInitialState() {
     return {
       isSidebarHidden: JSON.parse(localStorage.getItem('isSidebarHidden')),
-      isWrapResult: JSON.parse(localStorage.getItem('isWrapResult'))
+      isResultWrapped: JSON.parse(localStorage.getItem('isResultWrapped'))
     };
   },
 
@@ -130,7 +130,7 @@ const Script = React.createClass({
   },
 
   getStyles() {
-    const { isWrapResult } = this.state;
+    const { isResultWrapped } = this.state;
 
     return {
       root: {
@@ -199,7 +199,7 @@ const Script = React.createClass({
         color: '#444',
         fontFamily: "Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace",
         fontSize: 12,
-        whiteSpace: isWrapResult ? 'pre-line' : 'pre'
+        whiteSpace: isResultWrapped ? 'pre-line' : 'pre'
       },
       resultContainer: {
         display: 'flex',
@@ -231,7 +231,7 @@ const Script = React.createClass({
       },
       wrapIcon: {
         fontSize: 48,
-        color: isWrapResult && Colors.blue500
+        color: isResultWrapped && Colors.blue500
       }
     };
   },
@@ -468,10 +468,10 @@ const Script = React.createClass({
   },
 
   handleWrapResultCheckboxCheck() {
-    const { isWrapResult } = this.state;
+    const { isResultWrapped } = this.state;
 
-    this.setState({ isWrapResult: !isWrapResult });
-    localStorage.setItem('isWrapResult', !isWrapResult);
+    this.setState({ isResultWrapped: !isResultWrapped });
+    localStorage.setItem('isResultWrapped', !isResultWrapped);
   },
 
   showSidebar() {
@@ -857,9 +857,9 @@ const Script = React.createClass({
 
   renderSidebarResultSection() {
     const styles = this.getStyles();
-    const { lastTraceResult, isWrapResult } = this.state;
+    const { lastTraceResult, isResultWrapped } = this.state;
     const showRightContent = lastTraceResult && lastTraceResult !== 'Success';
-    const wrapIconTolltip = isWrapResult ? 'Unwrap text' : 'Wrap text';
+    const wrapIconTolltip = isResultWrapped ? 'Unwrap text' : 'Wrap text';
     const rightContent = showRightContent && (
       <div style={styles.rightContent}>
         <IconButton
