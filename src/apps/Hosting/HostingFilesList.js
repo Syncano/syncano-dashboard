@@ -100,13 +100,14 @@ const HostingFilesList = React.createClass({
     }];
   },
 
-  moveDirectoryUp(step = 1) {
+  moveDirectoryUp(depth) {
     const { previousFolders, directoryDepth } = this.state;
+    const depthLevel = _.isFinite(depth) ? depth : 1;
 
     this.setState({
-      directoryDepth: directoryDepth - step,
-      currentFolderName: previousFolders[directoryDepth - 1 - step] || '',
-      previousFolders: _.dropRight(previousFolders, step)
+      directoryDepth: directoryDepth - depthLevel,
+      currentFolderName: previousFolders[directoryDepth - 1 - depthLevel] || '',
+      previousFolders: _.dropRight(previousFolders, depthLevel)
     });
   },
 

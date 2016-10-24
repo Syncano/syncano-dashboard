@@ -14,10 +14,6 @@ const DotsListItem = ({ onDotsClick }) => {
     fontSize: 34
   };
 
-  const handleDotsClick = () => {
-    onDotsClick && onDotsClick();
-  };
-
   return (
     <ColumnList.Item key="hosting-files-dots-list-item">
       <Column.Desc
@@ -25,7 +21,7 @@ const DotsListItem = ({ onDotsClick }) => {
         data-e2e="hosting-files-dots-list-item"
       >
         <div
-          onClick={handleDotsClick}
+          onClick={onDotsClick}
           style={styles}
         >
           ...
