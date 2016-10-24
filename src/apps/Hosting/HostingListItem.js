@@ -54,7 +54,10 @@ class HostingListItem extends Component {
           </div>
         </Column.Desc>
         <Column.Desc className="col-sm-3">
-          <Link to={`/instances/${params.instanceName}/hosting/${item.id}/files/`}>
+          <Link
+            to={`/instances/${params.instanceName}/hosting/${item.id}/files/`}
+            data-e2e={`${item.label}-hosting-lit-item-files`}
+          >
             Files
           </Link>
         </Column.Desc>

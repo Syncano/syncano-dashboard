@@ -200,9 +200,7 @@ const CreateHostingDialog = React.createClass({
               style={styles.contentSection}
             >
               <div style={styles.defaultExplanation}>
-                <Notification
-                  isCloseButtonVisible={false}
-                >
+                <Notification hasCloseButtonVisible={false}>
                   {'Default hosting is available at '}
                   <a
                     href={defaultLink}

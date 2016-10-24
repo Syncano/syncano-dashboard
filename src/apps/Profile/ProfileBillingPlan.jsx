@@ -7,8 +7,8 @@ import _ from 'lodash';
 
 import { FormMixin } from '../../mixins';
 
-import Store from './ProfileBillingPlanStore';
-import Actions from './ProfileBillingPlanActions';
+import ProfileBillingPlanStore from './ProfileBillingPlanStore';
+import ProfileBillingPlanActions from './ProfileBillingPlanActions';
 import ChartActions from '../Profile/ProfileBillingChartActions';
 import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';
@@ -20,7 +20,7 @@ import PlanReceiptDialog from './ProfileBillingPlanReceiptDialog';
 
 const ProfileBillingPlan = Radium(React.createClass({
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(ProfileBillingPlanStore),
     Reflux.connect(PlanDialogStore),
     FormMixin
   ],
@@ -56,8 +56,8 @@ const ProfileBillingPlan = Radium(React.createClass({
   },
 
   componentDidMount() {
-    Actions.fetchBillingProfile();
-    Actions.fetchBillingSubscriptions();
+    ProfileBillingPlanActions.fetchBillingProfile();
+    ProfileBillingPlanActions.fetchBillingSubscriptions();
     ChartActions.fetchBillingProfile();
     ChartActions.fetchTotalDailyUsage();
   },
@@ -107,11 +107,11 @@ const ProfileBillingPlan = Radium(React.createClass({
   },
 
   handlePlanDialogDismiss() {
-    Actions.fetch();
+    ProfileBillingPlanActions.fetch();
   },
 
   handleSuccessfullValidation() {
-    Actions.updateBillingProfile({
+    ProfileBillingPlanActions.updateBillingProfile({
       hard_limit: this.state.hard_limit,
       soft_limit: this.state.soft_limit
     });
@@ -119,7 +119,7 @@ const ProfileBillingPlan = Radium(React.createClass({
 
   renderLimitsForm() {
     const styles = this.getStyles();
-    const plan = Store.getPlan();
+    const plan = ProfileBillingPlanStore.getPlan();
 
     if (plan === 'builder' || plan === 'free') {
       return null;
@@ -224,7 +224,7 @@ const ProfileBillingPlan = Radium(React.createClass({
 
   render() {
     const { isLoading } = this.state;
-    const pricingPlanName = Store.getPricingPlanName();
+    const pricingPlanName = _.upperFirst(ProfileBillingPlanStore.getPricingPlanKey());
 
     return (
       <Loading show={isLoading}>

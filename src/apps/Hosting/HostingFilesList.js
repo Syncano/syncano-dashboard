@@ -212,8 +212,6 @@ const HostingFilesList = React.createClass({
     const listItems = _.map(filteredItems, (item) => {
       const filesToRemove = item.isFolder ? item.files : item;
 
-      console.error(item.path);
-
       return (
         <ListItem
           key={`hosting-file-list-item-${item.id}`}

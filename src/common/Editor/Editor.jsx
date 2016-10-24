@@ -1,5 +1,3 @@
-// Port from react-ace
-
 import React from 'react';
 import ace from 'brace';
 
@@ -15,25 +13,6 @@ import 'brace/mode/django';
 import 'brace/theme/tomorrow';
 
 export default React.createClass({
-  propTypes: {
-    mode: React.PropTypes.oneOf([
-      'text', 'python', 'javascript', 'ruby', 'golang', 'swift', 'php', 'json', 'django', 'html'
-    ]),
-    theme: React.PropTypes.string,
-    name: React.PropTypes.string,
-    height: React.PropTypes.string,
-    width: React.PropTypes.string,
-    fontSize: React.PropTypes.number,
-    showGutter: React.PropTypes.bool,
-    onChange: React.PropTypes.func,
-    value: React.PropTypes.string,
-    onLoad: React.PropTypes.func,
-    minLines: React.PropTypes.number,
-    maxLines: React.PropTypes.node,
-    readOnly: React.PropTypes.bool,
-    highlightActiveLine: React.PropTypes.bool
-  },
-
   getDefaultProps() {
     return {
       name: 'brace-editor',
@@ -55,19 +34,34 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    this.editor = ace.edit(this.props.name);
+    const {
+      name,
+      mode,
+      theme,
+      fontSize,
+      value,
+      showGutter,
+      minLines,
+      maxLines,
+      readOnly,
+      highlightActiveLine,
+      setShowPrintMargin,
+      onLoad
+    } = this.props;
+
+    this.editor = ace.edit(name);
     this.editor.$blockScrolling = Infinity;
-    this.editor.getSession().setMode(`ace/mode/${this.props.mode}`);
-    this.editor.setTheme(`ace/theme/${this.props.theme}`);
-    this.editor.setFontSize(this.props.fontSize);
+    this.editor.getSession().setMode(`ace/mode/${mode}`);
+    this.editor.setTheme(`ace/theme/${theme}`);
+    this.editor.setFontSize(fontSize);
     this.editor.on('change', this.onChange);
-    this.editor.setValue(this.props.value);
-    this.editor.renderer.setShowGutter(this.props.showGutter);
-    this.editor.setOption('minLines', this.props.minLines);
-    this.editor.setOption('maxLines', this.props.maxLines);
-    this.editor.setOption('readOnly', this.props.readOnly);
-    this.editor.setOption('highlightActiveLine', this.props.highlightActiveLine);
-    this.editor.setShowPrintMargin(this.props.setShowPrintMargin);
+    this.editor.setValue(value);
+    this.editor.renderer.setShowGutter(showGutter);
+    this.editor.setOption('minLines', minLines);
+    this.editor.setOption('maxLines', maxLines);
+    this.editor.setOption('readOnly', readOnly);
+    this.editor.setOption('highlightActiveLine', highlightActiveLine);
+    this.editor.setShowPrintMargin(setShowPrintMargin);
 
     this.editor.clearSelection();
 
@@ -77,8 +71,16 @@ export default React.createClass({
       textArea.className += ' mousetrap';
     }
 
-    if (this.props.onLoad) {
-      this.props.onLoad(this.editor);
+    if (onLoad) {
+      onLoad(this.editor);
+    }
+  },
+
+  componentDidUpdate(prevProps) {
+    const { isEditorErrorVisible } = this.props;
+
+    if (isEditorErrorVisible !== null && isEditorErrorVisible !== prevProps.isEditorErrorVisible) {
+      this.editor.resize();
     }
   },
 
@@ -95,9 +97,10 @@ export default React.createClass({
 
   onChange() {
     const value = this.editor.getValue();
+    const { onChange } = this.props;
 
-    if (this.props.onChange) {
-      this.props.onChange(value);
+    if (onChange) {
+      onChange(value);
     }
   },
 
@@ -112,6 +115,7 @@ export default React.createClass({
         onChange={this.onChange}
         onFocus={onFocus}
         onBlur={onBlur}
+        data-e2e={this.props['data-e2e']}
       />
     );
   }

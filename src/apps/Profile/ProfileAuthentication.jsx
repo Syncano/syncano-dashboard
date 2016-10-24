@@ -12,9 +12,7 @@ import SessionStore from '../Session/SessionStore';
 import { TextField, FlatButton, RaisedButton } from 'material-ui';
 import { Clipboard, Container, InnerToolbar } from '../../common/';
 
-export default Radium(React.createClass({
-  displayName: 'ProfileAuthentication',
-
+const ProfileAuthentication = Radium(React.createClass({
   mixins: [
     Reflux.connect(Store),
     Reflux.ListenerMixin,
@@ -55,11 +53,6 @@ export default Radium(React.createClass({
         fontFamily: 'monospace',
         paddingRight: 8
       },
-      updateButton: {
-        height: 36,
-        lineHeight: '36px',
-        boxShadow: 0
-      },
       updateButtonLabel: {
         lineHeight: '36px',
         fontWeight: 400,
@@ -81,13 +74,8 @@ export default Radium(React.createClass({
   },
 
   render() {
-    const {
-      account_key: accountKey,
-      current_password,
-      newPassword,
-      confirmNewPassword
-     } = this.state;
     const styles = this.getStyles();
+    const { account_key: accountKey, current_password, newPassword, confirmNewPassword } = this.state;
     const user = SessionStore.getUser();
     const hasPassword = user && user.has_password ? user.has_password : null;
     const title = 'Authentication';
@@ -177,7 +165,6 @@ export default Radium(React.createClass({
                   <RaisedButton
                     type="submit"
                     label="Update"
-                    style={styles.updateButton}
                     labelStyle={styles.updateButtonLabel}
                     className="raised-button"
                     disabled={!this.state.canSubmit}
@@ -193,3 +180,5 @@ export default Radium(React.createClass({
     );
   }
 }));
+
+export default ProfileAuthentication;
