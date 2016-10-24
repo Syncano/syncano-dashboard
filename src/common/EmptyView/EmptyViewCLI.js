@@ -156,6 +156,7 @@ const EmptyViewCLI = (props, { errorResponses, handleErrorsButtonClick }) => {
           className="synicon-alert-circle-outline"
           color={Colors.red500}
           style={styles.errorIcon}
+          data-e2e="hosting-files-alert-icon"
         />
         <span>Errors</span>
       </div>

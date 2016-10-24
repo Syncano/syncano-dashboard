@@ -9,7 +9,7 @@ import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
 import HostingUploadDialogStore from './HostingUploadDialogStore';
 
-import { ColumnList, Dialog, Lists, Loading } from '../../common';
+import { ColumnList, Dialog, DirectoryNavigation, Lists, Loading } from '../../common';
 import HostingFilesEmptyView from './HostingFilesEmptyView';
 import HostingUploadDialog from './HostingUploadDialog';
 import ListItem from './HostingFilesListItem';
@@ -106,13 +106,14 @@ const HostingFilesList = React.createClass({
     }];
   },
 
-  moveDirectoryUp() {
+  moveDirectoryUp(depth) {
     const { previousFolders, directoryDepth } = this.state;
+    const depthLevel = _.isFinite(depth) ? depth : 1;
 
     this.setState({
-      directoryDepth: directoryDepth - 1,
-      currentFolderName: previousFolders[directoryDepth - 1] || '',
-      previousFolders: _.dropRight(previousFolders, 1)
+      directoryDepth: directoryDepth - depthLevel,
+      currentFolderName: previousFolders[directoryDepth - 1 - depthLevel] || '',
+      previousFolders: _.dropRight(previousFolders, depthLevel)
     });
   },
 
@@ -165,25 +166,31 @@ const HostingFilesList = React.createClass({
     this.showDialog('removeHostingFilesDialog');
   },
 
+  renderDirectoryNavigation() {
+    const { previousFolders, directoryDepth } = this.state;
+
+    return (
+      <DirectoryNavigation
+        previousFolders={previousFolders}
+        directoryDepth={directoryDepth}
+        moveDirectoryUp={this.moveDirectoryUp}
+      />
+    );
+  },
+
   renderHeader() {
     const { handleTitleClick, handleUnselectAll, items, getCheckedItems } = this.props;
 
     return (
       <ColumnList.Header>
         <Column.ColumnHeader
-          className="col-sm-14"
+          className="col-flex-1"
           primary={true}
           columnName="CHECK_ICON"
           handleClick={handleTitleClick}
           data-e2e="hosting-files-list-title"
         >
           File
-        </Column.ColumnHeader>
-        <Column.ColumnHeader
-          columnName="DESC"
-          className="col-flex-1"
-        >
-          Path
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
@@ -206,9 +213,7 @@ const HostingFilesList = React.createClass({
   },
 
   renderDotsListItem() {
-    return (
-      <DotsListItem onClickDots={this.moveDirectoryUp} />
-    );
+    return <DotsListItem onDotsClick={this.moveDirectoryUp} />;
   },
 
   renderItems() {
@@ -223,7 +228,6 @@ const HostingFilesList = React.createClass({
           key={`hosting-file-list-item-${item.id}`}
           onFolderEnter={this.moveDirectoryDown}
           onIconClick={item.isFolder ? () => this.handleCheckFolder(item) : checkItem}
-          directoryDepth={directoryDepth}
           item={item}
           showDeleteDialog={() => this.showDialog('removeHostingFilesDialog', filesToRemove)}
         />
@@ -305,6 +309,7 @@ const HostingFilesList = React.createClass({
           lastFileIndex={lastFileIndex}
         />
         {this.getDialogs()}
+        {this.renderDirectoryNavigation()}
         {this.renderHeader()}
         <Lists.List
           {...other}
