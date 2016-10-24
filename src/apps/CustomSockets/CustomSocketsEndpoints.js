@@ -37,6 +37,7 @@ const CustomSocketsEndpoints = React.createClass({
         <InnerToolbar
           title={`Sockets: ${customSocketName}`}
           backButton={true}
+          forceBackFallback={true}
           backFallback={this.handleBackClick}
           backButtonTooltip="Go back to Custom Sockets List"
         />
