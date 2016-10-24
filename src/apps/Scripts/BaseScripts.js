@@ -69,9 +69,10 @@ const baseScripts = {
   },
   base_php: {
     source: `
-      // Start coding!
-      // Note: You do not need opening / closing PHP tags in this script
+    // Start coding!
+    // Note: You do not need opening / closing PHP tags in this script
 
+    if ($CONFIG) {
       $count = count($CONFIG);
 
       foreach ($CONFIG as $key => $val) {
@@ -79,8 +80,19 @@ const baseScripts = {
           break;
         }
 
-        echo "$key = $val\n";
+        echo "$key = $val", PHP_EOL;
       }
+    } else {
+      $number = array("one", "two", "three", "four", "five");
+      $count = count($number);
+
+      foreach ($number as $key => $val) {
+        if (--$count < 0) {
+          break;
+        }
+        echo "$key = $val", PHP_EOL;
+      }
+    }
       `
   }
 };
