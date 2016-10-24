@@ -74,7 +74,6 @@ const baseScripts = {
 
     if ($CONFIG) {
       foreach ($CONFIG as $key => $val) {
-
         echo "$key = $val", PHP_EOL;
       }
     } else {
