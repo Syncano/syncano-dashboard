@@ -66,6 +66,24 @@ const baseScripts = {
       # )
 
       # print (new_user)`
+  },
+  base_php: {
+    source: `
+    // Start coding!
+    // Note: You do not need opening / closing PHP tags in this script
+
+    if ($CONFIG) {
+      foreach ($CONFIG as $key => $val) {
+        echo "$key = $val", PHP_EOL;
+      }
+    } else {
+      $number = array("one", "two", "three", "four", "five");
+
+      foreach ($number as $key => $val) {
+        echo "$key = $val", PHP_EOL;
+      }
+    }
+      `
   }
 };
 
