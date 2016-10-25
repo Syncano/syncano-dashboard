@@ -55,7 +55,7 @@ const HostingFilesEmptyView = ({
     />
   );
 
-  const defaultDescription = 'Choose your website files from your disk.';
+  const defaultDescription = 'Choose your files from disk:';
   const uploadingFilesDescription = `${action} ${uploadingFilesCount} files...`;
   const descriptionWithFiles = isActionInProgress ? uploadingFilesDescription : `${filesCount} files ready for upload.`;
   const description = hasFiles || isActionInProgress ? descriptionWithFiles : defaultDescription;
