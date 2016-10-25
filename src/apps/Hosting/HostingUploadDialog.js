@@ -34,6 +34,7 @@ const HostingUploadDialog = React.createClass({
         key="dialog"
         ref="dialog"
         showCloseButton={!isUploading}
+        bindShortcuts={!isUploading}
         onRequestClose={this.handleCancel}
         open={open}
       >
