@@ -88,7 +88,7 @@ const CustomSocketsRegistryList = React.createClass({
 
     return (
       <ListItem
-        key={`custom-sockets-registry-list-item-${item.name}`}
+        key={`sockets-registry-list-item-${item.name}`}
         item={item}
         onIconClick={checkItem}
         showDeleteDialog={showDeleteDialog}

@@ -8,7 +8,7 @@ const Column = ColumnList.Column;
 
 const CustomSocketsRegistryListItem = ({ item, onIconClick, router }) => {
   const handleRedirectToDetailsView = () => {
-    router.push(`/custom-sockets-registry/${item.id}/details/`);
+    router.push(`/sockets-registry/${item.id}/details/`);
   };
 
   const { metadata } = item;

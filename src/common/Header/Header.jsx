@@ -255,10 +255,10 @@ const Header = Radium(React.createClass({
                 <Link to="demo-apps">Demo Apps</Link>
               </li>
               <li
-                id="custom-sockets-registry"
+                id="sockets-registry"
                 style={styles.toolbarListItem}
               >
-                <Link to="custom-sockets-registry">Sockets Registry</Link>
+                <Link to="sockets-registry">Sockets Registry</Link>
               </li>
               <li
                 id="menu-solutions"

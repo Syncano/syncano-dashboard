@@ -77,7 +77,7 @@ const CustomSocketsList = React.createClass({
           primary={true}
           columnName="CHECK_ICON"
         >
-          Sockets (BETA)
+          Sockets
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
@@ -114,7 +114,7 @@ const CustomSocketsList = React.createClass({
           iconClassName="synicon-socket-custom-socket"
           buttonLabel="Add a Socket"
           iconColor={Colors.purple400}
-          title="Sockets (BETA)"
+          title="Sockets"
           urlLabel="Socket"
           description="Some random text about sockets, has to be replaced."
           docsUrl="http://docs.syncano.io/docs"

@@ -47,7 +47,7 @@ const AccountLogin = React.createClass({
         .please()
         .list()
         .then((instances) => {
-          if (_.some(instances, { name: lastInstanceName }) || queryNext === '/custom-sockets-registry') {
+          if (_.some(instances, { name: lastInstanceName }) || queryNext === '/sockets-registry') {
             router.replace({
               pathname: queryNext,
               query: _.omit(location.query, 'next')
