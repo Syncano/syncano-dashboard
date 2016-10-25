@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router';
 import Reflux from 'reflux';
 import Helmet from 'react-helmet';
@@ -24,15 +24,6 @@ const HostingFilesView = React.createClass({
     DialogsMixin,
     SnackbarNotificationMixin
   ],
-
-  getChildContext() {
-    const { errorResponses } = this.state;
-
-    return {
-      errorResponses,
-      handleErrorsButtonClick: HostingFilesActions.finishUploading
-    };
-  },
 
   componentDidMount() {
     const { hostingId } = this.props.params;
@@ -168,8 +159,8 @@ const HostingFilesView = React.createClass({
           forceBackFallback={true}
           backButtonTooltip="Go Back to Hosting Sockets"
         >
-          <Show if={items.length && !isLoading}>
-            <div style={{ display: 'flex' }}>
+          <div>
+            <Show if={items.length && !isLoading}>
               <RaisedButton
                 label="Upload files"
                 primary={true}
@@ -177,16 +168,16 @@ const HostingFilesView = React.createClass({
                 style={{ marginRight: 10 }}
                 onTouchTap={this.handleShowUploadDialog}
               />
-              <RaisedButton
-                label="Go to site"
-                primary={true}
-                icon={<FontIcon className="synicon-open-in-new" />}
-                onTouchTap={this.handleOnTouchTap(hostingUrl)}
-                href={hostingUrl}
-                target="_blank"
-              />
-            </div>
-          </Show>
+            </Show>
+            <RaisedButton
+              label="Go to site"
+              primary={true}
+              icon={<FontIcon className="synicon-open-in-new" />}
+              onTouchTap={this.handleOnTouchTap(hostingUrl)}
+              href={hostingUrl}
+              target="_blank"
+            />
+          </div>
         </InnerToolbar>
 
         <Container>
@@ -198,23 +189,19 @@ const HostingFilesView = React.createClass({
             currentFileIndex={currentFileIndex}
             handleClearFiles={this.handleClearFiles}
             filesCount={filesToUpload.length}
+            handleErrorsButtonClick={HostingFilesActions.finishUploading}
             handleUploadFiles={this.handleUploadFiles}
             handleSendFiles={this.handleSendFiles}
+            errorResponses={errorResponses}
             hasFiles={hasFilesToUpload}
             isLoading={isLoading}
             items={items}
             hideDialogs={hideDialogs}
-            errorResponses={errorResponses}
           />
         </Container>
       </div>
     );
   }
 });
-
-HostingFilesView.childContextTypes = {
-  errorResponses: PropTypes.array,
-  handleErrorsButtonClick: PropTypes.func
-};
 
 export default withRouter(HostingFilesView);

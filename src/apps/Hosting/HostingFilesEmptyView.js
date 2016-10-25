@@ -6,13 +6,15 @@ import { EmptyView } from '../../common';
 import UploadFilesButton from './UploadFilesButton';
 
 const HostingFilesEmptyView = ({
+  currentFileIndex,
   currentInstanceName,
-  hasFiles,
+  errorResponses,
   filesCount,
+  handleErrorsButtonClick,
+  hasFiles,
   isDeleting,
   isUploading,
   lastFileIndex,
-  currentFileIndex,
   ...other
 }) => {
   const progressBarStyles = {
@@ -68,20 +70,22 @@ const HostingFilesEmptyView = ({
 
   return (
     <EmptyView.CLI
+      actionButton={actionButton}
+      bashSnippets={bashSnippets}
+      CLITitle="Use Syncano CLI"
+      CLIDescription="The best way to manage your hosting files is with "
+      description={description}
+      docsUrl="http://docs.syncano.io/docs/"
+      errorResponses={errorResponses}
+      handleErrorsButtonClick={handleErrorsButtonClick}
+      hostingDocsUrl="http://docs.syncano.io/docs/hosting"
+      hostingDocsButtonLabel="View Hosting Docs"
       isUploadFinished={isUploadFinished}
       iconClassName={iconClassName}
       iconColor={iconColor}
       mainTitle="Hosting Socket Files"
       showDocsUrl={false}
       urlLabel="Hosting Socket"
-      description={description}
-      docsUrl="http://docs.syncano.io/docs/"
-      actionButton={actionButton}
-      CLITitle="Use Syncano CLI"
-      CLIDescription="The best way to manage your hosting files is with "
-      bashSnippets={bashSnippets}
-      hostingDocsUrl="http://docs.syncano.io/docs/hosting"
-      hostingDocsButtonLabel="View Hosting Docs"
     />
   );
 };

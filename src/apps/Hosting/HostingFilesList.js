@@ -247,7 +247,9 @@ const HostingFilesList = React.createClass({
     const {
       currentFileIndex,
       currentInstanceName,
+      errorResponses,
       filesCount,
+      handleErrorsButtonClick,
       hasFiles,
       isDeleting,
       isUploading,
@@ -260,7 +262,9 @@ const HostingFilesList = React.createClass({
         {...other}
         currentFileIndex={currentFileIndex}
         currentInstanceName={currentInstanceName}
+        errorResponses={errorResponses}
         filesCount={filesCount}
+        handleErrorsButtonClick={handleErrorsButtonClick}
         handleUploadFiles={this.handleUploadFiles}
         hasFiles={hasFiles}
         isDeleting={isDeleting}
@@ -276,6 +280,7 @@ const HostingFilesList = React.createClass({
       currentInstanceName,
       errorResponses,
       filesCount,
+      handleErrorsButtonClick,
       hasFiles,
       items,
       isLoading,
@@ -287,7 +292,7 @@ const HostingFilesList = React.createClass({
 
     const { _dialogVisible } = this.state;
 
-    if (!items.length || (items.length && errorResponses.length && !_dialogVisible)) {
+    if (!items.length || isDeleting || (items.length && errorResponses.length && !_dialogVisible)) {
       return (
         <Loading show={isLoading}>
           {this.renderEmptyView()}
@@ -301,7 +306,9 @@ const HostingFilesList = React.createClass({
           {...other}
           currentFileIndex={currentFileIndex}
           currentInstanceName={currentInstanceName}
+          errorResponses={errorResponses}
           filesCount={filesCount}
+          handleErrorsButtonClick={handleErrorsButtonClick}
           handleUploadFiles={this.handleUploadFiles}
           hasFiles={hasFiles}
           isDeleting={isDeleting}

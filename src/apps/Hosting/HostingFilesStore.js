@@ -101,7 +101,6 @@ export default Reflux.createStore({
     this.data.currentFileIndex = uploadingStatus.currentFileIndex;
     this.data.lastFileIndex = uploadingStatus.lastFileIndex;
     uploadingStatus.isFinished && removeEventListener('beforeunload', this.handleCloseOnUpload);
-
     this.trigger(this.data);
   },
 
