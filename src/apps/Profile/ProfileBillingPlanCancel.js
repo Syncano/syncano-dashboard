@@ -4,8 +4,8 @@ import Radium from 'radium';
 import Helmet from 'react-helmet';
 import { withRouter } from 'react-router';
 
-import Store from './ProfileBillingPlanStore';
-import Actions from './ProfileBillingPlanActions';
+import ProfileBillingPlanStore from './ProfileBillingPlanStore';
+import ProfileBillingPlanActions from './ProfileBillingPlanActions';
 
 import { Container, InnerToolbar, Loading } from '../../common/';
 import ProfileBillingPlanCancelForm from './ProfileBillingPlanCancelForm';
@@ -13,12 +13,10 @@ import ProfileBillingPlanCancelForm from './ProfileBillingPlanCancelForm';
 import { RaisedButton } from 'material-ui';
 
 const ProfileBillingPlanCancel = Radium(React.createClass({
-  displayName: 'ProfileBillingPlanCancel',
-
-  mixins: [Reflux.connect(Store)],
+  mixins: [Reflux.connect(ProfileBillingPlanStore)],
 
   componentWillMount() {
-    const planName = Store.getPlan();
+    const planName = ProfileBillingPlanStore.getPlan();
     const { router } = this.props;
 
     if (planName && planName !== 'paid-commitment') {
@@ -27,7 +25,7 @@ const ProfileBillingPlanCancel = Radium(React.createClass({
   },
 
   componentDidMount() {
-    Actions.fetchBillingProfile();
+    ProfileBillingPlanActions.fetchBillingProfile();
   },
 
   getStyles() {
@@ -111,7 +109,7 @@ const ProfileBillingPlanCancel = Radium(React.createClass({
   render() {
     const styles = this.getStyles();
     const { isLoading } = this.state;
-    const status = Store.data.cancelSubscriptionRequest;
+    const status = ProfileBillingPlanStore.data.cancelSubscriptionRequest;
 
     if (isLoading) {
       return <Loading show={true} />;

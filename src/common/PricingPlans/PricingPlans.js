@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import _ from 'lodash';
 
-import PricingPlansUtil from '../../utils/PricingPlansUtil';
+import { PricingPlansUtil } from '../../utils';
 
-import Store from '../../apps/Profile/ProfileBillingPlanStore';
+import ProfileBillingPlanStore from '../../apps/Profile/ProfileBillingPlanStore';
 import PlanDialogActions from '../../apps/Profile/ProfileBillingPlanDialogActions';
 
 import { RaisedButton } from 'material-ui';
@@ -49,11 +49,11 @@ class PricingPlans extends Component {
   }
 
   renderCurrentPlan = () => {
-    const currentAPIPrice = Store.getCurrentPlanValue('api');
-    const currentScriptsPrice = Store.getCurrentPlanValue('cbx');
-    const plans = PricingPlansUtil.getPlans(currentAPIPrice, currentScriptsPrice);
-    const pricingPlanName = Store.getPricingPlanName();
-    const price = Store.getPlanTotalValue();
+    const currentApiPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
+    const currentCbxPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
+    const plans = PricingPlansUtil.getPlans(currentApiPrice, currentCbxPrice);
+    const pricingPlanKey = ProfileBillingPlanStore.getPricingPlanKey();
+    const price = ProfileBillingPlanStore.getPlanTotalValue();
 
     if (!price) {
       return null;
@@ -61,11 +61,11 @@ class PricingPlans extends Component {
 
     return (
       <PricingPlansPlan
-        {...plans[pricingPlanName]}
+        {...plans[pricingPlanKey]}
         isCurrent={true}
         isHidden={false}
-        apiCallsOptions={PricingPlansUtil.getOptions('apiCalls', currentAPIPrice, currentAPIPrice)}
-        scriptsOptions={PricingPlansUtil.getOptions('scripts', currentScriptsPrice, currentScriptsPrice)}
+        apiOptions={PricingPlansUtil.getOptions('api', currentApiPrice, currentApiPrice)}
+        cbxOptions={PricingPlansUtil.getOptions('cbx', currentCbxPrice, currentCbxPrice)}
         price={price}
         disabled={true}
       />
@@ -75,9 +75,9 @@ class PricingPlans extends Component {
   render() {
     const styles = this.getStyles();
     const { isDowngrade } = this.context;
-    const currentAPIPrice = Store.getCurrentPlanValue('api');
-    const currentScriptsPrice = Store.getCurrentPlanValue('cbx');
-    const plans = PricingPlansUtil.getPlans(currentAPIPrice, currentScriptsPrice, isDowngrade);
+    const currentApiPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
+    const currentCbxPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
+    const plans = PricingPlansUtil.getPlans(currentApiPrice, currentCbxPrice, isDowngrade);
 
     return (
       <div>

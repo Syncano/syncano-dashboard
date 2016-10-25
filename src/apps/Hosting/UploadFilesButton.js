@@ -69,6 +69,7 @@ class UploadFilesButton extends Component {
             label="Send Files"
             primary={true}
             onTouchTap={handleSendFiles}
+            data-e2e="hosting-send-files"
           />
         </div>
       );
@@ -89,6 +90,7 @@ class UploadFilesButton extends Component {
                 type="file"
                 ref="fileSelect"
                 onChange={handleUploadFiles}
+                data-e2e="hosting-upload-files"
               />
             </RaisedButton>
             <RaisedButton

@@ -6,8 +6,8 @@ const plansLimits = {
   'paid-commitment': 16
 };
 
-const checkAccountLimits = () => {
-  return connection.get().Subscription
+const checkAccountLimits = () => connection.get()
+  .Subscription
   .please()
   .list()
   .then((response) => {
@@ -21,6 +21,5 @@ const checkAccountLimits = () => {
 
     return currentLimit;
   });
-};
 
 export default checkAccountLimits;

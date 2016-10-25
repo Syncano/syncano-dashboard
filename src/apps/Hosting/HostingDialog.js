@@ -54,7 +54,7 @@ const CreateHostingDialog = React.createClass({
       },
       labelStyle: {
         lineHeight: 1.4,
-        color: 'rgba(68,68,68, .8)'
+        color: 'rgba(68, 68, 68, .8)'
       },
       defaultExplanation: {
         margin: '30px 0 10px'
@@ -210,9 +210,7 @@ const CreateHostingDialog = React.createClass({
               style={styles.contentSection}
             >
               <div style={styles.defaultExplanation}>
-                <Notification
-                  isCloseButtonVisible={false}
-                >
+                <Notification hasCloseButtonVisible={false}>
                   {'Default hosting is available at '}
                   <a
                     href={defaultLink}

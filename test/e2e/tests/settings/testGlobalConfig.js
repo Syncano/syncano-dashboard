@@ -32,6 +32,6 @@ export default addTestNamePrefixes({
 
     globalConfigPage
       .waitForElementPresent('@globalConfigEditor')
-      .verify.containsText('@globalConfigEditorContent', '{\n  "value1": "test1",\n  "value2": "test2"\n}');
+      .verify.containsText('@globalConfigEditor', '{\n  "value1": "test1",\n  "value2": "test2"\n}');
   }
 });

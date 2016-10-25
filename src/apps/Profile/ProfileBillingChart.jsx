@@ -10,8 +10,6 @@ import './ProfileBillingChart.css';
 
 export default Radium(React.createClass({
   componentDidUpdate() {
-    console.debug('ProfileBillingChart::componentDidUpdate');
-
     this.charts = true;
 
     _.map(this.props.charts, (config, name) => {
@@ -43,7 +41,6 @@ export default Radium(React.createClass({
         <div style={styles.heading}>
           {config.title}
         </div>
-
         <div
           ref={`chart-${name}`}
           className="col chart"
@@ -53,5 +50,4 @@ export default Radium(React.createClass({
 
     return <div>{charts}</div>;
   }
-
 }));

@@ -39,6 +39,19 @@ export default addTestNamePrefixes({
       .waitForElementPresent('@hostingList')
       .assert.containsText('@hostingListItemDescription', utils.addSuffix('edited'));
   },
+  'Administrator sends file(s) to Hosting Socket': (client) => {
+    const hostingPage = client.page.hostingPage();
+    const testFileLocation = utils.getTestFileLocation();
+
+    hostingPage
+      .clickElement('@hostingListItemFilesLink')
+      .waitForElementPresent('@hostingUploadFilesInput')
+      .setValue('@hostingUploadFilesInput', testFileLocation)
+      .clickElement('@hostingSendFilesButton')
+      .waitForElementVisible('@hostingFilesListItem')
+      .assert.elementNotPresent('@hostingFilesAlertIcon')
+      .clickElement('@innerToolbarBackButton');
+  },
   'Administrator deletes a Hosting Socket': (client) => {
     const hostingPage = client.page.hostingPage();
     const dropdownOption = hostingPage.elements.hostingListItemDropdownDeleteOption.selector;
