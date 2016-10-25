@@ -35,7 +35,7 @@ const CustomSocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
     }
   };
   const handleBackClick = () => {
-    router.push('/custom-sockets-registry');
+    router.push('/sockets-registry');
   };
 
   const setFilterAll = () => {
@@ -87,7 +87,7 @@ const CustomSocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
 
     return isCurrentFilter ? activeColorConfigObj : inactiveColorConfigObj;
   };
-  const isRegistryListRouteActive = router.getCurrentLocation().pathname === '/custom-sockets-registry';
+  const isRegistryListRouteActive = router.getCurrentLocation().pathname === '/sockets-registry';
 
   return (
     <Sticky
@@ -98,7 +98,7 @@ const CustomSocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
         style={styles.innerToolbar}
         backButton={!isRegistryListRouteActive}
         backFallback={handleBackClick}
-        backButtonTooltip="Go back to Custom Sockets Registry List"
+        backButtonTooltip="Go back to Sockets Registry List"
       >
         <div style={styles.toolbar}>
           <div>

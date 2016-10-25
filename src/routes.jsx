@@ -518,17 +518,17 @@ export default (
 
       {/* Custom Sockets Registry */}
       <Route
-        name="custom-sockets-registry"
+        name="sockets-registry"
         component={CustomSocketsRegistry}
-        path="custom-sockets-registry"
+        path="sockets-registry"
       >
         <Route
-          name="custom-sockets-registry-list"
+          name="sockets-registry-list"
           component={CustomSocketsRegistry.List}
           path="list"
         />
         <Route
-          name="custom-sockets-registry-details"
+          name="sockets-registry-details"
           component={CustomSocketsRegistry.Details}
           path=":customSocketId/details"
         />

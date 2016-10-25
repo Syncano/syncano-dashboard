@@ -83,7 +83,7 @@ const CustomSocketsRegistrySummary = ({ item }) => {
       <Dialog.ContentSection>
         <div className="col-flex-1">
           <div style={styles.descriptionContainer}>
-            {`Custom Socket you just created contains several endpoints that you can connect your frontend
+            {`Socket you just created contains several endpoints that you can connect your frontend
               or mobile app to. Check out their dependencies to see how everything work under the hood.
             There's no need for that though since a socket should work out of the box (if configured properly).`}
           </div>

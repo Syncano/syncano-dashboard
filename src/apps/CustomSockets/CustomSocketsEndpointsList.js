@@ -52,7 +52,7 @@ const CustomSocketsEndpointsList = ({ isLoading, items, socketName }) => {
       <Lists.List
         isLoading={isLoading}
         items={items}
-        emptyItemContent="Add a Custom Socket to see Endpoints"
+        emptyItemContent="Add a Socket to see Endpoints"
         key="custom-sockets-endpoints-list"
         renderItem={renderListItem}
       />

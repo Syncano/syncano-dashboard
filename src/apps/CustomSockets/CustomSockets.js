@@ -34,7 +34,7 @@ const CustomSockets = React.createClass({
 
     return (
       <div>
-        <Helmet title="Custom Sockets" />
+        <Helmet title="Sockets" />
         <CustomSocketsDialog />
         <SocketsInnerToolbar>
           <RaisedButton

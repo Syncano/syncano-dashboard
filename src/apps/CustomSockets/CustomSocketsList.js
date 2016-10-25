@@ -17,7 +17,7 @@ const CustomSocketsList = React.createClass({
 
   getDefaultProps() {
     return {
-      emptyItemContent: 'Add a Custom Socket',
+      emptyItemContent: 'Add a Socket',
       getCheckedItems: Store.getCheckedItems
     };
   },
@@ -77,7 +77,7 @@ const CustomSocketsList = React.createClass({
           primary={true}
           columnName="CHECK_ICON"
         >
-          Custom Sockets (BETA)
+          Sockets
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
@@ -112,10 +112,10 @@ const CustomSocketsList = React.createClass({
       return (
         <EmptyView
           iconClassName="synicon-socket-custom-socket"
-          buttonLabel="Add a Custom Socket"
+          buttonLabel="Add a Socket"
           iconColor={Colors.purple400}
-          title="Custom Sockets (BETA)"
-          urlLabel="Custom Socket"
+          title="Sockets"
+          urlLabel="Socket"
           description="Some random text about sockets, has to be replaced."
           docsUrl="http://docs.syncano.io/docs"
           handleClick={Actions.showDialog}

@@ -14,7 +14,7 @@ const CustomSocketsRegistryList = React.createClass({
 
   getDefaultProps() {
     return {
-      emptyItemContent: 'Add a Custom Socket',
+      emptyItemContent: 'Add a Socket',
       emptyItemHandleClick: Actions.showDialog,
       getCheckedItems: Store.getCheckedItems,
       checkItem: Actions.checkItem
@@ -88,7 +88,7 @@ const CustomSocketsRegistryList = React.createClass({
 
     return (
       <ListItem
-        key={`custom-sockets-registry-list-item-${item.name}`}
+        key={`sockets-registry-list-item-${item.name}`}
         item={item}
         onIconClick={checkItem}
         showDeleteDialog={showDeleteDialog}
@@ -108,7 +108,7 @@ const CustomSocketsRegistryList = React.createClass({
           columnName="CHECK_ICON"
           handleClick={handleTitleClick}
         >
-          Custom Sockets
+          Sockets
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
@@ -167,7 +167,7 @@ const CustomSocketsRegistryList = React.createClass({
           description={`Think of Sockets Registry a package manager for Syncano Sockets. You can search for Custom
             Sockets created by community and add them to your projects.`}
           src={customSocketImageDir}
-          altText="No Custom Socket"
+          altText="No Socket"
         />
       );
     }

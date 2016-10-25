@@ -15,7 +15,7 @@ const SocketsDropdown = () => (
     <MenuItem style={menuItemstyle} value="schedules" primaryText="Schedules" />
     <MenuItem style={menuItemstyle} value="channels" primaryText="Real-time Channels" />
     <MenuItem style={menuItemstyle} value="hosting" primaryText="Hosting" />
-    {/* <MenuItem style={menuItemstyle} value="custom-sockets" primaryText="Custom Sockets" /> */}
+    <MenuItem style={menuItemstyle} value="custom-sockets" primaryText="Sockets" />
     <MenuItem style={menuItemstyle} value="push-notification-config" primaryText="Push Notifications" />
   </InnerToolbarDropdown>
 );
