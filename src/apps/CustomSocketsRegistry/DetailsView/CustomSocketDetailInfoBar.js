@@ -108,7 +108,7 @@ class CustomSocketsRegistryInfoBar extends Component {
         <Sticky offsetTop={130}>
           <div className="hm-2-l">
             <RaisedButton
-              label="install Custom Socket"
+              label="install Socket"
               backgroundColor={Colors.amber400}
               onTouchTap={DialogActions.showDialog}
             />

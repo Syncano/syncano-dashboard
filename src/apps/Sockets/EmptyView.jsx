@@ -71,9 +71,9 @@ const EmptyView = () => {
       {/*
       <EmptyListItem
         handleCreate={CustomSocketsActions.showDialog}
-        socketName="CustomSocket"
-        title="Custom Sockets (BETA)"
-        description="Some text about Custom Sockets to be REPLACED."
+        socketName="Socket"
+        title="Sockets (BETA)"
+        description="Some text about Sockets to be REPLACED."
         documentationUrl="http://docs.syncano.io/docs/"
       />
       */}

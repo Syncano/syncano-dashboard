@@ -98,7 +98,7 @@ const CustomSocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
         style={styles.innerToolbar}
         backButton={!isRegistryListRouteActive}
         backFallback={handleBackClick}
-        backButtonTooltip="Go back to Custom Sockets Registry List"
+        backButtonTooltip="Go back to Sockets Registry List"
       >
         <div style={styles.toolbar}>
           <div>

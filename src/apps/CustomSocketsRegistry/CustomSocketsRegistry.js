@@ -5,12 +5,14 @@ import Helmet from 'react-helmet';
 import _ from 'lodash';
 
 import InstancesActions from '../Instances/InstancesActions';
+import DialogActions from '../CustomSockets/CustomSocketsActions';
 import Actions from './CustomSocketsRegistryActions';
 import Store from './CustomSocketsRegistryStore';
 
 import { Show } from '../../common/';
 
 import SocketsRegistryInnerToolbar from './SocketsRegistryInnerToolbar';
+import CustomSocketInstallDialog from './CustomSocketsRegistryDialog';
 import SocketsSearchBar from './SocketsSearchBar';
 
 const CustomSocketsRegistry = React.createClass({
@@ -21,14 +23,10 @@ const CustomSocketsRegistry = React.createClass({
   componentDidMount() {
     InstancesActions.fetch();
     Actions.fetchCustomSocketsRegistry();
-  },
 
-  componentDidUpdate() {
-    const { location, router } = this.props;
-    const socketUrl = location.query.socket_url;
-    const customSocket = Store.getCustomSocketByUrl(socketUrl);
-
-    customSocket && router.push(`/custom-sockets-registry/${customSocket.id}/details/`);
+    if (this.props.location.query.socket_url) {
+      DialogActions.showDialog();
+    }
   },
 
   handleChangeSearchTerm(term) {
@@ -73,12 +71,17 @@ const CustomSocketsRegistry = React.createClass({
 
 
   render() {
-    const { children } = this.props;
+    const { children, location } = this.props;
     const { term, items, isLoading, searchClicked, changeListView, filter, filterBySyncano } = this.state;
+    const socketUrl = location.query.socket_url;
 
     return (
       <div>
-        <Helmet title="Custom Sockets Registry" />
+        <Helmet title="Sockets Registry" />
+        <CustomSocketInstallDialog
+          shouldRedirect={true}
+          url={socketUrl}
+        />
         <SocketsSearchBar
           items={items}
           onClick={this.handleStartFilter}

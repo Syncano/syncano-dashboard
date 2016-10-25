@@ -180,7 +180,7 @@ const CustomSocketsRegistryDialog = React.createClass({
               value={name}
               onChange={this.handleNameChange}
               errorText={this.getValidationMessages('name').join(' ')}
-              floatingLabelText="Custom Socket name"
+              floatingLabelText="Socket name"
               data-e2e="custom-socket-name"
             />
             <TextField

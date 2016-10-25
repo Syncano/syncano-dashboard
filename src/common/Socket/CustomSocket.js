@@ -2,7 +2,7 @@ import React from 'react';
 import { colors as Colors } from 'material-ui/styles/';
 import SocketWrapper from './SocketWrapper';
 
-const CustomSocket = ({ tooltip = 'Create a Custom Socket', iconStyle, ...other }) => (
+const CustomSocket = ({ tooltip = 'Create a Socket', iconStyle, ...other }) => (
   <SocketWrapper
     {...other}
     tooltip={tooltip}

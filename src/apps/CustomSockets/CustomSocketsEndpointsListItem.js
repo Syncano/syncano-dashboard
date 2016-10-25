@@ -38,7 +38,7 @@ const CustomSocketsEndpointsListItem = React.createClass({
   mixins: [SnackbarNotificationMixin],
 
   handleOpenSnackbar() {
-    this.setSnackbarNotification({ message: 'Custom Socket Endpoint url copied!' });
+    this.setSnackbarNotification({ message: 'Socket Endpoint url copied!' });
   },
 
   renderCallMethodsLabel(methods) {
@@ -84,7 +84,7 @@ const CustomSocketsEndpointsListItem = React.createClass({
               text={link}
               copyText={`${SYNCANO_BASE_URL}${link}`}
               onCopy={this.handleOpenSnackbar}
-              tooltip="Copy Custom Socket Endpoint url"
+              tooltip="Copy Socket Endpoint url"
               type="link"
             />
           }

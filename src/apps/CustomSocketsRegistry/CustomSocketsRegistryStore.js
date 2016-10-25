@@ -40,12 +40,6 @@ export default Reflux.createStore({
     return _.find(items, ['id', Number(id)]);
   },
 
-  getCustomSocketByUrl(url) {
-    const { items } = this.data;
-
-    return _.find(items, ['url', url]);
-  },
-
   onSetCurrentSocketId(id) {
     this.data.currentSocketId = Number(id);
     this.trigger(this.data);
