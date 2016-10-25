@@ -24,7 +24,6 @@ const Traces = Radium(React.createClass({
   getDefaultProps() {
     return {
       tracesFor: 'script',
-      showHeader: false,
       hasHeaderId: true
     };
   },

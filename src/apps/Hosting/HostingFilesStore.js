@@ -59,7 +59,7 @@ export default Reflux.createStore({
     currentHostingId && Actions.fetchFiles(currentHostingId);
   },
 
-  setHostingId(hostingId) {
+  onSetHostingId(hostingId) {
     this.data.currentHostingId = hostingId;
   },
 
