@@ -37,6 +37,7 @@ bin/
 *.p12
 tempAccounts.js
 tempInstances.js
+*.testfile
 
 # Others
 .tern-project
