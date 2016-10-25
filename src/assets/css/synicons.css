@@ -4745,38 +4745,42 @@
 	content: "\E49D";
 }
 
-.synicon-xbox-controller-off:before {
+.synicon-wrap-text:before {
 	content: "\E49E";
 }
 
-.synicon-xbox-controller:before {
+.synicon-xbox-controller-off:before {
 	content: "\E49F";
 }
 
-.synicon-xbox:before {
+.synicon-xbox-controller:before {
 	content: "\E4A0";
 }
 
-.synicon-xda:before {
+.synicon-xbox:before {
 	content: "\E4A1";
 }
 
-.synicon-xml:before {
+.synicon-xda:before {
 	content: "\E4A2";
 }
 
-.synicon-yeast:before {
+.synicon-xml:before {
 	content: "\E4A3";
 }
 
-.synicon-youtube-play:before {
+.synicon-yeast:before {
 	content: "\E4A4";
 }
 
-.synicon-youtube:before {
+.synicon-youtube-play:before {
 	content: "\E4A5";
 }
 
-.synicon-zip-box:before {
+.synicon-youtube:before {
 	content: "\E4A6";
+}
+
+.synicon-zip-box:before {
+	content: "\E4A7";
 }
