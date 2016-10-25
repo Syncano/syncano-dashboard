@@ -1,16 +1,16 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import Store from './HostingUploadDialogStore';
-
-import HostingFilesEmptyView from './HostingFilesEmptyView';
-
 import { DialogMixin } from '../../mixins';
+
+import HostingUploadDialogStore from './HostingUploadDialogStore';
+
 import { Dialog } from '../../common';
+import HostingFilesEmptyView from './HostingFilesEmptyView';
 
 const HostingUploadDialog = React.createClass({
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(HostingUploadDialogStore),
     DialogMixin
   ],
 

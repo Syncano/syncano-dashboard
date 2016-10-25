@@ -291,8 +291,9 @@ const HostingFilesList = React.createClass({
     } = this.props;
 
     const { _dialogVisible } = this.state;
+    const hasItemsAndErorrs = (items.length && errorResponses.length && !_dialogVisible);
 
-    if (!items.length || isDeleting || (items.length && errorResponses.length && !_dialogVisible)) {
+    if (!items.length || isDeleting || hasItemsAndErorrs) {
       return (
         <Loading show={isLoading}>
           {this.renderEmptyView()}
