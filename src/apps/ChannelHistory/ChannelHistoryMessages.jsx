@@ -10,7 +10,7 @@ const ChannelHistoryMessages = React.createClass({
   mixins: [Reflux.connect(Store)],
 
   render() {
-    const { channelName } = this.props;
+    const { channelName } = this.props.params;
 
     return <ChannelHistory channelName={channelName} />;
   }
