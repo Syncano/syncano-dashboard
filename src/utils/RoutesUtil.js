@@ -34,6 +34,35 @@ const RoutesUtil = {
       });
   },
 
+  checkInstanceActiveSubscription(nextState, replace, callback) {
+    const connection = NewLibConnection.get();
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      connection.setAccountKey(token);
+    }
+
+    connection
+      .Account
+      .getUserDetails()
+      .then(({ email }) => email)
+      .then((email) => {
+        const { instanceName: name } = nextState.params;
+
+        connection
+          .Instance
+          .please()
+          .get({ name })
+          .then(({ owner }) => {
+            if (owner.email === email) {
+              RoutesUtil.checkActiveSubscriptions(nextState, replace, callback);
+            } else {
+              callback();
+            }
+          });
+      });
+  },
+
   isInstanceAvailable(instanceName) {
     const connection = NewLibConnection.get();
 
