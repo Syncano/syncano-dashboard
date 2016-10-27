@@ -54,7 +54,7 @@ class HostingListItem extends Component {
     let customDomainLink = '';
 
     if (domainsCount) {
-      customDomainLink = `https://${params.instanceName}--${item.domains[0].value}.syncano.site`;
+      customDomainLink = `https://${params.instanceName}--${item.domains[0]}.syncano.site`;
     }
     const visibleLink = isDefaultHosting ? defaultLink : customDomainLink;
     const moreLinksLabel = areLinksVisible ? 'Hide Links' : 'More Links';
@@ -81,7 +81,7 @@ class HostingListItem extends Component {
             iconColor={Colors.orange600}
             checked={item.checked}
             handleIconClick={onIconClick}
-            primaryText={item.label}
+            primaryText={item.name}
           />
           <Column.Desc
             className="col-flex-1"
