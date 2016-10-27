@@ -29,7 +29,7 @@ const HostingFilesView = React.createClass({
       presence: true,
       format: {
         pattern: `[a-zA-Z0-9\-_]+$`,
-        message: 'can containt only a-z, 0-9 '
+        message: 'can containt only a-z, 0-9, no spaces '
       },
       length: {
         maximum: 64
@@ -51,13 +51,8 @@ const HostingFilesView = React.createClass({
         alignItems: 'center'
       },
       newFolderNameInput: {
-        width: 200,
+        width: 230,
         marginRight: 10
-      },
-      newFolderNameInputWithErrors: {
-        width: 200,
-        marginRight: 10,
-        marginBottom: 22
       },
       newFolderButtons: {
         marginRight: 10
@@ -204,6 +199,7 @@ const HostingFilesView = React.createClass({
     const { name, errors, showNewFolderButton } = this.state;
     const hasErrors = errors.name && errors.name.length;
     const styles = this.getStyles();
+    const textFieldStyle = hasErrors ? { marginBottom: 22 } : null;
 
     if (showNewFolderButton && !hasErrors) {
       return (
@@ -227,7 +223,7 @@ const HostingFilesView = React.createClass({
           onChange={this.handleSetNewFolderName}
           errorText={this.getValidationMessages('name').join(' ')}
           hintText="Type new folder name"
-          style={!hasErrors ? styles.newFolderNameInput : styles.newFolderNameInputWithErrors}
+          style={{ ...styles.newFolderNameInput, ...textFieldStyle }}
         />
         <RaisedButton
           label="Create"
