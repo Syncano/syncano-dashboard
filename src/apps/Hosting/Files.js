@@ -4,14 +4,14 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
 
-import { SnackbarNotificationMixin } from '../../mixins';
+import { FormMixin, SnackbarNotificationMixin } from '../../mixins';
 
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
 import SessionStore from '../Session/SessionStore';
 import HostingPublishDialogActions from './HostingPublishDialogActions';
 
-import { FontIcon, RaisedButton } from 'material-ui';
+import { FontIcon, RaisedButton, TextField } from 'material-ui';
 import { InnerToolbar, Container, Show } from '../../common';
 import HostingFilesList from './HostingFilesList';
 import HostingDialog from './HostingDialog';
@@ -20,14 +20,49 @@ import HostingPublishDialog from './HostingPublishDialog';
 const HostingFilesView = React.createClass({
   mixins: [
     Reflux.connect(HostingFilesStore),
+    FormMixin,
     SnackbarNotificationMixin
   ],
+
+  validatorConstraints: {
+    name: {
+      presence: true,
+      format: {
+        pattern: `[a-zA-Z0-9\-_]+$`,
+        message: 'can containt only a-z, 0-9 '
+      },
+      length: {
+        maximum: 64
+      }
+    }
+  },
 
   componentDidMount() {
     const { hostingId } = this.props.params;
 
     HostingFilesActions.setHostingId(hostingId);
     HostingFilesActions.fetch();
+  },
+
+  getStyles() {
+    return {
+      buttonsWrapper: {
+        display: 'flex',
+        alignItems: 'center'
+      },
+      newFolderNameInput: {
+        width: 200,
+        marginRight: 10
+      },
+      newFolderNameInputWithErrors: {
+        width: 200,
+        marginRight: 10,
+        marginBottom: 22
+      },
+      newFolderButtons: {
+        marginRight: 10
+      }
+    };
   },
 
   getHostingUrl() {
@@ -75,6 +110,26 @@ const HostingFilesView = React.createClass({
     }
   },
 
+  handleClickNewFolderButton() {
+    this.setState({ showNewFolderButton: false });
+  },
+
+  handleCreateNewFolder() {
+    const validateFolderName = this.handleValidation('name', (isValid) => {
+      const { directoryDepth, name } = this.state;
+
+      if (isValid) {
+        this.setState({
+          currentFolderName: name,
+          directoryDepth: directoryDepth + 1,
+          showNewFolderButton: true
+        });
+      }
+    });
+
+    this.clearValidations(validateFolderName);
+  },
+
   handleClearFiles() {
     this.setState({
       filesToUpload: []
@@ -100,6 +155,30 @@ const HostingFilesView = React.createClass({
     return !hasHostingUrl && this.showMissingDomainsSnackbar;
   },
 
+  handleSetNewFolderName(event, name) {
+    this.setState({ name });
+  },
+
+  moveDirectoryUp() {
+    const { previousFolders, directoryDepth } = this.state;
+
+    this.setState({
+      directoryDepth: directoryDepth - 1,
+      currentFolderName: previousFolders[directoryDepth - 1] || '',
+      previousFolders: _.slice(previousFolders, 0, directoryDepth)
+    });
+  },
+
+  moveDirectoryDown(nextFolderName) {
+    const { directoryDepth, currentFolderName, previousFolders } = this.state;
+
+    this.setState({
+      directoryDepth: directoryDepth + 1,
+      currentFolderName: nextFolderName,
+      previousFolders: [...previousFolders, currentFolderName]
+    });
+  },
+
   showMissingDomainsSnackbar() {
     this.setSnackbarNotification({
       message: "You don't have any domains yet. Please add some or set Hosting as default."
@@ -121,18 +200,63 @@ const HostingFilesView = React.createClass({
     return file;
   },
 
+  renderNewFolderButtons() {
+    const { name, errors, showNewFolderButton } = this.state;
+    const hasErrors = errors.name && errors.name.length;
+    const styles = this.getStyles();
+
+    if (showNewFolderButton && !hasErrors) {
+      return (
+        <div>
+          <RaisedButton
+            label="Create new folder"
+            primary={true}
+            style={styles.newFolderButtons}
+            onTouchTap={this.handleClickNewFolderButton}
+          />
+        </div>
+      );
+    }
+
+    return (
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <TextField
+          fullWidth={true}
+          name="name"
+          value={name}
+          onChange={this.handleSetNewFolderName}
+          errorText={this.getValidationMessages('name').join(' ')}
+          hintText="Type new folder name"
+          style={!hasErrors ? styles.newFolderNameInput : styles.newFolderNameInputWithErrors}
+        />
+        <RaisedButton
+          label="Create"
+          primary={true}
+          style={styles.newFolderButtons}
+          onTouchTap={this.handleCreateNewFolder}
+          target="_blank"
+          disabled={!name}
+        />
+      </div>
+    );
+  },
+
   render() {
     const {
-      isLoading,
-      hideDialogs,
-      items,
-      filesToUpload,
-      lastFileIndex,
       currentFileIndex,
+      currentFolderName,
+      directoryDepth,
+      filesToUpload,
+      hideDialogs,
       isDeleting,
-      isUploading
+      isLoading,
+      isUploading,
+      items,
+      lastFileIndex,
+      previousFolders
     } = this.state;
 
+    const styles = this.getStyles();
     const hasFilesToUpload = filesToUpload.length > 0;
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
@@ -152,33 +276,41 @@ const HostingFilesView = React.createClass({
           forceBackFallback={true}
           backButtonTooltip="Go Back to Hosting Sockets"
         >
-          <Show if={items.length && !isLoading}>
+          <div style={styles.buttonsWrapper}>
+            <Show if={items.length && !isLoading}>
+              {this.renderNewFolderButtons()}
+            </Show>
             <RaisedButton
               label="Go to site"
               primary={true}
-              icon={<FontIcon className="synicon-open-in-new" style={{ marginTop: 4 }} />}
+              icon={<FontIcon className="synicon-open-in-new" />}
               onTouchTap={this.handleOnTouchTap(hostingUrl)}
               href={hostingUrl}
               target="_blank"
             />
-          </Show>
+          </div>
         </InnerToolbar>
 
         <Container>
           <HostingFilesList
-            currentInstanceName={currentInstanceName}
-            isDeleting={isDeleting}
-            isUploading={isUploading}
-            lastFileIndex={lastFileIndex}
+            currentFolderName={currentFolderName}
             currentFileIndex={currentFileIndex}
-            handleClearFiles={this.handleClearFiles}
+            currentInstanceName={currentInstanceName}
+            directoryDepth={directoryDepth}
             filesCount={filesToUpload.length}
+            handleClearFiles={this.handleClearFiles}
             handleUploadFiles={this.handleUploadFiles}
             handleSendFiles={this.handleSendFiles}
             hasFiles={hasFilesToUpload}
-            isLoading={isLoading}
-            items={items}
             hideDialogs={hideDialogs}
+            isDeleting={isDeleting}
+            isLoading={isLoading}
+            isUploading={isUploading}
+            items={items}
+            lastFileIndex={lastFileIndex}
+            moveDirectoryDown={this.moveDirectoryDown}
+            moveDirectoryUp={this.moveDirectoryUp}
+            previousFolders={previousFolders}
           />
         </Container>
       </div>
