@@ -1,11 +1,11 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import CloseButton from '../src/common/CloseButton/CloseButton';
+import SnapshotTestLink from '../src/common/SnapshotTestLink';
 
 it('renders correctly', () => {
   const tree = renderer.create(
-    <CloseButton />
+    <SnapshotTestLink/>
   ).toJSON();
   expect(tree).toMatchSnapshot();
 });
