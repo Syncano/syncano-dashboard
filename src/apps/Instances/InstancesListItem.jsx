@@ -1,63 +1,63 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import localStorage from 'local-storage-fallback';
 
-// Stores and Actions
-import Actions from './InstancesActions';
-import Store from './InstancesStore';
+import InstancesStore from './InstancesStore';
+import InstancesActions from './InstancesActions';
 import InstanceDialogActions from './InstanceDialogActions';
 
 import { MenuItem } from 'material-ui';
-import { ColumnList, Color, Truncate } from '../../common/';
+import { Color, ColumnList, Truncate } from '../../common/';
 
 const Column = ColumnList.Column;
 
 const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checkable }) => {
-  const handleClickInstanceName = () => {
-    localStorage.setItem('lastInstanceName', item.name);
-    router.push(`/instances/${item.name}/`);
+  const { checked, name, metadata, description, created_at } = item;
+  const handleInstanceNameClick = () => {
+    localStorage.setItem('lastInstanceName', name);
+    router.push(`/instances/${name}/sockets/`);
   };
   const showEditDialog = () => {
     InstanceDialogActions.showDialog(item);
   };
   const setClickedInstance = () => {
-    Actions.setClickedInstance(item);
+    InstancesActions.setClickedInstance(item);
   };
 
   return (
     <ColumnList.Item
-      checked={item.checked}
-      id={item.name}
-      key={item.name}
-      data-e2e={`${item.name}-list-row-name`}
+      checked={checked}
+      id={name}
+      key={name}
+      data-e2e={`${name}-list-row-name`}
     >
       <Column.CheckIcon
-        id={item.name}
-        iconClassName={item.metadata.icon}
-        background={Color.getColorByName(item.metadata.color)}
+        id={name}
+        iconClassName={metadata.icon}
+        background={Color.getColorByName(metadata.color)}
         checkable={checkable}
-        checked={item.checked}
+        checked={checked}
         handleIconClick={onIconClick}
         primaryText={
           <Truncate
-            onClick={handleClickInstanceName}
+            text={name}
             style={{ cursor: 'pointer' }}
-            text={item.name}
+            onClick={handleInstanceNameClick}
           />
         }
       />
-      <Column.Desc>{item.description}</Column.Desc>
-      <Column.Date date={item.created_at} />
+      <Column.Desc>{description}</Column.Desc>
+      <Column.Date date={created_at} />
       <Column.Menu handleClick={setClickedInstance}>
         <MenuItem
+          primaryText="Edit"
           className="dropdown-item-instance-edit"
           onTouchTap={showEditDialog}
-          primaryText="Edit"
         />
         <MenuItem
+          primaryText={InstancesStore.amIOwner(item) ? 'Delete' : 'Leave'}
           className="dropdown-item-instance-delete"
           onTouchTap={showDeleteDialog}
-          primaryText={Store.amIOwner(item) ? 'Delete' : 'Leave'}
         />
       </Column.Menu>
     </ColumnList.Item>
@@ -65,8 +65,8 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
 };
 
 InstancesListItem.propTypes = {
-  onIconClick: React.PropTypes.func,
-  showDeleteDialog: React.PropTypes.func.isRequired
+  onIconClick: PropTypes.func,
+  showDeleteDialog: PropTypes.func.isRequired
 };
 
 export default withRouter(InstancesListItem);

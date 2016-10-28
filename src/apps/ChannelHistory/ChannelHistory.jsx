@@ -13,12 +13,6 @@ import ChannelHistoryList from './ChannelHistoryList';
 const ChannelHistory = React.createClass({
   mixins: [Reflux.connect(ChannelHistoryStore)],
 
-  getDefaultProps() {
-    return {
-      showHeader: false
-    };
-  },
-
   componentDidMount() {
     ChannelHistoryActions.getChannelHistory(this.props.channelName);
   },
@@ -27,7 +21,7 @@ const ChannelHistory = React.createClass({
     return {
       list: {
         position: 'relative',
-        top: '35px'
+        top: 35
       }
     };
   },
@@ -39,9 +33,9 @@ const ChannelHistory = React.createClass({
   },
 
   render() {
+    const styles = this.getStyles();
     const { channelName } = this.props;
     const { items, isLoading } = this.state;
-    const styles = this.getStyles();
     const title = `Real-time Channel History for ${channelName}`;
 
     return (

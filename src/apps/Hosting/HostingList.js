@@ -14,8 +14,6 @@ import HostingPublishDialog from './HostingPublishDialog';
 const Column = ColumnList.Column;
 
 const HostingList = React.createClass({
-  displayName: 'HostingList',
-
   mixins: [
     DialogsMixin
   ],
