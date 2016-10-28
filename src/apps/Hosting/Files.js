@@ -151,7 +151,7 @@ const HostingFilesView = React.createClass({
           backButton={true}
           backFallback={this.handleBackClick}
           forceBackFallback={true}
-          backButtonTooltip="Go Back to Hosting Sockets"
+          backButtonTooltip="Go Back to Hosting"
         >
           <Show if={items.length && !isLoading}>
             <RaisedButton
