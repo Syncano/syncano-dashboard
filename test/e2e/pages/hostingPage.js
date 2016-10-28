@@ -5,8 +5,8 @@ export default {
     addHostingButton: {
       selector: '[data-e2e="add-hosting-button"]'
     },
-    labelInput: {
-      selector: '[data-e2e="hosting-dialog-label-input"]'
+    nameInput: {
+      selector: '[data-e2e="hosting-dialog-name-input"]'
     },
     descriptionInput: {
       selector: '[data-e2e="hosting-dialog-description-input"]'
@@ -23,9 +23,6 @@ export default {
     hostingList: {
       selector: '[data-e2e="hosting-list-container"]'
     },
-    hostingListItemLabel: {
-      selector: `[data-e2e="label-list-item-name"]`
-    },
     hostingListItemDescription: {
       selector: `[data-e2e="${utils.addSuffix('edited')}-hosting-list-item-description"]`
     },
@@ -33,7 +30,7 @@ export default {
       selector: '[data-e2e="hosting-delete-dialog-confirm"]'
     },
     hostingDropdownIcon: {
-      selector: '[data-e2e="label-hosting-dropdown-icon"]'
+      selector: '[data-e2e="name-hosting-dropdown-icon"]'
     },
     editedHostingDropdownIcon: {
       selector: `[data-e2e="${utils.addSuffix('edited')}-hosting-dropdown-icon"]`
@@ -45,7 +42,7 @@ export default {
       selector: '[data-e2e="dropdown-hosting-item-delete"]'
     },
     hostingListItemFilesLink: {
-      selector: '[data-e2e="label-hosting-lit-item-files"]'
+      selector: '[data-e2e="name-hosting-lit-item-files"]'
     },
     hostingUploadFilesInput: {
       selector: '[data-e2e="hosting-upload-files"]'
