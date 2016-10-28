@@ -74,10 +74,10 @@ class PricingPlans extends Component {
 
   render() {
     const styles = this.getStyles();
-    const { isDowngrade } = this.context;
+    const { isDowngrade, isLowTierPromo } = this.context;
     const currentApiPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
     const currentCbxPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
-    const plans = PricingPlansUtil.getPlans(currentApiPrice, currentCbxPrice, isDowngrade);
+    const plans = PricingPlansUtil.getPlans(currentApiPrice, currentCbxPrice, isDowngrade, isLowTierPromo);
 
     return (
       <div>
@@ -113,7 +113,8 @@ class PricingPlans extends Component {
 }
 
 PricingPlans.contextTypes = {
-  isDowngrade: PropTypes.bool
+  isDowngrade: PropTypes.bool,
+  isLowTierPromo: PropTypes.bool
 };
 
 export default withRouter(PricingPlans);

@@ -464,17 +464,12 @@ export default (
         <Route
           name="profile-billing-plan"
           component={Profile.BillingPlan}
-          path="plan"
+          path="plan(/:mode)"
         />
         <Route
           name="profile-billing-plan-cancel"
           component={Profile.BillingPlanCancel}
           path="plan/cancel"
-        />
-        <Route
-          name="profile-billing-plan-downgrade"
-          component={Profile.BillingPlan}
-          path="plan/downgrade"
         />
         <Route
           name="profile-billing-usage"

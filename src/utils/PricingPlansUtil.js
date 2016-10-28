@@ -96,14 +96,18 @@ const PricingPlansUtil = {
     return this.getOptions(field, minPrice, maxPrice);
   },
 
-  getPlans(currentApiPrice, currentCbxPrice, isDowngrade) {
+  getPlans(currentApiPrice, currentCbxPrice, isDowngrade, isLowTierPromo) {
     if (isDowngrade) {
       return this.getDowngradePlans(currentApiPrice, currentCbxPrice);
     }
 
+    if (isLowTierPromo) {
+      return this.getPromoPlans(currentApiPrice, currentCbxPrice);
+    }
+
     return {
       starter: {
-        isCurrent: true,
+        isCurrent: currentApiPrice === 0,
         isHidden: currentApiPrice > 0,
         title: 'Starter',
         apiOptions: [{
@@ -194,6 +198,24 @@ const PricingPlansUtil = {
     };
 
     return downgradePlans;
+  },
+
+  getPromoPlans(currentApiPrice, currentCbxPrice) {
+    const plans = this.getPlans(currentApiPrice, currentCbxPrice);
+    const promoPlansDiffs = {
+      founder: {
+        isHidden: this.isPlanHidden('founder', currentApiPrice, currentCbxPrice),
+        isFeatured: true
+      }
+    };
+    const promoPlans = {
+      starter: _.defaults(promoPlansDiffs.starter, plans.starter),
+      founder: _.defaults(promoPlansDiffs.founder, plans.founder),
+      developer: _.defaults(promoPlansDiffs.developer, plans.developer),
+      business: _.defaults(promoPlansDiffs.business, plans.business)
+    };
+
+    return promoPlans;
   },
 
   getStoreBillingPlans() {

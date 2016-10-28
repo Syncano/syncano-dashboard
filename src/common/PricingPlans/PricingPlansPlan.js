@@ -84,6 +84,9 @@ class PricingPlansPlan extends Component {
     pricingPlansPlanHighlighted: {
       backgroundColor: '#f5f5f5'
     },
+    pricingPlansPlanFeatured: {
+      boxShadow: 'rgba(0, 112, 211, .27) 0px 3px 10px, rgba(0, 112, 211, .27) 0px 3px 10px'
+    },
     pricingPlansPlanContent: {
       padding: 16
     },
@@ -211,7 +214,7 @@ class PricingPlansPlan extends Component {
     const { router } = this.props;
 
     window.scrollTo(0, 0);
-    router.push('profile-billing-plan-downgrade');
+    router.push('/account/plan/downgrade/');
   }
 
   formatSelectLabel = (field, option) => {
@@ -374,7 +377,7 @@ class PricingPlansPlan extends Component {
 
   render() {
     const styles = this.getStyles();
-    const { isCurrent, isHidden, title, price, disabled } = this.props;
+    const { isCurrent, isFeatured, isHidden, title, price, disabled } = this.props;
     const { isDowngrade } = this.context;
     const { apiPrice, cbxPrice } = this.state;
     const defaultButtonLabel = isDowngrade ? 'Downgrade' : 'Upgrade';
@@ -386,6 +389,10 @@ class PricingPlansPlan extends Component {
 
     if (isCurrent) {
       _.assign(styles.pricingPlansPlan, styles.pricingPlansPlanHighlighted);
+    }
+
+    if (isFeatured) {
+      _.assign(styles.pricingPlansPlan, styles.pricingPlansPlanFeatured);
     }
 
     return (
