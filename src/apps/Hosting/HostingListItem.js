@@ -102,7 +102,7 @@ class HostingListItem extends Component {
           <Column.Desc className="col-sm-3">
             <Link
               to={{ pathname: filesRedirectPath }}
-              data-e2e={`${item.label}-hosting-lit-item-files`}
+              data-e2e={`${item.name}-hosting-list-item-files`}
             >
               Files
             </Link>
@@ -113,7 +113,7 @@ class HostingListItem extends Component {
               withInactive={false}
             />
           </Column.Desc>
-          <Column.Menu data-e2e={`${item.label}-hosting-dropdown-icon`}>
+          <Column.Menu data-e2e={`${item.name}-hosting-dropdown-icon`}>
             <MenuItem
               onTouchTap={showEditDialog}
               primaryText="Edit"
