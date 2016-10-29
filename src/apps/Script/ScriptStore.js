@@ -33,7 +33,7 @@ export default Reflux.createStore({
       instance: payload.instanceName,
       scriptId: payload.id,
       sourceLength: payload.source.length,
-      runtime: payload.runtimeName
+      runtime: payload.runtime_name
     });
   },
 
