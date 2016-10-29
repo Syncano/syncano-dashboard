@@ -15,7 +15,7 @@ class HostingListItem extends Component {
       height: 'auto',
       minHeight: 64
     },
-    websiteUrlContainerStyles: {
+    websiteUrlContainer: {
       display: 'flex',
       flexDirection: 'column',
       maxWidth: '100%'
@@ -49,7 +49,7 @@ class HostingListItem extends Component {
           {item.description}
         </Column.Desc>
         <Column.Desc className="col-sm-11">
-          <div style={styles.websiteUrlContainerStyles}>
+          <div style={styles.websiteUrlContainer}>
             <HostingListItemLinks items={item.domains} />
           </div>
         </Column.Desc>

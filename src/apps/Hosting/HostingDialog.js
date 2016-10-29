@@ -103,7 +103,7 @@ const CreateHostingDialog = React.createClass({
     this.setState({ label: value });
   },
 
-  handleChangeCName(event, value) {
+  handleCNAMEChange(event, value) {
     this.setState({ cname: value });
   },
 
@@ -232,7 +232,7 @@ const CreateHostingDialog = React.createClass({
             defaultValue={domains[cnameIndex]}
             value={cname}
             name="CNAME"
-            onChange={this.handleChangeCName}
+            onChange={this.handleCNAMEChange}
             hintText="Hosting's CNAME"
             floatingLabelText="CNAME"
             data-e2e="hosting-dialog-cname-input"

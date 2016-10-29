@@ -26,7 +26,11 @@ const HostingListItemLinks = ({ items, params }) => {
 
   return (
     <div>
-      {_.map(items, (item) => <div style={styles.item}><LinkWithIcon url={getLinkUrl(item)} /></div>)}
+      {_.map(items, (item) => (
+        <div style={styles.item}>
+          <LinkWithIcon url={getLinkUrl(item)} />
+        </div>
+      ))}
     </div>
   );
 };

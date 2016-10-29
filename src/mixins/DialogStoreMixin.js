@@ -1,4 +1,4 @@
-import SyntheticUIEvent from 'react/lib/SyntheticUIEvent';
+import SyntheticUIEvent from 'react-dom/lib/SyntheticUIEvent';
 import _ from 'lodash';
 
 export default {
