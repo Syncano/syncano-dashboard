@@ -20,7 +20,7 @@ const CreateHostingDialog = React.createClass({
   ],
 
   validatorConstraints: {
-    label: {
+    name: {
       presence: true,
       format: {
         pattern: '[a-z]+',
@@ -38,9 +38,9 @@ const CreateHostingDialog = React.createClass({
   },
 
   getHostingParams() {
-    const { description, domains = [], id, isDefault, label } = this.state;
+    const { description, domains = [], id, isDefault, name } = this.state;
 
-    return { label, description, id, isDefault, domains };
+    return { name, description, id, isDefault, domains };
   },
 
   getStyles() {
@@ -52,7 +52,7 @@ const CreateHostingDialog = React.createClass({
         maxWidth: 400,
         margin: '10px 0'
       },
-      labelStyle: {
+      nameStyle: {
         lineHeight: 1.4,
         color: 'rgba(68, 68, 68, .8)'
       },
@@ -63,11 +63,11 @@ const CreateHostingDialog = React.createClass({
   },
 
   handleAddSubmit() {
-    const { description, domains = [], isDefault, label, cname } = this.state;
+    const { description, domains = [], isDefault, name, cname } = this.state;
     const hostingCount = HostingStore.data.items.length;
-    const params = { description, domains, isDefault, label };
+    const params = { description, domains, isDefault, name };
 
-    params.domains.push(label);
+    params.domains.push(name);
     cname && params.domains.push(cname);
 
     if (!hostingCount) {
@@ -99,8 +99,8 @@ const CreateHostingDialog = React.createClass({
     HostingActions.updateHosting(params.id, params);
   },
 
-  handleChangeLabel(event, value) {
-    this.setState({ label: value });
+  handleChangeName(event, value) {
+    this.setState({ name: value });
   },
 
   handleCNAMEChange(event, value) {
@@ -118,12 +118,12 @@ const CreateHostingDialog = React.createClass({
   },
 
   render() {
-    const { isDefault, isLoading, open, label, description, canSubmit, domains = [], cname, cnameIndex } = this.state;
+    const { isDefault, isLoading, open, name, description, canSubmit, domains = [], cname, cnameIndex } = this.state;
     const title = this.hasEditMode() ? 'Edit Hosting' : 'Add Hosting';
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const defaultLink = `https://${currentInstanceName}.syncano.site`;
-    const labelLink = `https://${currentInstanceName}--${label}.syncano.site`;
+    const nameLink = `https://${currentInstanceName}--${name}.syncano.site`;
     const styles = this.getStyles();
 
     return (
@@ -147,7 +147,7 @@ const CreateHostingDialog = React.createClass({
             <Dialog.SidebarSection>
               Hosting allows you to manage, deploy and publish websites using Syncano Platform.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection title="Hosting label">
+            <Dialog.SidebarSection title="Hosting name">
               Name of the hosting in Syncano Dashboard.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Domains">
@@ -174,14 +174,14 @@ const CreateHostingDialog = React.createClass({
           <TextField
             autoFocus={true}
             fullWidth={true}
-            value={label}
-            name="label"
-            onChange={this.handleChangeLabel}
-            errorText={this.getValidationMessages('label').join(' ')}
-            hintText="Hosting's label"
-            floatingLabelText="Label"
+            value={name}
+            name="name"
+            onChange={this.handleChangeName}
+            errorText={this.getValidationMessages('name').join(' ')}
+            hintText="Hosting's name"
+            floatingLabelText="Name"
             disabled={this.hasEditMode()}
-            data-e2e="hosting-dialog-label-input"
+            data-e2e="hosting-dialog-name-input"
           />
           <TextField
             fullWidth={true}
@@ -212,10 +212,10 @@ const CreateHostingDialog = React.createClass({
                   {'Each instance can have one default hosting. '}
                   {'Setting this as a default will not affect '}
                   <a
-                    href={labelLink}
+                    href={nameLink}
                     target="_blank"
                   >
-                    {`${labelLink}.`}
+                    {`${nameLink}.`}
                   </a>
                 </Notification>
               </div>
