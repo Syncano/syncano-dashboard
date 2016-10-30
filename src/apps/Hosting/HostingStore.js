@@ -56,9 +56,8 @@ export default Reflux.createStore({
 
   setHosting(data) {
     const prepareHosting = (hosting) => {
-      hosting.isDefault = _.includes(hosting.domains, 'default');
-      hosting.cnameIndex = _.findIndex(hosting.domains, (domain) => domain !== 'default' && domain !== hosting.label);
-      hosting.domains = this.sortHostingDomains(hosting.domains, hosting.label, hosting.isDefault);
+      hosting.domains = this.sortHostingDomains(hosting.domains, hosting.name, hosting.is_default);
+      hosting.cnameIndex = _.findIndex(hosting.domains, (domain) => domain !== 'default' && domain !== hosting.name);
       return hosting;
     };
 

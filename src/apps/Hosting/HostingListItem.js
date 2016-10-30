@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
 import { Link, withRouter } from 'react-router';
 
 import { MenuItem } from 'material-ui';
@@ -25,7 +24,6 @@ class HostingListItem extends Component {
   render() {
     const { item, onIconClick, params, showDeleteDialog, showPublishDialog, showEditDialog } = this.props;
     const styles = this.getStyles();
-    const isDefaultHosting = _.includes(item.domains, 'default');
 
     return (
       <ColumnList.Item
@@ -50,7 +48,10 @@ class HostingListItem extends Component {
         </Column.Desc>
         <Column.Desc className="col-sm-11">
           <div style={styles.websiteUrlContainer}>
-            <HostingListItemLinks items={item.domains} />
+            <HostingListItemLinks
+              items={item.domains}
+              hostingLabel={item.name}
+            />
           </div>
         </Column.Desc>
         <Column.Desc className="col-sm-3">
@@ -63,7 +64,7 @@ class HostingListItem extends Component {
         </Column.Desc>
         <Column.Desc className="col-sm-3 row align-center">
           <StatusLabel
-            isActive={isDefaultHosting}
+            isActive={item.is_default}
             withInactive={false}
           />
         </Column.Desc>
@@ -76,7 +77,7 @@ class HostingListItem extends Component {
           <MenuItem
             onTouchTap={showPublishDialog}
             primaryText="Set as default"
-            disabled={isDefaultHosting}
+            disabled={item.is_default}
             data-e2e="dropdown-hosting-item-set-default"
           />
           <MenuItem

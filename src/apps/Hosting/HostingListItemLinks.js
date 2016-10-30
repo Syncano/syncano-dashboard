@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import _ from 'lodash';
 import { LinkWithIcon } from '../../common';
 
-const HostingListItemLinks = ({ items, params }) => {
+const HostingListItemLinks = ({ items, hostingLabel, params }) => {
   const styles = {
     item: {
       padding: '4px 0'
@@ -11,14 +11,12 @@ const HostingListItemLinks = ({ items, params }) => {
   };
 
   const getLinkUrl = (domain) => {
-    const containsOnlyLetter = /^[a-zA-Z]+$/;
-
     if (domain === 'default') {
       return `https://${params.instanceName}.syncano.site`;
     }
 
-    if (containsOnlyLetter.test(domain)) {
-      return `https://${params.instanceName}--${domain}.syncano.site`;
+    if (domain === hostingLabel) {
+      return `https://${domain}--${params.instanceName}.syncano.site`;
     }
 
     return domain;
@@ -29,7 +27,7 @@ const HostingListItemLinks = ({ items, params }) => {
       {_.map(items, (item) => (
         <div
           style={styles.item}
-          key={`domain-${domain}`}
+          key={`domain-${item}`}
         >
           <LinkWithIcon url={getLinkUrl(item)} />
         </div>
