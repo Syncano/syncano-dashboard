@@ -74,7 +74,7 @@ const HostingFilesView = React.createClass({
   getToolbarTitle() {
     const { hostingDetails, isLoading } = this.state;
 
-    return hostingDetails && !isLoading ? `Website Hosting: ${hostingDetails.label} (id: ${hostingDetails.id})` : '';
+    return hostingDetails && !isLoading ? `Website Hosting: ${hostingDetails.name} (id: ${hostingDetails.id})` : '';
   },
 
   isDefaultHosting() {
