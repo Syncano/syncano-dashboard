@@ -10,7 +10,6 @@ import { Dialog, Loading } from '../common/';
 
 class SetupPage extends Component {
   static contextTypes = {
-    router: PropTypes.object,
     location: PropTypes.object
   }
 

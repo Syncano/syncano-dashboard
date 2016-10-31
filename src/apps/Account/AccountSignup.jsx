@@ -38,8 +38,8 @@ const AccountSignup = React.createClass({
     const { location, router } = this.props;
 
     if (SessionStore.isAuthenticated()) {
-      const queryNext = location.query.next || null;
       const lastInstanceName = localStorage.getItem('lastInstanceName') || null;
+      const queryNext = location.query.next || null;
 
       SessionStore
         .getConnection()
