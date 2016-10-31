@@ -117,6 +117,7 @@
     "node-sass": "3.8.0",
     "raw-loader": "0.5.1",
     "react-prism": "3.2.1",
+    "react-snapshot-test-generator": "^1.0.1",
     "react-test-renderer": "15.4.0-rc.3",
     "sass-loader": "3.2.1",
     "selenium-standalone": "5.7.2",
@@ -129,7 +130,7 @@
   },
   "scripts": {
     "start": "gulp webpack-dev-server",
-    "test": "jest",
+    "test": "jest --config jest.json",
     "build": "gulp build",
     "publish": "gulp publish",
     "clean": "gulp clean",
@@ -153,8 +154,5 @@
     "git-config": "git config --global user.email \"ci@syncano.com\" && git config --global user.name \"CI\"",
     "predeployment-master": "npm version patch -m \"Release v%s [ci skip]\"",
     "postversion": "git push origin master && git push origin --tags"
-  },
-  "jest": {
-    "testEnvironment": "node"
   }
 }

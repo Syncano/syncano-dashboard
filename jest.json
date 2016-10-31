@@ -1,0 +1,22 @@
+{
+  "testEnvironment": "node",
+  "globals": {
+    "SENTRY_DSN": "",
+    "SYNCANO_BASE_URL": "",
+    "FACEBOOK_ID": "",
+    "GOOGLE_ID": "",
+    "GITHUB_ID": ""
+  },
+  "moduleDirectories": [
+    "node_modules"
+  ],
+  "moduleFileExtensions": [ ".js", ".json", ".jsx", ".css", ".scss", ".sass", ".svg", ".styl" ],
+  "moduleNameMapper": {
+    "renderer": "<rootDir>/node_modules/react-test-renderer",
+    "react": "<rootDir>/node_modules/react/react.js",
+    "^react-dom": "<rootDir>/node_modules/react-dom",
+    "^react-router": "<rootDir>/node_modules/react-router",
+    "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/styleMock.js",
+    "^.+\\.(css|less|styl|sass)$": "<rootDir>/__mocks__/fileMock.js"
+  }
+}
