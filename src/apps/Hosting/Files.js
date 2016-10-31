@@ -64,12 +64,12 @@ const HostingFilesView = React.createClass({
     router.push(redirectPath);
   },
 
-  handleUploadFiles(directory, event) {
+  handleUploadFiles(currentPath, event) {
     event.stopPropagation();
     const { files } = event.target;
 
     if (files && files.length) {
-      const filesToUpload = _.map(files, (file) => this.extendFilePath(file, directory));
+      const filesToUpload = _.map(files, (file) => this.extendFilePath(file, currentPath));
 
       this.setState({ filesToUpload });
     }
