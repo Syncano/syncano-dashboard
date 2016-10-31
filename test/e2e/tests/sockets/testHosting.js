@@ -20,7 +20,7 @@ export default addTestNamePrefixes({
     hostingPage
       .goToUrl(instanceName, 'hosting')
       .clickElement('@addHostingButton')
-      .fillInput('@labelInput', 'label')
+      .fillInput('@nameInput', 'name')
       .fillInput('@descriptionInput', hosting)
       .fillInput('@cnameInput', domain)
       .clickElement('@addHostingConfirmButton')
