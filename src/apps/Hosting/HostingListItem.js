@@ -54,7 +54,7 @@ class HostingListItem extends Component {
     let customDomainLink = '';
 
     if (domainsCount) {
-      customDomainLink = `https://${params.instanceName}--${item.domains[0].value}.syncano.site`;
+      customDomainLink = `https://${params.instanceName}--${item.domains[0]}.syncano.site`;
     }
     const visibleLink = isDefaultHosting ? defaultLink : customDomainLink;
     const moreLinksLabel = areLinksVisible ? 'Hide Links' : 'More Links';
@@ -81,7 +81,7 @@ class HostingListItem extends Component {
             iconColor={Colors.orange600}
             checked={item.checked}
             handleIconClick={onIconClick}
-            primaryText={item.label}
+            primaryText={item.name}
           />
           <Column.Desc
             className="col-flex-1"
@@ -102,7 +102,7 @@ class HostingListItem extends Component {
           <Column.Desc className="col-sm-3">
             <Link
               to={{ pathname: filesRedirectPath }}
-              data-e2e={`${item.label}-hosting-lit-item-files`}
+              data-e2e={`${item.name}-hosting-list-item-files`}
             >
               Files
             </Link>
@@ -113,7 +113,7 @@ class HostingListItem extends Component {
               withInactive={false}
             />
           </Column.Desc>
-          <Column.Menu data-e2e={`${item.label}-hosting-dropdown-icon`}>
+          <Column.Menu data-e2e={`${item.name}-hosting-dropdown-icon`}>
             <MenuItem
               onTouchTap={showEditDialog}
               primaryText="Edit"
