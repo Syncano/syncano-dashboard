@@ -19,7 +19,7 @@ dependencies:
 test:
   override:
     - google-chrome --version
-    - ./test.sh:
+    - npm run lint && ./test.sh:
         timeout: 150
 
 deployment:
