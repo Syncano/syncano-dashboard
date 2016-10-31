@@ -50,20 +50,20 @@ const PricingPlansUtil = {
     return params.api.minPrice + params.cbx.minPrice;
   },
 
-  isPlanHidden(planName, currentApiPrice, currentCbxPrice) {
+  isPlanHidden(planName, currentApiPrice, currentCbxPrice, mode) {
     const pricingParams = this.getPricingParams(planName);
+
+    if (mode === 'downgrade') {
+      const pricingParamsMinTotal = pricingParams.api.minPrice + pricingParams.cbx.minPrice;
+      const currentTotal = currentApiPrice + currentCbxPrice;
+
+      return currentTotal <= pricingParamsMinTotal;
+    }
+
     const pricingParamsMaxTotal = pricingParams.api.maxPrice + pricingParams.cbx.maxPrice;
     const currentTotal = currentApiPrice + currentCbxPrice;
 
     return currentTotal >= pricingParamsMaxTotal;
-  },
-
-  isDowngradePlanHidden(planName, currentApiPrice, currentCbxPrice) {
-    const pricingParams = this.getPricingParams(planName);
-    const pricingParamsMinTotal = pricingParams.api.minPrice + pricingParams.cbx.minPrice;
-    const currentTotal = currentApiPrice + currentCbxPrice;
-
-    return currentTotal <= pricingParamsMinTotal;
   },
 
   getOptions(field, minPrice, maxPrice) {
@@ -76,16 +76,16 @@ const PricingPlansUtil = {
     ));
   },
 
-  getPlanOptions(field, pricingPlanName, currentPrice, isDowngrade) {
+  getPlanOptions(field, pricingPlanName, currentPrice, mode) {
     const pricingParams = this.getPricingParams();
     let minPrice = pricingParams[pricingPlanName][field].minPrice;
     let maxPrice = pricingParams[pricingPlanName][field].maxPrice;
 
-    if (isDowngrade && maxPrice > currentPrice) {
+    if (mode === 'downgrade' && maxPrice > currentPrice) {
       maxPrice = currentPrice;
     }
 
-    if (!isDowngrade && minPrice < currentPrice) {
+    if (mode !== 'downgrade' && minPrice < currentPrice) {
       minPrice = currentPrice;
     }
 
@@ -96,19 +96,24 @@ const PricingPlansUtil = {
     return this.getOptions(field, minPrice, maxPrice);
   },
 
-  getPlans(currentApiPrice, currentCbxPrice, isDowngrade, isLowTierPromo) {
-    if (isDowngrade) {
-      return this.getDowngradePlans(currentApiPrice, currentCbxPrice);
+  getPricingPlans(mode, currentPrices) {
+    switch (mode) {
+      case 'downgrade':
+        return this.getDowngradePlans(currentPrices);
+      case 'promo-plan-nine':
+        return this.getPromoPlans(currentPrices);
+      default:
+        return this.getPlans(currentPrices);
     }
+  },
 
-    if (isLowTierPromo) {
-      return this.getPromoPlans(currentApiPrice, currentCbxPrice);
-    }
+  getPlans(currentPrices) {
+    const { api, cbx } = currentPrices;
 
     return {
       starter: {
-        isCurrent: currentApiPrice === 0,
-        isHidden: currentApiPrice > 0,
+        isCurrent: api === 0,
+        isHidden: api > 0,
         title: 'Starter',
         apiOptions: [{
           price: 0,
@@ -132,8 +137,8 @@ const PricingPlansUtil = {
       founder: {
         isHidden: true,
         title: 'Founder',
-        apiOptions: this.getPlanOptions('api', 'founder', currentApiPrice),
-        cbxOptions: this.getPlanOptions('cbx', 'founder', currentCbxPrice),
+        apiOptions: this.getPlanOptions('api', 'founder', api),
+        cbxOptions: this.getPlanOptions('cbx', 'founder', cbx),
         features: [
           'Full access to all features',
           '60 requests per second',
@@ -144,10 +149,10 @@ const PricingPlansUtil = {
         ]
       },
       developer: {
-        isHidden: this.isPlanHidden('developer', currentApiPrice, currentCbxPrice),
+        isHidden: this.isPlanHidden('developer', api, cbx),
         title: 'Developer',
-        apiOptions: this.getPlanOptions('api', 'developer', currentApiPrice),
-        cbxOptions: this.getPlanOptions('cbx', 'developer', currentCbxPrice),
+        apiOptions: this.getPlanOptions('api', 'developer', api),
+        cbxOptions: this.getPlanOptions('cbx', 'developer', cbx),
         features: [
           'Full access to all features',
           '60 requests per second',
@@ -158,10 +163,10 @@ const PricingPlansUtil = {
         ]
       },
       business: {
-        isHidden: this.isPlanHidden('business', currentApiPrice, currentCbxPrice),
+        isHidden: this.isPlanHidden('business', api, cbx),
         title: 'Business',
-        apiOptions: this.getPlanOptions('api', 'business', currentApiPrice),
-        cbxOptions: this.getPlanOptions('cbx', 'business', currentCbxPrice),
+        apiOptions: this.getPlanOptions('api', 'business', api),
+        cbxOptions: this.getPlanOptions('cbx', 'business', cbx),
         features: [
           'Full access to all features',
           '60 requests per second',
@@ -174,21 +179,22 @@ const PricingPlansUtil = {
     };
   },
 
-  getDowngradePlans(currentApiPrice, currentCbxPrice) {
+  getDowngradePlans(currentPrices) {
+    const { api, cbx } = currentPrices;
     const plans = this.getPlans();
     const downgradePlansDiffs = {
       starter: {
         isHidden: true
       },
       developer: {
-        isHidden: this.isDowngradePlanHidden('developer', currentApiPrice, currentCbxPrice),
-        apiOptions: this.getPlanOptions('api', 'developer', currentApiPrice, true),
-        cbxOptions: this.getPlanOptions('cbx', 'developer', currentCbxPrice, true)
+        isHidden: this.isPlanHidden('developer', api, cbx, 'downgrade'),
+        apiOptions: this.getPlanOptions('api', 'developer', api, 'downgrade'),
+        cbxOptions: this.getPlanOptions('cbx', 'developer', cbx, 'downgrade')
       },
       business: {
-        isHidden: this.isDowngradePlanHidden('business', currentApiPrice, currentCbxPrice),
-        apiOptions: this.getPlanOptions('api', 'business', currentApiPrice, true),
-        cbxOptions: this.getPlanOptions('cbx', 'business', currentCbxPrice, true)
+        isHidden: this.isPlanHidden('business', api, cbx, 'downgrade'),
+        apiOptions: this.getPlanOptions('api', 'business', api, 'downgrade'),
+        cbxOptions: this.getPlanOptions('cbx', 'business', cbx, 'downgrade')
       }
     };
     const downgradePlans = {
@@ -200,11 +206,12 @@ const PricingPlansUtil = {
     return downgradePlans;
   },
 
-  getPromoPlans(currentApiPrice, currentCbxPrice) {
-    const plans = this.getPlans(currentApiPrice, currentCbxPrice);
+  getPromoPlans(currentPrices) {
+    const { api, cbx } = currentPrices;
+    const plans = this.getPlans(currentPrices);
     const promoPlansDiffs = {
       founder: {
-        isHidden: this.isPlanHidden('founder', currentApiPrice, currentCbxPrice),
+        isHidden: this.isPlanHidden('founder', api, cbx),
         isFeatured: true
       }
     };

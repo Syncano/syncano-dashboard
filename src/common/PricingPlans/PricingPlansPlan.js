@@ -14,27 +14,27 @@ class PricingPlansPlan extends Component {
   constructor(props, context) {
     super(props);
 
-    const { isDowngrade } = context;
+    const { mode } = context;
 
-    this.state = this.getInitialPrices(props, isDowngrade);
+    this.state = this.getInitialPrices(props, mode);
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    const { isDowngrade } = nextContext;
+    const { mode } = nextContext;
 
-    this.setState(this.getInitialPrices(nextProps, isDowngrade));
+    this.setState(this.getInitialPrices(nextProps, mode));
   }
 
-  getInitialPrices(props, isDowngrade) {
+  getInitialPrices(props, mode) {
     const { apiOptions, cbxOptions } = props;
 
     return {
-      apiPrice: this.getInitialOption(apiOptions, isDowngrade),
-      cbxPrice: this.getInitialOption(cbxOptions, isDowngrade)
+      apiPrice: this.getInitialOption(apiOptions, mode),
+      cbxPrice: this.getInitialOption(cbxOptions, mode)
     };
   }
 
-  getInitialOption(options, isDowngrade) {
+  getInitialOption(options, mode) {
     const { title } = this.props;
     const pricingPlanName = _.upperFirst(ProfileBillingPlanStore.getPricingPlanKey());
 
@@ -42,11 +42,11 @@ class PricingPlansPlan extends Component {
       return options[0].price;
     }
 
-    if (isDowngrade && title === pricingPlanName) {
+    if (mode === 'downgrade' && title === pricingPlanName) {
       return options[options.length - 2].price;
     }
 
-    if (isDowngrade) {
+    if (mode === 'downgrade') {
       return _.last(options).price;
     }
 
@@ -378,9 +378,9 @@ class PricingPlansPlan extends Component {
   render() {
     const styles = this.getStyles();
     const { isCurrent, isFeatured, isHidden, title, price, disabled } = this.props;
-    const { isDowngrade } = this.context;
+    const { mode } = this.context;
     const { apiPrice, cbxPrice } = this.state;
-    const defaultButtonLabel = isDowngrade ? 'Downgrade' : 'Upgrade';
+    const defaultButtonLabel = mode === 'downgrade' ? 'Downgrade' : 'Upgrade';
     const period = (price === 'Free') ? null : 'per month';
 
     if (isHidden) {
@@ -427,14 +427,14 @@ class PricingPlansPlan extends Component {
           </div>
           {this.renderFeatures()}
         </Paper>
-        {isCurrent && title !== 'Starter' && !isDowngrade && this.renderCurrentPlanFooter()}
+        {isCurrent && title !== 'Starter' && mode !== 'downgrade' && this.renderCurrentPlanFooter()}
       </div>
     );
   }
 }
 
 PricingPlansPlan.contextTypes = {
-  isDowngrade: PropTypes.bool
+  mode: PropTypes.string
 };
 
 export default withRouter(PricingPlansPlan);

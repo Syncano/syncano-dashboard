@@ -117,7 +117,7 @@ export default (
         name="instances"
         onEnter={RoutesUtil.checkActiveSubscriptions}
         component={Instances}
-        path="/instances/"
+        path="instances"
       />
 
       <Route
@@ -460,16 +460,15 @@ export default (
         component={ProfilePage}
         path="/account"
       >
-
-        <Route
-          name="profile-billing-plan"
-          component={Profile.BillingPlan}
-          path="plan(/:mode)"
-        />
         <Route
           name="profile-billing-plan-cancel"
           component={Profile.BillingPlanCancel}
           path="plan/cancel"
+        />
+        <Route
+          name="profile-billing-plan"
+          component={Profile.BillingPlan}
+          path="plan(/:mode)"
         />
         <Route
           name="profile-billing-usage"

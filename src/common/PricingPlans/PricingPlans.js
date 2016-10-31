@@ -31,9 +31,9 @@ class PricingPlans extends Component {
   }
 
   renderBackLink() {
-    const { isDowngrade } = this.context;
+    const { mode } = this.context;
 
-    if (!isDowngrade) {
+    if (mode !== 'downgrade') {
       return null;
     }
 
@@ -74,10 +74,12 @@ class PricingPlans extends Component {
 
   render() {
     const styles = this.getStyles();
-    const { isDowngrade, isLowTierPromo } = this.context;
-    const currentApiPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
-    const currentCbxPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
-    const plans = PricingPlansUtil.getPlans(currentApiPrice, currentCbxPrice, isDowngrade, isLowTierPromo);
+    const { mode } = this.context;
+    const currentPrices = {
+      api: ProfileBillingPlanStore.getCurrentPlanValue('api'),
+      cbx: ProfileBillingPlanStore.getCurrentPlanValue('cbx')
+    };
+    const plans = PricingPlansUtil.getPricingPlans(mode, currentPrices);
 
     return (
       <div>
@@ -113,8 +115,7 @@ class PricingPlans extends Component {
 }
 
 PricingPlans.contextTypes = {
-  isDowngrade: PropTypes.bool,
-  isLowTierPromo: PropTypes.bool
+  mode: PropTypes.string
 };
 
 export default withRouter(PricingPlans);

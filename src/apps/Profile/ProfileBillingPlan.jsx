@@ -50,14 +50,7 @@ const ProfileBillingPlan = Radium(React.createClass({
   getChildContext() {
     const { mode } = this.props.params;
 
-    // todo: return one "mode" variable here
-    const isDowngrade = (mode === 'downgrade');
-    const isLowTierPromo = (mode === 'promo-plan-nine');
-
-    return {
-      isDowngrade,
-      isLowTierPromo
-    };
+    return { mode };
   },
 
   componentDidMount() {
@@ -267,8 +260,7 @@ const ProfileBillingPlan = Radium(React.createClass({
 }));
 
 ProfileBillingPlan.childContextTypes = {
-  isDowngrade: PropTypes.bool,
-  isLowTierPromo: PropTypes.bool
+  mode: PropTypes.string
 };
 
 export default withRouter(ProfileBillingPlan);
