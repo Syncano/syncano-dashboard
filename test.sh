@@ -70,7 +70,7 @@ function ci_setup {
 
 function ci_tests {
     MESSAGE=$(git log --pretty=format:%s -n 1 "$CIRCLE_SHA1")
-    # npm run lint
+    npm run lint
 
     if [[ "$MESSAGE" == *\[e2e-skip\]* ]]; then
         message "[WARN] Skipping E2E tests !!!"
