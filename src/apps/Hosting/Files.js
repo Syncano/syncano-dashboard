@@ -54,8 +54,12 @@ const HostingFilesView = React.createClass({
         width: 230,
         marginRight: 10
       },
-      newFolderButtons: {
+      newFolderButton: {
         marginRight: 10
+      },
+      newFolderForm: {
+        display: 'flex',
+        alignItems: 'center'
       }
     };
   },
@@ -152,7 +156,7 @@ const HostingFilesView = React.createClass({
     return !hasHostingUrl && this.showMissingDomainsSnackbar;
   },
 
-  handleSetNewFolderName(event, name) {
+  handleNewFolderNameChange(event, name) {
     this.setState({ name });
   },
 
@@ -206,24 +210,22 @@ const HostingFilesView = React.createClass({
 
     if (showNewFolderButton && !hasErrors) {
       return (
-        <div>
-          <RaisedButton
-            label="Create new folder"
-            primary={true}
-            style={styles.newFolderButtons}
-            onTouchTap={this.handleClickNewFolderButton}
-          />
-        </div>
+        <RaisedButton
+          label="Create new folder"
+          primary={true}
+          style={styles.newFolderButton}
+          onTouchTap={this.handleClickNewFolderButton}
+        />
       );
     }
 
     return (
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={styles.newFolderForm}>
         <TextField
           fullWidth={true}
           name="name"
           value={name}
-          onChange={this.handleSetNewFolderName}
+          onChange={this.handleNewFolderNameChange}
           errorText={this.getValidationMessages('name').join(' ')}
           hintText="Type new folder name"
           style={{ ...styles.newFolderNameInput, ...textFieldStyle }}
@@ -231,7 +233,7 @@ const HostingFilesView = React.createClass({
         <RaisedButton
           label="Create"
           primary={true}
-          style={styles.newFolderButtons}
+          style={styles.newFolderButton}
           onTouchTap={this.handleCreateNewFolder}
           target="_blank"
           disabled={!name}
