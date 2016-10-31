@@ -2,7 +2,6 @@ import React from 'react';
 import Radium from 'radium';
 import { withRouter } from 'react-router';
 import fileSize from 'filesize';
-import _ from 'lodash';
 
 import { MenuItem } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
@@ -13,10 +12,7 @@ const Column = ColumnList.Column;
 const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDeleteDialog }) => {
   const lastSlashIndex = item.path.lastIndexOf('/');
   const lastCommaIndex = item.path.lastIndexOf('.');
-  const shorterFileName = _.truncate(item.path.substring(lastSlashIndex + 1), {
-    length: 64
-  });
-  const fileName = item.isFolder ? item.folderName : shorterFileName;
+  const fileName = item.isFolder ? item.folderName : item.path.substring(lastSlashIndex + 1);
   const fileType = item.isFolder ? 'folder' : item.path.substring(lastCommaIndex + 1);
 
   const fileIconConfigs = {
@@ -48,6 +44,12 @@ const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDele
       ':hover': {
         color: Colors.blue500
       }
+    },
+    truncate: {
+      width: '40vw',
+      whiteSpace: 'nowrap',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden'
     }
   };
   const handleClickFolderName = () => {
@@ -65,7 +67,11 @@ const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDele
       );
     }
 
-    return fileName;
+    return (
+      <div style={styles.truncate} >
+        {fileName}
+      </div>
+      );
   };
 
   return (
@@ -82,7 +88,7 @@ const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDele
         handleIconClick={onIconClick}
         primaryText={getFolderName()}
       />
-      <Column.Desc className="col-sm-4">
+      <Column.Desc className="col-sm-4" >
         {fileSize(item.size)}
       </Column.Desc>
       <Column.Menu data-e2e={`${fileName}-hosting-file-dropdown-icon`}>
