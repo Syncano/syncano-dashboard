@@ -28,7 +28,7 @@ const HostingFilesView = React.createClass({
     name: {
       presence: true,
       format: {
-        pattern: `[a-zA-Z0-9\-_]+$`,
+        pattern: `[a-zA-Z0-9-_]+$`,
         message: 'can containt only a-z, 0-9, no spaces '
       },
       length: {
@@ -111,13 +111,15 @@ const HostingFilesView = React.createClass({
 
   handleCreateNewFolder() {
     const validateFolderName = this.handleValidation('name', (isValid) => {
-      const { directoryDepth, name } = this.state;
+      const { directoryDepth, name, previousFolders } = this.state;
 
       if (isValid) {
         this.setState({
           currentFolderName: name,
           directoryDepth: directoryDepth + 1,
-          showNewFolderButton: true
+          previousFolders: [...previousFolders, name],
+          showNewFolderButton: true,
+          name: ''
         });
       }
     });
@@ -154,23 +156,24 @@ const HostingFilesView = React.createClass({
     this.setState({ name });
   },
 
-  moveDirectoryUp() {
+  moveDirectoryUp(depth) {
     const { previousFolders, directoryDepth } = this.state;
+    const depthLevel = _.isFinite(depth) ? depth : 1;
 
     this.setState({
-      directoryDepth: directoryDepth - 1,
-      currentFolderName: previousFolders[directoryDepth - 1] || '',
-      previousFolders: _.slice(previousFolders, 0, directoryDepth)
+      directoryDepth: directoryDepth - depthLevel,
+      currentFolderName: previousFolders[directoryDepth - 1 - depthLevel] || '',
+      previousFolders: _.dropRight(previousFolders, depthLevel)
     });
   },
 
   moveDirectoryDown(nextFolderName) {
-    const { directoryDepth, currentFolderName, previousFolders } = this.state;
+    const { directoryDepth, previousFolders } = this.state;
 
     this.setState({
       directoryDepth: directoryDepth + 1,
       currentFolderName: nextFolderName,
-      previousFolders: [...previousFolders, currentFolderName]
+      previousFolders: [...previousFolders, nextFolderName]
     });
   },
 
@@ -242,6 +245,7 @@ const HostingFilesView = React.createClass({
       currentFileIndex,
       currentFolderName,
       directoryDepth,
+      errorResponses,
       filesToUpload,
       hideDialogs,
       isDeleting,
@@ -294,6 +298,8 @@ const HostingFilesView = React.createClass({
             currentInstanceName={currentInstanceName}
             directoryDepth={directoryDepth}
             filesCount={filesToUpload.length}
+            errorResponses={errorResponses}
+            handleErrorsButtonClick={HostingFilesActions.finishUploading}
             handleClearFiles={this.handleClearFiles}
             handleUploadFiles={this.handleUploadFiles}
             handleSendFiles={this.handleSendFiles}

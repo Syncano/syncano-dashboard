@@ -24,7 +24,7 @@ const GlobalConfigDialog = React.createClass({
         return {
           inclusion: {
             within: [],
-            message: '^is not a valid JSON'
+            message: 'is not a valid JSON'
           }
         };
       }
@@ -44,7 +44,7 @@ const GlobalConfigDialog = React.createClass({
     Actions.updateGlobalConfig(JSON.parse(globalConfig));
   },
 
-  handleChangeConfig(value) {
+  handleConfigChange(value) {
     this.setState({ globalConfig: value });
   },
 
@@ -96,7 +96,7 @@ const GlobalConfigDialog = React.createClass({
               ref="globalConfigEditor"
               mode="json"
               height="400px"
-              onChange={(value) => this.handleChangeConfig(value)}
+              onChange={this.handleConfigChange}
               onFocus={disableBindShortcuts}
               onBlur={enableBindShortcuts}
               value={globalConfig || [
@@ -105,19 +105,21 @@ const GlobalConfigDialog = React.createClass({
                 '    "lastName": "Doe"',
                 '}'
               ].join('\n')}
+              data-e2e="global-config-editor"
             />
           </Loading>
         </div>
-        <div className="vm-2-t">
-          <Show if={this.getValidationMessages('globalConfig').length}>
-            <Notification type="error">
-              {this.getValidationMessages('globalConfig')}
-            </Notification>
-          </Show>
-        </div>
-        <div className="vm-2-t">
+        <Show if={this.getValidationMessages('globalConfig').length}>
+          <Notification
+            type="error"
+            className="vm-2-t"
+          >
+            {this.getValidationMessages('globalConfig')}
+          </Notification>
+        </Show>
+        {this.renderFormNotifications() && <div className="vm-2-t">
           {this.renderFormNotifications()}
-        </div>
+        </div>}
       </Dialog.FullPage>
     );
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect, IndexRedirect, IndexRoute } from 'react-router';
 
-import RoutesUtil from './utils/RoutesUtil';
+import { RoutesUtil } from './utils';
 
 // Pages
 import AppPage from './pages/app';
@@ -117,7 +117,7 @@ export default (
         name="instances"
         onEnter={RoutesUtil.checkActiveSubscriptions}
         component={Instances}
-        path="instances"
+        path="/instances/"
       />
 
       <Route

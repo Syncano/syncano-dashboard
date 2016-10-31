@@ -20,6 +20,7 @@ export default Reflux.createStore({
     return {
       currentFolderName: '',
       directoryDepth: 0,
+      errorResponses: [],
       filesToUpload: [],
       isLoading: true,
       isUploading: false,
@@ -52,14 +53,9 @@ export default Reflux.createStore({
 
   onCheckFolder(folder) {
     const { items } = this.data;
-    const isChecked = folder.checked;
+    const folderToCheck = _.find(items, { id: folder.id });
 
-    _.forEach(items, (item) => {
-      if (_.some(folder.files, { id: item.id })) {
-        item.checked = !isChecked;
-      }
-    });
-
+    folderToCheck.checked = !folder.checked;
     this.trigger(this.data);
   },
 
@@ -69,7 +65,7 @@ export default Reflux.createStore({
     currentHostingId && Actions.fetchFiles(currentHostingId);
   },
 
-  setHostingId(hostingId) {
+  onSetHostingId(hostingId) {
     this.data.currentHostingId = hostingId;
   },
 
@@ -95,9 +91,13 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onUploadFilesFailure() {
-    this.data.isUploading = false;
-    this.refreshData();
+  onUploadFilesFailure(uploadingStatus, response) {
+    this.data.errorResponses = [...this.data.errorResponses, response];
+    this.data.currentFileIndex = uploadingStatus.currentFileIndex;
+    this.data.lastFileIndex = uploadingStatus.lastFileIndex;
+    uploadingStatus.isFinished && removeEventListener('beforeunload', this.handleCloseOnUpload);
+
+    this.trigger(this.data);
   },
 
   onFetchFilesCompleted(data) {
@@ -115,5 +115,12 @@ export default Reflux.createStore({
     this.data.currentFileIndex = deletingStatus.currentFileIndex;
     this.data.lastFileIndex = deletingStatus.lastFileIndex;
     this.trigger(this.data);
+  },
+
+  onFinishUploading() {
+    this.data.filesToUpload = [];
+    this.data.uploadErrors = [];
+    this.data.isUploading = false;
+    this.refreshData();
   }
 });

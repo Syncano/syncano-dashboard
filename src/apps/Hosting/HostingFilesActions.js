@@ -5,6 +5,7 @@ export default CreateActions(
     fetch: {},
     setHostingId: {},
     checkFolder: {},
+    finishUploading: {},
     uploadFiles: {
       asyncResult: true,
       loading: true,

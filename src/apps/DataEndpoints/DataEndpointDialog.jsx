@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import shortid from 'shortid';
 import _ from 'lodash';
 
-import JSONUtil from '../../utils/JSONUtil';
+import { JSONUtil } from '../../utils';
 import { DialogMixin, FormMixin } from '../../mixins';
 import ClassDialogMixin from '../Classes/ClassDialogMixin';
 

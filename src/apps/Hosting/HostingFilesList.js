@@ -7,7 +7,7 @@ import { DialogsMixin } from '../../mixins';
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
 
-import { ColumnList, Lists, Dialog, Loading } from '../../common';
+import { ColumnList, Dialog, DirectoryNavigation, Lists, Loading } from '../../common';
 import HostingFilesEmptyView from './HostingFilesEmptyView';
 import ListItem from './HostingFilesListItem';
 import DotsListItem from './DotsListItem';
@@ -24,7 +24,6 @@ const HostingFilesList = React.createClass({
       getCheckedItems: HostingFilesStore.getCheckedItems,
       checkItem: HostingFilesActions.checkItem,
       checkFolder: this.handleCheckFolder,
-      handleSelectAll: HostingFilesActions.selectAll,
       handleUnselectAll: HostingFilesActions.uncheckAll
     };
   },
@@ -59,6 +58,19 @@ const HostingFilesList = React.createClass({
     return handleUploadFiles(currentFolderName, event);
   },
 
+  handleSelectAll() {
+    const { checkItem, items } = this.props;
+    const filteredItems = this.filterFolders(items);
+
+    _.forEach(filteredItems, (filteredItem) => {
+      if (filteredItem.isFolder && !filteredItem.checked) {
+        return this.handleCheckFolder(filteredItem);
+      }
+
+      return checkItem(filteredItem.id, true);
+    });
+  },
+
   initDialogs() {
     const { isLoading, getCheckedItems } = this.props;
     const { hostingId } = this.props.params;
@@ -81,11 +93,11 @@ const HostingFilesList = React.createClass({
   },
 
   filterByCurrentDirectoryDepth(items) {
-    const { directoryDepth, currentFolderName } = this.props;
+    const { currentFolderName, directoryDepth, previousFolders } = this.props;
     const filteredItems = _.filter(items, (item) => {
       const isInFolder = directoryDepth < item.folders.length;
       const isInRootFolder = currentFolderName === '';
-      const isInSubfolder = _.includes(item.folders, currentFolderName);
+      const isInSubfolder = _.isMatch(item.folders, previousFolders);
 
       return isInFolder && isInSubfolder || isInRootFolder;
     });
@@ -118,25 +130,31 @@ const HostingFilesList = React.createClass({
     this.showDialog('removeHostingFilesDialog');
   },
 
+  renderDirectoryNavigation() {
+    const { previousFolders, directoryDepth, moveDirectoryUp } = this.props;
+
+    return (
+      <DirectoryNavigation
+        previousFolders={previousFolders}
+        directoryDepth={directoryDepth}
+        moveDirectoryUp={moveDirectoryUp}
+      />
+    );
+  },
+
   renderHeader() {
-    const { handleTitleClick, handleSelectAll, handleUnselectAll, items, getCheckedItems } = this.props;
+    const { handleTitleClick, handleUnselectAll, items, getCheckedItems } = this.props;
 
     return (
       <ColumnList.Header>
         <Column.ColumnHeader
-          className="col-sm-14"
+          className="col-flex-1"
           primary={true}
           columnName="CHECK_ICON"
           handleClick={handleTitleClick}
           data-e2e="hosting-files-list-title"
         >
           File
-        </Column.ColumnHeader>
-        <Column.ColumnHeader
-          columnName="DESC"
-          className="col-flex-1"
-        >
-          Path
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
@@ -147,7 +165,7 @@ const HostingFilesList = React.createClass({
         <Column.ColumnHeader columnName="MENU">
           <Lists.Menu
             checkedItemsCount={getCheckedItems().length}
-            handleSelectAll={handleSelectAll}
+            handleSelectAll={this.handleSelectAll}
             handleUnselectAll={handleUnselectAll}
             itemsCount={items.length}
           >
@@ -161,9 +179,7 @@ const HostingFilesList = React.createClass({
   renderDotsListItem() {
     const { moveDirectoryUp } = this.props;
 
-    return (
-      <DotsListItem onClickDots={moveDirectoryUp} />
-    );
+    return <DotsListItem onDotsClick={moveDirectoryUp} />;
   },
 
   renderItems() {
@@ -177,7 +193,6 @@ const HostingFilesList = React.createClass({
           key={`hosting-file-list-item-${item.id}`}
           onFolderEnter={moveDirectoryDown}
           onIconClick={item.isFolder ? () => this.handleCheckFolder(item) : checkItem}
-          directoryDepth={directoryDepth}
           item={item}
           showDeleteDialog={() => this.showDialog('removeHostingFilesDialog', filesToRemove)}
         />
@@ -216,6 +231,7 @@ const HostingFilesList = React.createClass({
     return (
       <div>
         {this.getDialogs()}
+        {this.renderDirectoryNavigation()}
         {this.renderHeader()}
         <Lists.List
           {...other}

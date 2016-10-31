@@ -1,21 +1,20 @@
 import React from 'react';
 import Reflux from 'reflux';
-import shortid from 'shortid';
 import _ from 'lodash';
 
 import { DialogMixin, FormMixin } from '../../mixins';
 
-import Store from './HostingStore';
-import Actions from './HostingActions';
+import HostingDialogStore from './HostingDialogStore';
+import HostingStore from './HostingStore';
+import HostingActions from './HostingActions';
 import SessionStore from '../Session/SessionStore';
 
 import { TextField, Toggle } from 'material-ui';
 import { Dialog, Show, Notification } from '../../common';
-import HostingDialogDomainTable from './HostingDialogDomainTable';
 
 const CreateHostingDialog = React.createClass({
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(HostingDialogStore),
     DialogMixin,
     FormMixin
   ],
@@ -23,6 +22,10 @@ const CreateHostingDialog = React.createClass({
   validatorConstraints: {
     label: {
       presence: true,
+      format: {
+        pattern: '[a-z]+',
+        message: 'can only contain a-z'
+      },
       length: {
         maximum: 64
       }
@@ -35,95 +38,73 @@ const CreateHostingDialog = React.createClass({
   },
 
   getHostingParams() {
-    const { description, domains = [], id, isDefault, label, newDomain } = this.state;
-    let domainsArray = _.map(domains, 'value');
+    const { description, domains = [], id, isDefault, label } = this.state;
 
-    if (newDomain && newDomain.length) {
-      domainsArray.push(newDomain);
-    }
-
-    if (!isDefault) {
-      domainsArray = _.without(domainsArray, 'default');
-    }
-
-    return { label, description, id, isDefault, domains: domainsArray };
+    return { label, description, id, isDefault, domains };
   },
 
   getStyles() {
     return {
-      checkBox: {
-        margin: '20px 0',
-        maxWidth: 250
+      contentSection: {
+        margin: '0 0 20px'
+      },
+      toggle: {
+        maxWidth: 400,
+        margin: '10px 0'
+      },
+      labelStyle: {
+        lineHeight: 1.4,
+        color: 'rgba(68, 68, 68, .8)'
+      },
+      defaultExplanation: {
+        margin: '30px 0 10px'
       }
     };
   },
 
-  handleChangeNewDomain(event, newDomain) {
-    this.setState({ newDomain });
-    if (newDomain.toLowerCase() === 'default') {
-      this.setState({ errors: { feedback: "You can't add 'Default' domain" } });
-    } else {
-      this.setState({
-        errors: {},
-        newDomain
-      });
-    }
-  },
-
-  handleAddNewDomain() {
-    const { domains, newDomain } = this.state;
-    const newDomains = _.unionBy(domains, [{ id: shortid.generate(), value: newDomain }], 'value');
-
-    if (newDomain.toLowerCase() !== 'default') {
-      this.setState({
-        domains: newDomains,
-        newDomain: ''
-      });
-    }
-  },
-
-  handleChangeDomains(domain, index) {
-    const { domains } = this.state;
-
-    domains[index].value = domain;
-    if (domain.toLowerCase() === 'default') {
-      this.setState({
-        errors: { feedback: "You can't add 'Default' domain" },
-        domains
-      });
-    } else {
-      this.setState({
-        errors: {},
-        domains
-      });
-    }
-  },
-
-  handleRemoveDomain(domain) {
-    const domains = _.reject(this.state.domains, { value: domain });
-
-    this.setState({ domains });
-  },
-
   handleAddSubmit() {
-    const { items } = this.state;
-    const params = this.getHostingParams();
+    const { description, domains = [], isDefault, label, cname } = this.state;
+    const hostingCount = HostingStore.data.items.length;
+    const params = { description, domains, isDefault, label };
 
-    if (_.isEmpty(items)) {
+    params.domains.push(label);
+    cname && params.domains.push(cname);
+
+    if (!hostingCount) {
       params.isDefault = true;
     }
 
-    Actions.createHosting(params);
+    HostingActions.createHosting(params);
   },
 
   handleEditSubmit() {
+    const { cname, cnameIndex } = this.state;
     const params = this.getHostingParams();
+    const pristineCname = cname && cnameIndex < 0;
+    const updateCname = cname && cnameIndex > -1;
+    const removeCname = !cname && cnameIndex > -1;
 
-    Actions.updateHosting(params.id, params);
+    if (pristineCname) {
+      params.domains.push(cname);
+    }
+
+    if (updateCname) {
+      params.domains[cnameIndex] = cname;
+    }
+
+    if (removeCname) {
+      _.remove(params.domains, (value, index) => index === cnameIndex);
+    }
+
+    HostingActions.updateHosting(params.id, params);
   },
 
   handleChangeLabel(event, value) {
     this.setState({ label: value });
+  },
+
+  handleChangeCName(event, value) {
+    this.setState({ cname: value });
   },
 
   handleChangeDescription(event, value) {
@@ -131,18 +112,18 @@ const CreateHostingDialog = React.createClass({
   },
 
   handleDefaultDomain() {
-    let { isDefault } = this.state;
+    const { isDefault } = this.state;
 
-    isDefault = !isDefault;
-    this.setState({ isDefault });
+    this.setState({ isDefault: !isDefault });
   },
 
   render() {
-    const { isDefault, isLoading, open, label, description, canSubmit, newDomain, domains } = this.state;
+    const { isDefault, isLoading, open, label, description, canSubmit, domains = [], cname, cnameIndex } = this.state;
     const title = this.hasEditMode() ? 'Edit Hosting' : 'Add Hosting';
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const defaultLink = `https://${currentInstanceName}.syncano.site`;
+    const labelLink = `https://${currentInstanceName}--${label}.syncano.site`;
     const styles = this.getStyles();
 
     return (
@@ -175,10 +156,12 @@ const CreateHostingDialog = React.createClass({
               The domains will be linked to your hosting at
               https://{currentInstanceName}--<em>domain</em>.syncano.site
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection title="Default hosting">
-              You can also check <em>Set as default hosting</em> then it will be connected directly to your current
-              Instance and avaliable at {defaultLink}
-            </Dialog.SidebarSection>
+            <Show if={this.hasEditMode()}>
+              <Dialog.SidebarSection title="Default hosting">
+                You can also toogle on <em>Default hosting </em> then it will be connected directly to your current
+                Instance and avaliable at {defaultLink}
+              </Dialog.SidebarSection>
+            </Show>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/hosting/">
                 Learn more
@@ -209,24 +192,51 @@ const CreateHostingDialog = React.createClass({
             hintText="Hosting's description"
             floatingLabelText="Description"
             data-e2e="hosting-dialog-description-input"
+            style={styles.contentSection}
           />
-          <Toggle
-            label="Set as default hosting"
-            style={styles.checkBox}
-            toggled={isDefault}
-            onToggle={this.handleDefaultDomain}
+          <TextField
+            fullWidth={true}
+            defaultValue={domains[cnameIndex]}
+            value={cname}
+            name="CNAME"
+            onChange={this.handleChangeCName}
+            hintText="Hosting's CNAME"
+            floatingLabelText="CNAME"
+            data-e2e="hosting-dialog-cname-input"
           />
-          <Dialog.ContentSection title="Domains">
-            <HostingDialogDomainTable
-              domains={domains}
-              handleChangeNewDomain={this.handleChangeNewDomain}
-              handleAddNewDomain={this.handleAddNewDomain}
-              handleChangeDomains={this.handleChangeDomains}
-              handleRemoveDomain={this.handleRemoveDomain}
-              isDefault={isDefault}
-              newDomain={newDomain}
-            />
-          </Dialog.ContentSection>
+          <Show if={this.hasEditMode()}>
+            <Dialog.ContentSection
+              title="Default Hosting"
+              style={styles.contentSection}
+            >
+              <div style={styles.defaultExplanation}>
+                <Notification hasCloseButtonVisible={false}>
+                  {'Default hosting is available at '}
+                  <a
+                    href={defaultLink}
+                    target="_blank"
+                  >
+                    {`${defaultLink}.`}
+                  </a>
+                  <br />
+                  {'Each instance can have one default hosting. '}
+                  {'Setting this as a default will not affect '}
+                  <a
+                    href={labelLink}
+                    target="_blank"
+                  >
+                    {`${labelLink}.`}
+                  </a>
+                </Notification>
+              </div>
+              <Toggle
+                label="Set as default hosting"
+                style={styles.toggle}
+                toggled={isDefault}
+                onToggle={this.handleDefaultDomain}
+              />
+            </Dialog.ContentSection>
+          </Show>
         </div>
         <div className="vm-2-t">
           {this.renderFormNotifications()}

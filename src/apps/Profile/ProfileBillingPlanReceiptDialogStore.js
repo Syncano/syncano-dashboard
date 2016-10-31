@@ -2,10 +2,10 @@ import Reflux from 'reflux';
 
 import { DialogStoreMixin } from '../../mixins';
 
-import Actions from './ProfileBillingPlanReceiptDialogActions';
+import ProfileBillingPlanReceiptDialogActions from './ProfileBillingPlanReceiptDialogActions';
 
 export default Reflux.createStore({
-  listenables: Actions,
+  listenables: ProfileBillingPlanReceiptDialogActions,
 
   mixins: [DialogStoreMixin],
 
