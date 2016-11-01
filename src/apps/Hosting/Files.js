@@ -35,8 +35,8 @@ const HostingFilesView = React.createClass({
     const { instanceName } = this.props.params;
     const defaultHostingUrl = `https://${instanceName}.syncano.site/`;
     const hasDomains = hostingDetails && hostingDetails.domains.length > 0;
-    const customDomainUrl = hasDomains ? `https://${instanceName}--${hostingDetails.domains[0]}.syncano.site/` : null;
-    const hostingUrl = this.isDefaultHosting() ? defaultHostingUrl : customDomainUrl;
+    const customDomainUrl = hasDomains ? `https://${hostingDetails.domains[0]}--${instanceName}.syncano.site/` : null;
+    const hostingUrl = hostingDetails.is_default ? defaultHostingUrl : customDomainUrl;
 
     return hostingUrl;
   },
@@ -45,16 +45,6 @@ const HostingFilesView = React.createClass({
     const { hostingDetails, isLoading } = this.state;
 
     return hostingDetails && !isLoading ? `Website Hosting: ${hostingDetails.name} (id: ${hostingDetails.id})` : '';
-  },
-
-  isDefaultHosting() {
-    const { hostingDetails } = this.state;
-
-    if (hostingDetails) {
-      return _.includes(hostingDetails.domains, 'default');
-    }
-
-    return false;
   },
 
   handleBackClick() {
@@ -131,8 +121,13 @@ const HostingFilesView = React.createClass({
       currentFileIndex,
       isUploading,
       isDeleting,
-      errorResponses
+      errorResponses,
+      hostingDetails
     } = this.state;
+
+    if (!hostingDetails) {
+      return null;
+    }
 
     const hasFilesToUpload = filesToUpload.length > 0;
     const currentInstance = SessionStore.getInstance();
