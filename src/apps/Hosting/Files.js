@@ -45,6 +45,9 @@ const HostingFilesView = React.createClass({
   },
 
   getStyles() {
+    const { errors } = this.state;
+    const hasErrors = errors.name && errors.name.length;
+
     return {
       buttonsWrapper: {
         display: 'flex',
@@ -52,7 +55,8 @@ const HostingFilesView = React.createClass({
       },
       newFolderNameInput: {
         width: 230,
-        marginRight: 10
+        marginRight: 10,
+        marginBottom: hasErrors && 22
       },
       newFolderButton: {
         marginRight: 10
@@ -110,10 +114,10 @@ const HostingFilesView = React.createClass({
   },
 
   handleClickNewFolderButton() {
-    this.setState({ showNewFolderButton: false });
+    this.setState({ showNewFolderForm: true });
   },
 
-  handleCreateNewFolder() {
+  handleCreateFolder() {
     const validateFolderName = this.handleValidation('name', (isValid) => {
       const { directoryDepth, name, previousFolders } = this.state;
 
@@ -122,7 +126,7 @@ const HostingFilesView = React.createClass({
           currentFolderName: name,
           directoryDepth: directoryDepth + 1,
           previousFolders: [...previousFolders, name],
-          showNewFolderButton: true,
+          showNewFolderForm: false,
           name: ''
         });
       }
@@ -203,40 +207,31 @@ const HostingFilesView = React.createClass({
   },
 
   renderNewFolderButtons() {
-    const { name, errors, showNewFolderButton } = this.state;
-    const hasErrors = errors.name && errors.name.length;
+    const { name, showNewFolderForm } = this.state;
     const styles = this.getStyles();
-    const textFieldStyle = hasErrors ? { marginBottom: 22 } : null;
-
-    if (showNewFolderButton && !hasErrors) {
-      return (
-        <RaisedButton
-          label="Create new folder"
-          primary={true}
-          style={styles.newFolderButton}
-          onTouchTap={this.handleClickNewFolderButton}
-        />
-      );
-    }
+    const createFolderButtonLabel = showNewFolderForm ? 'Create' : 'Create new folder';
+    const createFolderButtonAction = showNewFolderForm ? this.handleCreateFolder : this.handleClickNewFolderButton;
+    const disableNewFolderButton = showNewFolderForm && !name;
 
     return (
       <div style={styles.newFolderForm}>
-        <TextField
-          fullWidth={true}
-          name="name"
-          value={name}
-          onChange={this.handleNewFolderNameChange}
-          errorText={this.getValidationMessages('name').join(' ')}
-          hintText="Type new folder name"
-          style={{ ...styles.newFolderNameInput, ...textFieldStyle }}
-        />
+        <Show if={showNewFolderForm}>
+          <TextField
+            fullWidth={true}
+            name="name"
+            value={name}
+            onChange={this.handleNewFolderNameChange}
+            errorText={this.getValidationMessages('name').join(' ')}
+            hintText="Type new folder name"
+            style={{ ...styles.newFolderNameInput }}
+          />
+        </Show>
         <RaisedButton
-          label="Create"
+          label={createFolderButtonLabel}
           primary={true}
           style={styles.newFolderButton}
-          onTouchTap={this.handleCreateNewFolder}
-          target="_blank"
-          disabled={!name}
+          onTouchTap={createFolderButtonAction}
+          disabled={disableNewFolderButton}
         />
       </div>
     );

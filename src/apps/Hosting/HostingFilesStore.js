@@ -27,7 +27,7 @@ export default Reflux.createStore({
       isDeleting: false,
       items: [],
       previousFolders: [],
-      showNewFolderButton: true,
+      showNewFolderForm: false,
       name: ''
     };
   },
