@@ -31,7 +31,7 @@ function selenium_start {
     SELENIUM_ROLE_HUB="-role hub"
     SELENIUM_SERVER="${SELENIUM} ${SELENIUM_ROLE_HUB}"
 
-    SELENIUM_CHROMEDRIVER="-Dwebdriver.chrome.driver=./node_modules/selenium-standalone/.selenium/chromedriver/2.22-x64-chromedriver"
+    SELENIUM_CHROMEDRIVER="-Dwebdriver.chrome.driver=./node_modules/selenium-standalone/.selenium/chromedriver/2.25-x64-chromedriver"
     SELENIUM_ROLE_WEBDRIVER="-role webdriver -hub http://localhost:4444/grid/register"
     SELENIUM_CHROMEDRIVER="${SELENIUM} ${SELENIUM_CHROMEDRIVER} ${SELENIUM_ROLE_WEBDRIVER}"
 
