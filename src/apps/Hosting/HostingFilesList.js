@@ -37,13 +37,15 @@ const HostingFilesList = React.createClass({
   getFolderFiles(file) {
     const { items } = this.props;
     const { directoryDepth } = this.state;
-    const fileFolderName = file.path.split('/')[directoryDepth];
+    const depthToCheck = directoryDepth + 1;
+    const fileFoldersToCheck = _.take(file.folders, depthToCheck);
+
     const folderFiles = _.filter(items, (item) => {
       const itemFolders = item.path.split('/');
-      const hasSubFolders = directoryDepth > itemFolders.length;
-      const isFileInCurrentFolder = _.includes(itemFolders, fileFolderName);
+      const itemFoldersToCheck = _.take(itemFolders, depthToCheck);
+      const isFileInCurrentFolder = _.isMatch(itemFoldersToCheck, fileFoldersToCheck);
 
-      return !hasSubFolders && isFileInCurrentFolder;
+      return isFileInCurrentFolder;
     });
 
     return folderFiles;
@@ -216,6 +218,7 @@ const HostingFilesList = React.createClass({
     const filteredItems = this.filterFolders(items);
     const listItems = _.map(filteredItems, (item) => {
       const filesToRemove = item.isFolder ? item.files : item;
+      const showDeleteDialog = () => this.showDialog('removeHostingFilesDialog', filesToRemove);
 
       return (
         <ListItem
@@ -223,7 +226,7 @@ const HostingFilesList = React.createClass({
           onFolderEnter={this.moveDirectoryDown}
           onIconClick={item.isFolder ? () => this.handleCheckFolder(item) : checkItem}
           item={item}
-          showDeleteDialog={() => this.showDialog('removeHostingFilesDialog', filesToRemove)}
+          showDeleteDialog={showDeleteDialog}
         />
       );
     });

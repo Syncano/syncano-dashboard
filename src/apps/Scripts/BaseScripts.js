@@ -37,6 +37,8 @@ const baseScripts = {
   },
   base_python: {
     source: `
+      # coding=UTF8
+
       # ARGS, CONFIG and META are three default dictionaries you
       # have access to from within the script. Click 'RUN' to see what
       # they contain. CONFIG is empty because you'd need to add key/values
