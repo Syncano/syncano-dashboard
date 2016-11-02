@@ -14,7 +14,8 @@ export default addTestNamePrefixes({
   afterEach: (client, done) => client.end(done),
   'User views Plan Usage': (client) => {
     const planUsagePage = client.page.planUsagePage();
-    const randomInstance = _.sample(instances).instanceName;
+    const instancesArray = _.filter(instances, 'instanceName');
+    const randomInstance = _.sample(instancesArray).instanceName;
     const usageChartsSelector = planUsagePage.elements.usageCharts.selector;
 
     planUsagePage
