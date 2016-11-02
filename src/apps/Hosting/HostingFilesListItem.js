@@ -71,7 +71,7 @@ const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDele
       <div style={styles.truncate} >
         {fileName}
       </div>
-      );
+    );
   };
 
   return (
