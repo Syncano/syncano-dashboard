@@ -117,7 +117,7 @@ export default (
         name="instances"
         onEnter={RoutesUtil.checkActiveSubscriptions}
         component={Instances}
-        path="/instances/"
+        path="/instances"
       />
 
       <Route
