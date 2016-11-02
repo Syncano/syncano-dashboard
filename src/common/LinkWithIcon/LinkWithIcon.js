@@ -16,10 +16,11 @@ const LinkWithIcon = ({ url, iconClassName = 'synicon-launch' }) => {
     fontSize: 16,
     maxWidth: 16
   };
+  const linkUrl = url.indexOf('http') > 0 ? url : `http://${url}`;
 
   return (
     <a
-      href={url}
+      href={linkUrl}
       target="_blank"
       style={linkStyles}
     >

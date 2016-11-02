@@ -144,7 +144,7 @@ const SendChannelMessageDialog = React.createClass({
   },
 
   clearMessageText() {
-    this.setState({ messageText: null });
+    this.setState({ messageText: '' });
   },
 
   renderSidebarContent() {
@@ -210,7 +210,6 @@ const SendChannelMessageDialog = React.createClass({
         value={messageText}
         onChange={this.handleMessageTextChange}
         errorText={this.getValidationMessages('messageText').join(' ')}
-        hintText="Your message goes here"
         floatingLabelText="Message"
         onFocus={disableBindShortcuts}
         onBlur={enableBindShortcuts}
@@ -229,8 +228,8 @@ const SendChannelMessageDialog = React.createClass({
         className="vm-2-b vp-2-b"
         style={styles.messagesHistoryMessage}
       >
-        <div>Message Id: {message.id}</div>
-        <div>Author Id: {message.author.admin}</div>
+        <div>Message ID: {message.id}</div>
+        <div>Author ID: {message.author.admin}</div>
         <div>Created at: {message.created_at}</div>
         {message.room && <div>Room: {message.room}</div>}
         {JSON.stringify(message.payload, null, 2)}
@@ -242,41 +241,36 @@ const SendChannelMessageDialog = React.createClass({
     const styles = this.getStyles();
     const { sentMessage, stepIndex, isJSONMessage, room, type, isLoading } = this.state;
     const isSeparateRooms = type === 'separate_rooms';
-    const roomHint = isSeparateRooms ? 'Channel room' : 'Channel room is available for spearate rooms type only';
+    const labelText = isSeparateRooms ? 'Channel Room' : 'Channel Room is available for spearate rooms type only';
     const stepContent = {
       step0: (
         <div className="vm-2-t">
-          <Dialog.ContentSection title="Channel Room">
-            <div className="col-flex-1">
-              <TextField
-                label="room"
-                autoFocus={true}
-                fullWidth={true}
-                disabled={!isSeparateRooms}
-                value={room}
-                onChange={this.handleRoomChange}
-                errorText={this.getValidationMessages('room').join(' ')}
-                hintText="Type room name here"
-                floatingLabelText={roomHint}
-              />
-            </div>
-          </Dialog.ContentSection>
-          <Dialog.ContentSection title="Message Content">
+          <Dialog.ContentSection title="New Message">
             <div className="col-flex-1">
               <form onSubmit={this.handleFormValidation}>
+                <TextField
+                  label="room"
+                  autoFocus={true}
+                  fullWidth={true}
+                  disabled={!isSeparateRooms}
+                  value={room}
+                  onChange={this.handleRoomChange}
+                  errorText={this.getValidationMessages('room').join(' ')}
+                  floatingLabelText={labelText}
+                />
                 <Toggle
                   label="Use advanced editor (JSON)"
-                  className="vm-2-t"
                   labelPosition="right"
+                  className="vm-2-t"
                   toggled={isJSONMessage}
                   onToggle={this.handleAdvancedEditorToggleToggle}
                 />
                 {this.renderMessageEditor()}
                 <div className="vm-2-t text--right">
                   <RaisedButton
-                    primary={true}
-                    type="submit"
                     label="Send Message"
+                    type="submit"
+                    primary={true}
                     data-e2e="send-channel-message-dialog-send-message-button"
                   />
                 </div>
@@ -356,8 +350,8 @@ const SendChannelMessageDialog = React.createClass({
     if (isFinished) {
       return (
         <RaisedButton
-          primary={true}
           label="Close"
+          primary={true}
           onTouchTap={this.handleCancel}
           data-e2e="send-channel-message-summary-close-button"
         />

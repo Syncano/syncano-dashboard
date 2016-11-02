@@ -18,7 +18,7 @@ export default {
       .please()
       .create(params)
       .then((createdHosting) => {
-        if (params.isDefault) {
+        if (params.is_default) {
           return this.NewLibConnection
             .Hosting
             .please()
@@ -37,7 +37,7 @@ export default {
       .please()
       .update({ id }, params)
       .then((updatedHosting) => {
-        if (params.isDefault) {
+        if (params.is_default) {
           return this.NewLibConnection
             .Hosting
             .please()

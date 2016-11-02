@@ -20,15 +20,8 @@ const CreateHostingDialog = React.createClass({
   ],
 
   validatorConstraints: {
-    label: {
-      presence: true,
-      format: {
-        pattern: '[a-z]+',
-        message: 'can only contain a-z'
-      },
-      length: {
-        maximum: 64
-      }
+    name: {
+      presence: true
     },
     description: {
       length: {
@@ -38,9 +31,9 @@ const CreateHostingDialog = React.createClass({
   },
 
   getHostingParams() {
-    const { description, domains = [], id, isDefault, label } = this.state;
+    const { description, domains = [], id, is_default, name } = this.state;
 
-    return { label, description, id, isDefault, domains };
+    return { name, description, id, is_default, domains };
   },
 
   getStyles() {
@@ -52,7 +45,7 @@ const CreateHostingDialog = React.createClass({
         maxWidth: 400,
         margin: '10px 0'
       },
-      labelStyle: {
+      nameStyle: {
         lineHeight: 1.4,
         color: 'rgba(68, 68, 68, .8)'
       },
@@ -63,23 +56,22 @@ const CreateHostingDialog = React.createClass({
   },
 
   handleAddSubmit() {
-    const { description, domains = [], isDefault, label, cname } = this.state;
+    const { description, domains = [], is_default, name, cname } = this.state;
     const hostingCount = HostingStore.data.items.length;
-    const params = { description, domains, isDefault, label };
+    const params = { description, domains, is_default, name };
 
-    params.domains.push(label);
     cname && params.domains.push(cname);
 
     if (!hostingCount) {
-      params.isDefault = true;
+      params.is_default = true;
     }
 
     HostingActions.createHosting(params);
   },
 
   handleEditSubmit() {
-    const { cname, cnameIndex } = this.state;
     const params = this.getHostingParams();
+    const { cnameIndex, cname = params.domains[cnameIndex] } = this.state;
     const pristineCname = cname && cnameIndex < 0;
     const updateCname = cname && cnameIndex > -1;
     const removeCname = !cname && cnameIndex > -1;
@@ -99,11 +91,11 @@ const CreateHostingDialog = React.createClass({
     HostingActions.updateHosting(params.id, params);
   },
 
-  handleChangeLabel(event, value) {
-    this.setState({ label: value });
+  handleChangeName(event, value) {
+    this.setState({ name: value });
   },
 
-  handleChangeCName(event, value) {
+  handleCNAMEChange(event, value) {
     this.setState({ cname: value });
   },
 
@@ -112,18 +104,18 @@ const CreateHostingDialog = React.createClass({
   },
 
   handleDefaultDomain() {
-    const { isDefault } = this.state;
+    const { is_default } = this.state;
 
-    this.setState({ isDefault: !isDefault });
+    this.setState({ is_default: !is_default });
   },
 
   render() {
-    const { isDefault, isLoading, open, label, description, canSubmit, domains = [], cname, cnameIndex } = this.state;
+    const { is_default, isLoading, open, name, description, canSubmit, domains = [], cnameIndex, cname } = this.state;
     const title = this.hasEditMode() ? 'Edit Hosting' : 'Add Hosting';
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const defaultLink = `https://${currentInstanceName}.syncano.site`;
-    const labelLink = `https://${currentInstanceName}--${label}.syncano.site`;
+    const nameLink = `https://${name}--${currentInstanceName}.syncano.site`;
     const styles = this.getStyles();
 
     return (
@@ -147,14 +139,14 @@ const CreateHostingDialog = React.createClass({
             <Dialog.SidebarSection>
               Hosting allows you to manage, deploy and publish websites using Syncano Platform.
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection title="Hosting label">
+            <Dialog.SidebarSection title="Hosting name">
               Name of the hosting in Syncano Dashboard.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Domains">
               You can define different domains and use it for staging/production flow or simply to
               compare various versions of your web application.
               The domains will be linked to your hosting at
-              https://{currentInstanceName}--<em>domain</em>.syncano.site
+              https://<em>domain</em>--{currentInstanceName}.syncano.site
             </Dialog.SidebarSection>
             <Show if={this.hasEditMode()}>
               <Dialog.SidebarSection title="Default hosting">
@@ -174,14 +166,14 @@ const CreateHostingDialog = React.createClass({
           <TextField
             autoFocus={true}
             fullWidth={true}
-            value={label}
-            name="label"
-            onChange={this.handleChangeLabel}
-            errorText={this.getValidationMessages('label').join(' ')}
-            hintText="Hosting's label"
-            floatingLabelText="Label"
+            value={name}
+            name="name"
+            onChange={this.handleChangeName}
+            errorText={this.getValidationMessages('name').join(' ')}
+            hintText="Hosting's name"
+            floatingLabelText="Name"
             disabled={this.hasEditMode()}
-            data-e2e="hosting-dialog-label-input"
+            data-e2e="hosting-dialog-name-input"
           />
           <TextField
             fullWidth={true}
@@ -193,16 +185,6 @@ const CreateHostingDialog = React.createClass({
             floatingLabelText="Description"
             data-e2e="hosting-dialog-description-input"
             style={styles.contentSection}
-          />
-          <TextField
-            fullWidth={true}
-            defaultValue={domains[cnameIndex]}
-            value={cname}
-            name="CNAME"
-            onChange={this.handleChangeCName}
-            hintText="Hosting's CNAME"
-            floatingLabelText="CNAME"
-            data-e2e="hosting-dialog-cname-input"
           />
           <Show if={this.hasEditMode()}>
             <Dialog.ContentSection
@@ -222,21 +204,31 @@ const CreateHostingDialog = React.createClass({
                   {'Each instance can have one default hosting. '}
                   {'Setting this as a default will not affect '}
                   <a
-                    href={labelLink}
+                    href={nameLink}
                     target="_blank"
                   >
-                    {`${labelLink}.`}
+                    {`${nameLink}.`}
                   </a>
                 </Notification>
               </div>
               <Toggle
                 label="Set as default hosting"
                 style={styles.toggle}
-                toggled={isDefault}
+                toggled={is_default}
                 onToggle={this.handleDefaultDomain}
               />
             </Dialog.ContentSection>
           </Show>
+          <TextField
+            fullWidth={true}
+            defaultValue={domains[cnameIndex]}
+            value={cname}
+            name="CNAME"
+            onChange={this.handleCNAMEChange}
+            hintText="Hosting's CNAME"
+            floatingLabelText="CNAME"
+            data-e2e="hosting-dialog-cname-input"
+          />
         </div>
         <div className="vm-2-t">
           {this.renderFormNotifications()}
