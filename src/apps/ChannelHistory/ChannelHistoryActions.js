@@ -6,7 +6,6 @@ export default CreateActions({
     asyncResult: true,
     children: ['completed', 'failure'],
     loading: true,
-    redirectOnFailure: true,
     method: 'Syncano.Actions.Channels.getHistory'
   },
   fetchCurrentChannel: {

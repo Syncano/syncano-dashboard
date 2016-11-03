@@ -86,6 +86,14 @@ const Instance = React.createClass({
                 />
 
                 <Sidebar.LinkListItem
+                  key="Hosting"
+                  routeName="hosting"
+                  data-e2e="left-sidebar-hosting"
+                  iconClassName="synicon-web"
+                  primaryText="Hosting"
+                />
+
+                <Sidebar.LinkListItem
                   key="pushDevices"
                   routeName="all-push-notification-devices"
                   data-e2e="left-sidebar-all-push-notification-devices"
