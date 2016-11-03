@@ -197,10 +197,10 @@ export default {
     return _.get(errors, key, []);
   },
 
-  clearValidations() {
+  clearValidations(callback) {
     this.setState({
       errors: {}
-    });
+    }, callback);
   },
 
   isInputDisabled(inputName) {
