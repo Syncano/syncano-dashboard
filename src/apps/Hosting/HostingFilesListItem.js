@@ -45,11 +45,10 @@ const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDele
         color: Colors.blue500
       }
     },
-    truncate: {
-      width: '40vw',
-      whiteSpace: 'nowrap',
-      textOverflow: 'ellipsis',
-      overflow: 'hidden'
+    checkIcon: {
+      primaryText: {
+        width: '40vw'
+      }
     }
   };
   const handleClickFolderName = () => {
@@ -67,11 +66,7 @@ const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDele
       );
     }
 
-    return (
-      <div style={styles.truncate} >
-        {fileName}
-      </div>
-    );
+    return fileName;
   };
 
   return (
@@ -85,6 +80,7 @@ const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDele
         iconClassName={iconConfig.icon}
         background={iconConfig.color}
         checked={item.checked}
+        customStyles={styles.checkIcon}
         handleIconClick={onIconClick}
         primaryText={getFolderName()}
       />
