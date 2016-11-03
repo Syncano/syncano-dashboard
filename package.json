@@ -117,7 +117,7 @@
     "node-sass": "3.8.0",
     "raw-loader": "0.5.1",
     "react-prism": "3.2.1",
-    "react-snapshot-test-generator": "^1.0.1",
+    "react-snapshot-test-generator": "github:Syncano/react-snapshot-test-generator#build",
     "react-test-renderer": "15.4.0-rc.3",
     "sass-loader": "3.2.1",
     "selenium-standalone": "5.8.0",
