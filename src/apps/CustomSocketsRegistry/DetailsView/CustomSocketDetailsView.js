@@ -6,7 +6,7 @@ import _ from 'lodash';
 import Store from '../CustomSocketsRegistryStore';
 import Actions from '../CustomSocketsRegistryActions';
 
-import { Loading } from '../../../common';
+import { Loading, RegistryEmptyView } from '../../../common';
 import InfoBar from './CustomSocketDetailInfoBar';
 import ContentSection from './CustomSocketDetailContentSection';
 import CustomSocketInstallDialog from '../CustomSocketsRegistryDialog';
@@ -133,6 +133,19 @@ const CustomSocketsRegistryDetailsView = React.createClass({
     const { currentSocket, currentLanguage } = this.state;
     const styles = this.getStyles();
     const endpoints = this.getEndpointsObjects();
+    const customSocketImageDir = '/img/custom-socket-assemble.svg';
+
+    if (!currentSocket) {
+      return (
+        <RegistryEmptyView
+          title="This Socket is unavailable"
+          description={`It looks like the Socket is not valid. Please use another Socket, or if this is your own Socket,
+            try checking if YAML file is correct.`}
+          src={customSocketImageDir}
+          altText="No Custom Socket"
+        />
+      );
+    }
 
     return (
       <Loading show={isLoading}>

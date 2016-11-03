@@ -162,7 +162,6 @@ const CustomSocketsRegistryList = React.createClass({
     if (containsItems && !changeListView) {
       return (
         <RegistryEmptyView
-          style={styles.zeroStateContainer}
           title="Supercharge your project with Sockets from the community"
           description={`Think of Sockets Registry a package manager for Syncano Sockets. You can search for Custom
             Sockets created by community and add them to your projects.`}

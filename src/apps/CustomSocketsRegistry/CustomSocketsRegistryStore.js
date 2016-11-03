@@ -65,9 +65,13 @@ export default Reflux.createStore({
   },
 
   onFetchCustomSocketsInfoCompleted({ data, license, ymlUrl }) {
-    this.data.currentSocket = YAML.safeLoad(data);
-    this.data.currentSocket.license = license;
-    this.data.currentSocket.ymlUrl = ymlUrl;
+    try {
+      this.data.currentSocket = YAML.safeLoad(data);
+      this.data.currentSocket.license = license;
+      this.data.currentSocket.ymlUrl = ymlUrl;
+    } catch (e) {
+      this.data.currentSocket = null;
+    }
     this.trigger(this.data);
   },
 
