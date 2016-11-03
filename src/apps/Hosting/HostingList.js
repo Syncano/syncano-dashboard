@@ -38,7 +38,6 @@ const HostingList = React.createClass({
         title: 'Delete a Hosting',
         handleConfirm: HostingActions.removeHostings,
         items: getCheckedItems(),
-        itemLabelName: 'label',
         groupName: 'Hosting',
         isLoading
       }

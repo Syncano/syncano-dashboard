@@ -42,6 +42,7 @@ export default Radium(React.createClass({
   },
 
   renderClickableItem() {
+    const { style } = this.props;
     const styles = this.getStyles();
 
     return (
@@ -53,6 +54,7 @@ export default Radium(React.createClass({
           {},
           styles.base,
           styles.hoverable,
+          style,
           this.props.checked === true && styles.checked
         )}
         rounded={false}
@@ -63,6 +65,7 @@ export default Radium(React.createClass({
   },
 
   renderItem() {
+    const { style } = this.props;
     const styles = this.getStyles();
 
     return (
@@ -73,6 +76,7 @@ export default Radium(React.createClass({
           {},
           styles.base,
           styles.noBackground,
+          style,
           this.props.checked === true && styles.checked
         )}
         rounded={false}
