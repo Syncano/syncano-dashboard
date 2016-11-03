@@ -130,7 +130,7 @@
   },
   "scripts": {
     "start": "gulp webpack-dev-server",
-    "test": "jest --config jest.json",
+    "test": "react-snapshot-test-generator && jest --config jest.json",
     "build": "gulp build",
     "publish": "gulp publish",
     "clean": "gulp clean",
