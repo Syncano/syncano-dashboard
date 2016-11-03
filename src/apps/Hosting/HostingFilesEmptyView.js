@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { colors as Colors } from 'material-ui/styles';
-import { LinearProgress } from 'material-ui';
-import { EmptyView } from '../../common';
+import { LinearProgress, RaisedButton } from 'material-ui';
+import { EmptyView, Show } from '../../common';
 import UploadFilesButton from './UploadFilesButton';
 
 const HostingFilesEmptyView = ({
@@ -10,8 +10,10 @@ const HostingFilesEmptyView = ({
   currentInstanceName,
   errorResponses,
   filesCount,
+  handleCancelUploading,
   handleErrorsButtonClick,
   hasFiles,
+  isCanceled,
   isDeleting,
   isUploading,
   lastFileIndex,
@@ -29,7 +31,8 @@ const HostingFilesEmptyView = ({
     }
     return '';
   })();
-  const isActionInProgress = isDeleting || isUploading;
+  const cancelButtonStyle = { marginTop: 14 };
+  const isActionInProgress = !isCanceled && (isDeleting || isUploading);
   const uploadingFilesCount = lastFileIndex + 1;
   const uploadingProgressCount = currentFileIndex + 1;
   const isUploadFinished = currentFileIndex === lastFileIndex;
@@ -45,6 +48,15 @@ const HostingFilesEmptyView = ({
       <div className="vm-2-t">
         {`${action} file ${uploadingProgressCount} / ${uploadingFilesCount}`}
       </div>
+      <Show if={isUploading}>
+        <RaisedButton
+          label="Cancel uploading"
+          primary={true}
+          style={cancelButtonStyle}
+          onTouchTap={handleCancelUploading}
+          disabled={isUploadFinished}
+        />
+      </Show>
     </div>
   );
   const actionButton = isActionInProgress ? progressBar : (
@@ -77,6 +89,7 @@ const HostingFilesEmptyView = ({
       description={description}
       docsUrl="http://docs.syncano.io/docs/"
       errorResponses={errorResponses}
+      handleCancelUploading={handleCancelUploading}
       handleErrorsButtonClick={handleErrorsButtonClick}
       hostingDocsUrl="http://docs.syncano.io/docs/hosting"
       hostingDocsButtonLabel="View Hosting Docs"

@@ -63,7 +63,7 @@ const HostingFilesView = React.createClass({
     if (files && files.length) {
       const filesToUpload = _.map(files, (file) => this.extendFilePath(file, directory));
 
-      this.setState({ filesToUpload });
+      this.setState({ filesToUpload, isCanceled: false });
     }
   },
 
@@ -119,16 +119,17 @@ const HostingFilesView = React.createClass({
 
   render() {
     const {
-      isLoading,
-      hideDialogs,
-      items,
-      filesToUpload,
-      lastFileIndex,
       currentFileIndex,
-      isUploading,
-      isDeleting,
       errorResponses,
-      hostingDetails
+      filesToUpload,
+      hideDialogs,
+      hostingDetails,
+      isUploading,
+      isCanceled,
+      isDeleting,
+      isLoading,
+      items,
+      lastFileIndex
     } = this.state;
 
     if (!hostingDetails) {
@@ -177,21 +178,23 @@ const HostingFilesView = React.createClass({
 
         <Container>
           <HostingFilesList
+            currentFileIndex={currentFileIndex}
             currentInstanceName={currentInstanceName}
+            isCanceled={isCanceled}
             isDeleting={isDeleting}
             isUploading={isUploading}
-            lastFileIndex={lastFileIndex}
-            currentFileIndex={currentFileIndex}
-            handleClearFiles={this.handleClearFiles}
+            isLoading={isLoading}
+            items={items}
+            errorResponses={errorResponses}
             filesCount={filesToUpload.length}
+            handleClearFiles={this.handleClearFiles}
+            handleCancelUploading={HostingFilesActions.cancelUploading}
             handleErrorsButtonClick={HostingFilesActions.finishUploading}
             handleUploadFiles={this.handleUploadFiles}
             handleSendFiles={this.handleSendFiles}
-            errorResponses={errorResponses}
             hasFiles={hasFilesToUpload}
-            isLoading={isLoading}
-            items={items}
             hideDialogs={hideDialogs}
+            lastFileIndex={lastFileIndex}
           />
         </Container>
       </div>

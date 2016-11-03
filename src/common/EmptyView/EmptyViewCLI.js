@@ -188,13 +188,14 @@ const EmptyViewCLI = ({
           {renderErrors}
         </TableBody>
       </Table>
-      <FlatButton
-        label="Close"
-        primary={true}
-        style={styles.errorsBackButton}
-        onTouchTap={handleErrorsButtonClick}
-        disabled={!isUploadFinished}
-      />
+      <Show if={isUploadFinished}>
+        <FlatButton
+          label="Close"
+          primary={true}
+          style={styles.errorsBackButton}
+          onTouchTap={handleErrorsButtonClick}
+        />
+      </Show>
     </div>
   );
 

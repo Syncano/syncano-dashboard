@@ -21,6 +21,7 @@ export default Reflux.createStore({
     return {
       errorResponses: [],
       filesToUpload: [],
+      isCanceled: false,
       isLoading: true,
       isUploading: false,
       isDeleting: false,
@@ -54,6 +55,21 @@ export default Reflux.createStore({
 
     _.forEach(folderToCheck.files, (file) => {
       file.checked = !isChecked;
+    });
+    this.trigger(this.data);
+  },
+
+  onCancelUploading() {
+    this.data.filesToUpload = [];
+    this.data.errorResponses = [];
+    this.data.isCanceled = true;
+    this.data.isUploading = false;
+    this.refreshData();
+    HostingUploadDialogActions.dismissDialog();
+    removeEventListener('beforeunload', this.handleCloseOnUpload);
+    this.setSnackbarNotification({
+      message: 'Your uploading process has been canceled.',
+      autoHideDuration: 3000
     });
     this.trigger(this.data);
   },

@@ -20,6 +20,7 @@ const HostingUploadDialog = React.createClass({
       currentInstanceName,
       errorResponses,
       filesCount,
+      handleCancelUploading,
       handleErrorsButtonClick,
       hasFiles,
       isDeleting,
@@ -43,6 +44,7 @@ const HostingUploadDialog = React.createClass({
           currentInstanceName={currentInstanceName}
           filesCount={filesCount}
           errorResponses={errorResponses}
+          handleCancelUploading={handleCancelUploading}
           handleErrorsButtonClick={handleErrorsButtonClick}
           hasFiles={hasFiles}
           isDeleting={isDeleting}

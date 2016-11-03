@@ -252,8 +252,10 @@ const HostingFilesList = React.createClass({
       currentInstanceName,
       errorResponses,
       filesCount,
+      handleCancelUploading,
       handleErrorsButtonClick,
       hasFiles,
+      isCanceled,
       isDeleting,
       isUploading,
       lastFileIndex,
@@ -267,9 +269,11 @@ const HostingFilesList = React.createClass({
         currentInstanceName={currentInstanceName}
         errorResponses={errorResponses}
         filesCount={filesCount}
+        handleCancelUploading={handleCancelUploading}
         handleErrorsButtonClick={handleErrorsButtonClick}
         handleUploadFiles={this.handleUploadFiles}
         hasFiles={hasFiles}
+        isCanceled={isCanceled}
         isDeleting={isDeleting}
         isUploading={isUploading}
         lastFileIndex={lastFileIndex}
@@ -283,18 +287,20 @@ const HostingFilesList = React.createClass({
       currentInstanceName,
       errorResponses,
       filesCount,
+      handleCancelUploading,
       handleErrorsButtonClick,
       hasFiles,
       items,
-      isLoading,
+      isCanceled,
       isDeleting,
       isUploading,
+      isLoading,
       lastFileIndex,
       ...other
     } = this.props;
 
     const { _dialogVisible } = this.state;
-    const hasItemsAndErorrs = (items.length && errorResponses.length && !_dialogVisible);
+    const hasItemsAndErorrs = (items.length && errorResponses.length && !_dialogVisible && !isCanceled);
 
     if (!items.length || isDeleting || hasItemsAndErorrs) {
       return (
@@ -312,9 +318,11 @@ const HostingFilesList = React.createClass({
           currentInstanceName={currentInstanceName}
           errorResponses={errorResponses}
           filesCount={filesCount}
+          handleCancelUploading={handleCancelUploading}
           handleErrorsButtonClick={handleErrorsButtonClick}
           handleUploadFiles={this.handleUploadFiles}
           hasFiles={hasFiles}
+          isCanceled={isCanceled}
           isDeleting={isDeleting}
           isUploading={isUploading}
           lastFileIndex={lastFileIndex}

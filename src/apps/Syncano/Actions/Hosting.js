@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import bluebird from 'bluebird';
 
+let stopUploading = false;
+
 export default {
   list() {
     this.NewLibConnection
@@ -59,8 +61,14 @@ export default {
       .catch(this.failure);
   },
 
+  cancelUploading() {
+    stopUploading = true;
+  },
+
   uploadFiles(hostingId, files) {
     const all = this.NewLibConnection.HostingFile.please().all({ hostingId }, { ordering: 'desc' });
+
+    bluebird.config.cancellation = true;
 
     all.on('stop', (fetchedFiles) => {
       bluebird.mapSeries(files, (file, currentFileIndex) => {
@@ -82,6 +90,10 @@ export default {
             }
           );
         };
+
+        if (stopUploading) {
+          return true;
+        }
 
         if (fileToUpdate) {
           return this.NewLibConnection
