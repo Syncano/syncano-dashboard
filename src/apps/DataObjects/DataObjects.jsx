@@ -14,7 +14,7 @@ import Store from './DataObjectsStore';
 
 // Components
 import { IconButton } from 'material-ui';
-import { Container, Loading, Dialog, InnerToolbar } from '../../common/';
+import { Container, Dialog, InnerToolbar, Loading } from '../../common/';
 
 // Local components
 import ReadOnlyTooltip from './ReadOnlyTooltip';
@@ -30,7 +30,6 @@ const DataObjects = React.createClass({
   ],
 
   componentDidMount() {
-    console.info('DataObjects::componentDidMount');
     const { location } = this.props;
 
     Actions.fetch();
@@ -41,7 +40,6 @@ const DataObjects = React.createClass({
   },
 
   componentWillUpdate(nextProps, nextState) {
-    console.info('DataObjects::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
   },
 
@@ -56,7 +54,6 @@ const DataObjects = React.createClass({
   },
 
   handleDelete() {
-    console.info('DataObjects::handleDelete');
     const { classObj } = this.state;
 
     Actions.removeDataObjects(classObj.name, Store.getIDsFromTable());
@@ -98,7 +95,6 @@ const DataObjects = React.createClass({
   },
 
   renderTable() {
-    console.info('DataObjects::renderTable');
     const { hasNextPage, isLoading, items, selectedRows, classObj, users } = this.state;
 
     return (
@@ -117,7 +113,7 @@ const DataObjects = React.createClass({
 
   render() {
     const { className } = this.props.params;
-    const { selectedRows, isLoading } = this.state;
+    const { isLoading, selectedRows } = this.state;
     const title = `Data Class: ${className}`;
     let selectedMessageText = '';
 

@@ -13,7 +13,7 @@ export default Radium(React.createClass({
   getDefaultProps() {
     return {
       type: 'circular',
-      size: 1,
+      size: 70,
       show: false
     };
   },
