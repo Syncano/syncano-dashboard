@@ -1,5 +1,5 @@
 export default {
-  url: 'https://localhost:8080/#/instances/',
+  url: 'https://localhost:8080/#/instances',
   elements: {
     syncanoLogo: {
       selector: '.logo-white'

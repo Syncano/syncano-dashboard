@@ -1,7 +1,13 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin, SnackbarNotificationMixin } from '../../mixins';
+import {
+  CheckListStoreMixin,
+  StoreFormMixin,
+  StoreLoadingMixin,
+  WaitForStoreMixin,
+  SnackbarNotificationMixin
+} from '../../mixins';
 
 import Actions from './HostingFilesActions';
 import HostingUploadDialogActions from './HostingUploadDialogActions';
@@ -12,6 +18,7 @@ export default Reflux.createStore({
 
   mixins: [
     CheckListStoreMixin,
+    StoreFormMixin,
     StoreLoadingMixin,
     WaitForStoreMixin,
     SnackbarNotificationMixin
@@ -19,13 +26,18 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
+      currentFolderName: '',
+      directoryDepth: 0,
       errorResponses: [],
       filesToUpload: [],
       isCanceled: false,
       isLoading: true,
       isUploading: false,
       isDeleting: false,
-      items: []
+      items: [],
+      previousFolders: [],
+      showNewFolderForm: false,
+      name: ''
     };
   },
 

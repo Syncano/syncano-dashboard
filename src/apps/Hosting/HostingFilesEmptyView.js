@@ -96,9 +96,9 @@ const HostingFilesEmptyView = ({
       isUploadFinished={isUploadFinished}
       iconClassName={iconClassName}
       iconColor={iconColor}
-      mainTitle="Hosting Socket Files"
+      mainTitle="Hosting Files"
       showDocsUrl={false}
-      urlLabel="Hosting Socket"
+      urlLabel="Hosting"
     />
   );
 };

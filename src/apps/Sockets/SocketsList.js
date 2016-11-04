@@ -12,7 +12,6 @@ import ScriptEndpointsList from '../ScriptEndpoints/ScriptEndpointsList';
 import TriggersList from '../Triggers/TriggersList';
 import SchedulesList from '../Schedules/SchedulesList';
 import ChannelsList from '../Channels/ChannelsList';
-import HostingList from '../Hosting/HostingList';
 import { Show, ShowMore } from '../../common/';
 
 const SocketsList = ({ router, params, sockets, handleTitleClick, visibleItems = 3 }) => {
@@ -36,10 +35,6 @@ const SocketsList = ({ router, params, sockets, handleTitleClick, visibleItems =
     channels: {
       component: ChannelsList,
       routeName: 'channels'
-    },
-    hosting: {
-      component: HostingList,
-      routeName: 'hosting'
     },
     customSockets: {
       component: CustomSocketsList,

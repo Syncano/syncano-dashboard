@@ -24,7 +24,6 @@ import SocketsDialog from './SocketsDialog';
 import SocketsLists from './SocketsList';
 import SocketsInnerToolbar from './SocketsInnerToolbar';
 import PushNotifications from '../PushNotifications';
-import Hosting from '../Hosting';
 
 const Sockets = React.createClass({
   mixins: [
@@ -184,7 +183,6 @@ const Sockets = React.createClass({
         <Schedules.Dialog />
         <Triggers.Dialog />
         <Channels.Dialog />
-        <Hosting.Dialog />
         <Channels.SendMessageDialog />
         <PushNotifications.APNSConfigDialog />
         <PushNotifications.SummaryDialog />

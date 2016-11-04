@@ -48,11 +48,9 @@ const ProfileBillingPlan = Radium(React.createClass({
   },
 
   getChildContext() {
-    const { router } = this.props;
+    const { mode } = this.props.params;
 
-    return {
-      isDowngrade: router.isActive('profile-billing-plan-downgrade')
-    };
+    return { mode };
   },
 
   componentDidMount() {
@@ -262,7 +260,7 @@ const ProfileBillingPlan = Radium(React.createClass({
 }));
 
 ProfileBillingPlan.childContextTypes = {
-  isDowngrade: PropTypes.bool
+  mode: PropTypes.string
 };
 
 export default withRouter(ProfileBillingPlan);
