@@ -4,17 +4,15 @@ import Helmet from 'react-helmet';
 
 import { FormMixin } from '../../mixins';
 
-import Actions from './ProfileActions';
-import Store from './ProfileSettingsStore';
+import ProfileSettingsStore from './ProfileSettingsStore';
+import ProfileActions from './ProfileActions';
 
 import { TextField, RaisedButton } from 'material-ui';
 import { Container, InnerToolbar } from '../../common/';
 
-export default React.createClass({
-  displayName: 'ProfileSettings',
-
+const ProfileSettings = React.createClass({
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(ProfileSettingsStore),
     FormMixin
   ],
 
@@ -47,7 +45,7 @@ export default React.createClass({
   },
 
   handleSuccessfullValidation() {
-    Actions.updateSettings(this.state);
+    ProfileActions.updateSettings(this.state);
   },
 
   render() {
@@ -116,3 +114,5 @@ export default React.createClass({
     );
   }
 });
+
+export default ProfileSettings;

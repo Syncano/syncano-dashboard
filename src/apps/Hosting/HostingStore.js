@@ -1,14 +1,7 @@
 import Reflux from 'reflux';
-import shortid from 'shortid';
 import _ from 'lodash';
 
-import {
-  CheckListStoreMixin,
-  StoreFormMixin,
-  WaitForStoreMixin,
-  StoreLoadingMixin,
-  DialogStoreMixin
-} from '../../mixins';
+import { CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './HostingActions';
@@ -19,9 +12,7 @@ export default Reflux.createStore({
   mixins: [
     CheckListStoreMixin,
     WaitForStoreMixin,
-    StoreLoadingMixin,
-    DialogStoreMixin,
-    StoreFormMixin
+    StoreLoadingMixin
   ],
 
   getInitialState() {
@@ -38,7 +29,6 @@ export default Reflux.createStore({
       this.refreshData
     );
     this.setLoadingStates();
-    this.listenToForms();
   },
 
   sendHostingAnalytics(type, payload) {
@@ -50,36 +40,44 @@ export default Reflux.createStore({
     });
   },
 
+  sortHostingDomains(domains, label, isDefault) {
+    // cname(s) -> default -> label
+    const cnameArray = _.without(domains, 'default', label);
+    const sortedDomains = [...cnameArray];
+
+    if (isDefault) {
+      sortedDomains.push('default');
+    }
+
+    sortedDomains.push(label);
+
+    return sortedDomains;
+  },
+
   setHosting(data) {
-    const addIdToDomain = (domain) => ({ id: shortid.generate(), value: domain });
-    const setHosting = (hosting) => {
-      hosting.domains = _.map(hosting.domains, addIdToDomain);
-      hosting.isDefault = _.some(hosting.domains, { value: 'default' });
+    const prepareHosting = (hosting) => {
+      hosting.domains = this.sortHostingDomains(hosting.domains, hosting.name, hosting.is_default);
+      hosting.cnameIndex = _.findIndex(hosting.domains, (domain) => domain !== 'default' && domain !== hosting.name);
       return hosting;
     };
-    const hostings = _.forEach(data, setHosting);
 
-    this.data.items = hostings;
+    this.data.items = _.forEach(data, prepareHosting);
     this.trigger(this.data);
   },
 
   refreshData() {
-    Actions.fetchHosting();
+    Actions.fetchHostings();
   },
 
-  onFetchHostingCompleted(data) {
+  onFetchHostingsCompleted(data) {
     Actions.setHosting(data);
   },
 
   onCreateHostingCompleted(payload) {
-    this.refreshData();
-    this.dismissDialog();
     this.sendHostingAnalytics('add', payload);
   },
 
   onUpdateHostingCompleted(payload) {
-    this.refreshData();
-    this.dismissDialog();
     this.sendHostingAnalytics('edit', payload);
   },
 

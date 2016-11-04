@@ -2,7 +2,18 @@ import React from 'react';
 import _ from 'lodash';
 
 import Show from '../Show';
-import { FontIcon, FlatButton, RaisedButton } from 'material-ui';
+import {
+  FontIcon,
+  FlatButton,
+  RaisedButton,
+  Table,
+  TableBody,
+  TableRowColumn,
+  TableRow,
+  TableHeader,
+  TableHeaderColumn
+} from 'material-ui';
+import { colors as Colors } from 'material-ui/styles';
 import { BashSnippet } from '../../common';
 
 const EmptyViewCLI = ({
@@ -13,12 +24,15 @@ const EmptyViewCLI = ({
   docsUrl,
   description,
   handleClick,
+  handleErrorsButtonClick,
   hostingDocsUrl,
   hostingDocsButtonLabel,
   iconClassName,
   iconColor,
+  isUploadFinished,
   mainTitle,
   showDocsUrl = true,
+  errorResponses,
   urlLabel,
   actionButton = (
     <RaisedButton
@@ -55,7 +69,10 @@ const EmptyViewCLI = ({
       marginTop: 40,
       fontSize: 26,
       fontWeight: 400,
-      lineHeight: '34px'
+      lineHeight: '34px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     description: {
       lineHeight: '26px',
@@ -63,17 +80,147 @@ const EmptyViewCLI = ({
     },
     docsButton: {
       marginTop: 10
+    },
+    errorIcon: {
+      marginRight: 5,
+      display: 'inline-flex',
+      fontSize: 30
+    },
+    tableBody: {
+      display: 'block',
+      height: 250
+    },
+    tableRow: {
+      display: 'flex'
+    },
+    tableRowColumnLeft: {
+      flex: 2,
+      textOverflow: 'clip',
+      overflow: 'scroll',
+      paddingLeft: 0
+    },
+    tableRowColumnRight: {
+      flex: 1,
+      color: Colors.red500
+    },
+    tableHeaderColumnLeft: {
+      flex: 2
+    },
+    tableHeaderColumnRight: {
+      flex: 1
+    },
+    alignCenter: {
+      display: 'flex',
+      alignItems: 'center',
+      flexWrap: 'wrap'
+    },
+    errorsBackButton: {
+      marginTop: 15
     }
   };
 
-  const renderSnippets = (items) => (
-    _.map(items, (item) => (
+  const renderSnippets = (
+    _.map(bashSnippets, (item) => (
       <BashSnippet
         description={item.description}
         snippet={item.snippet}
       />
       )
     )
+  );
+
+  const renderErrors = (
+    _.map(errorResponses, (errorResponse) => {
+      const fieldsErrors = errorResponse.errors && (errorResponse.errors.path || errorResponse.errors.file);
+
+      errorResponse.message = errorResponse.message[0].toUpperCase() + errorResponse.message.slice(1);
+      const error = fieldsErrors || errorResponse.message;
+
+      return (
+        <TableRow style={styles.tableRow}>
+          <TableRowColumn style={{ ...styles.tableRowColumnLeft, ...styles.alignCenter }}>
+            {errorResponse.file.path}
+          </TableRowColumn>
+          <TableRowColumn style={{ ...styles.tableRowColumnRight, ...styles.alignCenter }}>
+            {error}
+          </TableRowColumn>
+        </TableRow>
+      );
+    })
+  );
+
+  const renderErrorsView = (
+    <div>
+      <div style={styles.title}>
+        <FontIcon
+          className="synicon-alert-circle-outline"
+          color={Colors.red500}
+          style={styles.errorIcon}
+          data-e2e="hosting-files-alert-icon"
+        />
+        <span>Errors</span>
+      </div>
+      <div style={styles.description}>
+        The following {errorResponses.length} files had problems while uploading.
+      </div>
+      <Table style={styles.table}>
+        <TableHeader
+          displaySelectAll={false}
+          adjustForCheckbox={false}
+        >
+          <TableRow style={styles.tableRow}>
+            <TableHeaderColumn
+              style={{ ...styles.tableHeaderColumnLeft, ...styles.alignCenter }}
+            >
+              Path
+            </TableHeaderColumn>
+            <TableHeaderColumn
+              style={{ ...styles.tableHeaderColumnRight, ...styles.alignCenter }}
+            >
+              Error
+            </TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody
+          displayRowCheckbox={false}
+          style={styles.tableBody}
+        >
+          {renderErrors}
+        </TableBody>
+      </Table>
+      <FlatButton
+        label="Close"
+        primary={true}
+        style={styles.errorsBackButton}
+        onTouchTap={handleErrorsButtonClick}
+        disabled={!isUploadFinished}
+      />
+    </div>
+  );
+
+  const renderCLIUsage = (
+    <div>
+      <div style={styles.title}>
+        {CLITitle}
+      </div>
+      <div style={styles.description}>
+        {CLIDescription}
+        <a
+          href="https://github.com/Syncano/syncano-cli"
+          target="_blank"
+        >
+          Syncano CLI.
+        </a>
+      </div>
+      {renderSnippets}
+      <FlatButton
+        label={hostingDocsButtonLabel}
+        primary={true}
+        href={hostingDocsUrl}
+        target="_blank"
+        style={styles.docsButton}
+      />
+    </div>
   );
 
   return (
@@ -106,26 +253,7 @@ const EmptyViewCLI = ({
           </div>
         </Show>
         {actionButton}
-        <div style={styles.title}>
-          {CLITitle}
-        </div>
-        <div style={styles.description}>
-          {CLIDescription}
-          <a
-            href="https://github.com/Syncano/syncano-cli"
-            target="_blank"
-          >
-            Syncano CLI.
-          </a>
-        </div>
-        {renderSnippets(bashSnippets)}
-        <FlatButton
-          label={hostingDocsButtonLabel}
-          primary={true}
-          href={hostingDocsUrl}
-          target="_blank"
-          style={styles.docsButton}
-        />
+        {!errorResponses.length ? renderCLIUsage : renderErrorsView}
       </div>
     </div>
   );

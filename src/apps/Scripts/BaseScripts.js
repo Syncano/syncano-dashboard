@@ -37,6 +37,8 @@ const baseScripts = {
   },
   base_python: {
     source: `
+      # coding=UTF8
+
       # ARGS, CONFIG and META are three default dictionaries you
       # have access to from within the script. Click 'RUN' to see what
       # they contain. CONFIG is empty because you'd need to add key/values
@@ -66,6 +68,24 @@ const baseScripts = {
       # )
 
       # print (new_user)`
+  },
+  base_php: {
+    source: `
+    // Start coding!
+    // Note: You do not need opening / closing PHP tags in this script
+
+    if ($CONFIG) {
+      foreach ($CONFIG as $key => $val) {
+        echo "$key = $val", PHP_EOL;
+      }
+    } else {
+      $number = array("one", "two", "three", "four", "five");
+
+      foreach ($number as $key => $val) {
+        echo "$key = $val", PHP_EOL;
+      }
+    }
+      `
   }
 };
 

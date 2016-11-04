@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect, IndexRedirect, IndexRoute } from 'react-router';
 
-import RoutesUtil from './utils/RoutesUtil';
+import { RoutesUtil } from './utils';
 
 // Pages
 import AppPage from './pages/app';
@@ -461,21 +461,15 @@ export default (
         component={ProfilePage}
         path="/account"
       >
-
-        <Route
-          name="profile-billing-plan"
-          component={Profile.BillingPlan}
-          path="plan"
-        />
         <Route
           name="profile-billing-plan-cancel"
           component={Profile.BillingPlanCancel}
           path="plan/cancel"
         />
         <Route
-          name="profile-billing-plan-downgrade"
+          name="profile-billing-plan"
           component={Profile.BillingPlan}
-          path="plan/downgrade"
+          path="plan(/:mode)"
         />
         <Route
           name="profile-billing-usage"

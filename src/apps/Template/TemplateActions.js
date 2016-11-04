@@ -5,6 +5,7 @@ export default CreateActions({
   setFlag: {},
   resetFlag: {},
   setDataSource: {},
+  clearTemplate: {},
   fetchTemplate: {
     asyncResult: true,
     loading: true,

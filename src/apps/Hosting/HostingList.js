@@ -14,8 +14,6 @@ import HostingPublishDialog from './HostingPublishDialog';
 const Column = ColumnList.Column;
 
 const HostingList = React.createClass({
-  displayName: 'HostingList',
-
   mixins: [
     DialogsMixin
   ],
@@ -40,7 +38,6 @@ const HostingList = React.createClass({
         title: 'Delete a Hosting',
         handleConfirm: HostingActions.removeHostings,
         items: getCheckedItems(),
-        itemLabelName: 'label',
         groupName: 'Hosting',
         isLoading
       }

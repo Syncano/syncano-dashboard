@@ -4,11 +4,11 @@ import Reflux from 'reflux';
 
 import { DialogMixin } from '../../mixins';
 
-import Store from './ProfileBillingPlanReceiptDialogStore';
-import PlanStore from './ProfileBillingPlanStore';
-import BillingPlanActions from './ProfileBillingPlanActions';
-import PlanDialogActions from './ProfileBillingPlanDialogActions';
-import PlanDialogStore from './ProfileBillingPlanDialogStore';
+import ProfileBillingPlanReceiptDialogStore from './ProfileBillingPlanReceiptDialogStore';
+import ProfileBillingPlanStore from './ProfileBillingPlanStore';
+import ProfileBillingPlanActions from './ProfileBillingPlanActions';
+import ProfileBillingPlanDialogActions from './ProfileBillingPlanDialogActions';
+import ProfileBillingPlanDialogStore from './ProfileBillingPlanDialogStore';
 import SessionStore from '../Session/SessionStore';
 
 import { RaisedButton } from 'material-ui';
@@ -16,17 +16,15 @@ import { RaisedButton } from 'material-ui';
 import { CreditCard, Dialog } from '../../common/';
 
 const ProfileBillingPlanReceiptDialog = React.createClass({
-  displayName: 'ProfileBillingPlanReceiptDialog',
-
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(ProfileBillingPlanReceiptDialogStore),
     DialogMixin
   ],
 
   getStyles() {
     return {
       narrowWrapper: {
-        maxWidth: '500px',
+        maxWidth: 500,
         margin: '0 auto'
       },
       title: {
@@ -49,20 +47,20 @@ const ProfileBillingPlanReceiptDialog = React.createClass({
   },
 
   handleDialogShow() {
-    PlanDialogActions.fetchBillingCard();
+    ProfileBillingPlanDialogActions.fetchBillingCard();
   },
 
   handleDismiss() {
-    BillingPlanActions.fetchBillingProfile();
-    BillingPlanActions.fetchBillingSubscriptions();
-    PlanDialogStore.resetSelectedPricingPlan();
+    ProfileBillingPlanActions.fetchBillingProfile();
+    ProfileBillingPlanActions.fetchBillingSubscriptions();
+    ProfileBillingPlanDialogStore.resetSelectedPricingPlan();
     this.handleCancel();
   },
 
   renderHeader() {
     const styles = this.getStyles();
-    const selectedPricingPlanName = PlanDialogStore.getSelectedPricingPlanName();
-    const selectedPricingPlanPrice = PlanDialogStore.getTotalPlanValue();
+    const selectedPricingPlanName = ProfileBillingPlanDialogStore.getSelectedPricingPlanName();
+    const selectedPricingPlanPrice = ProfileBillingPlanDialogStore.getTotalPlanValue();
 
     let title = (
       <span data-e2e="plan-receipt-dialog-current">
@@ -72,7 +70,7 @@ const ProfileBillingPlanReceiptDialog = React.createClass({
     let text = `Your monthly billing cycle starts on the 1st day of every month. Your payment for the current month will
       be prorated and charged immediately.`;
 
-    if (PlanStore.getPlanTotalValue()) {
+    if (ProfileBillingPlanStore.getPlanTotalValue()) {
       title = (
         <span data-e2e="plan-receipt-dialog-next">
           Your Next Plan will be: <strong>{selectedPricingPlanName}</strong> (${selectedPricingPlanPrice} per month)
@@ -103,7 +101,7 @@ const ProfileBillingPlanReceiptDialog = React.createClass({
 
   renderPaymentMethod() {
     const styles = this.getStyles();
-    const { card } = PlanDialogStore.data;
+    const { card } = ProfileBillingPlanDialogStore.data;
 
     if (!card) {
       return null;

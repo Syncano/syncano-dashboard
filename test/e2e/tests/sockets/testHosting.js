@@ -20,9 +20,9 @@ export default addTestNamePrefixes({
     hostingPage
       .goToUrl(instanceName, 'hosting')
       .clickElement('@addHostingButton')
-      .fillInput('@labelInput', hosting)
+      .fillInput('@nameInput', 'name')
       .fillInput('@descriptionInput', hosting)
-      .fillInput('@newDomainInput', domain)
+      .fillInput('@cnameInput', domain)
       .clickElement('@addHostingConfirmButton')
       .waitForElementVisible('@hostingList');
   },
@@ -34,11 +34,23 @@ export default addTestNamePrefixes({
     hostingPage
       .clickDropdown('@hostingDropdownIcon', dropdownOption)
       .fillInput('@descriptionInput', utils.addSuffix('edited'))
-      .fillInput('@newDomainInput', domain)
-      .clickElement('@addNewDomainButton')
+      .fillInput('@cnameInput', domain)
       .clickElement('@addHostingConfirmButton')
       .waitForElementPresent('@hostingList')
       .assert.containsText('@hostingListItemDescription', utils.addSuffix('edited'));
+  },
+  'Administrator sends file(s) to Hosting Socket': (client) => {
+    const hostingPage = client.page.hostingPage();
+    const testFileLocation = utils.getTestFileLocation();
+
+    hostingPage
+      .clickElement('@hostingListItemFilesLink')
+      .waitForElementPresent('@hostingUploadFilesInput')
+      .setValue('@hostingUploadFilesInput', testFileLocation)
+      .clickElement('@hostingSendFilesButton')
+      .waitForElementVisible('@hostingFilesListItem')
+      .assert.elementNotPresent('@hostingFilesAlertIcon')
+      .clickElement('@innerToolbarBackButton');
   },
   'Administrator deletes a Hosting Socket': (client) => {
     const hostingPage = client.page.hostingPage();
