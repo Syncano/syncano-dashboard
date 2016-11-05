@@ -111,7 +111,7 @@
     "http-server": "0.9.0",
     "nightwatch": "0.9.8",
     "node-libs-browser": ">=0.5.3",
-    "node-sass": "3.10.1",
+    "node-sass": "3.11.2",
     "raw-loader": "0.5.1",
     "react-prism": "4.0.0",
     "sass-loader": "4.0.2",
