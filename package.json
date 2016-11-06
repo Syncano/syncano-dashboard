@@ -65,7 +65,7 @@
     "syncano": "1.0.28",
     "urijs": "1.18.2",
     "use-named-routes": "0.3.2",
-    "validate.js": "0.11.0"
+    "validate.js": "0.11.1"
   },
   "devDependencies": {
     "autoprefixer-loader": "3.2.0",
