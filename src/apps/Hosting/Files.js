@@ -56,7 +56,7 @@ const HostingFilesView = React.createClass({
         alignItems: 'center'
       },
       newFolderNameInput: {
-        width: 230,
+        width: 180,
         marginRight: 10,
         marginBottom: hasErrors && 22
       },
@@ -212,7 +212,7 @@ const HostingFilesView = React.createClass({
     return file;
   },
 
-  renderNewFolderButtons() {
+  renderActionButtons() {
     const { name, showNewFolderForm } = this.state;
     const styles = this.getStyles();
     const createFolderButtonLabel = showNewFolderForm ? 'Create' : 'Create new folder';
@@ -229,7 +229,7 @@ const HostingFilesView = React.createClass({
             onChange={this.handleNewFolderNameChange}
             errorText={this.getValidationMessages('name').join(' ')}
             hintText="Type new folder name"
-            style={{ ...styles.newFolderNameInput }}
+            style={styles.newFolderNameInput}
           />
         </Show>
         <RaisedButton
@@ -238,6 +238,13 @@ const HostingFilesView = React.createClass({
           style={styles.newFolderButton}
           onTouchTap={createFolderButtonAction}
           disabled={disableNewFolderButton}
+        />
+        <RaisedButton
+          label="Upload files"
+          primary={true}
+          icon={<FontIcon className="synicon-cloud-upload" />}
+          style={{ marginRight: 10 }}
+          onTouchTap={this.handleShowUploadDialog}
         />
       </div>
     );
@@ -260,17 +267,16 @@ const HostingFilesView = React.createClass({
       directoryDepth,
       previousFolders
     } = this.state;
-
-    if (!hostingDetails) {
-      return null;
-    }
-
     const styles = this.getStyles();
     const hasFilesToUpload = filesToUpload.length > 0;
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const hostingUrl = this.getHostingUrl();
     const pageTitle = this.getToolbarTitle();
+
+    if (!hostingDetails) {
+      return null;
+    }
 
     return (
       <div>
@@ -285,18 +291,9 @@ const HostingFilesView = React.createClass({
           forceBackFallback={true}
           backButtonTooltip="Go Back to Hosting"
         >
-          <Show if={items.length && !isLoading}>
-            <RaisedButton
-              label="Upload files"
-              primary={true}
-              icon={<FontIcon className="synicon-cloud-upload" />}
-              style={{ marginRight: 10 }}
-              onTouchTap={this.handleShowUploadDialog}
-            />
-          </Show>
           <div style={styles.buttonsWrapper}>
             <Show if={items.length && !isLoading}>
-              {this.renderNewFolderButtons()}
+              {this.renderActionButtons()}
             </Show>
             <RaisedButton
               label="Go to site"

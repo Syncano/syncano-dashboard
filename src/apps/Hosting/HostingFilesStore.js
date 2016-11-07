@@ -76,6 +76,8 @@ export default Reflux.createStore({
     this.data.errorResponses = [];
     this.data.isCanceled = true;
     this.data.isUploading = false;
+    this.lastFileIndex = 0;
+    this.currentFileIndex = 0;
     this.refreshData();
     HostingUploadDialogActions.dismissDialog();
     removeEventListener('beforeunload', this.handleCloseOnUpload);

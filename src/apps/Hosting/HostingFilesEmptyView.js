@@ -31,8 +31,9 @@ const HostingFilesEmptyView = ({
     }
     return '';
   })();
-  const cancelButtonStyle = { marginTop: 14 };
-  const isActionInProgress = !isCanceled && (isDeleting || isUploading);
+
+  const actionButtonStyle = { marginTop: 14 };
+  const isActionInProgress = !isCanceled && (isDeleting || isUploading || errorResponses.length);
   const uploadingFilesCount = lastFileIndex + 1;
   const uploadingProgressCount = currentFileIndex + 1;
   const isUploadFinished = currentFileIndex === lastFileIndex;
@@ -48,13 +49,12 @@ const HostingFilesEmptyView = ({
       <div className="vm-2-t">
         {`${action} file ${uploadingProgressCount} / ${uploadingFilesCount}`}
       </div>
-      <Show if={isUploading}>
+      <Show if={isUploading || (isUploadFinished && errorResponses.length)}>
         <RaisedButton
-          label="Cancel uploading"
+          label={isUploading ? 'Cancel' : 'Close'}
+          style={actionButtonStyle}
+          onTouchTap={isUploading ? handleCancelUploading : handleErrorsButtonClick}
           primary={true}
-          style={cancelButtonStyle}
-          onTouchTap={handleCancelUploading}
-          disabled={isUploadFinished}
         />
       </Show>
     </div>
