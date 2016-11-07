@@ -309,14 +309,13 @@ const InstanceDialog = React.createClass({
         showCloseButton={!isRestoring}
         actions={!isRestoring &&
           <div>
-            {this.hasEditMode()
-              ? <FlatButton
+            {this.hasEditMode() &&
+              <FlatButton
                 style={{ float: 'left' }}
                 labelStyle={{ color: Colors.red400 }}
                 label="DELETE AN INSTANCE"
                 onTouchTap={this.handleDeleteInstance}
               />
-              : null
             }
             <Dialog.StandardButtons
               disabled={!canSubmit}

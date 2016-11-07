@@ -26,7 +26,6 @@ import LinkWrapper from './LinkWrapper';
 import Lists from './Lists';
 import Loading from './Loading';
 import Logo from './Logo';
-import MethodLabel from './MethodLabel';
 import MobileOnboarding from './MobileOnboarding';
 import NoMobileInfo from './NoMobileInfo';
 import Notification from './Notification';
@@ -36,6 +35,7 @@ import PaymentIcons from './PaymentIcons';
 import Popover from './Popover';
 import PricingPlans from './PricingPlans';
 import DialogRefreshButton from './DialogRefreshButton';
+import RegistryEmptyView from './RegistryEmptyView';
 import SelectFieldWrapper from './SelectFieldWrapper';
 import SelectWrapper from './SelectWrapper';
 import Show from './Show';
@@ -57,6 +57,7 @@ import UpgradeButton from './UpgradeButton';
 import UpgradeNowToolbar from './UpgradeNowToolbar';
 import StatusLabel from './StatusLabel';
 import LinkWithIcon from './LinkWithIcon';
+import MethodLabel from './MethodLabel';
 
 export { AlertPageContent };
 export { AutoCompleteWrapper };
@@ -96,6 +97,7 @@ export { PaymentIcons };
 export { Popover };
 export { PricingPlans };
 export { DialogRefreshButton };
+export { RegistryEmptyView };
 export { SelectFieldWrapper };
 export { SelectWrapper };
 export { Show };
@@ -158,6 +160,7 @@ export default {
   Popover,
   PricingPlans,
   DialogRefreshButton,
+  RegistryEmptyView,
   SelectFieldWrapper,
   SelectWrapper,
   Show,

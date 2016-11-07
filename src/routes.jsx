@@ -36,6 +36,7 @@ import ChannelHistory from './apps/ChannelHistory';
 import Channels from './apps/Channels';
 import Classes from './apps/Classes';
 import CustomSockets from './apps/CustomSockets';
+import CustomSocketsRegistry from './apps/CustomSocketsRegistry';
 import ScriptEndpoints from './apps/ScriptEndpoints';
 import Script from './apps/Script';
 import Scripts from './apps/Scripts';
@@ -507,6 +508,26 @@ export default (
         />
 
         <IndexRoute component={Profile.Settings} />
+      </Route>
+
+      {/* Custom Sockets Registry */}
+      <Route
+        name="custom-sockets-registry"
+        component={CustomSocketsRegistry}
+        path="custom-sockets-registry"
+      >
+        <Route
+          name="custom-sockets-registry-list"
+          component={CustomSocketsRegistry.List}
+          path="list"
+        />
+        <Route
+          name="custom-sockets-registry-details"
+          component={CustomSocketsRegistry.Details}
+          path=":customSocketId/details"
+        />
+
+        <IndexRoute component={CustomSocketsRegistry.List} />
       </Route>
 
       {/* Solutions */}
