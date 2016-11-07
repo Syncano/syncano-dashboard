@@ -19,7 +19,7 @@ const instancesCommands = {
 };
 
 export default {
-  url: 'https://localhost:8080/#/instances/',
+  url: 'https://localhost:8080/#/instances',
   commands: [instancesCommands],
   elements: {
     instanceDropdown: {
