@@ -44,18 +44,18 @@ const RuntimesAutoComplete = ({
     handleUpdateAutoComplete(value.text);
   };
 
-  const renderRuntimeOption = (item) => {
+  const renderRuntimeOption = (item, key) => {
     const deprecatedInfo = item.deprecated ? 'deprecated' : 'latest';
     const libraryVersion = item.library_version ? `${item.library_version} ${deprecatedInfo}` : 'unavailable';
 
     return ({
       text: item.name,
-      payload: item.key,
+      payload: key,
       value:
         <MenuItem
           data-e2e={`${_.toLower(item.name)}-script-runtime-option`}
-          key={`select-${item.key}`}
-          value={item.key}
+          key={`select-${key}`}
+          value={key}
           style={styles.autoCompleteItem}
           leftIcon={(
             <FontIcon

@@ -4,5 +4,4 @@ src/segment.js
 src/stripe.js
 src/raven.js
 
-test/e2e/tempAccounts.js
 test/e2e/tempInstances.js

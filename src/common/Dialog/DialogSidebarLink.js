@@ -32,7 +32,8 @@ export default React.createClass({
         >
           {children}
         </a>
-    ); }
+      );
+    }
 
     return (
       <Link

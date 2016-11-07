@@ -5,14 +5,14 @@ export default {
     addHostingButton: {
       selector: '[data-e2e="add-hosting-button"]'
     },
-    labelInput: {
-      selector: '[data-e2e="hosting-dialog-label-input"]'
+    nameInput: {
+      selector: '[data-e2e="hosting-dialog-name-input"]'
     },
     descriptionInput: {
       selector: '[data-e2e="hosting-dialog-description-input"]'
     },
-    newDomainInput: {
-      selector: '[data-e2e="hosting-dialog-new-domain-input"]'
+    cnameInput: {
+      selector: '[data-e2e="hosting-dialog-cname-input"]'
     },
     addNewDomainButton: {
       selector: '[data-e2e="domain-add-button"]'
@@ -23,9 +23,6 @@ export default {
     hostingList: {
       selector: '[data-e2e="hosting-list-container"]'
     },
-    hostingListItemLabel: {
-      selector: `[data-e2e="${utils.addSuffix('edited')}-list-item-name"]`
-    },
     hostingListItemDescription: {
       selector: `[data-e2e="${utils.addSuffix('edited')}-hosting-list-item-description"]`
     },
@@ -33,7 +30,7 @@ export default {
       selector: '[data-e2e="hosting-delete-dialog-confirm"]'
     },
     hostingDropdownIcon: {
-      selector: `[data-e2e="${utils.addSuffix('hosting')}-hosting-dropdown-icon"]`
+      selector: '[data-e2e="name-hosting-dropdown-icon"]'
     },
     editedHostingDropdownIcon: {
       selector: `[data-e2e="${utils.addSuffix('edited')}-hosting-dropdown-icon"]`
@@ -43,6 +40,27 @@ export default {
     },
     hostingListItemDropdownDeleteOption: {
       selector: '[data-e2e="dropdown-hosting-item-delete"]'
+    },
+    hostingListItemFilesLink: {
+      selector: '[data-e2e="name-hosting-list-item-files"]'
+    },
+    hostingUploadFilesInput: {
+      selector: '[data-e2e="hosting-upload-files"]'
+    },
+    hostingSendFilesButton: {
+      selector: '[data-e2e="hosting-send-files"]'
+    },
+    hostingFilesListItem: {
+      selector: '[data-e2e="simplefilename.testfile-list-item-name"]'
+    },
+    hostingFilesListItemDescription: {
+      selector: '[data-e2e="simplefilename.testfile-list-item-description"]'
+    },
+    innerToolbarBackButton: {
+      selector: '[data-e2e="innertoolbar-back-button"]'
+    },
+    hostingFilesAlertIcon: {
+      selector: '[data-e2e="hosting-files-alert-icon"]'
     }
   }
 };

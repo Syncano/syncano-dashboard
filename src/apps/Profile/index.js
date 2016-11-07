@@ -1,4 +1,4 @@
-import Actions from './ProfileActions';
+import ProfileActions from './ProfileActions';
 import Authentication from './ProfileAuthentication';
 import AuthenticationStore from './ProfileAuthenticationStore';
 import BillingAddress from './ProfileBillingAddress';
@@ -18,7 +18,7 @@ import Settings from './ProfileSettings';
 import SettingsStore from './ProfileSettingsStore';
 
 export default {
-  Actions,
+  ProfileActions,
   Authentication,
   AuthenticationStore,
   BillingPlan,

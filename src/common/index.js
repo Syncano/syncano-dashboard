@@ -14,6 +14,7 @@ import CreditCard from './CreditCard';
 import CreditCardForm from './CreditCardForm';
 import DataObjectsAmount from './DataObjectsAmount';
 import Dialog from './Dialog';
+import DirectoryNavigation from './DirectoryNavigation';
 import DropZone from './DropZone';
 import Dropdown from './Dropdown';
 import Editor from './Editor';
@@ -74,6 +75,7 @@ export { CreditCard };
 export { CreditCardForm };
 export { DataObjectsAmount };
 export { Dialog };
+export { DirectoryNavigation };
 export { DropZone };
 export { Dropdown };
 export { Editor };
@@ -136,6 +138,7 @@ export default {
   CreditCardForm,
   DataObjectsAmount,
   Dialog,
+  DirectoryNavigation,
   DropZone,
   Dropdown,
   Editor,

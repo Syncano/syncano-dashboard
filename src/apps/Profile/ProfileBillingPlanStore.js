@@ -2,12 +2,13 @@ import Reflux from 'reflux';
 import Moment from 'moment';
 import _ from 'lodash';
 
+import { PricingPlansUtil } from '../../utils';
 import { SnackbarNotificationMixin, StoreLoadingMixin } from '../../mixins';
 
-import Actions from './ProfileBillingPlanActions';
+import ProfileBillingPlanActions from './ProfileBillingPlanActions';
 
 export default Reflux.createStore({
-  listenables: Actions,
+  listenables: ProfileBillingPlanActions,
 
   mixins: [
     SnackbarNotificationMixin,
@@ -42,10 +43,9 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    console.debug('ProfileBillingPlanStore::refreshData');
     const join = this.joinTrailing(
-      Actions.fetchBillingProfile.completed,
-      Actions.fetchBillingSubscriptions.completed,
+      ProfileBillingPlanActions.fetchBillingProfile.completed,
+      ProfileBillingPlanActions.fetchBillingSubscriptions.completed,
       () => {
         join.stop();
         this.data.isReady = true;
@@ -54,8 +54,8 @@ export default Reflux.createStore({
       }
     );
 
-    Actions.fetchBillingProfile();
-    Actions.fetchBillingSubscriptions();
+    ProfileBillingPlanActions.fetchBillingProfile();
+    ProfileBillingPlanActions.fetchBillingSubscriptions();
   },
 
   setProfile(profile) {
@@ -158,28 +158,18 @@ export default Reflux.createStore({
     return this.data.profile.subscription.plan;
   },
 
-  getPricingPlanName() {
-    let PricingPlanName = 'Starter';
-
+  getPricingPlanKey() {
     if (!this.data.profile) {
       return null;
     }
 
     if (!this.data.profile.subscription || !this.data.profile.subscription.pricing.api) {
-      return PricingPlanName;
+      return PricingPlansUtil.getPlanKey();
     }
 
     const apiLimit = this.data.profile.subscription.pricing.api.included;
 
-    if (_.inRange(apiLimit, 999999, 2000001)) {
-      PricingPlanName = 'Developer';
-    }
-
-    if (_.inRange(apiLimit, 4499999, 100000001)) {
-      PricingPlanName = 'Business';
-    }
-
-    return PricingPlanName;
+    return PricingPlansUtil.getPlanKey(apiLimit);
   },
 
   getLimitsData(subscription, plan) {

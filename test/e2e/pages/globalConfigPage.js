@@ -1,16 +1,13 @@
 export default {
   elements: {
     globalConfigEditor: {
-      selector: 'div[id="globalConfigEditor"]'
-    },
-    globalConfigEditorContent: {
-      selector: 'div[class="ace_content"]'
+      selector: '[data-e2e="global-config-editor"]'
     },
     globalConfigTextarea: {
-      selector: 'textarea'
+      selector: '[data-e2e="global-config-editor"] textarea'
     },
     globalConfigConfirmButton: {
-      selector: 'button[data-e2e="global-config-submit"]'
+      selector: '[data-e2e="global-config-submit"]'
     }
   }
 };

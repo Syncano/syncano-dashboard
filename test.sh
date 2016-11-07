@@ -31,7 +31,7 @@ function selenium_start {
     SELENIUM_ROLE_HUB="-role hub"
     SELENIUM_SERVER="${SELENIUM} ${SELENIUM_ROLE_HUB}"
 
-    SELENIUM_CHROMEDRIVER="-Dwebdriver.chrome.driver=./node_modules/selenium-standalone/.selenium/chromedriver/2.22-x64-chromedriver"
+    SELENIUM_CHROMEDRIVER="-Dwebdriver.chrome.driver=./node_modules/selenium-standalone/.selenium/chromedriver/2.25-x64-chromedriver"
     SELENIUM_ROLE_WEBDRIVER="-role webdriver -hub http://localhost:4444/grid/register"
     SELENIUM_CHROMEDRIVER="${SELENIUM} ${SELENIUM_CHROMEDRIVER} ${SELENIUM_ROLE_WEBDRIVER}"
 
@@ -51,6 +51,7 @@ function http_server_start {
 function ci_cleanup {
     rm -rf ./dist_e2e
     babel-node ./test/setup/files/removeCertificate.js
+    rm simplefilename.testfile
 }
 
 function ci_setup {
@@ -60,6 +61,7 @@ function ci_setup {
     mv ./dist ./dist_e2e
 
     babel-node ./test/setup/createTestInstances.js
+    touch simplefilename.testfile
     npm run lint-tests
 
     selenium_start
@@ -99,6 +101,7 @@ function local_setup {
 
     message "Creating temporary instances for tests..."
     babel-node ./test/setup/createTestInstances.js
+    touch simplefilename.testfile
 
     message "Starting Selenium in background..."
     trap local_cleanup EXIT
