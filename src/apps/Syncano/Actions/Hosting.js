@@ -90,6 +90,13 @@ export default {
         };
 
         if (stopUploading) {
+          if (currentFileIndex === lastFileIndex) {
+            stopUploading = false;
+            return this.completed({
+              isFinished: true,
+              isCanceled: true
+            });
+          }
           return true;
         }
 

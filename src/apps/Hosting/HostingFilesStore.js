@@ -71,23 +71,6 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onCancelUploading() {
-    this.data.filesToUpload = [];
-    this.data.errorResponses = [];
-    this.data.isCanceled = true;
-    this.data.isUploading = false;
-    this.lastFileIndex = 0;
-    this.currentFileIndex = 0;
-    this.refreshData();
-    HostingUploadDialogActions.dismissDialog();
-    removeEventListener('beforeunload', this.handleCloseOnUpload);
-    this.setSnackbarNotification({
-      message: 'Your uploading process has been canceled.',
-      autoHideDuration: 3000
-    });
-    this.trigger(this.data);
-  },
-
   refreshData() {
     const { currentHostingId } = this.data;
 
@@ -115,7 +98,8 @@ export default Reflux.createStore({
       if (!this.data.errorResponses.length) {
         HostingUploadDialogActions.dismissDialog();
         this.setSnackbarNotification({
-          message: 'Your files have been successfully uploaded.',
+          message: uploadingStatus.isCanceled ? 'Your uploading process has been canceled.' :
+            'Your files have been successfully uploaded.',
           autoHideDuration: null,
           onActionTouchTap: this.dismissSnackbarNotification,
           action: 'DISMISS'
