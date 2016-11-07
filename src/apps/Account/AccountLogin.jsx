@@ -6,8 +6,8 @@ import _ from 'lodash';
 
 import { FormMixin } from '../../mixins';
 
-import Store from './AuthStore';
-import Actions from './AuthActions';
+import AuthStore from './AuthStore';
+import AuthActions from './AuthActions';
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 import Constants from './AuthConstants';
@@ -18,7 +18,7 @@ import AccountContainer from './AccountContainer';
 
 const AccountLogin = React.createClass({
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(AuthStore),
     FormMixin
   ],
 
@@ -72,11 +72,11 @@ const AccountLogin = React.createClass({
   },
 
   handleSocialLogin(network) {
-    Actions.socialLogin(network);
+    AuthActions.socialLogin(network);
   },
 
   handleSuccessfullValidation(data) {
-    Actions.passwordSignIn({
+    AuthActions.passwordSignIn({
       email: data.email,
       password: data.password
     });

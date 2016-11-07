@@ -73,8 +73,8 @@ const HostingFilesView = React.createClass({
     const { instanceName } = this.props.params;
     const defaultHostingUrl = `https://${instanceName}.syncano.site/`;
     const hasDomains = hostingDetails && hostingDetails.domains.length > 0;
-    const customDomainUrl = hasDomains ? `https://${hostingDetails.domains[0]}--${instanceName}.syncano.site/` : null;
-    const hostingUrl = hostingDetails.is_default ? defaultHostingUrl : customDomainUrl;
+    const customDomainUrl = hasDomains ? `https://${instanceName}--${hostingDetails.domains[0]}.syncano.site/` : null;
+    const hostingUrl = this.isDefaultHosting() ? defaultHostingUrl : customDomainUrl;
 
     return hostingUrl;
   },
@@ -85,6 +85,16 @@ const HostingFilesView = React.createClass({
     return hostingDetails && !isLoading ? `Website Hosting: ${hostingDetails.name} (id: ${hostingDetails.id})` : '';
   },
 
+  isDefaultHosting() {
+    const { hostingDetails } = this.state;
+
+    if (hostingDetails) {
+      return _.includes(hostingDetails.domains, 'default');
+    }
+
+    return false;
+  },
+
   handleBackClick() {
     const { router, params } = this.props;
     const redirectPath = `/instances/${params.instanceName}/hosting/`;
@@ -92,12 +102,12 @@ const HostingFilesView = React.createClass({
     router.push(redirectPath);
   },
 
-  handleUploadFiles(directory, event) {
+  handleUploadFiles(currentPath, event) {
     event.stopPropagation();
     const { files } = event.target;
 
     if (files && files.length) {
-      const filesToUpload = _.map(files, (file) => this.extendFilePath(file, directory));
+      const filesToUpload = _.map(files, (file) => this.extendFilePath(file, currentPath));
 
       this.setState({ filesToUpload });
     }
@@ -181,17 +191,17 @@ const HostingFilesView = React.createClass({
     });
   },
 
-  extendFilePath(file, directory) {
+  extendFilePath(file, currentPath) {
     if (file.webkitRelativePath) {
       const firstSlashIndex = file.webkitRelativePath.indexOf('/');
 
-      file.path = directory ? `${directory}/` : '';
+      file.path = currentPath ? `${currentPath}/` : '';
       file.path += file.webkitRelativePath.substring(firstSlashIndex + 1);
 
       return file;
     }
 
-    file.path = directory ? `${directory}/${file.name}` : file.name;
+    file.path = currentPath ? `${currentPath}/${file.name}` : file.name;
 
     return file;
   },
@@ -266,7 +276,7 @@ const HostingFilesView = React.createClass({
           backButton={true}
           backFallback={this.handleBackClick}
           forceBackFallback={true}
-          backButtonTooltip="Go Back to Hosting Sockets"
+          backButtonTooltip="Go Back to Hosting"
         >
           <div style={styles.buttonsWrapper}>
             <Show if={items.length && !isLoading}>

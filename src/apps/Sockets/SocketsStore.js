@@ -11,8 +11,6 @@ import ScriptEndpointsActions from '../ScriptEndpoints/ScriptEndpointsActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
 import ChannelsActions from '../Channels/ChannelsActions';
-import HostingActions from '../Hosting/HostingActions';
-import HostingPublishDialogActions from '../Hosting/HostingPublishDialogActions';
 import APNSActions from '../PushNotifications/APNS/APNSPushNotificationsActions';
 import GCMActions from '../PushNotifications/GCM/GCMPushNotificationsActions';
 import ScriptsActions from '../Scripts/ScriptsActions';
@@ -70,10 +68,6 @@ export default Reflux.createStore({
     ChannelsActions.createChannel.completed,
     ChannelsActions.updateChannel.completed,
     ChannelsActions.removeChannels.completed,
-    HostingActions.createHosting.completed,
-    HostingActions.updateHosting.completed,
-    HostingActions.removeHostings.completed,
-    HostingPublishDialogActions.publishHosting.completed,
     APNSActions.configAPNSPushNotification.completed,
     APNSActions.removeCertificate.completed,
     GCMActions.configGCMPushNotification.completed
@@ -147,7 +141,6 @@ export default Reflux.createStore({
     this.data.triggers = sockets.triggers;
     this.data.schedules = sockets.schedules;
     this.data.channels = sockets.channels;
-    this.data.hosting = sockets.hosting;
     this.data.gcmPushNotifications = gcmItems;
     this.data.apnsPushNotifications = apnsItems;
     this.data.hasAnyItem = _.some(this.data, (value) => value.length);

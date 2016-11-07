@@ -54,9 +54,10 @@ const HostingFilesList = React.createClass({
   },
 
   handleUploadFiles(event) {
-    const { currentFolderName, handleUploadFiles } = this.props;
+    const { handleUploadFiles, previousFolders } = this.props;
+    const currentPath = previousFolders.join('/');
 
-    return handleUploadFiles(currentFolderName, event);
+    return handleUploadFiles(currentPath, event);
   },
 
   handleSelectAll() {
