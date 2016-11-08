@@ -174,18 +174,8 @@ export default Reflux.createStore({
     this.subscribe();
   },
 
-  onUpdateCardFailure() {
-    this.data.isLoading = false;
-    this.trigger(this.data);
-  },
-
   onAddCardCompleted() {
     this.subscribe();
-  },
-
-  onAddCardFailure() {
-    this.data.isLoading = false;
-    this.trigger(this.data);
   },
 
   onUpdateBillingProfileFailure() {
