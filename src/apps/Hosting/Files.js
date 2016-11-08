@@ -75,7 +75,7 @@ const HostingFilesView = React.createClass({
     const { instanceName } = this.props.params;
     const defaultHostingUrl = `https://${instanceName}.syncano.site/`;
     const hasDomains = hostingDetails && hostingDetails.domains.length > 0;
-    const customDomainUrl = hasDomains ? `https://${instanceName}--${hostingDetails.domains[0]}.syncano.site/` : null;
+    const customDomainUrl = hasDomains ? `https://${hostingDetails.domains[0]}--${instanceName}.syncano.site/` : null;
     const hostingUrl = this.isDefaultHosting() ? defaultHostingUrl : customDomainUrl;
 
     return hostingUrl;
@@ -299,7 +299,7 @@ const HostingFilesView = React.createClass({
               label="Go to site"
               primary={true}
               icon={<FontIcon className="synicon-open-in-new" />}
-              onTouchTap={this.handleOnTouchTap(hostingUrl)}
+              onTouchTap={() => this.handleOnTouchTap(hostingUrl)}
               href={hostingUrl}
               target="_blank"
             />

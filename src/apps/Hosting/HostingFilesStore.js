@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import {
   CheckListStoreMixin,
+  HostingMixin,
   StoreFormMixin,
   StoreLoadingMixin,
   WaitForStoreMixin,
@@ -18,6 +19,7 @@ export default Reflux.createStore({
 
   mixins: [
     CheckListStoreMixin,
+    HostingMixin,
     StoreFormMixin,
     StoreLoadingMixin,
     WaitForStoreMixin,
@@ -123,7 +125,7 @@ export default Reflux.createStore({
 
   onFetchFilesCompleted(data) {
     this.data.items = data.files;
-    this.data.hostingDetails = data.hostingDetails;
+    this.data.hostingDetails = this.prepareHosting(data.hostingDetails);
     this.trigger(this.data);
   },
 

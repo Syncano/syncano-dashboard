@@ -59,13 +59,14 @@ const HostingFilesEmptyView = ({
       </Show>
     </div>
   );
-  const actionButton = isActionInProgress ? progressBar : (
-  <UploadFilesButton
-    {...other}
-    hasFiles={hasFiles}
-    data-e2e="add-files-button"
-  />
+  const uploadFilesButton = (
+    <UploadFilesButton
+      {...other}
+      hasFiles={hasFiles}
+      data-e2e="add-files-button"
+    />
   );
+  const actionButton = isActionInProgress ? progressBar : uploadFilesButton;
 
   const defaultDescription = 'Choose your files from disk:';
   const uploadingFilesDescription = `${action} ${uploadingFilesCount} files...`;
