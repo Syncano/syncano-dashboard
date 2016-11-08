@@ -88,7 +88,7 @@
     "css-loader": "0.25.0",
     "del": "1.2.1",
     "eslint": "3.9.1",
-    "eslint-config-airbnb": "12.0.0",
+    "eslint-config-airbnb": "13.0.0",
     "eslint-friendly-formatter": "2.0.6",
     "eslint-loader": "1.6.1",
     "eslint-plugin-import": "2.0.1",
