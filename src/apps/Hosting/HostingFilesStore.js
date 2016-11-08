@@ -174,7 +174,7 @@ export default Reflux.createStore({
     const depthLevel = _.isFinite(depth) ? depth : 1;
 
     this.data.directoryDepth = this.data.directoryDepth - depthLevel;
-    this.data.currentFolderName = this.data.previousFolders[this.data.directoryDepth - 1 - depthLevel] || '';
+    this.data.currentFolderName = this.data.previousFolders[this.data.directoryDepth - 1] || '';
     this.data.previousFolders = _.dropRight(this.data.previousFolders, depthLevel);
     this.trigger(this.data);
   },
