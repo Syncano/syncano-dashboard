@@ -37,7 +37,7 @@ const CreateHostingDialog = React.createClass({
       validateObj.name = {
         inclusion: {
           within: [],
-          message: "^Name should be another than 'default'"
+          message: "^Name can't be a 'default'"
         }
       };
     }
