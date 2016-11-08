@@ -41,10 +41,6 @@ export default Reflux.createStore({
     };
   },
 
-  getState() {
-    return this.data;
-  },
-
   init() {
     this.data = this.getInitialState();
     this.waitFor(
