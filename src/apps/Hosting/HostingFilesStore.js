@@ -1,9 +1,16 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import { CheckListStoreMixin, StoreFormMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
+import {
+  CheckListStoreMixin,
+  StoreFormMixin,
+  StoreLoadingMixin,
+  WaitForStoreMixin,
+  SnackbarNotificationMixin
+} from '../../mixins';
 
 import Actions from './HostingFilesActions';
+import HostingUploadDialogActions from './HostingUploadDialogActions';
 import SessionActions from '../Session/SessionActions';
 
 export default Reflux.createStore({
@@ -13,7 +20,8 @@ export default Reflux.createStore({
     CheckListStoreMixin,
     StoreFormMixin,
     StoreLoadingMixin,
-    WaitForStoreMixin
+    WaitForStoreMixin,
+    SnackbarNotificationMixin
   ],
 
   getInitialState() {
@@ -22,6 +30,7 @@ export default Reflux.createStore({
       directoryDepth: 0,
       errorResponses: [],
       filesToUpload: [],
+      isCanceled: false,
       isLoading: true,
       isUploading: false,
       isDeleting: false,
@@ -86,6 +95,16 @@ export default Reflux.createStore({
       this.data.filesToUpload = [];
       this.data.isUploading = false;
       this.refreshData();
+      if (!this.data.errorResponses.length) {
+        HostingUploadDialogActions.dismissDialog();
+        this.setSnackbarNotification({
+          message: uploadingStatus.isCanceled ? 'Your uploading process has been canceled.' :
+            'Your files have been successfully uploaded.',
+          autoHideDuration: null,
+          onActionTouchTap: this.dismissSnackbarNotification,
+          action: 'DISMISS'
+        });
+      }
     }
     this.data.isUploading = !uploadingStatus.isFinished;
     this.data.currentFileIndex = uploadingStatus.currentFileIndex;
@@ -99,7 +118,6 @@ export default Reflux.createStore({
     this.data.currentFileIndex = uploadingStatus.currentFileIndex;
     this.data.lastFileIndex = uploadingStatus.lastFileIndex;
     uploadingStatus.isFinished && removeEventListener('beforeunload', this.handleCloseOnUpload);
-
     this.trigger(this.data);
   },
 
@@ -121,8 +139,9 @@ export default Reflux.createStore({
   },
 
   onFinishUploading() {
+    HostingUploadDialogActions.dismissDialog();
     this.data.filesToUpload = [];
-    this.data.uploadErrors = [];
+    this.data.errorResponses = [];
     this.data.isUploading = false;
     this.refreshData();
   }

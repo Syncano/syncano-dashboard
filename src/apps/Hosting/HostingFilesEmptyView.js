@@ -1,20 +1,22 @@
 import React from 'react';
 
 import { colors as Colors } from 'material-ui/styles';
-import { LinearProgress } from 'material-ui';
-import { EmptyView } from '../../common';
+import { LinearProgress, RaisedButton } from 'material-ui';
+import { EmptyView, Show } from '../../common';
 import UploadFilesButton from './UploadFilesButton';
 
 const HostingFilesEmptyView = ({
+  currentFileIndex,
   currentInstanceName,
+  errorResponses,
+  filesCount,
+  handleCancelUploading,
   handleErrorsButtonClick,
   hasFiles,
-  filesCount,
+  isCanceled,
   isDeleting,
   isUploading,
   lastFileIndex,
-  currentFileIndex,
-  errorResponses,
   ...other
 }) => {
   const progressBarStyles = {
@@ -29,7 +31,9 @@ const HostingFilesEmptyView = ({
     }
     return '';
   })();
-  const isActionInProgress = isDeleting || isUploading;
+
+  const actionButtonStyle = { marginTop: 14 };
+  const isActionInProgress = !isCanceled && (isDeleting || isUploading || errorResponses.length);
   const uploadingFilesCount = lastFileIndex + 1;
   const uploadingProgressCount = currentFileIndex + 1;
   const isUploadFinished = currentFileIndex === lastFileIndex;
@@ -43,8 +47,16 @@ const HostingFilesEmptyView = ({
         value={uploadingProgressCount}
       />
       <div className="vm-2-t">
-        Uploading file {uploadingProgressCount} / {uploadingFilesCount}
+        {`${action} file ${uploadingProgressCount} / ${uploadingFilesCount}`}
       </div>
+      <Show if={isUploading || (isUploadFinished && errorResponses.length)}>
+        <RaisedButton
+          label={isUploadFinished ? 'Close' : 'Cancel'}
+          style={actionButtonStyle}
+          onTouchTap={isUploadFinished ? handleErrorsButtonClick : handleCancelUploading}
+          primary={true}
+        />
+      </Show>
     </div>
   );
   const actionButton = isActionInProgress ? progressBar : (
@@ -55,7 +67,7 @@ const HostingFilesEmptyView = ({
   />
   );
 
-  const defaultDescription = 'Choose your website files from your disk.';
+  const defaultDescription = 'Choose your files from disk:';
   const uploadingFilesDescription = `${action} ${uploadingFilesCount} files...`;
   const descriptionWithFiles = isActionInProgress ? uploadingFilesDescription : `${filesCount} files ready for upload.`;
   const description = hasFiles || isActionInProgress ? descriptionWithFiles : defaultDescription;
@@ -70,22 +82,23 @@ const HostingFilesEmptyView = ({
 
   return (
     <EmptyView.CLI
-      handleErrorsButtonClick={handleErrorsButtonClick}
-      isUploadFinished={isUploadFinished}
+      actionButton={actionButton}
+      bashSnippets={bashSnippets}
+      CLITitle="Use Syncano CLI"
+      CLIDescription="The best way to manage your hosting files is with "
+      description={description}
+      docsUrl="http://docs.syncano.io/docs/"
       errorResponses={errorResponses}
+      handleCancelUploading={handleCancelUploading}
+      handleErrorsButtonClick={handleErrorsButtonClick}
+      hostingDocsUrl="http://docs.syncano.io/docs/hosting"
+      hostingDocsButtonLabel="View Hosting Docs"
+      isUploadFinished={isUploadFinished}
       iconClassName={iconClassName}
       iconColor={iconColor}
       mainTitle="Hosting Files"
       showDocsUrl={false}
       urlLabel="Hosting"
-      description={description}
-      docsUrl="http://docs.syncano.io/docs/"
-      actionButton={actionButton}
-      CLITitle="Use Syncano CLI"
-      CLIDescription="The best way to manage your hosting files is with "
-      bashSnippets={bashSnippets}
-      hostingDocsUrl="http://docs.syncano.io/docs/hosting"
-      hostingDocsButtonLabel="View Hosting Docs"
     />
   );
 };
