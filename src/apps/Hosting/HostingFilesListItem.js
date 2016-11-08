@@ -5,7 +5,7 @@ import fileSize from 'filesize';
 
 import { MenuItem } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
-import { ColumnList } from '../../common/';
+import { ColumnList, Truncate } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -44,20 +44,25 @@ const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDele
       ':hover': {
         color: Colors.blue500
       }
+    },
+    checkIcon: {
+      fileName: {
+        width: '38vw'
+      }
     }
   };
   const handleClickFolderName = () => {
     onFolderEnter(fileName);
   };
   const getFolderName = () => {
+    console.error('filename', fileName);
     if (item.isFolder) {
       return (
-        <div
+        <Truncate
           style={styles.folderName}
           onClick={handleClickFolderName}
-        >
-          {fileName}
-        </div>
+          text={fileName}
+        />
       );
     }
 
@@ -75,10 +80,11 @@ const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDele
         iconClassName={iconConfig.icon}
         background={iconConfig.color}
         checked={item.checked}
+        customStyles={styles.checkIcon}
         handleIconClick={onIconClick}
         primaryText={getFolderName()}
       />
-      <Column.Desc className="col-sm-4">
+      <Column.Desc className="col-sm-4" >
         {fileSize(item.size)}
       </Column.Desc>
       <Column.Menu data-e2e={`${fileName}-hosting-file-dropdown-icon`}>
