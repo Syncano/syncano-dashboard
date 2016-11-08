@@ -51,9 +51,9 @@ const HostingFilesEmptyView = ({
       </div>
       <Show if={isUploading || (isUploadFinished && errorResponses.length)}>
         <RaisedButton
-          label={isUploading ? 'Cancel' : 'Close'}
+          label={isUploadFinished ? 'Close' : 'Cancel'}
           style={actionButtonStyle}
-          onTouchTap={isUploading ? handleCancelUploading : handleErrorsButtonClick}
+          onTouchTap={isUploadFinished ? handleErrorsButtonClick : handleCancelUploading}
           primary={true}
         />
       </Show>
