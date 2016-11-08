@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 6.2.1
+    version: 7.0.0
   java:
     version: oraclejdk8
 
@@ -19,7 +19,7 @@ dependencies:
 test:
   override:
     - google-chrome --version
-    - npm run e2e:
+    - npm test && npm run e2e:
         timeout: 150
 
 deployment:

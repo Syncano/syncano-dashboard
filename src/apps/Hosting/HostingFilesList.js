@@ -1,4 +1,5 @@
 import React from 'react';
+import Reflux from 'reflux';
 import _ from 'lodash';
 import { withRouter } from 'react-router';
 
@@ -6,9 +7,11 @@ import { DialogsMixin } from '../../mixins';
 
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
+import HostingUploadDialogStore from './HostingUploadDialogStore';
 
 import { ColumnList, Dialog, DirectoryNavigation, Lists, Loading } from '../../common';
 import HostingFilesEmptyView from './HostingFilesEmptyView';
+import HostingUploadDialog from './HostingUploadDialog';
 import ListItem from './HostingFilesListItem';
 import DotsListItem from './DotsListItem';
 
@@ -16,8 +19,17 @@ const Column = ColumnList.Column;
 
 const HostingFilesList = React.createClass({
   mixins: [
+    Reflux.connect(HostingUploadDialogStore),
     DialogsMixin
   ],
+
+  getInitialState() {
+    return {
+      directoryDepth: 0,
+      currentFolderName: '',
+      previousFolders: []
+    };
+  },
 
   getDefaultProps() {
     return {
@@ -212,18 +224,62 @@ const HostingFilesList = React.createClass({
   },
 
   renderEmptyView() {
+    const {
+      currentFileIndex,
+      currentInstanceName,
+      errorResponses,
+      filesCount,
+      handleCancelUploading,
+      handleErrorsButtonClick,
+      hasFiles,
+      isCanceled,
+      isDeleting,
+      isUploading,
+      lastFileIndex,
+      ...other
+    } = this.props;
+
     return (
       <HostingFilesEmptyView
-        {...this.props}
+        {...other}
+        currentFileIndex={currentFileIndex}
+        currentInstanceName={currentInstanceName}
+        errorResponses={errorResponses}
+        filesCount={filesCount}
+        handleCancelUploading={handleCancelUploading}
+        handleErrorsButtonClick={handleErrorsButtonClick}
         handleUploadFiles={this.handleUploadFiles}
+        hasFiles={hasFiles}
+        isCanceled={isCanceled}
+        isDeleting={isDeleting}
+        isUploading={isUploading}
+        lastFileIndex={lastFileIndex}
       />
     );
   },
 
   render() {
-    const { items, isLoading, hasFiles, isDeleting, isUploading, ...other } = this.props;
+    const {
+      currentFileIndex,
+      currentInstanceName,
+      errorResponses,
+      filesCount,
+      handleCancelUploading,
+      handleErrorsButtonClick,
+      hasFiles,
+      items,
+      isCanceled,
+      isDeleting,
+      isUploading,
+      isLoading,
+      lastFileIndex,
+      ...other
+    } = this.props;
 
-    if (!items.length || hasFiles || isUploading || isDeleting) {
+    const { _dialogVisible } = this.state;
+    const hasItemsAndErorrs = (items.length && errorResponses.length && !_dialogVisible && !isCanceled);
+
+    if (!items.length || isDeleting || hasItemsAndErorrs) {
       return (
         <Loading show={isLoading}>
           {this.renderEmptyView()}
@@ -233,6 +289,21 @@ const HostingFilesList = React.createClass({
 
     return (
       <div>
+        <HostingUploadDialog
+          {...other}
+          currentFileIndex={currentFileIndex}
+          currentInstanceName={currentInstanceName}
+          errorResponses={errorResponses}
+          filesCount={filesCount}
+          handleCancelUploading={handleCancelUploading}
+          handleErrorsButtonClick={handleErrorsButtonClick}
+          handleUploadFiles={this.handleUploadFiles}
+          hasFiles={hasFiles}
+          isCanceled={isCanceled}
+          isDeleting={isDeleting}
+          isUploading={isUploading}
+          lastFileIndex={lastFileIndex}
+        />
         {this.getDialogs()}
         {this.renderDirectoryNavigation()}
         {this.renderHeader()}
@@ -242,7 +313,6 @@ const HostingFilesList = React.createClass({
           key="hosting-files-list"
         >
           {this.renderItems()}
-          {this.renderEmptyView()}
         </Lists.List>
       </div>
     );

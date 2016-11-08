@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import bluebird from 'bluebird';
 
+let stopUploading = false;
+
 export default {
   list() {
     this.NewLibConnection
@@ -59,19 +61,24 @@ export default {
       .catch(this.failure);
   },
 
+  cancelUploading() {
+    stopUploading = true;
+  },
+
   uploadFiles(hostingId, files) {
     const all = this.NewLibConnection.HostingFile.please().all({ hostingId }, { ordering: 'desc' });
+    let cancelFileIndex = false;
 
     all.on('stop', (fetchedFiles) => {
       bluebird.mapSeries(files, (file, currentFileIndex) => {
         const lastFileIndex = files.length - 1;
-        const hasNextFile = files.length > currentFileIndex + 1;
+        const isFinished = currentFileIndex === lastFileIndex;
         const fileToUpdate = _.find(fetchedFiles, { path: file.path });
         const payload = { file: this.NewLibConnection.file(file), path: file.path };
         const errorCallback = ({ errors, message }) => {
           this.failure(
             {
-              isFinished: !hasNextFile,
+              isFinished,
               currentFileIndex,
               lastFileIndex
             },
@@ -83,13 +90,29 @@ export default {
           );
         };
 
+        if (stopUploading) {
+          if (currentFileIndex === lastFileIndex) {
+            stopUploading = false;
+            return this.completed({
+              isFinished: true,
+              isCanceled: true,
+              currentFileIndex: cancelFileIndex,
+              lastFileIndex: cancelFileIndex
+            });
+          }
+          if (!cancelFileIndex) {
+            cancelFileIndex = currentFileIndex;
+          }
+          return true;
+        }
+
         if (fileToUpdate) {
           return this.NewLibConnection
             .HostingFile
             .please()
             .update({ id: fileToUpdate.id, hostingId }, payload)
             .then(() => this.completed({
-              isFinished: !hasNextFile,
+              isFinished,
               currentFileIndex,
               lastFileIndex
             }))
@@ -101,7 +124,7 @@ export default {
           .please()
           .upload({ hostingId }, payload)
           .then(() => this.completed({
-            isFinished: !hasNextFile,
+            isFinished,
             currentFileIndex,
             lastFileIndex
           }))

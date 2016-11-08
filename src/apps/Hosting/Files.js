@@ -4,12 +4,13 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
 
-import { FormMixin, SnackbarNotificationMixin } from '../../mixins';
+import { DialogsMixin, FormMixin, SnackbarNotificationMixin } from '../../mixins';
 
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
 import SessionStore from '../Session/SessionStore';
 import HostingPublishDialogActions from './HostingPublishDialogActions';
+import HostingUploadDialogActions from './HostingUploadDialogActions';
 
 import { FontIcon, RaisedButton, TextField } from 'material-ui';
 import { InnerToolbar, Container, Show } from '../../common';
@@ -20,6 +21,7 @@ import HostingPublishDialog from './HostingPublishDialog';
 const HostingFilesView = React.createClass({
   mixins: [
     Reflux.connect(HostingFilesStore),
+    DialogsMixin,
     FormMixin,
     SnackbarNotificationMixin
   ],
@@ -54,7 +56,7 @@ const HostingFilesView = React.createClass({
         alignItems: 'center'
       },
       newFolderNameInput: {
-        width: 230,
+        width: 180,
         marginRight: 10,
         marginBottom: hasErrors && 22
       },
@@ -109,7 +111,7 @@ const HostingFilesView = React.createClass({
     if (files && files.length) {
       const filesToUpload = _.map(files, (file) => this.extendFilePath(file, currentPath));
 
-      this.setState({ filesToUpload });
+      this.setState({ filesToUpload, isCanceled: false });
     }
   },
 
@@ -145,6 +147,10 @@ const HostingFilesView = React.createClass({
     const { hostingId, instanceName } = this.props.params;
 
     HostingPublishDialogActions.showDialog({ id: hostingId, instanceName });
+  },
+
+  handleShowUploadDialog() {
+    HostingUploadDialogActions.showDialog();
   },
 
   handleSendFiles() {
@@ -206,7 +212,7 @@ const HostingFilesView = React.createClass({
     return file;
   },
 
-  renderNewFolderButtons() {
+  renderActionButtons() {
     const { name, showNewFolderForm } = this.state;
     const styles = this.getStyles();
     const createFolderButtonLabel = showNewFolderForm ? 'Create' : 'Create new folder';
@@ -223,7 +229,7 @@ const HostingFilesView = React.createClass({
             onChange={this.handleNewFolderNameChange}
             errorText={this.getValidationMessages('name').join(' ')}
             hintText="Type new folder name"
-            style={{ ...styles.newFolderNameInput }}
+            style={styles.newFolderNameInput}
           />
         </Show>
         <RaisedButton
@@ -233,6 +239,13 @@ const HostingFilesView = React.createClass({
           onTouchTap={createFolderButtonAction}
           disabled={disableNewFolderButton}
         />
+        <RaisedButton
+          label="Upload files"
+          primary={true}
+          icon={<FontIcon className="synicon-cloud-upload" />}
+          style={{ marginRight: 10 }}
+          onTouchTap={this.handleShowUploadDialog}
+        />
       </div>
     );
   },
@@ -241,29 +254,29 @@ const HostingFilesView = React.createClass({
     const {
       currentFileIndex,
       currentFolderName,
-      directoryDepth,
       errorResponses,
       filesToUpload,
       hideDialogs,
+      hostingDetails,
+      isUploading,
+      isCanceled,
       isDeleting,
       isLoading,
-      isUploading,
       items,
       lastFileIndex,
-      previousFolders,
-      hostingDetails
+      directoryDepth,
+      previousFolders
     } = this.state;
-
-    if (!hostingDetails) {
-      return null;
-    }
-
     const styles = this.getStyles();
     const hasFilesToUpload = filesToUpload.length > 0;
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const hostingUrl = this.getHostingUrl();
     const pageTitle = this.getToolbarTitle();
+
+    if (!hostingDetails) {
+      return null;
+    }
 
     return (
       <div>
@@ -280,13 +293,13 @@ const HostingFilesView = React.createClass({
         >
           <div style={styles.buttonsWrapper}>
             <Show if={items.length && !isLoading}>
-              {this.renderNewFolderButtons()}
+              {this.renderActionButtons()}
             </Show>
             <RaisedButton
               label="Go to site"
               primary={true}
               icon={<FontIcon className="synicon-open-in-new" />}
-              onTouchTap={this.handleOnTouchTap(hostingUrl)}
+              onTouchTap={() => this.handleOnTouchTap(hostingUrl)}
               href={hostingUrl}
               target="_blank"
             />
@@ -295,22 +308,24 @@ const HostingFilesView = React.createClass({
 
         <Container>
           <HostingFilesList
-            currentFolderName={currentFolderName}
             currentFileIndex={currentFileIndex}
+            currentFolderName={currentFolderName}
             currentInstanceName={currentInstanceName}
             directoryDepth={directoryDepth}
-            filesCount={filesToUpload.length}
             errorResponses={errorResponses}
-            handleErrorsButtonClick={HostingFilesActions.finishUploading}
+            isCanceled={isCanceled}
+            isDeleting={isDeleting}
+            isUploading={isUploading}
+            isLoading={isLoading}
+            items={items}
+            filesCount={filesToUpload.length}
             handleClearFiles={this.handleClearFiles}
+            handleCancelUploading={HostingFilesActions.cancelUploading}
+            handleErrorsButtonClick={HostingFilesActions.finishUploading}
             handleUploadFiles={this.handleUploadFiles}
             handleSendFiles={this.handleSendFiles}
             hasFiles={hasFilesToUpload}
             hideDialogs={hideDialogs}
-            isDeleting={isDeleting}
-            isLoading={isLoading}
-            isUploading={isUploading}
-            items={items}
             lastFileIndex={lastFileIndex}
             moveDirectoryDown={this.moveDirectoryDown}
             moveDirectoryUp={this.moveDirectoryUp}
