@@ -166,7 +166,7 @@ const DemoApp = React.createClass({
   renderDescContainer() {
     const styles = this.getStyles();
     const { appName, appTitle, appDesc, appGithubSrc, appTutorialSrc, feedback } = this.state;
-    const appImageSrc = `/img/DemoApps/${appName}.jpg`;
+    const appImageSrc = `/img/static/${appName}.png`;
 
     return (
       <div style={styles.descContainer}>
@@ -228,7 +228,7 @@ const DemoApp = React.createClass({
   renderSchemaContainer() {
     const styles = this.getStyles();
     const { appName } = this.state;
-    const appSchemaSrc = `/img/DemoApps/${appName}-schema.svg`;
+    const appSchemaSrc = `/img/static/${appName}-schema.svg`;
 
     return (
       <div style={styles.schemaContainer}>
