@@ -142,6 +142,17 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
+  onSetFilesToUpload(filesToUpload) {
+    this.data.filesToUpload = filesToUpload;
+    this.data.isCanceled = false;
+    this.trigger(this.data);
+  },
+
+  onClearFilesToUpload() {
+    this.data.filesToUpload = [];
+    this.trigger(this.data);
+  },
+
   onFinishUploading() {
     HostingUploadDialogActions.dismissDialog();
     this.data.filesToUpload = [];
@@ -150,28 +161,21 @@ export default Reflux.createStore({
     this.refreshData();
   },
 
-  onSetFilesToUpload(filesToUpload) {
-    this.data.filesToUpload = filesToUpload;
-    this.data.isCanceled = false;
-
-    this.trigger(this.data);
-  },
-
   onCreateFolder(name) {
     this.data.currentFolderName = name;
     this.data.directoryDepth = this.data.directoryDepth + 1;
     this.data.previousFolders = [...this.data.previousFolders, name];
     this.data.showNewFolderForm = false;
     this.data.name = '';
-
     this.trigger(this.data);
   },
 
-  onMoveDirectoryUp(depthLevel) {
+  onMoveDirectoryUp(depth) {
+    const depthLevel = _.isFinite(depth) ? depth : 1;
+
     this.data.directoryDepth = this.data.directoryDepth - depthLevel;
     this.data.currentFolderName = this.data.previousFolders[this.data.directoryDepth - 1 - depthLevel] || '';
     this.data.previousFolders = _.dropRight(this.data.previousFolders, depthLevel);
-
     this.trigger(this.data);
   },
 
@@ -179,7 +183,6 @@ export default Reflux.createStore({
     this.data.directoryDepth = this.data.directoryDepth + 1;
     this.data.currentFolderName = nextFolderName;
     this.data.previousFolders = [...this.data.previousFolders, nextFolderName];
-
     this.trigger(this.data);
   }
 });
