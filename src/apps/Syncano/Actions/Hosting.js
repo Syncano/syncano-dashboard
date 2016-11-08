@@ -67,6 +67,7 @@ export default {
 
   uploadFiles(hostingId, files) {
     const all = this.NewLibConnection.HostingFile.please().all({ hostingId }, { ordering: 'desc' });
+    let cancelFileIndex = false;
 
     all.on('stop', (fetchedFiles) => {
       bluebird.mapSeries(files, (file, currentFileIndex) => {
@@ -94,8 +95,13 @@ export default {
             stopUploading = false;
             return this.completed({
               isFinished: true,
-              isCanceled: true
+              isCanceled: true,
+              currentFileIndex: cancelFileIndex,
+              lastFileIndex: cancelFileIndex
             });
+          }
+          if (!cancelFileIndex) {
+            cancelFileIndex = currentFileIndex;
           }
           return true;
         }
