@@ -2,6 +2,10 @@ import CreateActions from '../../utils/ActionsConstructor';
 
 export default CreateActions(
   {
+    setFilesToUpload: {},
+    createFolder: {},
+    moveDirectoryUp: {},
+    moveDirectoryDown: {},
     fetch: {},
     setHostingId: {},
     checkFolder: {},

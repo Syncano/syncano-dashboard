@@ -111,7 +111,9 @@ const HostingFilesView = React.createClass({
     if (files && files.length) {
       const filesToUpload = _.map(files, (file) => this.extendFilePath(file, currentPath));
 
-      this.setState({ filesToUpload, isCanceled: false });
+      // this.setState({ filesToUpload, isCanceled: false });
+
+      HostingFilesActions.setFilesToUpload(filesToUpload);
     }
   },
 
@@ -121,16 +123,22 @@ const HostingFilesView = React.createClass({
 
   handleCreateFolder() {
     const validateFolderName = this.handleValidation('name', (isValid) => {
-      const { directoryDepth, name, previousFolders } = this.state;
+      const {
+        // directoryDepth,
+        name
+        // previousFolders
+      } = this.state;
 
       if (isValid) {
-        this.setState({
-          currentFolderName: name,
-          directoryDepth: directoryDepth + 1,
-          previousFolders: [...previousFolders, name],
-          showNewFolderForm: false,
-          name: ''
-        });
+        // this.setState({
+        //   currentFolderName: name,
+        //   directoryDepth: directoryDepth + 1,
+        //   previousFolders: [...previousFolders, name],
+        //   showNewFolderForm: false,
+        //   name: ''
+        // });
+
+        HostingFilesActions.createFolder(name);
       }
     });
 
@@ -171,24 +179,28 @@ const HostingFilesView = React.createClass({
   },
 
   moveDirectoryUp(depth) {
-    const { previousFolders, directoryDepth } = this.state;
+    // const { previousFolders, directoryDepth } = this.state;
     const depthLevel = _.isFinite(depth) ? depth : 1;
 
-    this.setState({
-      directoryDepth: directoryDepth - depthLevel,
-      currentFolderName: previousFolders[directoryDepth - 1 - depthLevel] || '',
-      previousFolders: _.dropRight(previousFolders, depthLevel)
-    });
+    // this.setState({
+    //   directoryDepth: directoryDepth - depthLevel,
+    //   currentFolderName: previousFolders[directoryDepth - 1 - depthLevel] || '',
+    //   previousFolders: _.dropRight(previousFolders, depthLevel)
+    // });
+
+    HostingFilesActions.uploadFiles(depthLevel);
   },
 
   moveDirectoryDown(nextFolderName) {
-    const { directoryDepth, previousFolders } = this.state;
+    // const { directoryDepth, previousFolders } = this.state;
 
-    this.setState({
-      directoryDepth: directoryDepth + 1,
-      currentFolderName: nextFolderName,
-      previousFolders: [...previousFolders, nextFolderName]
-    });
+    // this.setState({
+    //   directoryDepth: directoryDepth + 1,
+    //   currentFolderName: nextFolderName,
+    //   previousFolders: [...previousFolders, nextFolderName]
+    // });
+
+    HostingFilesActions.moveDirectoryDown(nextFolderName);
   },
 
   showMissingDomainsSnackbar() {
@@ -215,7 +227,7 @@ const HostingFilesView = React.createClass({
   renderActionButtons() {
     const { name, showNewFolderForm } = this.state;
     const styles = this.getStyles();
-    const createFolderButtonLabel = showNewFolderForm ? 'Create' : 'Create new folder';
+    const createFolderButtonLabel = showNewFolderForm ? 'Create' : 'New folder';
     const createFolderButtonAction = showNewFolderForm ? this.handleCreateFolder : this.handleClickNewFolderButton;
     const disableNewFolderButton = showNewFolderForm && !name;
 
@@ -251,6 +263,8 @@ const HostingFilesView = React.createClass({
   },
 
   render() {
+    console.log('this.state', this.state);
+    console.log('HostingFilesStore.getState()', HostingFilesStore.getState());
     const {
       currentFileIndex,
       currentFolderName,

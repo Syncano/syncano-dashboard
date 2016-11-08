@@ -41,6 +41,10 @@ export default Reflux.createStore({
     };
   },
 
+  getState() {
+    return this.data;
+  },
+
   init() {
     this.data = this.getInitialState();
     this.waitFor(
@@ -144,5 +148,38 @@ export default Reflux.createStore({
     this.data.errorResponses = [];
     this.data.isUploading = false;
     this.refreshData();
+  },
+
+  onSetFilesToUpload(filesToUpload) {
+    this.data.filesToUpload = filesToUpload;
+    this.data.isCanceled = false;
+
+    this.trigger(this.data);
+  },
+
+  onCreateFolder(name) {
+    this.data.currentFolderName = name;
+    this.data.directoryDepth = this.data.directoryDepth + 1;
+    this.data.previousFolders = [...this.data.previousFolders, name];
+    this.data.showNewFolderForm = false;
+    this.data.name = '';
+
+    this.trigger(this.data);
+  },
+
+  onMoveDirectoryUp(depthLevel) {
+    this.data.directoryDepth = this.data.directoryDepth - depthLevel;
+    this.data.currentFolderName = this.data.previousFolders[this.data.directoryDepth - 1 - depthLevel] || '';
+    this.data.previousFolders = _.dropRight(this.data.previousFolders, depthLevel);
+
+    this.trigger(this.data);
+  },
+
+  onMoveDirectoryDown(nextFolderName) {
+    this.data.directoryDepth = this.data.directoryDepth + 1;
+    this.data.currentFolderName = nextFolderName;
+    this.data.previousFolders = [...this.data.previousFolders, nextFolderName];
+
+    this.trigger(this.data);
   }
 });
