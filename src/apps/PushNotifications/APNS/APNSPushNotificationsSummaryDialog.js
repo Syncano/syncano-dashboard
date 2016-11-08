@@ -6,7 +6,7 @@ import APNSPushNotificationsStore from './APNSPushNotificationsStore';
 import SessionStore from '../../Session/SessionStore';
 
 import { DialogMixin } from '../../../mixins';
-import { CodePreview, Dialog, Loading } from '../../../common/';
+import { CodePreview, Dialog } from '../../../common/';
 import { Card, CardTitle, CardText } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 
@@ -28,7 +28,7 @@ export default React.createClass({
     const item = APNSPushNotificationsStore.data.items[0];
     const token = SessionStore.getToken();
     const currentInstance = SessionStore.getInstance();
-    const showSummaryDialog = (!item || !currentInstance || !token || APNSPPushNotifications.isLoading);
+    const showSummaryDialog = (item && currentInstance && token && !APNSPPushNotifications.isLoading);
 
     return (
       <Dialog.FullPage
@@ -37,7 +37,7 @@ export default React.createClass({
         title="You've just configured Apple Push Notification Socket!"
         titleStyle={{ paddingLeft: 72 }}
         onRequestClose={this.handleCancel}
-        loading={APNSPPushNotifications.isLoading}
+        loading={showSummaryDialog}
         open={open}
       >
         <div style={{ position: 'absolute', top: 0, left: 24 }}>
@@ -49,7 +49,6 @@ export default React.createClass({
             }}
           />
         </div>
-        {showSummaryDialog ? <Loading show={true} /> : (
         <div>
           <Dialog.ContentSection>
             <div className="col-flex-1">
@@ -170,7 +169,6 @@ export default React.createClass({
             </div>
           </Dialog.ContentSection>
         </div>
-        )}
       </Dialog.FullPage>
     );
   }

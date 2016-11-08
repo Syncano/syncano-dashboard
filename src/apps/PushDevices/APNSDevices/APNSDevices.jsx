@@ -10,6 +10,7 @@ import { Container } from '../../../common/';
 import DevicesList from '../DevicesList';
 import APNSDevicesEmptyView from './APNSDevicesEmptyView';
 import APNSNoConfigEmptyView from './APNSNoConfigEmptyView';
+import APNSPushNotificationsSummaryDialog from '../../PushNotifications/APNS/APNSPushNotificationsSummaryDialog';
 
 const APNSDevices = React.createClass({
   displayName: 'APNSDevices',
@@ -54,6 +55,7 @@ const APNSDevices = React.createClass({
     return (
       <Container>
         <Helmet title="iOS Devices" />
+        <APNSPushNotificationsSummaryDialog />
         <DevicesList
           titleVisible={this.shouldShowTitle()}
           emptyView={emptyView}

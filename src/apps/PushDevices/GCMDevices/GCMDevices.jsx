@@ -10,6 +10,7 @@ import { Container } from '../../../common/';
 import DevicesList from '../DevicesList';
 import GCMDevicesEmptyView from './GCMDevicesEmptyView';
 import GCMNoConfigEmptyView from './GCMNoConfigEmptyView';
+import GCMPSummaryDialog from '../../PushNotifications/GCM/GCMSummaryDialog';
 
 const GCMDevices = React.createClass({
 
@@ -55,6 +56,7 @@ const GCMDevices = React.createClass({
     return (
       <Container>
         <Helmet title="Android Devices" />
+        <GCMPSummaryDialog />
         <DevicesList
           titleVisible={this.shouldShowTitle()}
           emptyView={emptyView}
