@@ -79,8 +79,7 @@ export default {
           this.failure(
             {
               isFinished,
-              currentFileIndex,
-              lastFileIndex
+              currentFileIndex
             },
             {
               file,
@@ -113,8 +112,7 @@ export default {
             .update({ id: fileToUpdate.id, hostingId }, payload)
             .then(() => this.completed({
               isFinished,
-              currentFileIndex,
-              lastFileIndex
+              currentFileIndex
             }))
             .catch(errorCallback);
         }
@@ -125,8 +123,7 @@ export default {
           .upload({ hostingId }, payload)
           .then(() => this.completed({
             isFinished,
-            currentFileIndex,
-            lastFileIndex
+            currentFileIndex
           }))
           .catch(errorCallback);
       });

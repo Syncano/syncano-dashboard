@@ -86,7 +86,8 @@ export default Reflux.createStore({
     event.returnValue = 'Are you sure you want to close?';
   },
 
-  onUploadFiles() {
+  onUploadFiles(hostingId, files) {
+    this.trigger({ isUploading: true, lastFileIndex: files.length - 1, currentFileIndex: 0 });
     window.addEventListener('beforeunload', this.handleCloseOnUpload);
   },
 
@@ -108,7 +109,6 @@ export default Reflux.createStore({
     }
     this.data.isUploading = !uploadingStatus.isFinished;
     this.data.currentFileIndex = uploadingStatus.currentFileIndex;
-    this.data.lastFileIndex = uploadingStatus.lastFileIndex;
     uploadingStatus.isFinished && removeEventListener('beforeunload', this.handleCloseOnUpload);
     this.trigger(this.data);
   },
@@ -116,7 +116,6 @@ export default Reflux.createStore({
   onUploadFilesFailure(uploadingStatus, response) {
     this.data.errorResponses = [...this.data.errorResponses, response];
     this.data.currentFileIndex = uploadingStatus.currentFileIndex;
-    this.data.lastFileIndex = uploadingStatus.lastFileIndex;
     uploadingStatus.isFinished && removeEventListener('beforeunload', this.handleCloseOnUpload);
     this.trigger(this.data);
   },

@@ -55,7 +55,6 @@ const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDele
     onFolderEnter(fileName);
   };
   const getFolderName = () => {
-    console.error('filename', fileName);
     if (item.isFolder) {
       return (
         <Truncate
