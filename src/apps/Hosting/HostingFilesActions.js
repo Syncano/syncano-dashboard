@@ -6,6 +6,9 @@ export default CreateActions(
     setHostingId: {},
     checkFolder: {},
     finishUploading: {},
+    cancelUploading: {
+      method: 'Syncano.Actions.Hosting.cancelUploading'
+    },
     uploadFiles: {
       asyncResult: true,
       loading: true,
@@ -28,7 +31,6 @@ export default CreateActions(
     }
   },
   {
-    withCheck: true,
-    withDialog: true
+    withCheck: true
   }
 );

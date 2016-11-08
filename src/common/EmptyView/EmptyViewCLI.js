@@ -23,16 +23,14 @@ const EmptyViewCLI = ({
   CLIDescription,
   docsUrl,
   description,
+  errorResponses,
   handleClick,
-  handleErrorsButtonClick,
   hostingDocsUrl,
   hostingDocsButtonLabel,
   iconClassName,
   iconColor,
-  isUploadFinished,
   mainTitle,
   showDocsUrl = true,
-  errorResponses,
   urlLabel,
   actionButton = (
     <RaisedButton
@@ -113,9 +111,6 @@ const EmptyViewCLI = ({
       display: 'flex',
       alignItems: 'center',
       flexWrap: 'wrap'
-    },
-    errorsBackButton: {
-      marginTop: 15
     }
   };
 
@@ -125,7 +120,7 @@ const EmptyViewCLI = ({
         description={item.description}
         snippet={item.snippet}
       />
-      )
+     )
     )
   );
 
@@ -188,13 +183,6 @@ const EmptyViewCLI = ({
           {renderErrors}
         </TableBody>
       </Table>
-      <FlatButton
-        label="Close"
-        primary={true}
-        style={styles.errorsBackButton}
-        onTouchTap={handleErrorsButtonClick}
-        disabled={!isUploadFinished}
-      />
     </div>
   );
 

@@ -20,7 +20,8 @@ class UploadFilesButton extends Component {
       position: 'absolute'
     },
     folderDescription: {
-      padding: '8px 0'
+      color: '#777',
+      padding: '14px 0'
     }
   })
 
@@ -80,7 +81,7 @@ class UploadFilesButton extends Component {
         <div>
           <div>
             <RaisedButton
-              label="Choose files from disk"
+              label="Choose files"
               primary={true}
               onTouchTap={this.handleClickFilesButton}
               style={{ marginRight: 10 }}
@@ -94,7 +95,7 @@ class UploadFilesButton extends Component {
               />
             </RaisedButton>
             <RaisedButton
-              label="Choose whole folder from disk*"
+              label="Choose folder *"
               primary={true}
               onTouchTap={this.handleClickFoldersButton}
             >
