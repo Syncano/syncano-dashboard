@@ -116,6 +116,10 @@ export default Reflux.createStore({
     DataObjectsActions.setDataObjects(dataObjects, rawData);
   },
 
+  onSubFetchDataObjects() {
+    this.trigger({ isLoading: true });
+  },
+
   onSubFetchDataObjectsCompleted({ dataObjects, users }) {
     this.data.currentPage += 1;
     this.data.users = users;
@@ -159,6 +163,7 @@ export default Reflux.createStore({
   onRemoveDataObjects() {
     this.data.isLoading = true;
     this.trigger(this.data);
+    this.refreshDataObjects();
   },
 
   onRemoveDataObjectsCompleted() {
