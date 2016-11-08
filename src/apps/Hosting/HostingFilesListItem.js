@@ -5,7 +5,7 @@ import fileSize from 'filesize';
 
 import { MenuItem } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
-import { ColumnList } from '../../common/';
+import { ColumnList, Truncate } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -46,8 +46,8 @@ const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDele
       }
     },
     checkIcon: {
-      primaryText: {
-        width: '40vw'
+      fileName: {
+        width: '38vw'
       }
     }
   };
@@ -55,14 +55,14 @@ const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDele
     onFolderEnter(fileName);
   };
   const getFolderName = () => {
+    console.error('filename', fileName);
     if (item.isFolder) {
       return (
-        <div
+        <Truncate
           style={styles.folderName}
           onClick={handleClickFolderName}
-        >
-          {fileName}
-        </div>
+          text={fileName}
+        />
       );
     }
 
