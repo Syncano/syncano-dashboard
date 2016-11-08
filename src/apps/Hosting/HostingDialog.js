@@ -19,15 +19,30 @@ const CreateHostingDialog = React.createClass({
     FormMixin
   ],
 
-  validatorConstraints: {
-    name: {
-      presence: true
-    },
-    description: {
-      length: {
-        maximum: 256
+  validatorConstraints() {
+    const { name } = this.state;
+
+    const validateObj = {
+      name: {
+        presence: true
+      },
+      description: {
+        length: {
+          maximum: 256
+        }
       }
+    };
+
+    if (name.toLowerCase() === 'default') {
+      validateObj.name = {
+        inclusion: {
+          within: [],
+          message: "^Name should be another than 'default'"
+        }
+      };
     }
+
+    return validateObj;
   },
 
   getHostingParams() {
