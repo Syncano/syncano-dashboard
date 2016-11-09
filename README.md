@@ -100,7 +100,7 @@ export default PageIntro;
 ### Dashboard
 
 Dashboard is powered by [Node](https://nodejs.org).
-You will need to install `6.2.1` version, as it is current that we are using. It should come with [npm](https://www.npmjs.com/) in `3.9.3` version.
+You will need to install `7.0.0` version, as it is current that we are using. It should come with [npm](https://www.npmjs.com/) in `3.10.8` version.
 
 > Without proper node version everything tends to blow up :fire: !
 
@@ -110,7 +110,7 @@ If you already have other version of node, just install `n`:
 
 ```sh
 $ sudo npm install -g n
-$ n 6.2.1
+$ n 7.0.0
 ```
 
 And then type `n` to prompt selection of an installed node.
@@ -119,8 +119,8 @@ Use the up / down arrow to navigate, and press enter or the right arrow to selec
 ```sh
 $ n
 
-  ο 6.2.1
-    4.4.3
+  ο 7.0.0
+    6.2.1
 ```
 
 ### E2E Tests
@@ -211,7 +211,7 @@ It should be your **Syncano** account email address and password.
 
 ### Running tests
 
-:warning: **Our current E2E test are in testing phase, and they run on your Syncano account. 
+:warning: **Our current E2E test are in testing phase, and they run on your Syncano account.
 Please be careful what you do.**
 
 :information_source: **E2E tests require development server to be running, be sure to start it.**
