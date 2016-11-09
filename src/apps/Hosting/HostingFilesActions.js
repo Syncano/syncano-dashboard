@@ -2,10 +2,15 @@ import CreateActions from '../../utils/ActionsConstructor';
 
 export default CreateActions(
   {
-    fetch: {},
-    setHostingId: {},
     checkFolder: {},
+    clearFilesToUpload: {},
+    createFolder: {},
+    fetch: {},
     finishUploading: {},
+    moveDirectoryDown: {},
+    moveDirectoryUp: {},
+    setFilesToUpload: {},
+    setHostingId: {},
     cancelUploading: {
       method: 'Syncano.Actions.Hosting.cancelUploading'
     },
