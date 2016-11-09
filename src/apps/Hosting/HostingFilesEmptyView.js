@@ -1,4 +1,5 @@
 import React from 'react';
+import pluralize from 'pluralize';
 
 import { colors as Colors } from 'material-ui/styles';
 import { LinearProgress, RaisedButton } from 'material-ui';
@@ -67,10 +68,11 @@ const HostingFilesEmptyView = ({
     />
   );
   const actionButton = isActionInProgress ? progressBar : uploadFilesButton;
-
+  const pluralizedFiles = pluralize('files', filesCount);
+  const pluralizedDescription = `${filesCount} ${pluralizedFiles} ready for upload.`;
   const defaultDescription = 'Choose your files from disk:';
-  const uploadingFilesDescription = `${action} ${uploadingFilesCount} files...`;
-  const descriptionWithFiles = isActionInProgress ? uploadingFilesDescription : `${filesCount} files ready for upload.`;
+  const uploadingFilesDescription = `${action} ${uploadingFilesCount} ${pluralizedFiles}...`;
+  const descriptionWithFiles = isActionInProgress ? uploadingFilesDescription : pluralizedDescription;
   const description = hasFiles || isActionInProgress ? descriptionWithFiles : defaultDescription;
   const isFilesQueue = hasFiles || isUploading;
   const iconClassName = isFilesQueue ? 'synicon-cloud-upload' : 'synicon-hosting-files-types';
