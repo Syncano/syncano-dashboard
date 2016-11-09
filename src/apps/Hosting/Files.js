@@ -13,7 +13,7 @@ import HostingPublishDialogActions from './HostingPublishDialogActions';
 import HostingUploadDialogActions from './HostingUploadDialogActions';
 
 import { FontIcon, RaisedButton, TextField } from 'material-ui';
-import { InnerToolbar, Container, Show } from '../../common';
+import { InnerToolbar, Container, Show, Tooltip } from '../../common';
 import HostingFilesList from './HostingFilesList';
 import HostingDialog from './HostingDialog';
 import HostingPublishDialog from './HostingPublishDialog';
@@ -55,6 +55,12 @@ const HostingFilesView = React.createClass({
         display: 'flex',
         alignItems: 'center'
       },
+      customToolbarTitle: {
+        fontSize: 20,
+        lineHeight: '56px',
+        color: 'rgba(0, 0, 0, .4)',
+        padding: '0 24px 0 0'
+      },
       newFolderNameInput: {
         width: 180,
         marginRight: 10,
@@ -66,6 +72,9 @@ const HostingFilesView = React.createClass({
       newFolderForm: {
         display: 'flex',
         alignItems: 'center'
+      },
+      toolbarTooltip: {
+        top: 30
       }
     };
   },
@@ -81,10 +90,22 @@ const HostingFilesView = React.createClass({
     return hostingUrl;
   },
 
-  getToolbarTitle() {
+  getWholeTitle() {
     const { hostingDetails, isLoading } = this.state;
 
     return hostingDetails && !isLoading ? `Website Hosting: ${hostingDetails.name} (id: ${hostingDetails.id})` : '';
+  },
+
+  getTruncatedTitle() {
+    const { hostingDetails, isLoading } = this.state;
+
+    if (hostingDetails && !isLoading) {
+      const hostingName = `Website Hosting: ${hostingDetails.name}`;
+
+      return `${_.truncate(hostingName, { length: 60 })} (id: ${hostingDetails.id})`;
+    }
+
+    return '';
   },
 
   isDefaultHosting() {
@@ -160,7 +181,7 @@ const HostingFilesView = React.createClass({
     HostingFilesActions.uploadFiles(hostingId, filesToUpload);
   },
 
-  handleOnTouchTap(url) {
+  handleGoToWebsite(url) {
     const hasHostingUrl = !_.isEmpty(url);
 
     return !hasHostingUrl && this.showMissingDomainsSnackbar;
@@ -272,7 +293,9 @@ const HostingFilesView = React.createClass({
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const hostingUrl = this.getHostingUrl();
-    const pageTitle = this.getToolbarTitle();
+    const wholeTitle = this.getWholeTitle();
+    const openWebsite = this.handleGoToWebsite(hostingUrl);
+    const truncatedTitle = this.getTruncatedTitle();
 
     if (!hostingDetails) {
       return null;
@@ -280,17 +303,24 @@ const HostingFilesView = React.createClass({
 
     return (
       <div>
-        <Helmet title={pageTitle} />
+        <Helmet title={wholeTitle} />
         <HostingDialog />
         <HostingPublishDialog />
 
         <InnerToolbar
-          title={pageTitle}
           backButton={true}
           backFallback={this.handleBackClick}
           forceBackFallback={true}
           backButtonTooltip="Go Back to Hosting"
         >
+          <Tooltip
+            label={wholeTitle}
+            horizontalPosition="right"
+            style={styles.toolbarTooltip}
+          >
+            <span style={styles.customToolbarTitle}>{truncatedTitle}</span>
+          </Tooltip>
+          <div style={{ flex: 1 }} />
           <div style={styles.buttonsWrapper}>
             <Show if={items.length && !isLoading}>
               {this.renderActionButtons()}
@@ -299,7 +329,7 @@ const HostingFilesView = React.createClass({
               label="Go to site"
               primary={true}
               icon={<FontIcon className="synicon-open-in-new" />}
-              onTouchTap={this.handleOnTouchTap(hostingUrl)}
+              onTouchTap={openWebsite}
               href={hostingUrl}
               target="_blank"
             />
