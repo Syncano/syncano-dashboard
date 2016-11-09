@@ -30,6 +30,10 @@ export default React.createClass({
     const currentInstance = SessionStore.getInstance();
     const showSummaryDialog = (item && currentInstance && token && !APNSPPushNotifications.isLoading);
 
+    if (!currentInstance) {
+      return null;
+    }
+
     return (
       <Dialog.FullPage
         key="dialog"
@@ -54,10 +58,10 @@ export default React.createClass({
             <div className="col-flex-1">
               <div style={{ fontSize: 16, lineHeight: 1.6, color: 'rgba(68,68,68, .8)' }}>
                 <p>
-                    Apple Push Notification you just configured can always be modified later. Push Notification
-                    Sockets allow for sending messages directly to your users devices. Thanks to this functionality,
-                    your users can be quickly informed about changes taking place within your application.
-                  </p>
+                  Apple Push Notification you just configured can always be modified later. Push Notification
+                  Sockets allow for sending messages directly to your users devices. Thanks to this functionality,
+                  your users can be quickly informed about changes taking place within your application.
+                </p>
               </div>
             </div>
           </Dialog.ContentSection>
