@@ -46,7 +46,6 @@ const getCertFile = () => {
         resp.on('end', () => console.log(`\n> Downloaded: ./${certTargetInfo.certFileName}\n`));
       });
     });
-  return;
 };
 
 export default getCertFile;
