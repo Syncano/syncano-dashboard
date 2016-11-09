@@ -118,7 +118,8 @@ const HostingFilesView = React.createClass({
     this.setState({ showNewFolderForm: true });
   },
 
-  handleCreateFolder() {
+  handleCreateFolder(event) {
+    event && event.preventDefault();
     const validateFolderName = this.handleValidation('name', (isValid) => {
       const { name } = this.state;
 
@@ -191,31 +192,34 @@ const HostingFilesView = React.createClass({
 
     return (
       <div style={styles.newFolderForm}>
-        <Show if={showNewFolderForm}>
-          <TextField
-            fullWidth={true}
-            name="name"
-            value={name}
-            onChange={this.handleNewFolderNameChange}
-            errorText={this.getValidationMessages('name').join(' ')}
-            hintText="Type new folder name"
-            style={styles.newFolderNameInput}
+        <form onSubmit={this.handleCreateFolder}>
+          <Show if={showNewFolderForm}>
+            <TextField
+              fullWidth={true}
+              autoFocus={true}
+              name="name"
+              value={name}
+              onChange={this.handleNewFolderNameChange}
+              errorText={this.getValidationMessages('name').join(' ')}
+              hintText="Type new folder name"
+              style={styles.newFolderNameInput}
+            />
+          </Show>
+          <RaisedButton
+            label={createFolderButtonLabel}
+            primary={true}
+            style={styles.newFolderButton}
+            onTouchTap={createFolderButtonAction}
+            disabled={disableNewFolderButton}
           />
-        </Show>
-        <RaisedButton
-          label={createFolderButtonLabel}
-          primary={true}
-          style={styles.newFolderButton}
-          onTouchTap={createFolderButtonAction}
-          disabled={disableNewFolderButton}
-        />
-        <RaisedButton
-          label="Upload files"
-          primary={true}
-          icon={<FontIcon className="synicon-cloud-upload" />}
-          style={{ marginRight: 10 }}
-          onTouchTap={this.handleShowUploadDialog}
-        />
+          <RaisedButton
+            label="Upload files"
+            primary={true}
+            icon={<FontIcon className="synicon-cloud-upload" />}
+            style={{ marginRight: 10 }}
+            onTouchTap={this.handleShowUploadDialog}
+          />
+        </form>
       </div>
     );
   },
