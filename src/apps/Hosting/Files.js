@@ -30,8 +30,8 @@ const HostingFilesView = React.createClass({
     name: {
       presence: true,
       format: {
-        pattern: `[a-zA-Z0-9-_]+$`,
-        message: 'can containt only a-z, 0-9, no spaces '
+        pattern: '[a-zA-Z0-9-_]+$',
+        message: 'can contain only a-z, 0-9, no spaces '
       },
       length: {
         maximum: 64
