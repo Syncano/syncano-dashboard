@@ -132,7 +132,7 @@ const EmptyViewCLI = ({
     return (
       <img
         src={headerImageSrc}
-        alt=""
+        alt="sample hosting file icons"
         style={styles.headerImage}
       />
     );
