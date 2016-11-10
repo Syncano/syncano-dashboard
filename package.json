@@ -10,7 +10,7 @@
   },
   "engines": {
     "node": "7.0.0",
-    "npm": "4.0.1"
+    "npm": "3.10.8"
   },
   "dependencies": {
     "axios": "0.15.2",
@@ -73,7 +73,7 @@
     "babel-cli": "6.18.0",
     "babel-core": "6.18.2",
     "babel-eslint": "7.1.0",
-    "babel-jest": "16.0.0",
+    "babel-jest": "17.0.0",
     "babel-loader": "6.2.7",
     "babel-plugin-add-module-exports": "0.2.1",
     "babel-plugin-lodash": "3.2.9",
@@ -111,7 +111,7 @@
     "gulp-task-loader": "1.4.4",
     "gulp-util": "3.0.7",
     "http-server": "0.9.0",
-    "jest-cli": "16.0.2",
+    "jest-cli": "17.0.0",
     "nightwatch": "0.9.8",
     "node-libs-browser": ">=0.5.3",
     "node-sass": "3.11.2",

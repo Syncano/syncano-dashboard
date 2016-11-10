@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import { CheckListStoreMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../mixins';
+import { CheckListStoreMixin, HostingMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './HostingActions';
@@ -11,6 +11,7 @@ export default Reflux.createStore({
 
   mixins: [
     CheckListStoreMixin,
+    HostingMixin,
     WaitForStoreMixin,
     StoreLoadingMixin
   ],
@@ -40,28 +41,8 @@ export default Reflux.createStore({
     });
   },
 
-  sortHostingDomains(domains, label, isDefault) {
-    // cname(s) -> default -> label
-    const cnameArray = _.without(domains, 'default', label);
-    const sortedDomains = [...cnameArray];
-
-    if (isDefault) {
-      sortedDomains.push('default');
-    }
-
-    sortedDomains.push(label);
-
-    return sortedDomains;
-  },
-
   setHosting(data) {
-    const prepareHosting = (hosting) => {
-      hosting.domains = this.sortHostingDomains(hosting.domains, hosting.name, hosting.is_default);
-      hosting.cnameIndex = _.findIndex(hosting.domains, (domain) => domain !== 'default' && domain !== hosting.name);
-      return hosting;
-    };
-
-    this.data.items = _.forEach(data, prepareHosting);
+    this.data.items = _.forEach(data, this.prepareHosting);
     this.trigger(this.data);
   },
 

@@ -84,7 +84,7 @@ const HostingFilesView = React.createClass({
     const { instanceName } = this.props.params;
     const defaultHostingUrl = `https://${instanceName}.syncano.site/`;
     const hasDomains = hostingDetails && hostingDetails.domains.length > 0;
-    const customDomainUrl = hasDomains ? `https://${instanceName}--${hostingDetails.domains[0]}.syncano.site/` : null;
+    const customDomainUrl = hasDomains ? `https://${hostingDetails.domains[0]}--${instanceName}.syncano.site/` : null;
     const hostingUrl = this.isDefaultHosting() ? defaultHostingUrl : customDomainUrl;
 
     return hostingUrl;
@@ -120,9 +120,8 @@ const HostingFilesView = React.createClass({
 
   handleBackClick() {
     const { router, params } = this.props;
-    const redirectPath = `/instances/${params.instanceName}/hosting/`;
 
-    router.push(redirectPath);
+    router.push(`/instances/${params.instanceName}/hosting/`);
   },
 
   handleUploadFiles(currentPath, event) {
@@ -132,26 +131,20 @@ const HostingFilesView = React.createClass({
     if (files && files.length) {
       const filesToUpload = _.map(files, (file) => this.extendFilePath(file, currentPath));
 
-      this.setState({ filesToUpload, isCanceled: false });
+      HostingFilesActions.setFilesToUpload(filesToUpload);
     }
   },
 
-  handleClickNewFolderButton() {
+  handleNewFolderButtonClick() {
     this.setState({ showNewFolderForm: true });
   },
 
   handleCreateFolder() {
     const validateFolderName = this.handleValidation('name', (isValid) => {
-      const { directoryDepth, name, previousFolders } = this.state;
+      const { name } = this.state;
 
       if (isValid) {
-        this.setState({
-          currentFolderName: name,
-          directoryDepth: directoryDepth + 1,
-          previousFolders: [...previousFolders, name],
-          showNewFolderForm: false,
-          name: ''
-        });
+        HostingFilesActions.createFolder(name);
       }
     });
 
@@ -159,9 +152,7 @@ const HostingFilesView = React.createClass({
   },
 
   handleClearFiles() {
-    this.setState({
-      filesToUpload: []
-    });
+    HostingFilesActions.clearFilesToUpload();
   },
 
   handleShowPublishDialog() {
@@ -191,27 +182,6 @@ const HostingFilesView = React.createClass({
     this.setState({ name });
   },
 
-  moveDirectoryUp(depth) {
-    const { previousFolders, directoryDepth } = this.state;
-    const depthLevel = _.isFinite(depth) ? depth : 1;
-
-    this.setState({
-      directoryDepth: directoryDepth - depthLevel,
-      currentFolderName: previousFolders[directoryDepth - 1 - depthLevel] || '',
-      previousFolders: _.dropRight(previousFolders, depthLevel)
-    });
-  },
-
-  moveDirectoryDown(nextFolderName) {
-    const { directoryDepth, previousFolders } = this.state;
-
-    this.setState({
-      directoryDepth: directoryDepth + 1,
-      currentFolderName: nextFolderName,
-      previousFolders: [...previousFolders, nextFolderName]
-    });
-  },
-
   showMissingDomainsSnackbar() {
     this.setSnackbarNotification({
       message: "You don't have any domains yet. Please add some or set Hosting as default."
@@ -236,8 +206,8 @@ const HostingFilesView = React.createClass({
   renderActionButtons() {
     const { name, showNewFolderForm } = this.state;
     const styles = this.getStyles();
-    const createFolderButtonLabel = showNewFolderForm ? 'Create' : 'Create new folder';
-    const createFolderButtonAction = showNewFolderForm ? this.handleCreateFolder : this.handleClickNewFolderButton;
+    const createFolderButtonLabel = showNewFolderForm ? 'Create' : 'New folder';
+    const createFolderButtonAction = showNewFolderForm ? this.handleCreateFolder : this.handleNewFolderButtonClick;
     const disableNewFolderButton = showNewFolderForm && !name;
 
     return (
@@ -294,7 +264,6 @@ const HostingFilesView = React.createClass({
     const currentInstanceName = currentInstance && currentInstance.name;
     const hostingUrl = this.getHostingUrl();
     const wholeTitle = this.getWholeTitle();
-    const openWebsite = this.handleGoToWebsite(hostingUrl);
     const truncatedTitle = this.getTruncatedTitle();
 
     if (!hostingDetails) {
@@ -329,8 +298,7 @@ const HostingFilesView = React.createClass({
               label="Go to site"
               primary={true}
               icon={<FontIcon className="synicon-open-in-new" />}
-              onTouchTap={openWebsite}
-              href={hostingUrl}
+              onTouchTap={() => this.handleOnTouchTap(hostingUrl)}
               target="_blank"
             />
           </div>
@@ -357,8 +325,8 @@ const HostingFilesView = React.createClass({
             hasFiles={hasFilesToUpload}
             hideDialogs={hideDialogs}
             lastFileIndex={lastFileIndex}
-            moveDirectoryDown={this.moveDirectoryDown}
-            moveDirectoryUp={this.moveDirectoryUp}
+            moveDirectoryDown={HostingFilesActions.moveDirectoryDown}
+            moveDirectoryUp={HostingFilesActions.moveDirectoryUp}
             previousFolders={previousFolders}
           />
         </Container>
