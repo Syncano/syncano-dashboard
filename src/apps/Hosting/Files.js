@@ -30,8 +30,8 @@ const HostingFilesView = React.createClass({
     name: {
       presence: true,
       format: {
-        pattern: `[a-zA-Z0-9-_]+$`,
-        message: 'can containt only a-z, 0-9, no spaces '
+        pattern: '[a-zA-Z0-9-_]+$',
+        message: 'can contain only a-z, 0-9'
       },
       length: {
         maximum: 64
@@ -93,16 +93,16 @@ const HostingFilesView = React.createClass({
   getWholeTitle() {
     const { hostingDetails, isLoading } = this.state;
 
-    return hostingDetails && !isLoading ? `Website Hosting: ${hostingDetails.name} (id: ${hostingDetails.id})` : '';
+    return hostingDetails && !isLoading ? `Hosting: ${hostingDetails.name} (id: ${hostingDetails.id})` : '';
   },
 
   getTruncatedTitle() {
     const { hostingDetails, isLoading } = this.state;
 
     if (hostingDetails && !isLoading) {
-      const hostingName = `Website Hosting: ${hostingDetails.name}`;
+      const hostingName = `Hosting: ${hostingDetails.name}`;
 
-      return `${_.truncate(hostingName, { length: 60 })} (id: ${hostingDetails.id})`;
+      return `${_.truncate(hostingName, { length: 55 })} (id: ${hostingDetails.id})`;
     }
 
     return '';
