@@ -3,7 +3,7 @@ import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['passwordSettings'],
-  after: (client) => client.end(),
+  after: (client) => client.getChromeLogs().end(),
   before: (client) => {
     const { account_key: accountKey } = instances.account;
 

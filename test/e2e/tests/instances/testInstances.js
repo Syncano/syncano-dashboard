@@ -10,7 +10,7 @@ export default addTestNamePrefixes({
       .loginUsingLocalStorage(accountKey)
       .setResolution(client);
   },
-  after: (client) => client.end(),
+  after: (client) => client.getChromeLogs().end(),
   'Test Instances Dropdown': (client) => {
     const instancesPage = client.page.instancesPage();
     const leftMenuPage = client.page.leftMenuPage();
