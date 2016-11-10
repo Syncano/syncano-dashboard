@@ -208,6 +208,7 @@ export default Radium(React.createClass({
       >
         <DropZone
           certificateType={type}
+          accept="application/x-pkcs12"
           isLoading={isCertLoading}
           handleButtonClick={(file) => this.onDrop(file, type)}
           onDrop={(file) => this.onDrop(file, type)}
