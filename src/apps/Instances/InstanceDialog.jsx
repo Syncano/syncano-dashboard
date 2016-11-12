@@ -5,8 +5,9 @@ import moment from 'moment';
 
 import { DialogMixin, DialogsMixin, FormMixin } from '../../mixins';
 
-import Actions from './InstanceDialogActions';
 import Store from './InstanceDialogStore';
+import Actions from './InstanceDialogActions';
+import InstancesStore from './InstancesStore';
 
 import { TextField, FlatButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
@@ -73,9 +74,6 @@ const InstanceDialog = React.createClass({
       restoreFromFileListItem: {
         paddingTop: 8,
         paddingBottom: 8
-      },
-      notificationWrapper: {
-        width: '100%'
       }
     };
   },
@@ -138,9 +136,7 @@ const InstanceDialog = React.createClass({
   },
 
   handleChangeBackup(event, index, value) {
-    this.setState({
-      selectedBackup: value
-    });
+    this.setState({ selectedBackup: value });
   },
 
   initDialogs() {
@@ -212,61 +208,56 @@ const InstanceDialog = React.createClass({
       description,
       selectedBackup
     } = this.state;
-    const styles = this.getStyles();
 
     return (
       <div>
         {DialogsMixin.getDialogs(this.initDialogs())}
         {this.renderFormNotifications()}
         <Dialog.ContentSection>
-          <Show if={this.getValidationMessages('detail').length}>
-            <div
-              className="vm-2-t"
-              style={styles.notificationWrapper}
-            >
-              <Notification type="error">
+          <div className="col-flex-1">
+            <Show if={this.getValidationMessages('detail').length}>
+              <Notification
+                type="error"
+                className="vm-2-t"
+              >
                 {this.getValidationMessages('detail').join(' ')}
               </Notification>
-            </div>
-          </Show>
-        </Dialog.ContentSection>
-        <Dialog.ContentSection>
-          <TextField
-            ref="name"
-            name="name"
-            autoFocus={!this.hasEditMode() && true}
-            fullWidth={true}
-            value={name}
-            onChange={this.handleNameChange}
-            errorText={this.getValidationMessages('name').join(' ')}
-            hintText="Instance's name"
-            onFocus={this.handleInstanceNameFieldFocus}
-            floatingLabelText="Name"
-          />
-          {this.hasEditMode() && notificationShowed ? this.renderNotification() : null}
-          <TextField
-            ref="description"
-            name="description"
-            fullWidth={true}
-            multiLine={true}
-            value={description}
-            onChange={this.handleDescriptionChange}
-            errorText={this.getValidationMessages('description').join(' ')}
-            hintText="Instance's description"
-            floatingLabelText="Description (optional)"
-          />
+            </Show>
+            <TextField
+              ref="name"
+              name="name"
+              autoFocus={!this.hasEditMode() && true}
+              fullWidth={true}
+              value={name}
+              onChange={this.handleNameChange}
+              errorText={this.getValidationMessages('name').join(' ')}
+              onFocus={this.handleInstanceNameFieldFocus}
+              floatingLabelText="Name"
+            />
+            {this.hasEditMode() && notificationShowed ? this.renderNotification() : null}
+            <TextField
+              ref="description"
+              name="description"
+              fullWidth={true}
+              multiLine={true}
+              value={description}
+              onChange={this.handleDescriptionChange}
+              errorText={this.getValidationMessages('description').join(' ')}
+              floatingLabelText="Description (optional)"
+            />
+          </div>
         </Dialog.ContentSection>
         <Show if={!this.hasEditMode()}>
-          <Dialog.ContentSection
-            className="vp-3-t"
-          >
-            <SelectFieldWrapper
-              name="backup"
-              floatingLabelText="Restore Instance from backup"
-              value={selectedBackup}
-              options={this.renderDropDownItems()}
-              onChange={this.handleChangeBackup}
-            />
+          <Dialog.ContentSection className="vm-6-t">
+            <div className="col-flex-1">
+              <SelectFieldWrapper
+                name="backup"
+                floatingLabelText="Restore Instance from backup"
+                value={selectedBackup}
+                options={this.renderDropDownItems()}
+                onChange={this.handleChangeBackup}
+              />
+            </div>
           </Dialog.ContentSection>
         </Show>
       </div>
@@ -285,6 +276,21 @@ const InstanceDialog = React.createClass({
         <Loading show={true} />
       </div>
     );
+  },
+
+  renderDeleteInstanceButton() {
+    if (this.hasEditMode() && InstancesStore.amIOwner(this.state)) {
+      return (
+        <FlatButton
+          style={{ float: 'left' }}
+          labelStyle={{ color: Colors.red400 }}
+          label="Delete an Instance"
+          onTouchTap={this.handleDeleteInstance}
+        />
+      );
+    }
+
+    return null;
   },
 
   render() {
@@ -309,15 +315,7 @@ const InstanceDialog = React.createClass({
         showCloseButton={!isRestoring}
         actions={!isRestoring &&
           <div>
-            {this.hasEditMode()
-              ? <FlatButton
-                style={{ float: 'left' }}
-                labelStyle={{ color: Colors.red400 }}
-                label="DELETE AN INSTANCE"
-                onTouchTap={this.handleDeleteInstance}
-              />
-              : null
-            }
+            {this.renderDeleteInstanceButton()}
             <Dialog.StandardButtons
               disabled={!canSubmit}
               handleCancel={this.handleCancel}

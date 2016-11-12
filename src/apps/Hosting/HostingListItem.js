@@ -51,6 +51,7 @@ class HostingListItem extends Component {
             <HostingListItemLinks
               items={item.domains}
               hostingLabel={item.name}
+              isDefault={item.is_default}
             />
           </div>
         </Column.Desc>

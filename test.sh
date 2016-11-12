@@ -111,6 +111,7 @@ function local_setup {
 
 function local_tests {
     local_setup
+    npm run lint-tests -- --fix
 
     if [ -n "$1" ]; then
         message "Tag: ${1} local tests starts..."

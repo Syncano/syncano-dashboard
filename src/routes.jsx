@@ -115,7 +115,6 @@ export default (
     >
       <Route
         name="instances"
-        onEnter={RoutesUtil.checkActiveSubscriptions}
         component={Instances}
         path="instances"
       />
@@ -152,7 +151,7 @@ export default (
 
       <Route
         name="instance"
-        onEnter={RoutesUtil.checkActiveSubscriptions}
+        onEnter={RoutesUtil.checkInstanceActiveSubscription}
         component={InstancePage}
         path="instances/:instanceName"
       >
@@ -557,7 +556,7 @@ export default (
       </Route>
 
       <IndexRoute
-        onEnter={RoutesUtil.checkActiveSubscriptions}
+        onEnter={RoutesUtil.checkInstanceActiveSubscription}
         component={Instances}
       />
     </Route>
