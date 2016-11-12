@@ -21,7 +21,15 @@ const CreateHostingDialog = React.createClass({
 
   validatorConstraints: {
     name: {
-      presence: true
+      presence: true,
+      exclusion: {
+        within: ['default', 'Default'],
+        message: "can't be a 'default'"
+      },
+      format: {
+        pattern: '[a-zA-Z0-9-_]+$',
+        message: 'can contain only a-z, 0-9, no spaces '
+      }
     },
     description: {
       length: {
