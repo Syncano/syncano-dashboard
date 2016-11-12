@@ -14,7 +14,6 @@ export default CreateActions(
     fetchDevices: {
       asyncResult: true,
       loading: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.PushDevices.listGCMDevices'
     },
