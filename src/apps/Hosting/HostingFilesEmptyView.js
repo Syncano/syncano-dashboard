@@ -73,7 +73,7 @@ const HostingFilesEmptyView = ({
   const descriptionWithFiles = isActionInProgress ? uploadingFilesDescription : `${filesCount} files ready for upload.`;
   const description = hasFiles || isActionInProgress ? descriptionWithFiles : defaultDescription;
   const isFilesQueue = hasFiles || isUploading;
-  const iconClassName = isFilesQueue ? 'synicon-cloud-upload' : 'synicon-hosting-files-types';
+  const iconClassName = isFilesQueue && 'synicon-cloud-upload';
   const iconColor = isFilesQueue ? Colors.blue500 : Colors.grey600;
   const bashSnippets = [
     { description: 'Install Syncano CLI:', snippet: 'pip install syncano-cli' },
@@ -95,6 +95,7 @@ const HostingFilesEmptyView = ({
       hostingDocsUrl="http://docs.syncano.io/docs/hosting"
       hostingDocsButtonLabel="View Hosting Docs"
       isUploadFinished={isUploadFinished}
+      headerImageSrc="/img/illustrations/hosting-files-types.svg"
       iconClassName={iconClassName}
       iconColor={iconColor}
       mainTitle="Hosting Files"

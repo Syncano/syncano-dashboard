@@ -1,7 +1,9 @@
 import React from 'react';
-import { MenuItem, Divider, FontIcon } from 'material-ui';
-import { colors as Colors } from 'material-ui/styles/';
-import StandardButtons from '../Dialog/DialogStandardButtons';
+
+import { Divider, FontIcon, MenuItem } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles';
+
+import DialogStandardButtons from '../Dialog/DialogStandardButtons';
 
 export default ({ item, handleAccept, handleDecline }) => {
   const menuItemStyles = {
@@ -31,9 +33,10 @@ export default ({ item, handleAccept, handleDecline }) => {
           <strong>{`${item.inviter} `}</strong>invited you<br />to their instance<strong>{` ${item.instance}`}</strong>
         </div>
         <div className="vp-2-t">
-          <StandardButtons
+          <DialogStandardButtons
             cancelLabel="Decline"
             submitLabel="Accept"
+            inverted={true}
             handleCancel={handleDecline}
             handleConfirm={handleAccept}
           />
