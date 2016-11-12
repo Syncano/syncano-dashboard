@@ -10,7 +10,7 @@
   },
   "engines": {
     "node": "7.0.0",
-    "npm": "4.0.1"
+    "npm": "3.10.8"
   },
   "dependencies": {
     "axios": "0.15.2",
@@ -69,7 +69,7 @@
   },
   "devDependencies": {
     "autoprefixer-loader": "3.2.0",
-    "aws-sdk": "2.6.15",
+    "aws-sdk": "2.7.0",
     "babel-cli": "6.18.0",
     "babel-core": "6.18.2",
     "babel-eslint": "7.1.0",
@@ -87,7 +87,7 @@
     "compass-mixins": "0.12.10",
     "css-loader": "0.25.0",
     "del": "1.2.1",
-    "eslint": "3.9.1",
+    "eslint": "3.10.0",
     "eslint-config-airbnb": "13.0.0",
     "eslint-friendly-formatter": "2.0.6",
     "eslint-loader": "1.6.1",

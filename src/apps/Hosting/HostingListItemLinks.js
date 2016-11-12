@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import _ from 'lodash';
 import { LinkWithIcon } from '../../common';
 
-const HostingListItemLinks = ({ items, hostingLabel, params }) => {
+const HostingListItemLinks = ({ hostingLabel, items, isDefault, params }) => {
   const styles = {
     item: {
       padding: '4px 0'
@@ -11,7 +11,7 @@ const HostingListItemLinks = ({ items, hostingLabel, params }) => {
   };
 
   const getLinkUrl = (domain) => {
-    if (domain === 'default') {
+    if (domain === 'default' && isDefault) {
       return `https://${params.instanceName}.syncano.site`;
     }
 
