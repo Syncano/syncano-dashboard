@@ -44,23 +44,27 @@ const RoutesUtil = {
     }
 
     if (instanceName) {
+      let currentUserEmail;
+
       return connection
         .Account
         .getUserDetails()
-        .then(({ email }) => email)
-        .then((email) => (
+        .then(({ email }) => {
+          currentUserEmail = email;
+        })
+        .then(() => (
           connection
             .Instance
             .please()
             .get({ name: instanceName })
-            .then(({ owner }) => {
-              if (owner.email === email) {
-                return RoutesUtil.checkActiveSubscriptions(nextState, replace, callback);
-              }
-
-              return callback();
-            })
         ))
+        .then(({ owner }) => {
+          if (owner.email === currentUserEmail) {
+            return RoutesUtil.checkActiveSubscriptions(nextState, replace, callback);
+          }
+
+          return callback();
+        })
         .catch(console.error);
     }
 
