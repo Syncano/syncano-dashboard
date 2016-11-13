@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 import localStorage from 'local-storage-fallback';
 
-import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
+import { CheckListStoreMixin, SnackbarNotificationMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
@@ -14,6 +14,7 @@ export default Reflux.createStore({
 
   mixins: [
     CheckListStoreMixin,
+    SnackbarNotificationMixin,
     StoreLoadingMixin,
     WaitForStoreMixin
   ],
@@ -68,6 +69,13 @@ export default Reflux.createStore({
 
   onAcceptInvitationsCompleted() {
     const invKey = SessionStore.getLocation().query.invitation_key || null;
+
+    this.setSnackbarNotification({
+      autoHideDuration: null,
+      onActionTouchTap: this.dismissSnackbarNotification,
+      action: 'DISMISS',
+      message: "You've just joined a shared instance"
+    });
 
     if (invKey === localStorage.getItem('invitationKey')) {
       localStorage.removeItem('invitationKey');

@@ -7,6 +7,7 @@ import auth from '../apps/Account/auth';
 import NewLibConnection from '../apps/Session/NewLibConnection';
 
 import SessionStore from '../apps/Session/SessionStore';
+import AuthStore from '../apps/Account/AuthStore';
 
 const RoutesUtil = {
   checkActiveSubscriptions(nextState, replace, callback) {
@@ -122,6 +123,10 @@ const RoutesUtil = {
         category: 'Dashboard',
         label: name
       });
+    }
+
+    if (nextState.location.query.invitation_key) {
+      return AuthStore.acceptInvitationFromUrl();
     }
 
     if (auth.loggedIn() && nextState.location.pathname === '/' && !query.token) {
