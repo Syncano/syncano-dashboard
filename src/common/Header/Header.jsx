@@ -255,13 +255,13 @@ const Header = Radium(React.createClass({
                 <li style={styles.toolbarListItem}>
                   <Link to="demo-apps">Demo Apps</Link>
                 </li>
-              */}
               <li
                 id="menu-solutions"
                 style={styles.toolbarListItem}
               >
                 <Link to="solutions">Solutions Market</Link>
               </li>
+              */}
             </ul>
           </ToolbarGroup>
           <ToolbarGroup style={styles.toolbarGroup}>
