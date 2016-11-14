@@ -114,7 +114,7 @@
     "jest-cli": "17.0.0",
     "nightwatch": "0.9.8",
     "node-libs-browser": ">=0.5.3",
-    "node-sass": "3.11.3",
+    "node-sass": "3.12.0",
     "raw-loader": "0.5.1",
     "react-prism": "4.0.0",
     "react-snapshot-test-generator": "github:Syncano/react-snapshot-test-generator#build",
