@@ -1,5 +1,4 @@
 import utils from '../utils';
-import instances from '../tempInstances';
 
 export default {
   elements: {
@@ -20,9 +19,6 @@ export default {
     },
     scriptSampleOption: {
       selector: `[data-e2e="${utils.getRandomSampleScriptName()}-sample-option"]`
-    },
-    scriptUserOption: {
-      selector: `[data-e2e=${instances.secondInstance.scriptsNames[0]}-user-option]`
     },
     emptySocketsHeading: {
       selector: '[data-e2e="empty-sockets-heading"]'
