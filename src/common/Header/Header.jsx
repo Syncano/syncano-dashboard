@@ -4,8 +4,6 @@ import Radium from 'radium';
 import { withRouter, Link } from 'react-router';
 import Gravatar from 'gravatar';
 
-import { SnackbarNotificationMixin } from '../../mixins';
-
 // Stores & Actions
 import SessionActions from '../../apps/Session/SessionActions';
 import SessionStore from '../../apps/Session/SessionStore';
@@ -16,7 +14,7 @@ import ProfileBillingPlanActions from '../../apps/Profile/ProfileBillingPlanActi
 // Components
 import Sticky from 'react-stickydiv';
 import { FontIcon, Divider, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu } from 'material-ui';
-import { Logo, /* Clipboard, */UpgradeButton } from '../';
+import { Logo, UpgradeButton } from '../';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 import HeaderGettingStartedDropdown from './HeaderGettingStartedDropdown';
 
@@ -30,8 +28,7 @@ const Header = Radium(React.createClass({
   },
 
   mixins: [
-    Reflux.connect(InstancesStore),
-    SnackbarNotificationMixin
+    Reflux.connect(InstancesStore)
   ],
 
   componentDidMount() {
@@ -86,22 +83,14 @@ const Header = Radium(React.createClass({
       },
       toolbarDropdownListItem: {
         padding: 0
-      },
-      accountKeyIcon: {
-        zIndex: -1
-      },
-      listItemInnerDiv: {
-        padding: 0
       }
     };
   },
 
   getDropdownItems() {
-    // const styles = this.getStyles();
     const user = SessionStore.getUser() || '';
     const billingIcon = <FontIcon className="synicon-credit-card" />;
     const instancesListIcon = <FontIcon className="synicon-view-list" />;
-    // const accountKeyIcon = <FontIcon className="synicon-key-variant" style={styles.accountKeyIcon} />;
     const logoutIcon = <FontIcon className="synicon-power" />;
 
     if (!user) {
@@ -117,18 +106,6 @@ const Header = Radium(React.createClass({
           secondaryText={user.email}
         />
         <Divider />
-        {/* <ListItem
-          leftIcon={accountKeyIcon}
-          innerDivStyle={styles.listItemInnerDiv}
-        >
-          <Clipboard
-            text="Copy Account Key"
-            copyText={user.account_key}
-            onCopy={this.showSnackbarNotification}
-            label="Copy Account Key"
-            type="list"
-          />
-        </ListItem> */}
         <ListItem
           onTouchTap={this.goToIntances}
           leftIcon={instancesListIcon}
@@ -180,10 +157,6 @@ const Header = Radium(React.createClass({
     const { router } = this.props;
 
     router.push('/account/plan/');
-  },
-
-  showSnackbarNotification() {
-    this.setSnackbarNotification({ message: 'Account Key copied to the clipboard' });
   },
 
   renderIconButton() {
