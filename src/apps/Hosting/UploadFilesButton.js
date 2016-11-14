@@ -1,12 +1,10 @@
-/* eslint-disable no-useless-constructor */
 import React, { Component } from 'react';
-
 import { RaisedButton, FlatButton } from 'material-ui';
 
 class UploadFilesButton extends Component {
-  constructor(props) {
-    super(props);
-  }
+  static defaultProps = {
+    hasFiles: false
+  };
 
   componentDidMount() {
     this.setInputAttributes();
@@ -16,27 +14,49 @@ class UploadFilesButton extends Component {
     this.setInputAttributes();
   }
 
-  handleClickButton = () => {
+  getStyles = () => ({
+    chooseFilesButton: {
+      display: 'none',
+      position: 'absolute'
+    },
+    folderDescription: {
+      color: '#777',
+      padding: '14px 0'
+    }
+  })
+
+  isSupportedBrowser = () => (
+    !!window.chrome && !!window.chrome.webstore
+  )
+
+  handleClickFilesButton = () => {
+    this.refs.fileSelect.click();
+  }
+
+  handleClickFoldersButton = () => {
     this.refs.dirSelect.click();
   }
 
   setInputAttributes = () => {
-    if (this.refs.dirSelect) {
-      this.refs.dirSelect.setAttribute('webkitdirectory', true);
-      this.refs.dirSelect.setAttribute('multiple', true);
-      this.refs.dirSelect.setAttribute('directory', true);
-      this.refs.dirSelect.setAttribute('odirectory', true);
-      this.refs.dirSelect.setAttribute('msdirectory', true);
-      this.refs.dirSelect.setAttribute('mozdirectory', true);
+    const { fileSelect, dirSelect } = this.refs;
+
+    if (fileSelect) {
+      fileSelect.setAttribute('multiple', true);
+    }
+
+    if (dirSelect) {
+      dirSelect.setAttribute('webkitdirectory', true);
+      dirSelect.setAttribute('multiple', true);
+      dirSelect.setAttribute('directory', true);
+      dirSelect.setAttribute('odirectory', true);
+      dirSelect.setAttribute('msdirectory', true);
+      dirSelect.setAttribute('mozdirectory', true);
     }
   }
 
-  render = () => {
-    const inputStyles = {
-      display: 'none',
-      position: 'absolute'
-    };
+  render() {
     const { hasFiles, handleSendFiles, handleUploadFiles, handleClearFiles } = this.props;
+    const styles = this.getStyles();
 
     if (hasFiles) {
       return (
@@ -50,30 +70,67 @@ class UploadFilesButton extends Component {
             label="Send Files"
             primary={true}
             onTouchTap={handleSendFiles}
+            data-e2e="hosting-send-files"
           />
         </div>
       );
     }
 
+    if (this.isSupportedBrowser()) {
+      return (
+        <div>
+          <div>
+            <RaisedButton
+              label="Choose files"
+              primary={true}
+              onTouchTap={this.handleClickFilesButton}
+              style={{ marginRight: 10 }}
+            >
+              <input
+                style={styles.chooseFilesButton}
+                type="file"
+                ref="fileSelect"
+                onChange={handleUploadFiles}
+                data-e2e="hosting-upload-files"
+              />
+            </RaisedButton>
+            <RaisedButton
+              label="Choose folder *"
+              primary={true}
+              onTouchTap={this.handleClickFoldersButton}
+            >
+              <input
+                style={styles.chooseFilesButton}
+                type="file"
+                ref="dirSelect"
+                onChange={handleUploadFiles}
+              />
+            </RaisedButton>
+          </div>
+          <div style={styles.folderDescription}>
+            * only content of the folder will be uploaded
+          </div>
+        </div>
+      );
+    }
+
     return (
-      <RaisedButton
-        label="Choose files from disk"
-        primary={true}
-        onTouchTap={this.handleClickButton}
-      >
-        <input
-          style={inputStyles}
-          type="file"
-          ref="dirSelect"
-          onChange={handleUploadFiles}
-        />
-      </RaisedButton>
+      <div>
+        <RaisedButton
+          label="Choose files from disk"
+          primary={true}
+          onTouchTap={this.handleClickFilesButton}
+        >
+          <input
+            style={styles.chooseFilesButton}
+            type="file"
+            ref="fileSelect"
+            onChange={handleUploadFiles}
+          />
+        </RaisedButton>
+      </div>
     );
   }
 }
-
-UploadFilesButton.defaultProps = {
-  hasFiles: false
-};
 
 export default UploadFilesButton;

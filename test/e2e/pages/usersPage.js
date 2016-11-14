@@ -3,7 +3,7 @@ import utils from '../utils';
 export default {
   elements: {
     addUserButton: {
-      selector: 'button[data-e2e="add-user-button"]'
+      selector: '[data-e2e="add-user-button"]'
     },
     username: {
       selector: 'input[name="username"]'
@@ -12,19 +12,19 @@ export default {
       selector: 'input[name="password"]'
     },
     userDialogConfirmButton: {
-      selector: 'button[data-e2e="user-dialog-confirm-button"]'
+      selector: '[data-e2e="user-dialog-confirm-button"]'
     },
     userDialogDeleteButton: {
-      selector: 'button[data-e2e="user-delete-dialog-confirm"]'
+      selector: '[data-e2e="user-delete-dialog-confirm"]'
     },
     groupDialogConfirmButton: {
-      selector: 'button[data-e2e="group-dialog-confirm-button"]'
+      selector: '[data-e2e="group-dialog-confirm-button"]'
     },
     groupDialogDeleteButton: {
-      selector: 'button[data-e2e="group-delete-dialog-confirm"]'
+      selector: '[data-e2e="group-delete-dialog-confirm"]'
     },
     userTableRow: {
-      selector: `div[data-e2e="${utils.addSuffix('user')}-list-item-name"`
+      selector: `[data-e2e="${utils.addSuffix('user')}-list-item-name"`
     },
     selectUserTableRow: {
       selector: `//div[text()="${utils.addSuffix('user')}"]/../../../following-sibling::div//button`,
@@ -35,19 +35,19 @@ export default {
       locateStrategy: 'xpath'
     },
     addGroupButton: {
-      selector: 'button[data-e2e="add-group-button"]'
+      selector: '[data-e2e="add-group-button"]'
     },
     addGroupModalTitle: {
-      selector: 'div[data-e2e="group-dialog-title"]'
+      selector: '[data-e2e="group-dialog-title"]'
     },
     addGroupModalSummaryTitle: {
-      selector: 'div[data-e2e="group-dialog-summary-title"]'
+      selector: '[data-e2e="group-dialog-summary-title"]'
     },
     groupName: {
-      selector: 'input[data-e2e="group-dialog-input-group-name"]'
+      selector: '[data-e2e="group-dialog-input-group-name"]'
     },
     groupTableRow: {
-      selector: `div[data-e2e="${utils.addSuffix('group')}-list-item-name"`
+      selector: `[data-e2e="${utils.addSuffix('group')}-list-item-name"`
     },
     groupTableRowDropdown: {
       selector: `//div[text()="${utils.addSuffix('group')}"]/../../../following-sibling::div//button`,
@@ -64,7 +64,7 @@ export default {
       selector: 'div[class="groups-list"]'
     },
     groupSummaryDialogCloseButton: {
-      selector: 'button[data-e2e="group-summary-dialog-close-button"]'
+      selector: '[data-e2e="group-summary-dialog-close-button"]'
     }
   }
 };

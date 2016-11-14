@@ -1,11 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
-import Syncano from 'syncano';
 
 export default addTestNamePrefixes({
   tags: ['pushSocketsApns', 'apns'],
   beforeEach: (client) => {
-    const { accountKey } = accounts.navigationUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -14,8 +13,8 @@ export default addTestNamePrefixes({
   afterEach: (client, done) => client.end(done),
   'Test Admin Adds APNS Socket': (client) => {
     const socketsPage = client.page.socketsPage();
-    const filePath = './cert12';
-    const { instanceName } = accounts.navigationUser;
+    const filePath = './cert.p12';
+    const { instanceName } = instances.thirdInstance;
 
     socketsPage
       .goToUrl(instanceName, 'push-notifications/config/')
@@ -32,84 +31,29 @@ export default addTestNamePrefixes({
       .waitForElementPresent('@apnsDevCertInput')
       .clickElement('@pushNotificationsCancel');
   },
-  'Test Admin Removes APNS Socket': (client) => {
-    const socketsPage = client.page.socketsPage();
-    const filePath = './cert.p12';
-
-    const { accountKey } = accounts.navigationUser;
-    const { instanceName } = accounts.navigationUser;
-    const baseUrl = client.globals.apiBaseUrl;
-    const connection = Syncano({
-      baseUrl,
-      accountKey,
-      defaults: {
-        instanceName,
-        className: 'apns_cert'
-      }
-    });
-    const params = { instanceName };
-    const update = {
-      development_certificate: Syncano.file(filePath),
-      development_certificate_name: 'certName',
-      development_bundle_identifier: 'certBundle'
-    };
-
-    connection
-      .APNSConfig
-      .please()
-      .update(params, update)
-      .then((resp) => {
-        console.log('Development certifacte uploaded?: ', resp.development_certificate);
-        socketsPage
-          .goToUrl(instanceName, 'push-notifications/config/')
-          .clickElement('@configPushItem')
-          .waitForElementVisible('@apnsDevCertInput')
-          .clickElement('@removeApnsCertificate')
-          .waitForElementVisible('@developmentDropZoneDescription')
-          .clickElement('@pushNotificationsSubmit')
-          .waitForElementVisible('@pushSocketsZeroState');
-      })
-      .catch((err) => console.error(err));
-  },
   'Test Admin Goes to APNS Device list': (client) => {
     const socketsPage = client.page.socketsPage();
     const pushDevicesPage = client.page.pushDevicesPage();
-    const { instanceName } = accounts.navigationUser;
+    const { instanceName } = instances.secondInstance;
 
-    // This duplicates action above so additional api calls is done
-    // For now there is no other way to do it as tests before it
-    // can't properly add push socket
-    const { accountKey } = accounts.navigationUser;
-    const filePath = './cert.p12';
-    const baseUrl = client.globals.apiBaseUrl;
-    const connection = Syncano({
-      baseUrl,
-      accountKey,
-      defaults: {
-        instanceName,
-        className: 'apns_cert'
-      }
-    });
-    const params = { instanceName };
-    const update = {
-      development_certificate: Syncano.file(filePath),
-      development_certificate_name: 'certName',
-      development_bundle_identifier: 'certBundle'
-    };
+    socketsPage
+      .goToUrl(instanceName, 'push-notifications/config/')
+      .clickElement('@apnsPushSocketDevicesLinkIcon');
 
-    connection
-      .APNSConfig
-      .please()
-      .update(params, update)
-      .then((resp) => {
-        console.log('Development certifacte uploaded?: ', resp.development_certificate);
+    pushDevicesPage.waitForElementVisible('@firstDevice');
+  },
+  'Test Admin Removes APNS Socket': (client) => {
+    const socketsPage = client.page.socketsPage();
+    const { instanceName } = instances.secondInstance;
 
-        socketsPage
-          .goToUrl(instanceName, 'push-notifications/config/')
-          .clickElement('@apnsPushSocketDevicesLinkIcon');
-
-        pushDevicesPage.waitForElementVisible('@APNSDevicesEmptyListItem');
-      })
-      .catch((err) => console.error(err));
+    socketsPage
+      .goToUrl(instanceName, 'push-notifications/config/')
+      .clickElement('@apnsPushConfig')
+      .waitForElementVisible('@apnsDevCertInput')
+      .clickElement('@removeApnsCertificate')
+      .waitForElementVisible('@developmentDropZoneDescription')
+      .clickElement('@pushNotificationsSubmit')
+      .waitForElementVisible('@apnsPushConfig')
+      .assert.containsText('@apnsPushConfig', 'false');
   }
 });

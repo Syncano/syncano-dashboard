@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect, IndexRedirect, IndexRoute } from 'react-router';
 
-import RoutesUtil from './utils/RoutesUtil';
+import { RoutesUtil } from './utils';
 
 // Pages
 import AppPage from './pages/app';
@@ -81,6 +81,11 @@ export default (
       onEnter={RoutesUtil.redirectToDashboard}
     />
     <Route
+      name="setup"
+      component={SetupPage}
+      path="setup"
+    />
+    <Route
       name="activate"
       component={Account.Activate}
       path="/activate/:uid/:token"
@@ -110,15 +115,8 @@ export default (
     >
       <Route
         name="instances"
-        onEnter={RoutesUtil.checkActiveSubscriptions}
         component={Instances}
         path="instances"
-      />
-
-      <Route
-        name="setup"
-        component={SetupPage}
-        path="setup"
       />
 
       <Route
@@ -153,7 +151,7 @@ export default (
 
       <Route
         name="instance"
-        onEnter={RoutesUtil.checkActiveSubscriptions}
+        onEnter={RoutesUtil.checkInstanceActiveSubscription}
         component={InstancePage}
         path="instances/:instanceName"
       >
@@ -461,21 +459,15 @@ export default (
         component={ProfilePage}
         path="/account"
       >
-
-        <Route
-          name="profile-billing-plan"
-          component={Profile.BillingPlan}
-          path="plan"
-        />
         <Route
           name="profile-billing-plan-cancel"
           component={Profile.BillingPlanCancel}
           path="plan/cancel"
         />
         <Route
-          name="profile-billing-plan-downgrade"
+          name="profile-billing-plan"
           component={Profile.BillingPlan}
-          path="plan/downgrade"
+          path="plan(/:mode)"
         />
         <Route
           name="profile-billing-usage"
@@ -564,7 +556,7 @@ export default (
       </Route>
 
       <IndexRoute
-        onEnter={RoutesUtil.checkActiveSubscriptions}
+        onEnter={RoutesUtil.checkInstanceActiveSubscription}
         component={Instances}
       />
     </Route>

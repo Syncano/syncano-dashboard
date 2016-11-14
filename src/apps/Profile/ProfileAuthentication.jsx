@@ -12,9 +12,7 @@ import SessionStore from '../Session/SessionStore';
 import { TextField, FlatButton, RaisedButton } from 'material-ui';
 import { Clipboard, Container, InnerToolbar } from '../../common/';
 
-export default Radium(React.createClass({
-  displayName: 'ProfileAuthentication',
-
+const ProfileAuthentication = Radium(React.createClass({
   mixins: [
     Reflux.connect(Store),
     Reflux.ListenerMixin,
@@ -55,11 +53,6 @@ export default Radium(React.createClass({
         fontFamily: 'monospace',
         paddingRight: 8
       },
-      updateButton: {
-        height: 36,
-        lineHeight: '36px',
-        boxShadow: 0
-      },
       updateButtonLabel: {
         lineHeight: '36px',
         fontWeight: 400,
@@ -82,6 +75,7 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
+    const { account_key: accountKey, current_password, newPassword, confirmNewPassword } = this.state;
     const user = SessionStore.getUser();
     const hasPassword = user && user.has_password ? user.has_password : null;
     const title = 'Authentication';
@@ -94,20 +88,27 @@ export default Radium(React.createClass({
           <div style={styles.content}>
             <div>Account key</div>
             <div className="row" style={styles.contentRow}>
-              <div style={styles.accountKey}>{this.state.account_key}</div>
+              <div
+                style={styles.accountKey}
+                data-e2e="authentication-account-key"
+              >
+                {accountKey}
+              </div>
               <div className="flex-1">
                 <Clipboard
-                  copyText={this.state.account_key}
+                  copyText={accountKey}
                   onCopy={() => this.setSnackbarNotification({
                     message: 'Account key copied to the clipboard'
                   })}
                   label="COPY"
                   type="button"
+                  data-e2e="authentication-copy-button"
                 />
                 <FlatButton
                   label="RESET"
                   primary={true}
                   onClick={Actions.resetKey}
+                  data-e2e="authentication-reset-button"
                 />
               </div>
             </div>
@@ -126,7 +127,7 @@ export default Radium(React.createClass({
                     ? <TextField
                       ref="currentPassword"
                       type="password"
-                      value={this.state.current_password}
+                      value={current_password}
                       onChange={(event, value) => this.setState({ current_password: value })}
                       errorText={this.getValidationMessages('current_password').join(' ')}
                       name="currentPassword"
@@ -139,7 +140,7 @@ export default Radium(React.createClass({
                   <TextField
                     ref="newPassword"
                     type="password"
-                    value={this.state.newPassword}
+                    value={newPassword}
                     onChange={(event, value) => this.setState({ newPassword: value })}
                     errorText={this.getValidationMessages('newPassword').join(' ')}
                     name="newPassword"
@@ -151,7 +152,7 @@ export default Radium(React.createClass({
                   <TextField
                     ref="confirmNewPassword"
                     type="password"
-                    value={this.state.confirmNewPassword}
+                    value={confirmNewPassword}
                     onChange={(event, value) => this.setState({ confirmNewPassword: value })}
                     errorText={this.getValidationMessages('confirmNewPassword').join(' ')}
                     name="confirmNewPassword"
@@ -164,11 +165,11 @@ export default Radium(React.createClass({
                   <RaisedButton
                     type="submit"
                     label="Update"
-                    style={styles.updateButton}
                     labelStyle={styles.updateButtonLabel}
                     className="raised-button"
                     disabled={!this.state.canSubmit}
                     primary={true}
+                    data-e2e="authentication-update-button"
                   />
                 </form>
               </div>
@@ -179,3 +180,5 @@ export default Radium(React.createClass({
     );
   }
 }));
+
+export default ProfileAuthentication;

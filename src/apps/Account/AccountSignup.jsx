@@ -6,8 +6,8 @@ import _ from 'lodash';
 
 import { FormMixin } from '../../mixins';
 
-import Store from './AuthStore';
-import Actions from './AuthActions';
+import AuthStore from './AuthStore';
+import AuthActions from './AuthActions';
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 import Constants from './AuthConstants';
@@ -18,7 +18,7 @@ import AccountContainer from './AccountContainer';
 
 const AccountSignup = React.createClass({
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(AuthStore),
     FormMixin
   ],
 
@@ -38,8 +38,8 @@ const AccountSignup = React.createClass({
     const { location, router } = this.props;
 
     if (SessionStore.isAuthenticated()) {
-      const queryNext = location.query.next || null;
       const lastInstanceName = localStorage.getItem('lastInstanceName') || null;
+      const queryNext = location.query.next || null;
 
       SessionStore
         .getConnection()
@@ -51,6 +51,11 @@ const AccountSignup = React.createClass({
             router.replace({
               pathname: queryNext,
               query: _.omit(location.query, 'next')
+            });
+          } else if (queryNext) {
+            router.replace({
+              name: 'instances',
+              query: location.query
             });
           } else {
             router.replace({
@@ -74,19 +79,20 @@ const AccountSignup = React.createClass({
   getBottomContent() {
     return (
       <p className="vm-0-b text--center">
-        By signing up you agree to our
+        {'By signing up you agree to our '}
         <a
           href="http://www.syncano.com/terms-of-service/"
           target="_blank"
         >
-          {' Terms of Use and Privacy Policy'}
-        </a>.
+          Terms of Use and Privacy Policy
+        </a>
+        .
       </p>
     );
   },
 
   handleSocialLogin(network) {
-    Actions.socialLogin(network);
+    AuthActions.socialLogin(network);
   },
 
   handleSuccessfullValidation(data) {
@@ -94,7 +100,7 @@ const AccountSignup = React.createClass({
 
     SessionStore.setSignUpMode();
 
-    Actions.passwordSignUp({
+    AuthActions.passwordSignUp({
       email,
       password
     });
@@ -112,8 +118,9 @@ const AccountSignup = React.createClass({
         <div className="account-container__content__header vm-3-b">
           <p className="vm-2-b">Start Building Now</p>
           <small>
-            Simply enter your email, create a password and you're in!<br />
-            No credit card required.
+            {`Simply enter your email, create a password and you're in!`}
+            <br />
+            {`No credit card required.`}
           </small>
         </div>
         {this.renderFormNotifications()}

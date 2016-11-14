@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import JSONUtil from '../../utils/JSONUtil';
+import { JSONUtil } from '../../utils';
 import { DialogMixin, FormMixin } from '../../mixins';
 
 import { TextField, Toggle, RaisedButton, FontIcon } from 'material-ui';

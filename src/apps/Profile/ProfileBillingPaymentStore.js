@@ -1,10 +1,12 @@
 import Reflux from 'reflux';
+
 import { SnackbarNotificationMixin, StoreFormMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
-import Actions from './ProfileActions';
+
+import ProfileActions from './ProfileActions';
 import SessionActions from '../Session/SessionActions';
 
 export default Reflux.createStore({
-  listenables: Actions,
+  listenables: ProfileActions,
 
   mixins: [
     SnackbarNotificationMixin,
@@ -38,8 +40,7 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    console.debug('AdminsStore::refreshData');
-    Actions.fetchBillingCard();
+    ProfileActions.fetchBillingCard();
   },
 
   setCard(card) {

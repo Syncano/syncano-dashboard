@@ -1,10 +1,10 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['globalConfig'],
   before: (client) => {
-    const { accountKey } = accounts.alternativeUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -14,7 +14,7 @@ export default addTestNamePrefixes({
   'Administrator adds global Variables': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const globalConfigPage = client.page.globalConfigPage();
-    const { instanceName } = accounts.alternativeUser;
+    const { instanceName } = instances.firstInstance;
 
     leftMenuPage
       .goToUrl(instanceName, 'sockets')
@@ -32,6 +32,6 @@ export default addTestNamePrefixes({
 
     globalConfigPage
       .waitForElementPresent('@globalConfigEditor')
-      .verify.containsText('@globalConfigEditorContent', '{\n  "value1": "test1",\n  "value2": "test2"\n}');
+      .verify.containsText('@globalConfigEditor', '{\n  "value1": "test1",\n  "value2": "test2"\n}');
   }
 });

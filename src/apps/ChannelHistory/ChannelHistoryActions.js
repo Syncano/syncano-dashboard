@@ -1,4 +1,4 @@
-import CreateActions from '../../utils/ActionsConstructor.js';
+import CreateActions from '../../utils/ActionsConstructor';
 
 export default CreateActions({
   getChannelHistory: {},
@@ -6,7 +6,6 @@ export default CreateActions({
     asyncResult: true,
     children: ['completed', 'failure'],
     loading: true,
-    redirectOnFailure: true,
     method: 'Syncano.Actions.Channels.getHistory'
   },
   fetchCurrentChannel: {

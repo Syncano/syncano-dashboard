@@ -3,9 +3,9 @@ import { withRouter } from 'react-router';
 import numeral from 'numeral';
 import _ from 'lodash';
 
-import PricingPlansUtil from '../../utils/PricingPlansUtil.js';
+import { PricingPlansUtil } from '../../utils';
 
-import Store from '../../apps/Profile/ProfileBillingPlanStore';
+import ProfileBillingPlanStore from '../../apps/Profile/ProfileBillingPlanStore';
 import PlanDialogActions from '../../apps/Profile/ProfileBillingPlanDialogActions';
 
 import { Paper, Subheader, SelectField, List, ListItem, MenuItem, RaisedButton } from 'material-ui';
@@ -14,154 +14,156 @@ class PricingPlansPlan extends Component {
   constructor(props, context) {
     super(props);
 
-    const { isDowngrade } = context;
+    const { mode } = context;
 
-    this.state = this.getInitialPrices(props, isDowngrade);
+    this.state = this.getInitialPrices(props, mode);
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    const { isDowngrade } = nextContext;
+    const { mode } = nextContext;
 
-    this.state = this.getInitialPrices(nextProps, isDowngrade);
+    this.setState(this.getInitialPrices(nextProps, mode));
   }
 
-  getInitialPrices(props, isDowngrade) {
-    const { apiCallsOptions, scriptsOptions } = props;
+  getInitialPrices(props, mode) {
+    const { apiOptions, cbxOptions } = props;
 
     return {
-      apiCallsPrice: this.getInitialOption(apiCallsOptions, isDowngrade),
-      scriptsPrice: this.getInitialOption(scriptsOptions, isDowngrade)
+      apiPrice: this.getInitialOption(apiOptions, mode),
+      cbxPrice: this.getInitialOption(cbxOptions, mode)
     };
   }
 
-  getInitialOption(options, isDowngrade) {
+  getInitialOption(options, mode) {
     const { title } = this.props;
+    const pricingPlanName = _.upperFirst(ProfileBillingPlanStore.getPricingPlanKey());
 
     if (options.length === 1) {
       return options[0].price;
     }
 
-    if (isDowngrade && title === Store.getPricingPlanName()) {
+    if (mode === 'downgrade' && title === pricingPlanName) {
       return options[options.length - 2].price;
     }
 
-    if (isDowngrade) {
+    if (mode === 'downgrade') {
       return _.last(options).price;
     }
 
-    if (title === Store.getPricingPlanName()) {
+    if (title === pricingPlanName) {
       return options[1].price;
     }
 
     return options[0].price;
   }
 
-  getStyles() {
-    return {
-      heading: {
-        fontSize: '1.3em',
-        height: 65,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        position: 'relative'
-      },
-      headingSmall: {
-        fontSize: 13,
-        width: '100%',
-        marginBottom: 6,
-        position: 'absolute',
-        top: 0,
-        color: '#AAA'
-      },
-      pricingPlansPlan: {
-        maxWidth: 350,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        textAlign: 'left'
-      },
-      pricingPlansPlanHighlighted: {
-        backgroundColor: '#f5f5f5'
-      },
-      pricingPlansPlanContent: {
-        padding: 16
-      },
-      subheader: {
-        textAlign: 'center',
-        padding: 0,
-        borderBottom: 'solid 1px rgba(0, 0, 0, .117647)',
-        fontWeight: 700
-      },
-      price: {
-        fontWeight: 700,
-        color: '#333A42',
-        fontSize: 48,
-        textAlign: 'center',
-        textTransform: 'uppercase',
-        lineHeight: 1
-      },
-      period: {
-        fontSize: 18,
-        fontWeight: 500,
-        color: '#757E88',
-        textAlign: 'center',
-        lineHeight: 1,
-        height: 18
-      },
-      includes: {
-        padding: 0,
-        lineHeight: 1,
-        marginTop: 24,
-        marginBottom: 12
-      },
-      button: {
-        width: '100%',
-        height: 44,
-        marginTop: 24
-      },
-      listItemInnerDiv: {
-        paddingTop: 8,
-        paddingBottom: 8,
-        paddingLeft: 48
-      },
-      listItemIcon: {
-        width: 'auto',
-        height: 'auto',
-        margin: 0,
-        top: '50%',
-        left: 16,
-        transform: 'translateY(-50%)'
-      },
-      footer: {
-        marginTop: 16,
-        color: '#AAA'
-      },
-      textlink: {
-        color: '#42a5f5',
-        cursor: 'pointer'
-      }
-    };
-  }
+  getStyles = () => ({
+    heading: {
+      fontSize: '1.3em',
+      height: 65,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'column',
+      position: 'relative'
+    },
+    headingSmall: {
+      fontSize: 13,
+      width: '100%',
+      marginBottom: 6,
+      position: 'absolute',
+      top: 0,
+      color: '#AAA'
+    },
+    pricingPlansPlan: {
+      maxWidth: 350,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      textAlign: 'left'
+    },
+    pricingPlansPlanHighlighted: {
+      backgroundColor: '#f5f5f5'
+    },
+    pricingPlansPlanFeatured: {
+      boxShadow: 'rgba(0, 112, 211, .27) 0px 3px 10px, rgba(0, 112, 211, .27) 0px 3px 10px'
+    },
+    pricingPlansPlanContent: {
+      padding: 16
+    },
+    subheader: {
+      textAlign: 'center',
+      padding: 0,
+      borderBottom: 'solid 1px rgba(0, 0, 0, .117647)',
+      fontWeight: 700
+    },
+    price: {
+      fontWeight: 700,
+      color: '#333A42',
+      fontSize: 48,
+      textAlign: 'center',
+      textTransform: 'uppercase',
+      lineHeight: 1
+    },
+    period: {
+      fontSize: 18,
+      fontWeight: 500,
+      color: '#757E88',
+      textAlign: 'center',
+      lineHeight: 1,
+      height: 18
+    },
+    includes: {
+      padding: 0,
+      lineHeight: 1,
+      marginTop: 24,
+      marginBottom: 12
+    },
+    button: {
+      width: '100%',
+      height: 44,
+      marginTop: 24
+    },
+    listItemInnerDiv: {
+      paddingTop: 8,
+      paddingBottom: 8,
+      paddingLeft: 48
+    },
+    listItemIcon: {
+      width: 'auto',
+      height: 'auto',
+      margin: 0,
+      top: '50%',
+      left: 16,
+      transform: 'translateY(-50%)'
+    },
+    footer: {
+      marginTop: 16,
+      color: '#AAA'
+    },
+    textlink: {
+      color: '#42a5f5',
+      cursor: 'pointer'
+    }
+  })
 
   getPlanHeaderContent() {
     const { price } = this.props;
 
     if (price === 'Free') {
-      const subscriptionEndDate = Store.getActiveSubscriptionEndDate();
+      const subscriptionEndDate = ProfileBillingPlanStore.getActiveSubscriptionEndDate();
 
       return `(will expire at ${subscriptionEndDate})`;
     }
 
-    const isNewSubscriptionVisible = Store.isNewSubscriptionVisible();
+    const isNewSubscriptionVisible = ProfileBillingPlanStore.isNewSubscriptionVisible();
 
     if (isNewSubscriptionVisible) {
-      const newSubscriptionPrice = Store.getNewPlanTotalValue();
+      const newSubscriptionPrice = ProfileBillingPlanStore.getNewPlanTotalValue();
 
-      return `Your new plan (${newSubscriptionPrice}) starts next month`;
+      return `Your new plan ($${newSubscriptionPrice}) starts next month`;
     }
 
-    const isPlanCanceled = Store.isPlanCanceled();
+    const isPlanCanceled = ProfileBillingPlanStore.isPlanCanceled();
 
     if (isPlanCanceled) {
       return '(will expire at the end of the month)';
@@ -171,17 +173,17 @@ class PricingPlansPlan extends Component {
   }
 
   isButtonDisabled() {
-    const { apiCallsPrice, scriptsPrice } = this.state;
-    const currentAPIPrice = Store.getCurrentPlanValue('api');
-    const currentScriptsPrice = Store.getCurrentPlanValue('cbx');
-    const newAPIPrice = Store.getNewPlanValue('api');
-    const newScriptsPrice = Store.getNewPlanValue('cbx');
+    const { apiPrice, cbxPrice } = this.state;
+    const currentApiPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
+    const currentCbxPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
+    const newApiPrice = ProfileBillingPlanStore.getNewPlanValue('api');
+    const newCbxPrice = ProfileBillingPlanStore.getNewPlanValue('cbx');
 
-    if (apiCallsPrice === currentAPIPrice && scriptsPrice === currentScriptsPrice) {
+    if (apiPrice === currentApiPrice && cbxPrice === currentCbxPrice) {
       return true;
     }
 
-    if (apiCallsPrice === newAPIPrice && scriptsPrice === newScriptsPrice) {
+    if (apiPrice === newApiPrice && cbxPrice === newCbxPrice) {
       return true;
     }
 
@@ -193,12 +195,12 @@ class PricingPlansPlan extends Component {
   }
 
   handleButtonTouchTap = () => {
-    const { apiCallsPrice, scriptsPrice } = this.state;
-    const { apiCallsOptions, scriptsOptions, features } = this.props;
-    const apiCallsOption = _.find(apiCallsOptions, { price: apiCallsPrice });
-    const scriptsOption = _.find(scriptsOptions, { price: scriptsPrice });
+    const { apiPrice, cbxPrice } = this.state;
+    const { apiOptions, cbxOptions, features } = this.props;
+    const apiOption = _.find(apiOptions, { price: apiPrice });
+    const cbxOption = _.find(cbxOptions, { price: cbxPrice });
 
-    PlanDialogActions.selectPricingPlan(apiCallsOption, scriptsOption, features);
+    PlanDialogActions.selectPricingPlan(apiOption, cbxOption, features);
     PlanDialogActions.showDialog();
   }
 
@@ -212,13 +214,13 @@ class PricingPlansPlan extends Component {
     const { router } = this.props;
 
     window.scrollTo(0, 0);
-    router.push('profile-billing-plan-downgrade');
+    router.push('/account/plan/downgrade/');
   }
 
-  formatSelectLabel(field, option) {
+  formatSelectLabel = (field, option) => {
     const label = {
-      apiCallsPrice: 'API calls',
-      scriptsPrice: 'Script seconds'
+      apiPrice: 'API calls',
+      cbxPrice: 'Script seconds'
     };
 
     return `
@@ -249,9 +251,9 @@ class PricingPlansPlan extends Component {
 
   renderPrice() {
     const styles = this.getStyles();
-    const { apiCallsPrice, scriptsPrice } = this.state;
+    const { apiPrice, cbxPrice } = this.state;
     const { price } = this.props;
-    const value = price || apiCallsPrice + scriptsPrice;
+    const value = price || apiPrice + cbxPrice;
 
     if (price === 'Free') {
       return (
@@ -272,10 +274,10 @@ class PricingPlansPlan extends Component {
   }
 
   renderSelect(field) {
-    const { apiCallsOptions, scriptsOptions } = this.props;
+    const { apiOptions, cbxOptions } = this.props;
     const options = {
-      apiCallsPrice: apiCallsOptions,
-      scriptsPrice: scriptsOptions
+      apiPrice: apiOptions,
+      cbxPrice: cbxOptions
     };
     const count = options[field].length;
 
@@ -327,7 +329,7 @@ class PricingPlansPlan extends Component {
   renderCurrentPlanFooter() {
     const styles = this.getStyles();
     const lowestPrice = PricingPlansUtil.getLowestPrice();
-    const price = Store.getPlanTotalValue();
+    const price = ProfileBillingPlanStore.getPlanTotalValue();
 
     let content = (
       <div>
@@ -350,7 +352,7 @@ class PricingPlansPlan extends Component {
       </div>
     );
 
-    if (price === lowestPrice) {
+    if (price <= lowestPrice) {
       content = (
         <div>
           {'You can '}
@@ -375,9 +377,10 @@ class PricingPlansPlan extends Component {
 
   render() {
     const styles = this.getStyles();
-    const { isCurrent, isHidden, title, price, disabled } = this.props;
-    const { isDowngrade } = this.context;
-    const defaultButtonLabel = isDowngrade ? 'Downgrade' : 'Upgrade';
+    const { isCurrent, isFeatured, isHidden, title, price, disabled } = this.props;
+    const { mode } = this.context;
+    const { apiPrice, cbxPrice } = this.state;
+    const defaultButtonLabel = mode === 'downgrade' ? 'Downgrade' : 'Upgrade';
     const period = (price === 'Free') ? null : 'per month';
 
     if (isHidden) {
@@ -386,6 +389,10 @@ class PricingPlansPlan extends Component {
 
     if (isCurrent) {
       _.assign(styles.pricingPlansPlan, styles.pricingPlansPlanHighlighted);
+    }
+
+    if (isFeatured) {
+      _.assign(styles.pricingPlansPlan, styles.pricingPlansPlanFeatured);
     }
 
     return (
@@ -406,8 +413,8 @@ class PricingPlansPlan extends Component {
             <Subheader style={styles.includes}>
               Includes:
             </Subheader>
-            {this.renderSelect('apiCallsPrice')}
-            {this.renderSelect('scriptsPrice')}
+            {this.renderSelect('apiPrice')}
+            {this.renderSelect('cbxPrice')}
             <RaisedButton
               label={isCurrent ? 'Current Plan' : defaultButtonLabel}
               backgroundColor="#FFCC01"
@@ -415,18 +422,19 @@ class PricingPlansPlan extends Component {
               style={styles.button}
               onTouchTap={this.handleButtonTouchTap}
               disabled={disabled || this.isButtonDisabled()}
+              data-e2e={`${apiPrice + cbxPrice}-plan-upgrade-button`}
             />
           </div>
           {this.renderFeatures()}
         </Paper>
-        {isCurrent && title !== 'Starter' && !isDowngrade && this.renderCurrentPlanFooter()}
+        {isCurrent && title !== 'Starter' && mode !== 'downgrade' && this.renderCurrentPlanFooter()}
       </div>
     );
   }
 }
 
 PricingPlansPlan.contextTypes = {
-  isDowngrade: PropTypes.bool
+  mode: PropTypes.string
 };
 
 export default withRouter(PricingPlansPlan);

@@ -137,7 +137,7 @@ export default React.createClass({
                 horizontalPosition="left"
                 style={styles.tooltip}
               >
-              {this.renderCheckBoxIcon(field.filter_index)}
+                {this.renderCheckBoxIcon(field.filter_index)}
               </Tooltip>
             </TableRowColumn>
             <TableRowColumn

@@ -1,5 +1,6 @@
 import AlertPageContent from './AlertPageContent';
 import AutoCompleteWrapper from './AutoCompleteWrapper';
+import BashSnippet from './BashSnippet';
 import Billing from './Billing';
 import CheckIcon from './CheckIcon';
 import Clipboard from './Clipboard';
@@ -13,6 +14,7 @@ import CreditCard from './CreditCard';
 import CreditCardForm from './CreditCardForm';
 import DataObjectsAmount from './DataObjectsAmount';
 import Dialog from './Dialog';
+import DirectoryNavigation from './DirectoryNavigation';
 import DropZone from './DropZone';
 import Dropdown from './Dropdown';
 import Editor from './Editor';
@@ -53,12 +55,12 @@ import { TraceResult, TraceBigResult } from './TraceResult';
 import Truncate from './Truncate';
 import UpgradeButton from './UpgradeButton';
 import UpgradeNowToolbar from './UpgradeNowToolbar';
-import UnsupportedBrowserView from './UnsupportedBrowserView';
 import StatusLabel from './StatusLabel';
 import LinkWithIcon from './LinkWithIcon';
 
 export { AlertPageContent };
 export { AutoCompleteWrapper };
+export { BashSnippet };
 export { Billing };
 export { CheckIcon };
 export { Clipboard };
@@ -72,6 +74,7 @@ export { CreditCard };
 export { CreditCardForm };
 export { DataObjectsAmount };
 export { Dialog };
+export { DirectoryNavigation };
 export { DropZone };
 export { Dropdown };
 export { Editor };
@@ -114,12 +117,12 @@ export { Truncate };
 export { UpgradeButton };
 export { UpgradeNowToolbar };
 export { StatusLabel };
-export { UnsupportedBrowserView };
 export { LinkWithIcon };
 
 export default {
   AlertPageContent,
   AutoCompleteWrapper,
+  BashSnippet,
   Billing,
   CheckIcon,
   Clipboard,
@@ -133,6 +136,7 @@ export default {
   CreditCardForm,
   DataObjectsAmount,
   Dialog,
+  DirectoryNavigation,
   DropZone,
   Dropdown,
   Editor,
@@ -173,7 +177,6 @@ export default {
   TraceBigResult,
   Truncate,
   UpgradeButton,
-  UnsupportedBrowserView,
   StatusLabel,
   LinkWithIcon,
   UpgradeNowToolbar

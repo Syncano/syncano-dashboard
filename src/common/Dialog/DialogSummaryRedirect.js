@@ -42,7 +42,7 @@ const DialogSummaryRedirect = ({ linkTo, title, text, buttonLabel }) => {
       href={linkTo.pathname}
       target="_blank"
     >
-    {button}
+      {button}
     </a>
   );
 

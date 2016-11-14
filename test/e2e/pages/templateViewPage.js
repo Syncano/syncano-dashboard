@@ -1,3 +1,5 @@
+import commonElementsPage from './commonElementsPage';
+
 export default {
   elements: {
     codeEditor: {
@@ -36,9 +38,6 @@ export default {
       selector: '//div[text()="objects_html_table"]',
       locateStrategy: 'xpath'
     },
-    snackBarNotification: {
-      selector: 'div[data-e2e="snackbar-notifcation"]'
-    },
     templateName: {
       selector: '[data-e2e="template-name"]'
     },
@@ -62,6 +61,7 @@ export default {
     },
     templateTextCssType: {
       selector: '[data-e2e="text/css-user-option"]'
-    }
+    },
+    ...commonElementsPage
   }
 };

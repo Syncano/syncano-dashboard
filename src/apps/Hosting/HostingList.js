@@ -14,8 +14,6 @@ import HostingPublishDialog from './HostingPublishDialog';
 const Column = ColumnList.Column;
 
 const HostingList = React.createClass({
-  displayName: 'HostingList',
-
   mixins: [
     DialogsMixin
   ],
@@ -40,7 +38,6 @@ const HostingList = React.createClass({
         title: 'Delete a Hosting',
         handleConfirm: HostingActions.removeHostings,
         items: getCheckedItems(),
-        itemLabelName: 'label',
         groupName: 'Hosting',
         isLoading
       }
@@ -50,14 +47,26 @@ const HostingList = React.createClass({
   renderItem(item) {
     const { checkItem } = this.props;
 
+    const showEditDialog = () => {
+      HostingActions.showDialog(item);
+    };
+
+    const showPublishDialog = () => {
+      HostingPublishDialogActions.showDialog(item);
+    };
+
+    const showDeleteDialog = () => {
+      this.showDialog('removeHostingDialog', item);
+    };
+
     return (
       <ListItem
         key={`hosting-list-item-${item.id}`}
         onIconClick={checkItem}
         item={item}
-        showEditDialog={() => HostingActions.showDialog(item)}
-        showPublishDialog={() => HostingPublishDialogActions.showDialog(item)}
-        showDeleteDialog={() => this.showDialog('removeHostingDialog', item)}
+        showEditDialog={showEditDialog}
+        showPublishDialog={showPublishDialog}
+        showDeleteDialog={showDeleteDialog}
       />
     );
   },
@@ -68,7 +77,7 @@ const HostingList = React.createClass({
     return (
       <ColumnList.Header>
         <Column.ColumnHeader
-          className="col-sm-9"
+          className="col-sm-12"
           primary={true}
           columnName="CHECK_ICON"
           handleClick={handleTitleClick}
@@ -78,13 +87,13 @@ const HostingList = React.createClass({
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
-          className="col-sm-7"
+          className="col-flex-1"
         >
           Description
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
-          className="col-sm-12"
+          className="col-sm-11"
         >
           Website Url
         </Column.ColumnHeader>

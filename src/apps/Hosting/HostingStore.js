@@ -1,13 +1,7 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import {
-  CheckListStoreMixin,
-  StoreFormMixin,
-  WaitForStoreMixin,
-  StoreLoadingMixin,
-  DialogStoreMixin
-} from '../../mixins';
+import { CheckListStoreMixin, HostingMixin, WaitForStoreMixin, StoreLoadingMixin } from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './HostingActions';
@@ -17,10 +11,9 @@ export default Reflux.createStore({
 
   mixins: [
     CheckListStoreMixin,
+    HostingMixin,
     WaitForStoreMixin,
-    StoreLoadingMixin,
-    DialogStoreMixin,
-    StoreFormMixin
+    StoreLoadingMixin
   ],
 
   getInitialState() {
@@ -37,7 +30,6 @@ export default Reflux.createStore({
       this.refreshData
     );
     this.setLoadingStates();
-    this.listenToForms();
   },
 
   sendHostingAnalytics(type, payload) {
@@ -49,44 +41,28 @@ export default Reflux.createStore({
     });
   },
 
-  getDefaultHosting(objects) {
-    const defaultHosting = _.find(objects, (hosting) => _.includes(hosting.domains, 'default'));
-
-    return defaultHosting;
-  },
-
   setHosting(data) {
-    this.data.items = data;
-    this.data.defaultHosting = this.getDefaultHosting(data);
+    this.data.items = _.forEach(data, this.prepareHosting);
     this.trigger(this.data);
   },
 
   refreshData() {
-    console.debug('HostingStore::refreshData');
-    Actions.fetchHosting();
+    Actions.fetchHostings();
   },
 
-  onFetchHostingCompleted(data) {
-    console.debug('HostingStore::onFetchHostigCompleted');
+  onFetchHostingsCompleted(data) {
     Actions.setHosting(data);
   },
 
   onCreateHostingCompleted(payload) {
-    console.debug('HostingStore::onCreateHostingCompleted');
-    this.refreshData();
-    this.dismissDialog();
     this.sendHostingAnalytics('add', payload);
   },
 
   onUpdateHostingCompleted(payload) {
-    console.debug('HostingStore::onUpdateHostingCompleted');
-    this.refreshData();
-    this.dismissDialog();
     this.sendHostingAnalytics('edit', payload);
   },
 
   onRemoveHostingsCompleted(payload) {
-    console.debug('HostingStore::onRemoveHostingCompleted');
     this.refreshData();
     this.sendHostingAnalytics('delete', payload);
   }

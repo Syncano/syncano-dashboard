@@ -84,6 +84,9 @@ const Header = Radium(React.createClass({
         alignItems: 'center',
         cursor: 'pointer'
       },
+      toolbarDropdownListItem: {
+        padding: 0
+      },
       accountKeyIcon: {
         zIndex: -1
       },
@@ -208,7 +211,7 @@ const Header = Radium(React.createClass({
         id="upgrade-button"
         style={{ ...styles.toolbarListItem, ...{ paddingRight: 0 } }}
       >
-        <UpgradeButton onTouchTap={() => router.push('/account/plan')} />
+        <UpgradeButton onTouchTap={() => router.push('/account/plan/')} />
       </li>
     );
   },
@@ -245,17 +248,19 @@ const Header = Radium(React.createClass({
               className="toolbar-list left"
               style={styles.toolbarList}
             >
-              {/* <li style={styles.toolbarListItem}>
-                <Link to="demo-apps">Demo Apps</Link>
-              </li> */}
+              <li style={styles.toolbarDropdownListItem}>
+                <HeaderGettingStartedDropdown />
+              </li>
+              {/*
+                <li style={styles.toolbarListItem}>
+                  <Link to="demo-apps">Demo Apps</Link>
+                </li>
+              */}
               <li
                 id="menu-solutions"
                 style={styles.toolbarListItem}
               >
                 <Link to="solutions">Solutions Market</Link>
-              </li>
-              <li>
-                <HeaderGettingStartedDropdown />
               </li>
             </ul>
           </ToolbarGroup>

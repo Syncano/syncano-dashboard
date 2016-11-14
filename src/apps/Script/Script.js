@@ -13,6 +13,7 @@ import Actions from './ScriptActions';
 import RuntimeStore from '../Runtimes/RuntimesStore';
 
 import { Checkbox, FlatButton, FontIcon, IconButton, RaisedButton, TextField } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles';
 import {
   Dialog,
   Editor,
@@ -89,7 +90,8 @@ const Script = React.createClass({
 
   getInitialState() {
     return {
-      isSidebarHidden: JSON.parse(localStorage.getItem('isSidebarHidden'))
+      isSidebarHidden: JSON.parse(localStorage.getItem('isSidebarHidden')),
+      isResultWrapped: JSON.parse(localStorage.getItem('isResultWrapped'))
     };
   },
 
@@ -128,6 +130,8 @@ const Script = React.createClass({
   },
 
   getStyles() {
+    const { isResultWrapped } = this.state;
+
     return {
       root: {
         display: 'flex',
@@ -195,11 +199,12 @@ const Script = React.createClass({
         color: '#444',
         fontFamily: "Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace",
         fontSize: 12,
-        whiteSpace: 'pre'
+        whiteSpace: isResultWrapped ? 'pre-line' : 'pre'
       },
       resultContainer: {
         display: 'flex',
-        flexFlow: 'column'
+        flexFlow: 'column',
+        width: '100%'
       },
       lastTrace: {
         zIndex: 1,
@@ -212,6 +217,21 @@ const Script = React.createClass({
         flexBasis: 305,
         flexGrow: 1,
         display: 'flex'
+      },
+      linkIcon: {
+        color: Colors.blue500,
+        fontSize: 22,
+        lineHeight: 1
+      },
+      resultIcon: {
+        paddingTop: 10
+      },
+      rightContent: {
+        display: 'flex'
+      },
+      wrapIcon: {
+        fontSize: 48,
+        color: isResultWrapped && Colors.blue500
       }
     };
   },
@@ -236,6 +256,20 @@ const Script = React.createClass({
     const runtimeName = currentScript && RuntimeStore.getRuntimeByName(currentScript.runtime_name);
 
     return runtimeName ? runtimeName.packages : '';
+  },
+
+  getLastTrace(callback) {
+    const { currentScript, traces } = this.state;
+    const lastTrace = traces && traces[0];
+
+    Actions.fetchScriptTrace(currentScript.id, lastTrace.id);
+    const lastTraceResult = this.state.traces[0].result;
+
+    if (_.has(lastTraceResult, '__error__')) {
+      setTimeout(() => this.getLastTrace(callback), 250);
+    } else {
+      callback(lastTraceResult);
+    }
   },
 
   isSaved() {
@@ -431,6 +465,13 @@ const Script = React.createClass({
 
   handleNewFieldValueChange(event, value) {
     this.updateNewField('newFieldValue', value);
+  },
+
+  handleWrapResultCheckboxCheck() {
+    const { isResultWrapped } = this.state;
+
+    this.setState({ isResultWrapped: !isResultWrapped });
+    localStorage.setItem('isResultWrapped', !isResultWrapped);
   },
 
   showSidebar() {
@@ -694,7 +735,7 @@ const Script = React.createClass({
     );
   },
 
-  renderCode() {
+  renderContent() {
     const styles = this.getStyles();
     const { currentScript } = this.state;
     const linkToPackages = currentScript && this.getLinkToPackages(currentScript);
@@ -797,14 +838,54 @@ const Script = React.createClass({
     );
   },
 
+  renderLastTraceResultInNewTab() {
+    const { currentScript, lastTraceStatus } = this.state;
+
+    this.getLastTrace((pageContent) => {
+      const rawResultPage = window.open();
+      const documentContent = `
+        <title>
+          ${currentScript.label} || ${lastTraceStatus}
+        </title>
+        <pre>${pageContent.stdout}</pre>
+        <pre>${pageContent.stderr}</pre>
+      `;
+
+      rawResultPage.document.write(documentContent);
+    });
+  },
+
   renderSidebarResultSection() {
     const styles = this.getStyles();
-    const { lastTraceResult } = this.state;
+    const { lastTraceResult, isResultWrapped } = this.state;
+    const showRightContent = lastTraceResult && lastTraceResult !== 'Success';
+    const wrapIconTolltip = isResultWrapped ? 'Unwrap text' : 'Wrap text';
+    const rightContent = showRightContent && (
+      <div style={styles.rightContent}>
+        <IconButton
+          onTouchTap={this.renderLastTraceResultInNewTab}
+          iconStyle={styles.linkIcon}
+          style={styles.resultIcon}
+          tooltip="Open last trace result in new tab"
+          tooltipPosition="bottom-left"
+          iconClassName="synicon-launch"
+        />
+        <IconButton
+          onTouchTap={this.handleWrapResultCheckboxCheck}
+          iconStyle={styles.wrapIcon}
+          style={styles.resultIcon}
+          tooltip={wrapIconTolltip}
+          tooltipPosition="bottom-left"
+          iconClassName="synicon-wrap-text"
+        />
+      </div>
+    );
 
     return (
       <TogglePanel
         title="Result"
         style={styles.resultContainer}
+        rightContent={rightContent}
       >
         <div style={styles.result}>
           {lastTraceResult}
@@ -875,7 +956,7 @@ const Script = React.createClass({
             className="row"
             style={{ flex: 1 }}
           >
-            {this.renderCode()}
+            {this.renderContent()}
             {this.renderSidebar()}
           </div>
         </Loading>

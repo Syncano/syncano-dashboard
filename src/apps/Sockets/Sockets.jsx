@@ -4,20 +4,16 @@ import _ from 'lodash';
 import Helmet from 'react-helmet';
 import { colors as Colors } from 'material-ui/styles/';
 
-// Stores & Actions
 import ScriptsActions from '../Scripts/ScriptsActions';
 import Actions from './SocketsActions';
 import Store from './SocketsStore';
 import SessionStore from '../Session/SessionStore';
 
-// Utils
 import { DialogsMixin } from '../../mixins';
 
-// Components
 import { RaisedButton } from 'material-ui';
 import { Container, Loading, Show, Dialog, PageIntro } from '../../common/';
 
-// Apps
 import DataEndpoints from '../DataEndpoints';
 import Channels from '../Channels';
 import Schedules from '../Schedules';
@@ -28,7 +24,6 @@ import SocketsDialog from './SocketsDialog';
 import SocketsLists from './SocketsList';
 import SocketsInnerToolbar from './SocketsInnerToolbar';
 import PushNotifications from '../PushNotifications';
-import Hosting from '../Hosting';
 
 const Sockets = React.createClass({
   mixins: [
@@ -37,7 +32,6 @@ const Sockets = React.createClass({
   ],
 
   componentDidMount() {
-    console.info('Sockets::componentDidMount');
     Actions.addSocketsListeners();
     Actions.fetch();
     ScriptsActions.fetch();
@@ -189,7 +183,6 @@ const Sockets = React.createClass({
         <Schedules.Dialog />
         <Triggers.Dialog />
         <Channels.Dialog />
-        <Hosting.Dialog />
         <Channels.SendMessageDialog />
         <PushNotifications.APNSConfigDialog />
         <PushNotifications.SummaryDialog />
@@ -200,11 +193,11 @@ const Sockets = React.createClass({
 
         <SocketsInnerToolbar empty={!sockets.hasAnyItem || sockets.isLoading}>
           <RaisedButton
-            data-e2e="sockets-toolbar-add-button"
             label="Add"
             primary={true}
             style={{ marginRight: 0 }}
             onTouchTap={Actions.showDialog}
+            data-e2e="sockets-toolbar-add-button"
           />
         </SocketsInnerToolbar>
         <Container>

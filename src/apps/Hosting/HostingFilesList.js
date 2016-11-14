@@ -1,4 +1,5 @@
 import React from 'react';
+import Reflux from 'reflux';
 import _ from 'lodash';
 import { withRouter } from 'react-router';
 
@@ -6,18 +7,21 @@ import { DialogsMixin } from '../../mixins';
 
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
+import HostingUploadDialogStore from './HostingUploadDialogStore';
 
-import { RaisedButton } from 'material-ui';
-import { ColumnList, Lists, Dialog, Loading, UnsupportedBrowserView } from '../../common';
+import { ColumnList, Dialog, DirectoryNavigation, Lists, Loading } from '../../common';
 import HostingFilesEmptyView from './HostingFilesEmptyView';
-import UploadFilesButton from './UploadFilesButton';
+import HostingUploadDialog from './HostingUploadDialog';
 import ListItem from './HostingFilesListItem';
 import DotsListItem from './DotsListItem';
 
 const Column = ColumnList.Column;
 
 const HostingFilesList = React.createClass({
-  mixins: [DialogsMixin],
+  mixins: [
+    Reflux.connect(HostingUploadDialogStore),
+    DialogsMixin
+  ],
 
   getInitialState() {
     return {
@@ -32,21 +36,20 @@ const HostingFilesList = React.createClass({
       getCheckedItems: HostingFilesStore.getCheckedItems,
       checkItem: HostingFilesActions.checkItem,
       checkFolder: this.handleCheckFolder,
-      handleSelectAll: HostingFilesActions.selectAll,
       handleUnselectAll: HostingFilesActions.uncheckAll
     };
   },
 
   getFolderFiles(file) {
-    const { items } = this.props;
-    const { directoryDepth } = this.state;
-    const fileFolderName = file.path.split('/')[directoryDepth];
-    const folderFiles = _.filter(items, item => {
+    const { items, directoryDepth } = this.props;
+    const depthToCheck = directoryDepth + 1;
+    const fileFoldersToCheck = _.take(file.folders, depthToCheck);
+    const folderFiles = _.filter(items, (item) => {
       const itemFolders = item.path.split('/');
-      const hasSubFolders = directoryDepth > itemFolders.length;
-      const isFileInCurrentFolder = _.includes(itemFolders, fileFolderName);
+      const itemFoldersToCheck = _.take(itemFolders, depthToCheck);
+      const isFileInCurrentFolder = _.isMatch(itemFoldersToCheck, fileFoldersToCheck);
 
-      return !hasSubFolders && isFileInCurrentFolder;
+      return isFileInCurrentFolder;
     });
 
     return folderFiles;
@@ -57,9 +60,29 @@ const HostingFilesList = React.createClass({
   },
 
   handleCheckFolder(folder) {
-    const { directoryDepth, currentFolderName } = this.state;
+    const { directoryDepth, currentFolderName } = this.props;
 
     HostingFilesActions.checkFolder(folder, directoryDepth, currentFolderName);
+  },
+
+  handleUploadFiles(event) {
+    const { handleUploadFiles, previousFolders } = this.props;
+    const currentPath = previousFolders.join('/');
+
+    return handleUploadFiles(currentPath, event);
+  },
+
+  handleSelectAll() {
+    const { checkItem, items } = this.props;
+    const filteredItems = this.filterFolders(items);
+
+    _.forEach(filteredItems, (filteredItem) => {
+      if (filteredItem.isFolder && !filteredItem.checked) {
+        return this.handleCheckFolder(filteredItem);
+      }
+
+      return checkItem(filteredItem.id, true);
+    });
   },
 
   initDialogs() {
@@ -83,32 +106,12 @@ const HostingFilesList = React.createClass({
     }];
   },
 
-  moveDirectoryUp() {
-    const { previousFolders, directoryDepth } = this.state;
-
-    this.setState({
-      directoryDepth: directoryDepth - 1,
-      currentFolderName: previousFolders[directoryDepth - 1] || '',
-      previousFolders: _.slice(previousFolders, 0, directoryDepth)
-    });
-  },
-
-  moveDirectoryDown(nextFolderName) {
-    const { directoryDepth, currentFolderName, previousFolders } = this.state;
-
-    this.setState({
-      directoryDepth: directoryDepth + 1,
-      currentFolderName: nextFolderName,
-      previousFolders: [...previousFolders, currentFolderName]
-    });
-  },
-
   filterByCurrentDirectoryDepth(items) {
-    const { directoryDepth, currentFolderName } = this.state;
-    const filteredItems = _.filter(items, item => {
+    const { currentFolderName, directoryDepth, previousFolders } = this.props;
+    const filteredItems = _.filter(items, (item) => {
       const isInFolder = directoryDepth < item.folders.length;
       const isInRootFolder = currentFolderName === '';
-      const isInSubfolder = _.includes(item.folders, currentFolderName);
+      const isInSubfolder = _.isMatch(item.folders, previousFolders);
 
       return isInFolder && isInSubfolder || isInRootFolder;
     });
@@ -117,8 +120,8 @@ const HostingFilesList = React.createClass({
   },
 
   filterFolders(items) {
-    const { directoryDepth } = this.state;
-    let extendedItems = _.map(items, item => {
+    const { directoryDepth } = this.props;
+    let extendedItems = _.map(items, (item) => {
       const itemFolders = item.path.split('/');
 
       item.isFolder = _.isString(itemFolders[directoryDepth + 1]);
@@ -131,8 +134,8 @@ const HostingFilesList = React.createClass({
 
     extendedItems = this.filterByCurrentDirectoryDepth(extendedItems);
 
-    const splitedByType = _.partition(extendedItems, item => item.isFolder);
-    const uniqueFolders = _.uniqBy(splitedByType[0], item => item.folderName);
+    const splitedByType = _.partition(extendedItems, (item) => item.isFolder);
+    const uniqueFolders = _.uniqBy(splitedByType[0], (item) => item.folderName);
 
     return [...uniqueFolders, ...splitedByType[1]];
   },
@@ -141,25 +144,31 @@ const HostingFilesList = React.createClass({
     this.showDialog('removeHostingFilesDialog');
   },
 
+  renderDirectoryNavigation() {
+    const { previousFolders, directoryDepth, moveDirectoryUp } = this.props;
+
+    return (
+      <DirectoryNavigation
+        previousFolders={previousFolders}
+        directoryDepth={directoryDepth}
+        moveDirectoryUp={moveDirectoryUp}
+      />
+    );
+  },
+
   renderHeader() {
-    const { handleTitleClick, handleSelectAll, handleUnselectAll, items, getCheckedItems } = this.props;
+    const { handleTitleClick, handleUnselectAll, items, getCheckedItems } = this.props;
 
     return (
       <ColumnList.Header>
         <Column.ColumnHeader
-          className="col-sm-14"
+          className="col-flex-1"
           primary={true}
           columnName="CHECK_ICON"
           handleClick={handleTitleClick}
           data-e2e="hosting-files-list-title"
         >
           File
-        </Column.ColumnHeader>
-        <Column.ColumnHeader
-          columnName="DESC"
-          className="col-flex-1"
-        >
-          Path
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
@@ -170,7 +179,7 @@ const HostingFilesList = React.createClass({
         <Column.ColumnHeader columnName="MENU">
           <Lists.Menu
             checkedItemsCount={getCheckedItems().length}
-            handleSelectAll={handleSelectAll}
+            handleSelectAll={this.handleSelectAll}
             handleUnselectAll={handleUnselectAll}
             itemsCount={items.length}
           >
@@ -182,26 +191,25 @@ const HostingFilesList = React.createClass({
   },
 
   renderDotsListItem() {
-    return (
-      <DotsListItem onClickDots={this.moveDirectoryUp} />
-    );
+    const { moveDirectoryUp } = this.props;
+
+    return <DotsListItem onDotsClick={moveDirectoryUp} />;
   },
 
   renderItems() {
-    const { checkItem, items } = this.props;
-    const { directoryDepth } = this.state;
+    const { checkItem, directoryDepth, items, moveDirectoryDown } = this.props;
     const filteredItems = this.filterFolders(items);
-    const listItems = _.map(filteredItems, item => {
+    const listItems = _.map(filteredItems, (item) => {
       const filesToRemove = item.isFolder ? item.files : item;
+      const showDeleteDialog = () => this.showDialog('removeHostingFilesDialog', filesToRemove);
 
       return (
         <ListItem
           key={`hosting-file-list-item-${item.id}`}
-          onFolderEnter={this.moveDirectoryDown}
+          onFolderEnter={moveDirectoryDown}
           onIconClick={item.isFolder ? () => this.handleCheckFolder(item) : checkItem}
-          directoryDepth={directoryDepth}
           item={item}
-          showDeleteDialog={() => this.showDialog('removeHostingFilesDialog', filesToRemove)}
+          showDeleteDialog={showDeleteDialog}
         />
       );
     });
@@ -215,54 +223,89 @@ const HostingFilesList = React.createClass({
     return listItems;
   },
 
-  renderUploadFilesButton() {
-    const { hasFiles, ...other } = this.props;
+  renderEmptyView() {
+    const {
+      currentFileIndex,
+      currentInstanceName,
+      errorResponses,
+      filesCount,
+      handleCancelUploading,
+      handleErrorsButtonClick,
+      hasFiles,
+      isCanceled,
+      isDeleting,
+      isUploading,
+      lastFileIndex,
+      ...other
+    } = this.props;
 
     return (
-      <div className="row align-center vm-3-t">
-        <UploadFilesButton
-          {...other}
-          hasFiles={hasFiles}
-        />
-      </div>
+      <HostingFilesEmptyView
+        {...other}
+        currentFileIndex={currentFileIndex}
+        currentInstanceName={currentInstanceName}
+        errorResponses={errorResponses}
+        filesCount={filesCount}
+        handleCancelUploading={handleCancelUploading}
+        handleErrorsButtonClick={handleErrorsButtonClick}
+        handleUploadFiles={this.handleUploadFiles}
+        hasFiles={hasFiles}
+        isCanceled={isCanceled}
+        isDeleting={isDeleting}
+        isUploading={isUploading}
+        lastFileIndex={lastFileIndex}
+      />
     );
   },
 
   render() {
-    const { items, isLoading, hasFiles, isUploading, ...other } = this.props;
+    const {
+      currentFileIndex,
+      currentInstanceName,
+      errorResponses,
+      filesCount,
+      handleCancelUploading,
+      handleErrorsButtonClick,
+      hasFiles,
+      items,
+      isCanceled,
+      isDeleting,
+      isUploading,
+      isLoading,
+      lastFileIndex,
+      ...other
+    } = this.props;
 
-    if (!isLoading && !isUploading && !this.isSupportedBrowser()) {
-      const actionButton = (
-        <RaisedButton
-          label="Download CLI"
-          href="https://github.com/Syncano/syncano-cli"
-          target="_blank"
-          primary={true}
-        />
-      );
+    const { _dialogVisible } = this.state;
+    const hasItemsAndErorrs = (items.length && errorResponses.length && !_dialogVisible && !isCanceled);
 
+    if (!items.length || isDeleting || hasItemsAndErorrs) {
       return (
         <Loading show={isLoading}>
-          <UnsupportedBrowserView actionButton={actionButton} />
-        </Loading>
-      );
-    }
-
-    if (!items.length || hasFiles || isUploading) {
-      return (
-        <Loading show={isLoading}>
-          <HostingFilesEmptyView
-            {...other}
-            isUploading={isUploading}
-            hasFiles={hasFiles}
-          />
+          {this.renderEmptyView()}
         </Loading>
       );
     }
 
     return (
       <div>
+        <HostingUploadDialog
+          {...other}
+          currentFileIndex={currentFileIndex}
+          currentInstanceName={currentInstanceName}
+          errorResponses={errorResponses}
+          filesCount={filesCount}
+          handleCancelUploading={handleCancelUploading}
+          handleErrorsButtonClick={handleErrorsButtonClick}
+          handleUploadFiles={this.handleUploadFiles}
+          hasFiles={hasFiles}
+          isCanceled={isCanceled}
+          isDeleting={isDeleting}
+          isUploading={isUploading}
+          lastFileIndex={lastFileIndex}
+        />
         {this.getDialogs()}
+        {this.renderDirectoryNavigation()}
         {this.renderHeader()}
         <Lists.List
           {...other}
@@ -270,7 +313,6 @@ const HostingFilesList = React.createClass({
           key="hosting-files-list"
         >
           {this.renderItems()}
-          {this.renderUploadFilesButton()}
         </Lists.List>
       </div>
     );

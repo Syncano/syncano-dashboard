@@ -98,7 +98,7 @@ export default React.createClass({
           handleClick={Actions.showDialog}
           buttonLabel="Add Schedule"
         />
-        );
+      );
     }
 
     return (

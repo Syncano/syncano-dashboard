@@ -1,10 +1,10 @@
-import CreateActions from '../../utils/ActionsConstructor.js';
+import CreateActions from '../../utils/ActionsConstructor';
 
 export default CreateActions(
   {
     fetch: {},
     setHosting: {},
-    fetchHosting: {
+    fetchHostings: {
       asyncResult: true,
       loading: true,
       redirectOnFailure: true,

@@ -75,7 +75,7 @@ export default {
       ruby: '# Start coding!',
       golang: '// Start coding!',
       swift: '// Start coding!',
-      php: '// Start coding!'
+      php: getBaseScript('base_php')
     }[runtime_name];
 
     this.NewLibConnection

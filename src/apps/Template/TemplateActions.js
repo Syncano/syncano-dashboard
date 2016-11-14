@@ -1,10 +1,11 @@
-import CreateActions from '../../utils/ActionsConstructor.js';
+import CreateActions from '../../utils/ActionsConstructor';
 
 export default CreateActions({
   fetch: {},
   setFlag: {},
   resetFlag: {},
   setDataSource: {},
+  clearTemplate: {},
   fetchTemplate: {
     asyncResult: true,
     loading: true,

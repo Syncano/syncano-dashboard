@@ -5,7 +5,6 @@ export default React.createClass({
   displayName: 'EmptyContainer',
 
   propTypes: {
-    style: React.PropTypes.object,
     icon: React.PropTypes.string,
     text: React.PropTypes.string
   },

@@ -1,41 +1,27 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import Reflux from 'reflux';
-import Radium from 'radium';
 import Helmet from 'react-helmet';
 
-// Stores and Actions
-import Store from './ChannelHistoryStore';
-import Actions from './ChannelHistoryActions';
+import ChannelHistoryStore from './ChannelHistoryStore';
+import ChannelHistoryActions from './ChannelHistoryActions';
 
-// Components
 import { Container, InnerToolbar } from '../../common/';
 
-// Local components
 import ChannelHistoryList from './ChannelHistoryList';
 
-const ChannelHistory = Radium(React.createClass({
-  propTypes: {
-    channelName: React.PropTypes.string
-  },
-
-  mixins: [Reflux.connect(Store)],
-
-  getDefaultProps() {
-    return {
-      showHeader: false
-    };
-  },
+const ChannelHistory = React.createClass({
+  mixins: [Reflux.connect(ChannelHistoryStore)],
 
   componentDidMount() {
-    Actions.getChannelHistory(this.props.channelName);
+    ChannelHistoryActions.getChannelHistory(this.props.channelName);
   },
 
   getStyles() {
     return {
       list: {
         position: 'relative',
-        top: '35px'
+        top: 35
       }
     };
   },
@@ -47,9 +33,9 @@ const ChannelHistory = Radium(React.createClass({
   },
 
   render() {
+    const styles = this.getStyles();
     const { channelName } = this.props;
     const { items, isLoading } = this.state;
-    const styles = this.getStyles();
     const title = `Real-time Channel History for ${channelName}`;
 
     return (
@@ -71,6 +57,6 @@ const ChannelHistory = Radium(React.createClass({
       </div>
     );
   }
-}));
+});
 
 export default withRouter(ChannelHistory);

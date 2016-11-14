@@ -1,3 +1,5 @@
+import instances from '../tempInstances';
+
 const instancesCommands = {
   clickFAB() {
     return this.waitForElementVisible('@fab')
@@ -114,12 +116,18 @@ export default {
       selector: '//span[text()="Sockets"]',
       locateStrategy: 'xpath'
     },
-    setupText: {
-      selector: '//div[text()="We\'re preparing your account, please wait..."]',
-      locateStrategy: 'xpath'
+    setupPageContent: {
+      selector: '[data-e2e="setup-page-content"]'
     },
     confirmTextField: {
       selector: '//div[@class="confirmation-text-field"]/input',
+      locateStrategy: 'xpath'
+    },
+    instancesListRowName: {
+      selector: `[data-e2e="${instances.thirdInstance.instanceName}-list-row-name"]`
+    },
+    instancesListRowButton: {
+      selector: `//*[@data-e2e="${instances.thirdInstance.instanceName}-list-row-name"]/div/div`,
       locateStrategy: 'xpath'
     }
   }

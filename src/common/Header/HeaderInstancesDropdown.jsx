@@ -109,7 +109,7 @@ const HeaderInstancesDropdown = Radium(React.createClass({
     this.refs.instancesDropdown.close();
     SessionActions.fetchInstance(instanceName);
     localStorage.setItem('lastInstanceName', instanceName);
-    router.push(`/instances/${instanceName}/sockets`);
+    router.push(`/instances/${instanceName}/sockets/`);
   },
 
   renderAddInstanceItem() {
@@ -151,12 +151,12 @@ const HeaderInstancesDropdown = Radium(React.createClass({
 
       return (
         <ListItem
-          data-e2e={instance.name}
           key={instance.name}
           primaryText={instance.name}
           onTouchTap={() => this.handleDropdownItemClick(instance.name)}
           style={instance.name === currentInstance.name && styles.currentInstanceListItem}
           leftIcon={icon}
+          data-e2e={instance.name}
         />
       );
     });

@@ -77,8 +77,15 @@
     "react/jsx-first-prop-new-line": [2, "multiline"],
     "react/jsx-boolean-value": [2, "always"],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "arrow-parens": ["error", "always", {
+      "requireForBlockBody": true
+    }],
+    "jsx-a11y/no-static-element-interactions": "off",
+    "quotes": ["error", "single", { "avoidEscape": true, "allowTemplateLiterals": true }],
+    "import/first": ["error", null],
 
     // to be fixed
+    "react/forbid-prop-types": "off",
     "no-prototype-builtins": [0],
     "react/no-find-dom-node": [0],
     "no-mixed-operators": [0],

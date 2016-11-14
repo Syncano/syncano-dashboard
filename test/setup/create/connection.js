@@ -34,6 +34,7 @@ const Account = {
       .then((response) => {
         connection.setAccountKey(response.account_key);
         account = response;
+        ({ password: response.password } = authentication);
 
         return response;
       });
@@ -48,7 +49,7 @@ const Account = {
   },
 
   init() {
-    if (process.env.CI && process.env.CI !== 'local') {
+    if (process.env.CI) {
       return Account.register().then((authentication) => Account.login(authentication));
     }
     return Account.login();

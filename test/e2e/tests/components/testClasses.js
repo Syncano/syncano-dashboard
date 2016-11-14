@@ -1,11 +1,11 @@
-import accounts from '../../tempAccounts';
+import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
   tags: ['classes'],
   after: (client) => client.end(),
   before: (client) => {
-    const { accountKey } = accounts.instanceUser;
+    const { account_key: accountKey } = instances.account;
 
     client
       .loginUsingLocalStorage(accountKey)
@@ -13,7 +13,9 @@ export default addTestNamePrefixes({
   },
   'Test Select/Delete multiple Classes': (client) => {
     const classesPage = client.page.classesPage();
-    const { instanceName } = accounts.instanceUser;
+    const classTableRows = classesPage.elements.classTableRows.selector;
+    const userProfileClassName = classesPage.elements.userProfileClassName.selector;
+    const { instanceName } = instances.firstInstance;
 
     classesPage
       .goToUrl(instanceName, 'classes')
@@ -21,15 +23,8 @@ export default addTestNamePrefixes({
       .clickElement('@selectUserClass')
       .clickListItemDropdown('@classesListMenu', 'Delete')
       .clickElement('@confirmDeleteButton')
-      .waitForElementVisible('@classTableRows');
-    const classTableRows = classesPage.elements.classTableRows.selector;
-    const userProfileClassName = classesPage.elements.userProfileClassName.selector;
-
-    client.elements('xpath', classTableRows, (result) => {
-      client.assert.equal(result.value.length, 1, 'There is one class left');
-    });
-    client.elements('css selector', userProfileClassName, (result) => {
-      client.assert.equal(result.value.length, 1, 'user_profile class was not deleted');
-    });
+      .waitForElementVisible('@classTableRows')
+      .assertSelectedCount('xpath', classTableRows, 1, 'There is one class left')
+      .assertSelectedCount('css selector', userProfileClassName, 1, 'user_profile class was not deleted');
   }
 });

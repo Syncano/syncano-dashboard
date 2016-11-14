@@ -1,5 +1,5 @@
 import utils from '../utils';
-import accounts from '../tempAccounts';
+import instances from '../tempInstances';
 
 export default {
   elements: {
@@ -40,7 +40,7 @@ export default {
       selector: '[data-e2e="nodejs-script-runtime-option"]'
     },
     scriptUserOption: {
-      selector: `[data-e2e=${accounts.alternativeUser.tempScriptNames[0]}-user-option]`
+      selector: `[data-e2e=${instances.secondInstance.scriptsNames[0]}-user-option]`
     },
     scheduleTableRow: {
       selector: `//div[text()="${utils.addSuffix('schedule')}"]`,
@@ -50,7 +50,7 @@ export default {
       selector: `//div[@data-e2e="${utils.addSuffix('schedule')}-crontab-interval-value"]`,
       locateStrategy: 'xpath'
     },
-    deleteScheduleModalTitle: {
+    deleteScheduleButton: {
       selector: '[data-e2e="schedule-delete-dialog-confirm"]'
     },
     summaryDialogCloseButton: {

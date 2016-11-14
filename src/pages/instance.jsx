@@ -2,7 +2,6 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import localStorage from 'local-storage-fallback';
 
-// Stores and Action
 import SessionStore from '../apps/Session/SessionStore';
 import SessionActions from '../apps/Session/SessionActions';
 import InstanceDialogActions from '../apps/Instances/InstanceDialogActions';
@@ -14,10 +13,7 @@ import GlobalConfigDialog from '../apps/GlobalConfig/GlobalConfigDialog';
 import DataObjectDialog from '../apps/DataObjects/DataObjectDialog';
 
 const Instance = React.createClass({
-  displayName: 'Instance',
-
   componentDidMount() {
-    console.debug('Instance::componentDidMount');
     const { params } = this.props;
 
     if (params.instanceName) {
@@ -42,10 +38,10 @@ const Instance = React.createClass({
                 <Sidebar.LinkListItem
                   key="Sockets"
                   routeName="sockets"
-                  data-e2e="left-sidebar-sockets"
                   primaryText="Sockets"
                   iconClassName="synicon-hexagon-outline"
                   iconStyle={{ transform: 'rotate(30deg)' }}
+                  data-e2e="left-sidebar-sockets"
                 />
               </Sidebar.List>
               <Sidebar.List
@@ -87,6 +83,14 @@ const Instance = React.createClass({
                       primaryText="Templates"
                     />
                   ]}
+                />
+
+                <Sidebar.LinkListItem
+                  key="Hosting"
+                  routeName="hosting"
+                  data-e2e="left-sidebar-hosting"
+                  iconClassName="synicon-web"
+                  primaryText="Hosting"
                 />
 
                 <Sidebar.LinkListItem

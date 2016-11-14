@@ -1,11 +1,10 @@
-import CreateActions from '../../utils/ActionsConstructor.js';
+import CreateActions from '../../utils/ActionsConstructor';
 
 export default CreateActions({
   fetch: {},
   setBillingPlan: {},
   setChartLegend: {},
   setOverage: {},
-
   cancelSubscriptionRequest: {
     asyncResult: true,
     asyncForm: true,

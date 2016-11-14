@@ -1,0 +1,501 @@
+exports[`<BashSnippet /> renders correctly 1`] = `
+<div
+  style={
+    Object {
+      "paddingTop": 20,
+      "width": "100%",
+    }
+  }>
+  <div
+    style={
+      Object {
+        "fontSize": 16,
+        "textAlign": "left",
+      }
+    } />
+  <div
+    style={
+      Object {
+        "background": "rgb(56, 56, 56)",
+        "borderRadius": 5,
+        "color": "#fff",
+        "font": "14px/normal \'Monaco\', monospace",
+        "marginTop": 8,
+        "padding": 10,
+        "textAlign": "left",
+        "whiteSpace": "pre-wrap",
+      }
+    }>
+    <span
+      style={
+        Object {
+          "MozUserSelect": "none",
+          "WebkitUserSelect": "none",
+          "msUserSelect": "none",
+          "userSelect": "none",
+        }
+      }>
+      $ 
+    </span>
+  </div>
+</div>
+`;
+
+exports[`<ChartLegend /> renders correctly 1`] = `
+<div
+  _radiumDidResolveStyles={true}
+  className="row">
+  <div
+    _radiumDidResolveStyles={true}
+    className="col-flex-1" />
+</div>
+`;
+
+exports[`<ColumnHeader /> renders correctly 1`] = `
+<div
+  _radiumDidResolveStyles={true}
+  className={undefined}
+  data-e2e={undefined}
+  style={Object {}}>
+  <div
+    onClick={[Function]}
+    style={undefined} />
+</div>
+`;
+
+exports[`<Container /> renders correctly 1`] = `
+<div
+  data-e2e={undefined}
+  id={undefined}
+  style={
+    Object {
+      "padding": "24px 24px 64px",
+    }
+  } />
+`;
+
+exports[`<Desc /> renders correctly 1`] = `
+<div
+  _radiumDidResolveStyles={true}
+  className="description-field col-flex-1"
+  data-e2e={undefined}
+  style={
+    Object {
+      "WebkitAlignItems": "center",
+      "WebkitBoxAlign": "center",
+      "WebkitBoxDirection": "normal",
+      "WebkitBoxOrient": "horizontal",
+      "WebkitFlexDirection": "row",
+      "alignItems": "center",
+      "color": "#4a4a4a",
+      "display": Array [
+        "-webkit-box",
+        "-moz-box",
+        "-ms-flexbox",
+        "-webkit-flex",
+        "flex",
+      ],
+      "flexDirection": "row",
+      "fontSize": 14,
+      "msFlexAlign": "center",
+      "msFlexDirection": "row",
+      "padding": "16px 8px",
+      "wordBreak": "break-all",
+    }
+  } />
+`;
+
+exports[`<DialogContent /> renders correctly 1`] = `
+<div
+  className="col-flex-1" />
+`;
+
+exports[`<DialogContentSection /> renders correctly 1`] = `
+<div
+  className="vm-3-b"
+  style={Object {}}>
+  <div
+    className="row"
+    style={undefined} />
+</div>
+`;
+
+exports[`<DialogSidebar /> renders correctly 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+      "flexDirection": "row",
+      "paddingRight": 20,
+      "paddingTop": 16,
+      "width": 0,
+    }
+  } />
+`;
+
+exports[`<DialogSidebarBox /> renders correctly 1`] = `
+<div
+  style={
+    Object {
+      "background": "rgba(184, 192, 201, .1)",
+      "border": "1px solid rgba(184, 192, 201, .3)",
+      "borderRadius": 4,
+      "color": "rgba(68, 68, 68, .5)",
+      "fontSize": 13,
+      "lineHeight": 1.5,
+      "padding": 15,
+    }
+  } />
+`;
+
+exports[`<DialogSidebarSection /> renders correctly 1`] = `
+<div
+  className="vm-2-b" />
+`;
+
+exports[`<Header /> renders correctly 1`] = `
+<div
+  _radiumDidResolveStyles={true}
+  style={
+    Object {
+      "WebkitAlignItems": "center",
+      "WebkitBoxAlign": "center",
+      "alignItems": "center",
+      "color": "rgba(0,0,0,.54)",
+      "display": Array [
+        "-webkit-box",
+        "-moz-box",
+        "-ms-flexbox",
+        "-webkit-flex",
+        "flex",
+      ],
+      "fontSize": 14,
+      "lineHeight": "24px",
+      "marginBottom": 16,
+      "msFlexAlign": "center",
+    }
+  } />
+`;
+
+exports[`<ID /> renders correctly 1`] = `
+<div
+  _radiumDidResolveStyles={true}
+  className="col-xs-2"
+  style={
+    Object {
+      "WebkitBoxDirection": "normal",
+      "WebkitBoxOrient": "vertical",
+      "WebkitBoxPack": "center",
+      "WebkitFlexDirection": "column",
+      "WebkitJustifyContent": "center",
+      "color": "rgba(0,0,0,.54)",
+      "display": Array [
+        "-webkit-box",
+        "-moz-box",
+        "-ms-flexbox",
+        "-webkit-flex",
+        "flex",
+      ],
+      "flexDirection": "column",
+      "fontSize": "12px",
+      "justifyContent": "center",
+      "lineHeight": "16px",
+      "msFlexDirection": "column",
+      "msFlexPack": "center",
+      "padding": "16px 8px",
+    }
+  }>
+  <span />
+</div>
+`;
+
+exports[`<ItemColumn /> renders correctly 1`] = `
+<div
+  _radiumDidResolveStyles={true}
+  style={
+    Object {
+      "WebkitBoxDirection": "normal",
+      "WebkitBoxOrient": "vertical",
+      "WebkitBoxPack": "center",
+      "WebkitFlexDirection": "column",
+      "WebkitJustifyContent": "center",
+      "display": Array [
+        "-webkit-box",
+        "-moz-box",
+        "-ms-flexbox",
+        "-webkit-flex",
+        "flex",
+      ],
+      "flexDirection": "column",
+      "justifyContent": "center",
+      "msFlexDirection": "column",
+      "msFlexPack": "center",
+    }
+  } />
+`;
+
+exports[`<ListContainer /> renders correctly 1`] = `
+<div
+  className={undefined}
+  data-e2e={undefined}
+  style={
+    Object {
+      "marginBottom": 24,
+    }
+  } />
+`;
+
+exports[`<ListSubheader /> renders correctly 1`] = `
+<div
+  _radiumDidResolveStyles={true}
+  style={
+    Object {
+      "WebkitAlignItems": "center",
+      "WebkitBoxAlign": "center",
+      "alignItems": "center",
+      "display": Array [
+        "-webkit-box",
+        "-moz-box",
+        "-ms-flexbox",
+        "-webkit-flex",
+        "flex",
+      ],
+      "msFlexAlign": "center",
+      "padding": "20px 20px 10px",
+    }
+  }>
+  <div
+    _radiumDidResolveStyles={true}
+    style={
+      Object {
+        "color": "#aaa",
+        "fontSize": 10,
+        "paddingRight": 10,
+        "textTransform": "uppercase",
+      }
+    } />
+  <div
+    _radiumDidResolveStyles={true}
+    style={
+      Object {
+        "WebkitFlex": "1",
+        "background": "#eee",
+        "flex": "1",
+        "height": 1,
+        "msFlex": "1",
+        "position": "relative",
+        "top": "-1px",
+      }
+    } />
+</div>
+`;
+
+exports[`<LoadingContainer /> renders correctly 1`] = `
+<div
+  _radiumDidResolveStyles={true}
+  style={
+    Object {
+      "margin": "96px auto",
+    }
+  } />
+`;
+
+exports[`<MobileOnboardingSlide /> renders correctly 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+      "flexDirection": "column",
+      "height": "100%",
+      "justifyContent": "center",
+      "padding": "30px 30px",
+      "textAlign": "center",
+    }
+  }>
+  <div
+    style={
+      Object {
+        "color": "#244273",
+        "fontSize": 24,
+        "fontWeight": 500,
+        "marginBottom": 30,
+      }
+    } />
+  <div
+    style={
+      Object {
+        "color": "#000",
+        "fontSize": 14,
+        "lineHeight": 1.4,
+      }
+    } />
+</div>
+`;
+
+exports[`<Name /> renders correctly 1`] = `
+<div
+  _radiumDidResolveStyles={true}
+  className="col-xs-8"
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+  style={
+    Object {
+      "WebkitAlignSelf": "center",
+      "WebkitBoxDirection": "normal",
+      "WebkitBoxOrient": "horizontal",
+      "WebkitFlexDirection": "row",
+      "alignSelf": "center",
+      "color": undefined,
+      "cursor": "pointer",
+      "display": Array [
+        "-webkit-box",
+        "-moz-box",
+        "-ms-flexbox",
+        "-webkit-flex",
+        "flex",
+      ],
+      "flexDirection": "row",
+      "fontSize": 12,
+      "msFlexDirection": "row",
+      "msFlexItemAlign": "center",
+      "padding": "16px 8px",
+    }
+  } />
+`;
+
+exports[`<NotificationCloseButton /> renders correctly 1`] = `null`;
+
+exports[`<RoundIcon /> renders correctly 1`] = `
+<div
+  _radiumDidResolveStyles={true}
+  onClick={[Function]}
+  style={
+    Object {
+      "WebkitAlignItems": "center",
+      "WebkitBoxAlign": "center",
+      "WebkitBoxPack": "center",
+      "WebkitJustifyContent": "center",
+      "alignItems": "center",
+      "backgroundColor": undefined,
+      "borderRadius": "50%",
+      "display": Array [
+        "-webkit-box",
+        "-moz-box",
+        "-ms-flexbox",
+        "-webkit-flex",
+        "flex",
+      ],
+      "height": 40,
+      "justifyContent": "center",
+      "margin": "12px",
+      "msFlexAlign": "center",
+      "msFlexPack": "center",
+      "width": 40,
+    }
+  } />
+`;
+
+exports[`<Show /> renders correctly 1`] = `null`;
+
+exports[`<SliderSection /> renders correctly 1`] = `
+<div
+  className="row"
+  style={undefined}>
+  <div
+    className="col-md-24">
+    <div
+      style={
+        Object {
+          "fontSize": "1.2em",
+        }
+      } />
+    <div
+      style={
+        Object {
+          "marginTop": 10,
+          "padding": 10,
+        }
+      } />
+  </div>
+  <div
+    className="col-md-11"
+    style={
+      Object {
+        "paddingLeft": 35,
+      }
+    } />
+</div>
+`;
+
+exports[`<TabsContainer /> renders correctly 1`] = `
+<div
+  data-e2e={undefined}
+  id={undefined}
+  style={
+    Object {
+      "margin": "0 auto",
+      "maxWidth": "1000px",
+      "padding": "24px 24px 64px",
+    }
+  }>
+  <div
+    className="vm-4-b" />
+</div>
+`;
+
+exports[`<Text /> renders correctly 1`] = `
+<div
+  _radiumDidResolveStyles={true}
+  className="col-xs-4"
+  style={
+    Object {
+      "WebkitBoxDirection": "normal",
+      "WebkitBoxOrient": "vertical",
+      "WebkitBoxPack": "center",
+      "WebkitFlexDirection": "column",
+      "WebkitJustifyContent": "center",
+      "color": "rgba(0,0,0,.54)",
+      "display": Array [
+        "-webkit-box",
+        "-moz-box",
+        "-ms-flexbox",
+        "-webkit-flex",
+        "flex",
+      ],
+      "flexDirection": "column",
+      "fontSize": "12px",
+      "justifyContent": "center",
+      "lineHeight": "16px",
+      "msFlexDirection": "column",
+      "msFlexPack": "center",
+      "padding": "16px 8px",
+    }
+  } />
+`;
+
+exports[`<TraceResult /> renders correctly 1`] = `
+<div
+  style={
+    Object {
+      "backgroundColor": "#4C4A43",
+      "color": "#fff",
+      "font": "12px/normal \'Monaco\', monospace",
+      "padding": 25,
+      "whiteSpace": "pre-wrap",
+    }
+  }>
+  <div />
+</div>
+`;
+
+exports[`<Truncate /> renders correctly 1`] = `
+<div
+  style={
+    Object {
+      "display": "block",
+      "overflow": "hidden",
+      "textOverflow": "ellipsis",
+      "whiteSpace": "nowrap",
+    }
+  } />
+`;

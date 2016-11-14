@@ -2,12 +2,8 @@ import React from 'react';
 import { IconButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 
-export default React.createClass({
-  displayName: 'CheckIcon',
-
+const CheckIcon = React.createClass({
   propTypes: {
-    iconClassName: React.PropTypes.string,
-    iconColor: React.PropTypes.string,
     circleColor: React.PropTypes.string,
     checked: React.PropTypes.bool,
     checkable: React.PropTypes.bool,
@@ -39,17 +35,8 @@ export default React.createClass({
   getInitialState() {
     return {
       hovered: false
-      // checked: false
     };
   },
-
-  // correct me if i'm doing something wrong with getting rid of this
-
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     checked: nextProps.checked
-  //   });
-  // },
 
   getStyles() {
     const { color, circleColor } = this.props.icon;
@@ -99,17 +86,15 @@ export default React.createClass({
     event.stopPropagation();
     if (handleClick && checkable) {
       handleClick(id, !checked, keyName);
-
-      // this.setState({
-      //   checked: !this.state.checked
-      // });
     }
   },
 
-  toggleHover() {
-    this.setState({
-      hovered: !this.state.hovered
-    });
+  addHover() {
+    this.setState({ hovered: true });
+  },
+
+  removeHover() {
+    this.setState({ hovered: false });
   },
 
   render() {
@@ -126,10 +111,12 @@ export default React.createClass({
         iconClassName={`synicon-${icon.className}`}
         iconStyle={{ ...styles.icon, ...iconStyle }}
         style={{ ...styles.iconButton, ...style }}
-        onMouseEnter={checkable ? this.toggleHover : null}
-        onMouseLeave={checkable ? this.toggleHover : null}
+        onMouseEnter={checkable && this.addHover}
+        onMouseLeave={checkable && this.removeHover}
         onTouchTap={this.handleClick}
       />
     );
   }
 });
+
+export default CheckIcon;

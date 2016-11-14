@@ -47,7 +47,7 @@ export default Reflux.createStore({
     return this.data.template;
   },
 
-  clearTemplate() {
+  onClearTemplate() {
     this.data.template = null;
     this.data.renderedTemplate = '';
   },

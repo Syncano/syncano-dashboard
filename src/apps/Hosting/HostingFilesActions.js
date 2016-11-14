@@ -1,10 +1,19 @@
-import CreateActions from '../../utils/ActionsConstructor.js';
+import CreateActions from '../../utils/ActionsConstructor';
 
 export default CreateActions(
   {
-    fetch: {},
-    setHostingId: {},
     checkFolder: {},
+    clearFilesToUpload: {},
+    createFolder: {},
+    fetch: {},
+    finishUploading: {},
+    moveDirectoryDown: {},
+    moveDirectoryUp: {},
+    setFilesToUpload: {},
+    setHostingId: {},
+    cancelUploading: {
+      method: 'Syncano.Actions.Hosting.cancelUploading'
+    },
     uploadFiles: {
       asyncResult: true,
       loading: true,
@@ -27,7 +36,6 @@ export default CreateActions(
     }
   },
   {
-    withCheck: true,
-    withDialog: true
+    withCheck: true
   }
 );

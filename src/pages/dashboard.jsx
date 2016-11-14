@@ -12,14 +12,21 @@ import { Header, MobileOnboarding, UpgradeNowToolbar } from '../common/';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
 
 const Dashboard = React.createClass({
+  contextTypes: {
+    location: React.PropTypes.object
+  },
+
   mixins: [Reflux.connect(ProfileBillingPlanStore, 'billing')],
 
   componentDidMount() {
     const { router } = this.props;
+    const { location } = this.context;
 
     if (SessionStore.getSignUpMode()) {
-      SessionStore.removeSignUpMode();
-      router.push('/setup/');
+      router.push({
+        pathname: '/setup/',
+        query: location.query
+      });
     }
 
     ProfileBillingPlanStore.init();

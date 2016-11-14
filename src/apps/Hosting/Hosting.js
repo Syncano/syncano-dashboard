@@ -5,11 +5,10 @@ import Helmet from 'react-helmet';
 import HostingStore from './HostingStore';
 import HostingActions from './HostingActions';
 
-import { Container, Loading } from '../../common';
+import { Container, InnerToolbar, Loading } from '../../common';
 import { RaisedButton } from 'material-ui';
 import HostingList from './HostingList';
 import HostingDialog from './HostingDialog';
-import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 
 const Hosting = React.createClass({
   mixins: [
@@ -28,7 +27,7 @@ const Hosting = React.createClass({
         <Helmet title="Hosting" />
         <HostingDialog />
 
-        <SocketsInnerToolbar title="Hosting">
+        <InnerToolbar title="Hosting">
           <RaisedButton
             label="Add"
             style={{ marginRight: 0 }}
@@ -36,7 +35,7 @@ const Hosting = React.createClass({
             onTouchTap={HostingActions.showDialog}
             data-e2e="add-hosting-button"
           />
-        </SocketsInnerToolbar>
+        </InnerToolbar>
 
         <Container>
           <Loading show={isLoading}>

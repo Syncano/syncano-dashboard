@@ -5,16 +5,15 @@ import fileSize from 'filesize';
 
 import { MenuItem } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
-import { ColumnList } from '../../common/';
+import { ColumnList, Truncate } from '../../common/';
 
 const Column = ColumnList.Column;
 
-const HostingFileListItem = Radium(({ item, directoryDepth, onFolderEnter, onIconClick, showDeleteDialog }) => {
+const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDeleteDialog }) => {
   const lastSlashIndex = item.path.lastIndexOf('/');
   const lastCommaIndex = item.path.lastIndexOf('.');
   const fileName = item.isFolder ? item.folderName : item.path.substring(lastSlashIndex + 1);
   const fileType = item.isFolder ? 'folder' : item.path.substring(lastCommaIndex + 1);
-  const itemPath = item.folders.slice(0, directoryDepth + 1).join('/');
 
   const fileIconConfigs = {
     html: {
@@ -45,6 +44,11 @@ const HostingFileListItem = Radium(({ item, directoryDepth, onFolderEnter, onIco
       ':hover': {
         color: Colors.blue500
       }
+    },
+    checkIcon: {
+      fileName: {
+        width: '38vw'
+      }
     }
   };
   const handleClickFolderName = () => {
@@ -53,12 +57,11 @@ const HostingFileListItem = Radium(({ item, directoryDepth, onFolderEnter, onIco
   const getFolderName = () => {
     if (item.isFolder) {
       return (
-        <div
+        <Truncate
           style={styles.folderName}
           onClick={handleClickFolderName}
-        >
-          {fileName}
-        </div>
+          text={fileName}
+        />
       );
     }
 
@@ -71,21 +74,16 @@ const HostingFileListItem = Radium(({ item, directoryDepth, onFolderEnter, onIco
       key={item.id}
     >
       <Column.CheckIcon
-        className="col-sm-14"
+        className="col-flex-1"
         id={item.id}
         iconClassName={iconConfig.icon}
         background={iconConfig.color}
         checked={item.checked}
+        customStyles={styles.checkIcon}
         handleIconClick={onIconClick}
         primaryText={getFolderName()}
       />
-      <Column.Desc
-        className="col-flex-1"
-        data-e2e={`${fileName}-hosting-file-list-item-description`}
-      >
-        {`/${itemPath}`}
-      </Column.Desc>
-      <Column.Desc className="col-sm-4">
+      <Column.Desc className="col-sm-4" >
         {fileSize(item.size)}
       </Column.Desc>
       <Column.Menu data-e2e={`${fileName}-hosting-file-dropdown-icon`}>

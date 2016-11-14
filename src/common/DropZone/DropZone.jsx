@@ -116,14 +116,14 @@ export default class DropZone extends Component {
           className="synicon-cloud-upload"
         />
         <div data-e2e={`${certificateType}-dropzone-description`}>
-            {`Drag & Drop to upload ${certificateType} certificate`}
+          {`Drag & Drop to upload ${certificateType} certificate`}
         </div>
       </div>
     );
   }
 
   render() {
-    const { className, isLoading, disableClick, onDrop, containerStyle, styles, certificateType } = this.props;
+    const { accept, className, isLoading, disableClick, onDrop, containerStyle, styles, certificateType } = this.props;
     const dropZoneStyles = this.getStyles();
 
     return (
@@ -137,6 +137,7 @@ export default class DropZone extends Component {
             multiple={false}
             disableClick={disableClick}
             onDrop={onDrop}
+            accept={accept}
             style={{ ...dropZoneStyles.dropZone, ...styles }}
           >
             {this.renderDescription()}

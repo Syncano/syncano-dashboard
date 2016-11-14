@@ -1,12 +1,9 @@
+import commonElementsPage from './commonElementsPage';
 import utils from '../utils';
 
 export default {
   url: `${utils.testBaseUrl()}/#/account/address/`,
   elements: {
-    billingAddressTitle: {
-      selector: '//div[text()="Company name"]',
-      locateStrategy: 'xpath'
-    },
     companyNameInput: {
       selector: 'input[name="company_name"]'
     },
@@ -38,12 +35,8 @@ export default {
       selector: 'input[name="address_city"]'
     },
     updateButton: {
-      selector: '//button[@type="submit"]',
-      locateStrategy: 'xpath'
+      selector: '[data-e2e="billing-address-update-button"]'
     },
-    successfulUpdateMessage: {
-      selector: '//span[text()="Billing address changed successfully"]',
-      locateStrategy: 'xpath'
-    }
+    ...commonElementsPage
   }
 };

@@ -1,4 +1,4 @@
-import accounts from '../tempAccounts';
+import instances from '../tempInstances';
 import utils from '../utils';
 
 export default {
@@ -26,10 +26,10 @@ export default {
       selector: 'button[data-e2e="data-object-delete-button"]'
     },
     stringField: {
-      selector: `input[data-e2e="${accounts.alternativeUser.tempClassNames[0]}-string"]`
+      selector: `input[data-e2e="${instances.secondInstance.classNames[0]}-string"]`
     },
     stringFieldTableRow: {
-      selector: `td[data-e2e="${accounts.alternativeUser.tempClassNames[0]}-data-object-column"]`
+      selector: `td[data-e2e="${instances.secondInstance.classNames[0]}-data-object-column"]`
     },
     selectDataObjectTableRow: {
       selector: `//td[text()="${utils.addSuffix('edited')}"]/preceding-sibling::td//input[@type="checkbox"]`,

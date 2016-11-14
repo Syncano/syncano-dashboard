@@ -4,12 +4,16 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
 
+import { DialogsMixin, FormMixin, SnackbarNotificationMixin } from '../../mixins';
+
 import HostingFilesStore from './HostingFilesStore';
 import HostingFilesActions from './HostingFilesActions';
+import SessionStore from '../Session/SessionStore';
 import HostingPublishDialogActions from './HostingPublishDialogActions';
+import HostingUploadDialogActions from './HostingUploadDialogActions';
+import HostingFilesFolderForm from './HostingFilesFolderForm';
 
-import { RaisedButton } from 'material-ui';
-import { colors as Colors } from 'material-ui/styles';
+import { FontIcon, RaisedButton } from 'material-ui';
 import { InnerToolbar, Container, Show } from '../../common';
 import HostingFilesList from './HostingFilesList';
 import HostingDialog from './HostingDialog';
@@ -17,14 +21,60 @@ import HostingPublishDialog from './HostingPublishDialog';
 
 const HostingFilesView = React.createClass({
   mixins: [
-    Reflux.connect(HostingFilesStore)
+    Reflux.connect(HostingFilesStore),
+    DialogsMixin,
+    FormMixin,
+    SnackbarNotificationMixin
   ],
+
+  validatorConstraints: {
+    name: {
+      presence: true,
+      format: {
+        pattern: '[a-zA-Z0-9-_]+$',
+        message: 'can contain only a-z, 0-9, no spaces '
+      },
+      length: {
+        maximum: 64
+      }
+    }
+  },
 
   componentDidMount() {
     const { hostingId } = this.props.params;
 
     HostingFilesActions.setHostingId(hostingId);
     HostingFilesActions.fetch();
+  },
+
+  getStyles() {
+    return {
+      buttonsWrapper: {
+        display: 'flex',
+        alignItems: 'center'
+      },
+      actionButtons: {
+        display: 'flex',
+        alignItems: 'center'
+      }
+    };
+  },
+
+  getHostingUrl() {
+    const { hostingDetails } = this.state;
+    const { instanceName } = this.props.params;
+    const defaultHostingUrl = `https://${instanceName}.syncano.site/`;
+    const hasDomains = hostingDetails && hostingDetails.domains.length > 0;
+    const customDomainUrl = hasDomains ? `https://${hostingDetails.domains[0]}--${instanceName}.syncano.site/` : null;
+    const hostingUrl = this.isDefaultHosting() ? defaultHostingUrl : customDomainUrl;
+
+    return hostingUrl;
+  },
+
+  getToolbarTitle() {
+    const { hostingDetails, isLoading } = this.state;
+
+    return hostingDetails && !isLoading ? `Website Hosting: ${hostingDetails.name} (id: ${hostingDetails.id})` : '';
   },
 
   isDefaultHosting() {
@@ -37,27 +87,52 @@ const HostingFilesView = React.createClass({
     return false;
   },
 
-  handleUploadFiles(event) {
+  handleBackClick() {
+    const { router, params } = this.props;
+
+    router.push(`/instances/${params.instanceName}/hosting/`);
+  },
+
+  handleUploadFiles(currentPath, event) {
     event.stopPropagation();
     const { files } = event.target;
 
     if (files && files.length) {
-      const filesToUpload = _.map(files, this.extendFilePath);
+      const filesToUpload = _.map(files, (file) => this.extendFilePath(file, currentPath));
 
-      this.setState({ filesToUpload });
+      HostingFilesActions.setFilesToUpload(filesToUpload);
     }
   },
 
-  handleClearFiles() {
-    this.setState({
-      filesToUpload: []
+  handleNewFolderButtonClick() {
+    this.setState({ showNewFolderForm: true });
+  },
+
+  handleCreateFolder(event) {
+    event && event.preventDefault();
+    const validateFolderName = this.handleValidation('name', (isValid) => {
+      const { name } = this.state;
+
+      if (isValid) {
+        HostingFilesActions.createFolder(name);
+      }
     });
+
+    this.clearValidations(validateFolderName);
+  },
+
+  handleClearFiles() {
+    HostingFilesActions.clearFilesToUpload();
   },
 
   handleShowPublishDialog() {
     const { hostingId, instanceName } = this.props.params;
 
     HostingPublishDialogActions.showDialog({ id: hostingId, instanceName });
+  },
+
+  handleShowUploadDialog() {
+    HostingUploadDialogActions.showDialog();
   },
 
   handleSendFiles() {
@@ -67,51 +142,142 @@ const HostingFilesView = React.createClass({
     HostingFilesActions.uploadFiles(hostingId, filesToUpload);
   },
 
-  extendFilePath(file) {
-    const firstSlashIndex = file.webkitRelativePath.indexOf('/');
+  handleOnTouchTap(url) {
+    const hasHostingUrl = !_.isEmpty(url);
 
-    file.path = file.webkitRelativePath.substring(firstSlashIndex + 1);
+    return !hasHostingUrl && this.showMissingDomainsSnackbar;
+  },
+
+  handleNewFolderNameChange(event, name) {
+    this.setState({ name });
+  },
+
+  showMissingDomainsSnackbar() {
+    this.setSnackbarNotification({
+      message: "You don't have any domains yet. Please add some or set Hosting as default."
+    });
+  },
+
+  extendFilePath(file, currentPath) {
+    if (file.webkitRelativePath) {
+      const firstSlashIndex = file.webkitRelativePath.indexOf('/');
+
+      file.path = currentPath ? `${currentPath}/` : '';
+      file.path += file.webkitRelativePath.substring(firstSlashIndex + 1);
+
+      return file;
+    }
+
+    file.path = currentPath ? `${currentPath}/${file.name}` : file.name;
 
     return file;
   },
 
+  renderActionButtons() {
+    const { errors, name, showNewFolderForm } = this.state;
+    const styles = this.getStyles();
+
+    return (
+      <div style={styles.actionButtons}>
+        <HostingFilesFolderForm
+          errors={errors}
+          name={name}
+          showNewFolderForm={showNewFolderForm}
+          handleNewFolderNameChange={this.handleNewFolderNameChange}
+          handleCreateFolder={this.handleCreateFolder}
+          handleNewFolderButtonClick={this.handleNewFolderButtonClick}
+        />
+        <RaisedButton
+          label="Upload files"
+          primary={true}
+          icon={<FontIcon className="synicon-cloud-upload" />}
+          style={{ marginRight: 10 }}
+          onTouchTap={this.handleShowUploadDialog}
+        />
+      </div>
+    );
+  },
+
   render() {
-    const { isLoading, hideDialogs, items, filesToUpload, lastFileIndex, currentFileIndex, isUploading } = this.state;
+    const {
+      currentFileIndex,
+      currentFolderName,
+      errorResponses,
+      filesToUpload,
+      hideDialogs,
+      hostingDetails,
+      isUploading,
+      isCanceled,
+      isDeleting,
+      isLoading,
+      items,
+      lastFileIndex,
+      directoryDepth,
+      previousFolders
+    } = this.state;
+    const styles = this.getStyles();
     const hasFilesToUpload = filesToUpload.length > 0;
-    const isDefaultHosting = this.isDefaultHosting();
+    const currentInstance = SessionStore.getInstance();
+    const currentInstanceName = currentInstance && currentInstance.name;
+    const hostingUrl = this.getHostingUrl();
+    const pageTitle = this.getToolbarTitle();
+
+    if (!hostingDetails) {
+      return null;
+    }
 
     return (
       <div>
-        <Helmet title="Website Hosting" />
+        <Helmet title={pageTitle} />
         <HostingDialog />
         <HostingPublishDialog />
 
-        <InnerToolbar title="Website Hosting">
-          <Show if={items.length && !isLoading}>
+        <InnerToolbar
+          title={pageTitle}
+          backButton={true}
+          backFallback={this.handleBackClick}
+          forceBackFallback={true}
+          backButtonTooltip="Go Back to Hosting"
+        >
+          <div style={styles.buttonsWrapper}>
+            <Show if={items.length && !isLoading}>
+              {this.renderActionButtons()}
+            </Show>
             <RaisedButton
-              label={isDefaultHosting ? 'Published' : 'Publish'}
-              onTouchTap={this.handleShowPublishDialog}
+              label="Go to site"
               primary={true}
-              disabled={isDefaultHosting}
-              disabledBackgroundColor={Colors.green500}
-              disabledLabelColor="#FFF"
+              icon={<FontIcon className="synicon-open-in-new" />}
+              onTouchTap={() => this.handleOnTouchTap(hostingUrl)}
+              href={hostingUrl}
+              target="_blank"
             />
-          </Show>
+          </div>
         </InnerToolbar>
 
         <Container>
           <HostingFilesList
-            isUploading={isUploading}
-            lastFileIndex={lastFileIndex}
             currentFileIndex={currentFileIndex}
-            handleClearFiles={this.handleClearFiles}
+            currentFolderName={currentFolderName}
+            currentInstanceName={currentInstanceName}
+            directoryDepth={directoryDepth}
+            errorResponses={errorResponses}
+            isCanceled={isCanceled}
+            isDeleting={isDeleting}
+            isUploading={isUploading}
+            isLoading={isLoading}
+            items={items}
             filesCount={filesToUpload.length}
+            handleClearFiles={this.handleClearFiles}
+            handleCancelUploading={HostingFilesActions.cancelUploading}
+            handleErrorsButtonClick={HostingFilesActions.finishUploading}
             handleUploadFiles={this.handleUploadFiles}
             handleSendFiles={this.handleSendFiles}
             hasFiles={hasFilesToUpload}
-            isLoading={isLoading}
-            items={items}
             hideDialogs={hideDialogs}
+            lastFileIndex={lastFileIndex}
+            moveDirectoryDown={HostingFilesActions.moveDirectoryDown}
+            moveDirectoryUp={HostingFilesActions.moveDirectoryUp}
+            previousFolders={previousFolders}
           />
         </Container>
       </div>
