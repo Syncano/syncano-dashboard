@@ -11,8 +11,9 @@ import HostingFilesActions from './HostingFilesActions';
 import SessionStore from '../Session/SessionStore';
 import HostingPublishDialogActions from './HostingPublishDialogActions';
 import HostingUploadDialogActions from './HostingUploadDialogActions';
+import HostingFilesFolderForm from './HostingFilesFolderForm';
 
-import { FontIcon, RaisedButton, TextField } from 'material-ui';
+import { FontIcon, RaisedButton } from 'material-ui';
 import { InnerToolbar, Container, Show } from '../../common';
 import HostingFilesList from './HostingFilesList';
 import HostingDialog from './HostingDialog';
@@ -47,23 +48,12 @@ const HostingFilesView = React.createClass({
   },
 
   getStyles() {
-    const { errors } = this.state;
-    const hasErrors = errors.name && errors.name.length;
-
     return {
       buttonsWrapper: {
         display: 'flex',
         alignItems: 'center'
       },
-      newFolderNameInput: {
-        width: 180,
-        marginRight: 10,
-        marginBottom: hasErrors && 22
-      },
-      newFolderButton: {
-        marginRight: 10
-      },
-      newFolderForm: {
+      actionButtons: {
         display: 'flex',
         alignItems: 'center'
       }
@@ -184,42 +174,26 @@ const HostingFilesView = React.createClass({
   },
 
   renderActionButtons() {
-    const { name, showNewFolderForm } = this.state;
+    const { errors, name, showNewFolderForm } = this.state;
     const styles = this.getStyles();
-    const createFolderButtonLabel = showNewFolderForm ? 'Create' : 'New folder';
-    const createFolderButtonAction = showNewFolderForm ? this.handleCreateFolder : this.handleNewFolderButtonClick;
-    const disableNewFolderButton = showNewFolderForm && !name;
 
     return (
-      <div style={styles.newFolderForm}>
-        <form onSubmit={this.handleCreateFolder}>
-          <Show if={showNewFolderForm}>
-            <TextField
-              fullWidth={true}
-              autoFocus={true}
-              name="name"
-              value={name}
-              onChange={this.handleNewFolderNameChange}
-              errorText={this.getValidationMessages('name').join(' ')}
-              hintText="Type new folder name"
-              style={styles.newFolderNameInput}
-            />
-          </Show>
-          <RaisedButton
-            label={createFolderButtonLabel}
-            primary={true}
-            style={styles.newFolderButton}
-            onTouchTap={createFolderButtonAction}
-            disabled={disableNewFolderButton}
-          />
-          <RaisedButton
-            label="Upload files"
-            primary={true}
-            icon={<FontIcon className="synicon-cloud-upload" />}
-            style={{ marginRight: 10 }}
-            onTouchTap={this.handleShowUploadDialog}
-          />
-        </form>
+      <div style={styles.actionButtons}>
+        <HostingFilesFolderForm
+          errors={errors}
+          name={name}
+          showNewFolderForm={showNewFolderForm}
+          handleNewFolderNameChange={this.handleNewFolderNameChange}
+          handleCreateFolder={this.handleCreateFolder}
+          handleNewFolderButtonClick={this.handleNewFolderButtonClick}
+        />
+        <RaisedButton
+          label="Upload files"
+          primary={true}
+          icon={<FontIcon className="synicon-cloud-upload" />}
+          style={{ marginRight: 10 }}
+          onTouchTap={this.handleShowUploadDialog}
+        />
       </div>
     );
   },
