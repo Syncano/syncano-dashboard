@@ -111,7 +111,7 @@
     "gulp-task-loader": "1.4.4",
     "gulp-util": "3.0.7",
     "http-server": "0.9.0",
-    "jest-cli": "17.0.0",
+    "jest-cli": "17.0.1",
     "nightwatch": "0.9.8",
     "node-libs-browser": ">=0.5.3",
     "node-sass": "3.11.3",
