@@ -101,18 +101,6 @@ const Instance = React.createClass({
                   iconClassName="synicon-cellphone-iphone"
                   initiallyOpen={true}
                   autoGenerateNestedIndicator={false}
-                  nestedItems={[
-                    <Sidebar.NestedLinkListItem
-                      key="iOSDevices"
-                      routeName="apns-devices"
-                      primaryText="iOS Devices"
-                    />,
-                    <Sidebar.NestedLinkListItem
-                      key="androidDevices"
-                      routeName="gcm-devices"
-                      primaryText="Android Devices"
-                    />
-                  ]}
                 />
 
                 <Sidebar.LinkListItem
@@ -123,18 +111,6 @@ const Instance = React.createClass({
                   iconClassName="synicon-cellphone-iphone"
                   initiallyOpen={true}
                   autoGenerateNestedIndicator={false}
-                  nestedItems={[
-                    <Sidebar.NestedLinkListItem
-                      key="iOSMessages"
-                      routeName="apns-messages"
-                      primaryText="iOS Messages"
-                    />,
-                    <Sidebar.NestedLinkListItem
-                      key="androidMessages"
-                      routeName="gcm-messages"
-                      primaryText="Android Messages"
-                    />
-                  ]}
                 />
 
               </Sidebar.List>
