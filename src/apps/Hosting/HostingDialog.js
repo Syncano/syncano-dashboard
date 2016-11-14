@@ -229,7 +229,7 @@ const CreateHostingDialog = React.createClass({
             name="CNAME"
             onChange={this.handleCNAMEChange}
             floatingLabelText="CNAME"
-            data-e2e="hosting-dialog-domain-input"
+            data-e2e="hosting-dialog-cname-input"
           />
         </div>
         <div className="vm-2-t">
