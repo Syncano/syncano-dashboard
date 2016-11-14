@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-export default ({ className, noMargin, title, last, children, style, rootStyles }) => {
+const DialogContentSection = ({ className, noMargin, title, last, children, style, rootStyles = {} }) => {
   const styles = {
     title: {
       color: '#aaa',
@@ -29,3 +29,5 @@ export default ({ className, noMargin, title, last, children, style, rootStyles 
     </div>
   );
 };
+
+export default DialogContentSection;
