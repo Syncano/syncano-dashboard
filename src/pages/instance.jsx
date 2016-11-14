@@ -62,7 +62,7 @@ const Instance = React.createClass({
                   iconClassName="synicon-layers"
                   primaryText="Data Classes"
                 />
-
+                {/*
                 <Sidebar.LinkListItem
                   key="Snippets"
                   routeName="snippets"
@@ -84,7 +84,7 @@ const Instance = React.createClass({
                     />
                   ]}
                 />
-
+                */}
                 <Sidebar.LinkListItem
                   key="Hosting"
                   routeName="hosting"
