@@ -16,7 +16,7 @@ import ProfileBillingPlanActions from '../../apps/Profile/ProfileBillingPlanActi
 // Components
 import Sticky from 'react-stickydiv';
 import { FontIcon, Divider, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu } from 'material-ui';
-import { Logo, Clipboard, UpgradeButton } from '../';
+import { Logo, /* Clipboard, */UpgradeButton } from '../';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 import HeaderGettingStartedDropdown from './HeaderGettingStartedDropdown';
 
@@ -97,11 +97,11 @@ const Header = Radium(React.createClass({
   },
 
   getDropdownItems() {
-    const styles = this.getStyles();
+    // const styles = this.getStyles();
     const user = SessionStore.getUser() || '';
     const billingIcon = <FontIcon className="synicon-credit-card" />;
     const instancesListIcon = <FontIcon className="synicon-view-list" />;
-    const accountKeyIcon = <FontIcon className="synicon-key-variant" style={styles.accountKeyIcon} />;
+    // const accountKeyIcon = <FontIcon className="synicon-key-variant" style={styles.accountKeyIcon} />;
     const logoutIcon = <FontIcon className="synicon-power" />;
 
     if (!user) {
@@ -117,7 +117,7 @@ const Header = Radium(React.createClass({
           secondaryText={user.email}
         />
         <Divider />
-        <ListItem
+        {/* <ListItem
           leftIcon={accountKeyIcon}
           innerDivStyle={styles.listItemInnerDiv}
         >
@@ -128,7 +128,7 @@ const Header = Radium(React.createClass({
             label="Copy Account Key"
             type="list"
           />
-        </ListItem>
+        </ListItem> */}
         <ListItem
           onTouchTap={this.goToIntances}
           leftIcon={instancesListIcon}
