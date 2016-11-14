@@ -2,8 +2,6 @@ import connection from '../create/connection';
 
 import createInstance from '../create/instance';
 import createTestClasses from '../create/classes';
-import createTestDataEndpoints from '../create/dataEndpoint';
-import createTestScripts from '../create/scripts';
 import createAPNSSocket from '../create/apnsSocket';
 import createGCMSocket from '../create/gcmSocket';
 import createAPNSDevices from '../create/apnsDevices';
@@ -21,16 +19,6 @@ const secondInstance = () => {
     })
     .then((classNames) => {
       secondInstanceStructure.classNames = classNames;
-
-      return createTestDataEndpoints(classNames[0], 2);
-    })
-    .then((dataEndpointsNames) => {
-      secondInstanceStructure.dataEndpointsNames = dataEndpointsNames;
-
-      return createTestScripts(1);
-    })
-    .then((scriptsNames) => {
-      secondInstanceStructure.scriptsNames = scriptsNames;
 
       return createAPNSSocket();
     })
