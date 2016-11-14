@@ -140,20 +140,18 @@ const CreateHostingDialog = React.createClass({
               Hosting allows you to manage, deploy and publish websites using Syncano Platform.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Hosting name">
-              {"Hosting's name in Syncano Dashboard. It is also used as a domain in your hosting."}
-            </Dialog.SidebarSection>
-            <Dialog.SidebarSection title="CNAME">
-              Thanks to CNAME you can add an additional alias to your hosting. CNAME makes it available to publish
-              your website to several domains
-              The domains will be linked to your hosting at
-              https://<em>CNAME</em>--{currentInstanceName}.syncano.site
+              {"Hosting's name in Syncano Dashboard. It is also used to construct your hosting domain url."}
             </Dialog.SidebarSection>
             <Show if={this.hasEditMode()}>
               <Dialog.SidebarSection title="Default hosting">
-                You can also toogle on <em>Default hosting </em> then it will be connected directly to your current
-                Instance and avaliable at {defaultLink}
+                Enabling the <em>default hosting</em> will set this hosting&apos;s domain url to be also available
+                at {defaultLink}
               </Dialog.SidebarSection>
             </Show>
+            <Dialog.SidebarSection title="CNAME">
+              If your domain name is, for example, <em>my-domain.com</em> then type it in the CNAME field. Next,
+              go to your domain name provider website and set the CNAME to point at {nameLink}
+            </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/hosting/">
                 Learn more
