@@ -1,37 +1,20 @@
 import React, { PropTypes } from 'react';
 import Reflux from 'reflux';
 
-import { DialogMixin/* , FormMixin */ } from '../../mixins';
+import { DialogMixin } from '../../mixins';
 
 import Actions from './GlobalConfigDialogActions';
 import Store from './GlobalConfigDialogStore';
 
 import { RaisedButton } from 'material-ui';
-import { Dialog, Editor, Loading/* , Show, Notification */ } from '../../common';
+import { Dialog, Editor, Loading } from '../../common';
 import { DialogBindShortcutsHOC } from '../../common/Dialog';
 
 const GlobalConfigDialog = React.createClass({
   mixins: [
     Reflux.connect(Store),
     DialogMixin
-    // FormMixin
   ],
-
-  // validatorConstraints: {
-  //   globalConfig: (value) => {
-  //     try {
-  //       JSON.parse(value);
-  //     } catch (e) {
-  //       return {
-  //         inclusion: {
-  //           within: [],
-  //           message: 'is not a valid JSON'
-  //         }
-  //       };
-  //     }
-  //     return null;
-  //   }
-  // },
 
   componentWillUpdate(nextProps, nextState) {
     if (!this.state._dialogVisible && nextState._dialogVisible) {
@@ -39,18 +22,8 @@ const GlobalConfigDialog = React.createClass({
     }
   },
 
-  // handleAddSubmit() {
-  //   const { globalConfig } = this.state;
-  //
-  //   Actions.updateGlobalConfig(JSON.parse(globalConfig));
-  // },
-
-  // handleConfigChange(value) {
-  //   this.setState({ globalConfig: value });
-  // },
-
   render() {
-    const { hasBindShortcutsEnabled/* , enableBindShortcuts, disableBindShortcuts */ } = this.context;
+    const { hasBindShortcutsEnabled } = this.context;
     const { open, isLoading, isConfigLoading, globalConfig } = this.state;
 
     return (
@@ -62,18 +35,6 @@ const GlobalConfigDialog = React.createClass({
         open={open}
         isLoading={isLoading}
         bindShortcuts={hasBindShortcutsEnabled}
-        onConfirm={this.handleFormValidation}
-        /*
-        actions={
-          <Dialog.StandardButtons
-            data-e2e-submit="global-config-submit"
-            data-e2e-cancel="global-config-cancel"
-            disabled={isLoading}
-            handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}
-          />
-        }
-        */
         actions={
           <RaisedButton
             label="Close"
@@ -108,33 +69,11 @@ const GlobalConfigDialog = React.createClass({
               mode="json"
               readOnly={true}
               height="400px"
-              /*
-              onChange={this.handleConfigChange}
-              onFocus={disableBindShortcuts}
-              onBlur={enableBindShortcuts}
-              value={globalConfig || [
-                '{',
-                '    "name": "John",',
-                '    "lastName": "Doe"',
-                '}'
-              ].join('\n')}
-              */
               value={globalConfig}
               data-e2e="global-config-editor"
             />
           </Loading>
         </div>
-        {/* <Show if={this.getValidationMessages('globalConfig').length}>
-          <Notification
-            type="error"
-            className="vm-2-t"
-          >
-            {this.getValidationMessages('globalConfig')}
-          </Notification>
-        </Show>
-        {this.renderFormNotifications() && <div className="vm-2-t">
-          {this.renderFormNotifications()}
-        </div>} */}
       </Dialog.FullPage>
     );
   }
@@ -142,8 +81,6 @@ const GlobalConfigDialog = React.createClass({
 
 GlobalConfigDialog.contextTypes = {
   hasBindShortcutsEnabled: PropTypes.bool
-  // enableBindShortcuts: PropTypes.func,
-  // disableBindShortcuts: PropTypes.func
 };
 
 export default DialogBindShortcutsHOC(GlobalConfigDialog);
