@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import pluralize from 'pluralize';
 
 import Show from '../Show';
 import {
@@ -167,7 +168,7 @@ const EmptyViewCLI = ({
       );
     })
   );
-
+  const pluralizedFiles = pluralize('files', errorResponses.length);
   const renderErrorsView = (
     <div>
       <div style={styles.title}>
@@ -180,7 +181,7 @@ const EmptyViewCLI = ({
         <span>Errors</span>
       </div>
       <div style={styles.description}>
-        The following {errorResponses.length} files had problems while uploading.
+        The following {errorResponses.length} {pluralizedFiles} had problems while uploading.
       </div>
       <Table style={styles.table}>
         <TableHeader
