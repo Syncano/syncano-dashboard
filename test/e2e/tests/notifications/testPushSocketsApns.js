@@ -13,7 +13,7 @@ export default addTestNamePrefixes({
   afterEach: (client, done) => client.end(done),
   'Test Admin Adds APNS Socket': (client) => {
     const socketsPage = client.page.socketsPage();
-    const filePath = './cert12';
+    const filePath = './cert.p12';
     const { instanceName } = instances.thirdInstance;
 
     socketsPage
