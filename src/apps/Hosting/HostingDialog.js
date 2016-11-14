@@ -43,7 +43,7 @@ const CreateHostingDialog = React.createClass({
       },
       toggle: {
         maxWidth: 400,
-        margin: '10px 0'
+        marginTop: 10
       },
       nameStyle: {
         lineHeight: 1.4,
@@ -51,6 +51,9 @@ const CreateHostingDialog = React.createClass({
       },
       defaultExplanation: {
         margin: '30px 0 10px'
+      },
+      defaultHostingContentSection: {
+        margin: 0
       }
     };
   },
@@ -111,11 +114,13 @@ const CreateHostingDialog = React.createClass({
 
   render() {
     const { is_default, isLoading, open, name, description, canSubmit, domains = [], cnameIndex, cname } = this.state;
-    const title = this.hasEditMode() ? 'Edit Hosting' : 'Add Hosting';
+    const hasEditMode = this.hasEditMode();
+    const title = hasEditMode ? 'Edit Hosting' : 'Add Hosting';
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const defaultLink = `https://${currentInstanceName}.syncano.site`;
     const nameLink = `https://${name}--${currentInstanceName}.syncano.site`;
+    const sidebarCustomDomain = _.isEmpty(cname) ? 'DOMAIN' : cname;
     const styles = this.getStyles();
 
     return (
@@ -142,18 +147,17 @@ const CreateHostingDialog = React.createClass({
             <Dialog.SidebarSection title="Hosting name">
               {"Hosting's name in Syncano Dashboard. It is also used as a domain in your hosting."}
             </Dialog.SidebarSection>
-            <Dialog.SidebarSection title="CNAME">
-              Thanks to CNAME you can add an additional alias to your hosting. CNAME makes it available to publish
-              your website to several domains
-              The domains will be linked to your hosting at
-              https://<em>CNAME</em>--{currentInstanceName}.syncano.site
-            </Dialog.SidebarSection>
-            <Show if={this.hasEditMode()}>
+            <Show if={hasEditMode}>
               <Dialog.SidebarSection title="Default hosting">
                 You can also toogle on <em>Default hosting </em> then it will be connected directly to your current
                 Instance and avaliable at {defaultLink}
               </Dialog.SidebarSection>
             </Show>
+            <Dialog.SidebarSection title="Custom Domain">
+              Thanks to Custom Domain field you can add an additional alias to your hosting url.
+              The hosting will be available at<br />
+              https://<em>{sidebarCustomDomain}</em>--{currentInstanceName}.syncano.site
+            </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/hosting/">
                 Learn more
@@ -172,7 +176,7 @@ const CreateHostingDialog = React.createClass({
             errorText={this.getValidationMessages('name').join(' ')}
             hintText="Hosting's name"
             floatingLabelText="Name"
-            disabled={this.hasEditMode()}
+            disabled={hasEditMode}
             data-e2e="hosting-dialog-name-input"
           />
           <TextField
@@ -184,12 +188,13 @@ const CreateHostingDialog = React.createClass({
             hintText="Hosting's description"
             floatingLabelText="Description"
             data-e2e="hosting-dialog-description-input"
-            style={styles.contentSection}
+            style={hasEditMode && styles.contentSection}
           />
-          <Show if={this.hasEditMode()}>
+          <Show if={hasEditMode}>
             <Dialog.ContentSection
               title="Default Hosting"
-              style={styles.contentSection}
+              style={styles.defaultHostingContentSection}
+              rootStyles={styles.defaultHostingContentSection}
             >
               <div style={styles.defaultExplanation}>
                 <Notification hasCloseButtonVisible={false}>
@@ -223,11 +228,10 @@ const CreateHostingDialog = React.createClass({
             fullWidth={true}
             defaultValue={domains[cnameIndex]}
             value={cname}
-            name="CNAME"
+            name="Domain"
             onChange={this.handleCNAMEChange}
-            hintText="Hosting's CNAME"
-            floatingLabelText="CNAME"
-            data-e2e="hosting-dialog-cname-input"
+            floatingLabelText="Custom Domain"
+            data-e2e="hosting-dialog-domain-input"
           />
         </div>
         <div className="vm-2-t">

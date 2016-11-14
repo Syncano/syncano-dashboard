@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-export default ({ className, noMargin, title, last, children, style }) => {
+export default ({ className, noMargin, title, last, children, style, rootStyles }) => {
   const styles = {
     title: {
       color: '#aaa',
@@ -15,7 +15,10 @@ export default ({ className, noMargin, title, last, children, style }) => {
   }, className);
 
   return (
-    <div className={rootClassName}>
+    <div
+      className={rootClassName}
+      style={rootStyles}
+    >
       {title && <div style={styles.title}>{title}</div>}
       <div
         className="row"
