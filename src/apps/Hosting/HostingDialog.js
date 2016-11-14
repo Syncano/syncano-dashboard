@@ -116,12 +116,10 @@ const CreateHostingDialog = React.createClass({
     const { is_default, isLoading, open, name, description, canSubmit, domains = [], cnameIndex, cname } = this.state;
     const hasEditMode = this.hasEditMode();
     const title = hasEditMode ? 'Edit Hosting' : 'Add Hosting';
-    const hostingCname = cname || domains[cnameIndex];
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const defaultLink = `https://${currentInstanceName}.syncano.site`;
     const nameLink = `https://${name}--${currentInstanceName}.syncano.site`;
-    const sidebarCustomDomain = _.isEmpty(hostingCname) ? 'DOMAIN' : hostingCname;
     const styles = this.getStyles();
 
     return (
@@ -228,9 +226,9 @@ const CreateHostingDialog = React.createClass({
             fullWidth={true}
             defaultValue={domains[cnameIndex]}
             value={cname}
-            name="Domain"
+            name="CNAME"
             onChange={this.handleCNAMEChange}
-            floatingLabelText="Custom Domain"
+            floatingLabelText="CNAME"
             data-e2e="hosting-dialog-domain-input"
           />
         </div>
