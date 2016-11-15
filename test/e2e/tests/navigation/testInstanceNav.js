@@ -17,20 +17,6 @@ export default addTestNamePrefixes({
     client.pause(500);
   },
   after: (client) => client.end(),
-  'User goes to Script traces view': (client) => {
-    const leftMenuPage = client.page.leftMenuPage();
-    const scriptsPage = client.page.scriptsPage();
-    const scriptEditPage = client.page.scriptEditPage();
-
-    leftMenuPage.clickElement('@snippets');
-    // Workaround for endless loadings
-    client.pause(1500);
-    scriptsPage.clickElement('@scriptListItem');
-    scriptEditPage
-      .clickElement('@traces')
-      .waitForElementPresent('@tracesEmpty')
-      .clickElement('@tracesClose');
-  },
   'User goes to Data Objects View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const classesPage = client.page.classesPage();
