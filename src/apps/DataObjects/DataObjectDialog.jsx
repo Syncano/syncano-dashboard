@@ -188,14 +188,12 @@ export default React.createClass({
         } else if (item.type === 'datetime') {
           let dateInput = this.refs[`fielddate-${item.name}`].refs.input.getValue();
           let timeInput = this.refs[`fieldtime-${item.name}`].refs.input.getValue();
-          let date = null;
-          let time = null;
 
           params[item.name] = null;
 
           if (dateInput.length !== 0 && timeInput.length !== 0) {
-            date = this.refs[`fielddate-${item.name}`].getDate();
-            time = this.refs[`fieldtime-${item.name}`].getTime();
+            const date = this.refs[`fielddate-${item.name}`].state.date;
+            const time = this.refs[`fieldtime-${item.name}`].state.time;
 
             let dateTime = new Date(
               date.getFullYear(),
