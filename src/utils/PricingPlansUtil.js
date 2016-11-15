@@ -108,11 +108,12 @@ const PricingPlansUtil = {
   },
 
   getPlans(currentPrices) {
-    const { api, cbx } = currentPrices;
+    const api = currentPrices ? currentPrices.api : null;
+    const cbx = currentPrices ? currentPrices.cbx : null;
 
     return {
       starter: {
-        isCurrent: api === 0,
+        isCurrent: api === 0 || api === null,
         isHidden: api > 0,
         title: 'Starter',
         apiOptions: [{
