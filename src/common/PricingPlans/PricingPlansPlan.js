@@ -149,6 +149,10 @@ class PricingPlansPlan extends Component {
   getPlanHeaderContent() {
     const { price } = this.props;
 
+    if (ProfileBillingPlanStore.getProfileStatus() === 'no_active_subscription') {
+      return '(plan expired)';
+    }
+
     if (price === 'Free') {
       const subscriptionEndDate = ProfileBillingPlanStore.getActiveSubscriptionEndDate();
 
