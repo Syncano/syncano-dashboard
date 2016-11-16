@@ -228,12 +228,20 @@ const Header = Radium(React.createClass({
                 <li style={styles.toolbarListItem}>
                   <Link to="demo-apps">Demo Apps</Link>
                 </li>
+              */}
               <li
-                id="menu-solutions"
+                id="custom-sockets-registry"
                 style={styles.toolbarListItem}
               >
-                <Link to="solutions">Solutions Market</Link>
+                <Link to="custom-sockets-registry">Sockets Registry</Link>
               </li>
+              {/*
+                <li
+                  id="menu-solutions"
+                  style={styles.toolbarListItem}
+                >
+                  <Link to="solutions">Solutions Market</Link>
+                </li>
               */}
             </ul>
           </ToolbarGroup>

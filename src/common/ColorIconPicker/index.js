@@ -1,10 +1,12 @@
 import ColorIconPicker from './ColorIconPicker';
-import Preview from './Preview';
+import PreviewCircle from './PreviewCircle';
+import PreviewHexagon from './PreviewHexagon';
 import ColorPicker from './ColorPicker';
 import IconPicker from './IconPicker';
 
 ColorIconPicker.IconPicker = IconPicker;
 ColorIconPicker.ColorPicker = ColorPicker;
-ColorIconPicker.Preview = Preview;
+ColorIconPicker.PreviewCircle = PreviewCircle;
+ColorIconPicker.PreviewHexagon = PreviewHexagon;
 
 export default ColorIconPicker;

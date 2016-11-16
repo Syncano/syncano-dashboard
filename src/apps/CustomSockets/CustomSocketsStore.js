@@ -1,11 +1,10 @@
 import Reflux from 'reflux';
 
-// Utils & Mixins
 import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
 
-// Stores & Actions
 import SessionActions from '../Session/SessionActions';
 import Actions from './CustomSocketsActions';
+import ActionsDialog from '../CustomSocketsRegistry/CustomSocketsRegistryActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -62,6 +61,7 @@ export default Reflux.createStore({
 
   onRemoveCustomSocketsCompleted(payload) {
     this.refreshData();
+    ActionsDialog.dismissDialog();
     window.analytics.track('Used Dashboard Sockets API', {
       type: 'delete',
       instance: payload.instanceName,
