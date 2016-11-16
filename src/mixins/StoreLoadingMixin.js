@@ -32,7 +32,7 @@ export default {
 
   bindFailureListeners(listenable) {
     _.forEach(listenable, (action) => {
-      action.redirectOnFailure && this.listenTo(action.failure, SessionActions.handleInvalidURL);
+      action.redirectOnFailure && this.listenTo(action.failure, SessionActions.setInvalidRouteMode);
     });
   },
 

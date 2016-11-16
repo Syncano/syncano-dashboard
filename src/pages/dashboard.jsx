@@ -36,8 +36,8 @@ const Dashboard = React.createClass({
   componentDidUpdate() {
     const { router } = this.props;
 
-    if (SessionStore.getInvalidRoute()) {
-      SessionStore.clearInvalidRoute();
+    if (SessionStore.getInvalidRouteMode()) {
+      SessionStore.clearInvalidRouteMode();
       router.push('instances');
     }
   },

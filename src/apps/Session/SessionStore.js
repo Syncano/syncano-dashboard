@@ -23,7 +23,7 @@ export default Reflux.createStore({
     this.routes = null;
     this.theme = null;
     this.signUpMode = null;
-    this.isInvalidRoute = null;
+    this.invalidRouteMode = null;
 
     if (this.isAuthenticated() && !this.user) {
       Actions.fetchUser();
@@ -70,8 +70,8 @@ export default Reflux.createStore({
     return this.signUpMode;
   },
 
-  getInvalidRoute() {
-    return this.isInvalidRoute;
+  getInvalidRouteMode() {
+    return this.invalidRouteMode;
   },
 
   getTheme(empty) {
@@ -168,11 +168,6 @@ export default Reflux.createStore({
     this.trigger(this);
   },
 
-  clearInvalidRoute() {
-    this.isInvalidRoute = null;
-    this.trigger(this);
-  },
-
   setRouter(router) {
     this.router = router;
   },
@@ -194,8 +189,18 @@ export default Reflux.createStore({
     this.signUpMode = true;
   },
 
+  setInvalidRouteMode() {
+    this.invalidRouteMode = true;
+    this.trigger(this);
+  },
+
   setTheme(theme) {
     this.theme = theme;
+  },
+
+  clearInvalidRouteMode() {
+    this.invalidRouteMode = null;
+    this.trigger(this);
   },
 
   isFriendlyUser() {
@@ -214,7 +219,7 @@ export default Reflux.createStore({
   },
 
   onFetchInstanceFailure() {
-    Actions.handleInvalidURL();
+    Actions.setInvalidRouteMode();
   },
 
   onFetchUserCompleted(payload) {
@@ -275,11 +280,6 @@ export default Reflux.createStore({
     if (this.router) {
       this.router.push({ pathname: '/login', query: _.merge(this.location.query, { next: this.location.pathname }) });
     }
-  },
-
-  onHandleInvalidURL() {
-    this.isInvalidRoute = true;
-    this.trigger(this);
   },
 
   isAuthenticated() {
