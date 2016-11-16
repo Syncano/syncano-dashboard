@@ -11,7 +11,7 @@ export default addTestNamePrefixes({
       .setResolution(client);
   },
   after: (client) => client.end(),
-  'Administrator adds global Variables': (client) => {
+  'Administrator reads global Variables': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const globalConfigPage = client.page.globalConfigPage();
     const { instanceName } = instances.firstInstance;
@@ -22,16 +22,7 @@ export default addTestNamePrefixes({
 
     globalConfigPage
       .waitForElementPresent('@globalConfigEditor')
-      .clearInput('@globalConfigEditor')
-      .setValue('@globalConfigTextarea', '{\n"value1": "test1",\n"value2": "test2"')
-      .clickElement('@globalConfigConfirmButton')
+      .clickElement('@globalConfigCloseButton')
       .waitForElementNotPresent('@globalConfigEditor');
-
-    leftMenuPage
-      .clickElement('@globalConfig');
-
-    globalConfigPage
-      .waitForElementPresent('@globalConfigEditor')
-      .verify.containsText('@globalConfigEditor', '{\n  "value1": "test1",\n  "value2": "test2"\n}');
   }
 });
