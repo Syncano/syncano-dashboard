@@ -11,8 +11,9 @@ import HostingFilesActions from './HostingFilesActions';
 import SessionStore from '../Session/SessionStore';
 import HostingPublishDialogActions from './HostingPublishDialogActions';
 import HostingUploadDialogActions from './HostingUploadDialogActions';
+import HostingFilesFolderForm from './HostingFilesFolderForm';
 
-import { FontIcon, RaisedButton, TextField } from 'material-ui';
+import { FontIcon, RaisedButton } from 'material-ui';
 import { InnerToolbar, Container, Show, Tooltip } from '../../common';
 import HostingFilesList from './HostingFilesList';
 import HostingDialog from './HostingDialog';
@@ -62,14 +63,14 @@ const HostingFilesView = React.createClass({
         padding: '0 24px 0 0'
       },
       newFolderNameInput: {
-        width: 180,
+        width: 10,
         marginRight: 10,
         marginBottom: hasErrors && 22
       },
       newFolderButton: {
         marginRight: 10
       },
-      newFolderForm: {
+      actionButtons: {
         display: 'flex',
         alignItems: 'center'
       },
@@ -90,7 +91,7 @@ const HostingFilesView = React.createClass({
     return hostingUrl;
   },
 
-  getWholeTitle() {
+  getFullTitle() {
     const { hostingDetails, isLoading } = this.state;
 
     return hostingDetails && !isLoading ? `Hosting: ${hostingDetails.name} (id: ${hostingDetails.id})` : '';
@@ -139,7 +140,8 @@ const HostingFilesView = React.createClass({
     this.setState({ showNewFolderForm: true });
   },
 
-  handleCreateFolder() {
+  handleCreateFolder(event) {
+    event && event.preventDefault();
     const validateFolderName = this.handleValidation('name', (isValid) => {
       const { name } = this.state;
 
@@ -204,31 +206,18 @@ const HostingFilesView = React.createClass({
   },
 
   renderActionButtons() {
-    const { name, showNewFolderForm } = this.state;
+    const { errors, name, showNewFolderForm } = this.state;
     const styles = this.getStyles();
-    const createFolderButtonLabel = showNewFolderForm ? 'Create' : 'New folder';
-    const createFolderButtonAction = showNewFolderForm ? this.handleCreateFolder : this.handleNewFolderButtonClick;
-    const disableNewFolderButton = showNewFolderForm && !name;
 
     return (
-      <div style={styles.newFolderForm}>
-        <Show if={showNewFolderForm}>
-          <TextField
-            fullWidth={true}
-            name="name"
-            value={name}
-            onChange={this.handleNewFolderNameChange}
-            errorText={this.getValidationMessages('name').join(' ')}
-            hintText="Type new folder name"
-            style={styles.newFolderNameInput}
-          />
-        </Show>
-        <RaisedButton
-          label={createFolderButtonLabel}
-          primary={true}
-          style={styles.newFolderButton}
-          onTouchTap={createFolderButtonAction}
-          disabled={disableNewFolderButton}
+      <div style={styles.actionButtons}>
+        <HostingFilesFolderForm
+          errors={errors}
+          name={name}
+          showNewFolderForm={showNewFolderForm}
+          handleNewFolderNameChange={this.handleNewFolderNameChange}
+          handleCreateFolder={this.handleCreateFolder}
+          handleNewFolderButtonClick={this.handleNewFolderButtonClick}
         />
         <RaisedButton
           label="Upload files"
@@ -263,7 +252,7 @@ const HostingFilesView = React.createClass({
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const hostingUrl = this.getHostingUrl();
-    const wholeTitle = this.getWholeTitle();
+    const fullTitle = this.getFullTitle();
     const truncatedTitle = this.getTruncatedTitle();
 
     if (!hostingDetails) {
@@ -272,7 +261,7 @@ const HostingFilesView = React.createClass({
 
     return (
       <div>
-        <Helmet title={wholeTitle} />
+        <Helmet title={fullTitle} />
         <HostingDialog />
         <HostingPublishDialog />
 
@@ -283,7 +272,7 @@ const HostingFilesView = React.createClass({
           backButtonTooltip="Go Back to Hosting"
         >
           <Tooltip
-            label={wholeTitle}
+            label={fullTitle}
             horizontalPosition="right"
             style={styles.toolbarTooltip}
           >

@@ -7,6 +7,7 @@ import auth from '../apps/Account/auth';
 import NewLibConnection from '../apps/Session/NewLibConnection';
 
 import SessionStore from '../apps/Session/SessionStore';
+import AuthStore from '../apps/Account/AuthStore';
 
 const RoutesUtil = {
   checkActiveSubscriptions(nextState, replace, callback) {
@@ -17,7 +18,7 @@ const RoutesUtil = {
       connection.setAccountKey(token);
     }
 
-    connection
+    return connection
       .Profile
       .please()
       .get()
@@ -32,6 +33,43 @@ const RoutesUtil = {
         redirectRoute && replace(redirectRoute);
         callback();
       });
+  },
+
+  checkInstanceActiveSubscription(nextState, replace, callback) {
+    const connection = NewLibConnection.get();
+    const token = localStorage.getItem('token');
+    const { instanceName } = nextState.params;
+
+    if (token) {
+      connection.setAccountKey(token);
+    }
+
+    if (instanceName) {
+      let currentUserEmail;
+
+      return connection
+        .Account
+        .getUserDetails()
+        .then(({ email }) => {
+          currentUserEmail = email;
+        })
+        .then(() => (
+          connection
+            .Instance
+            .please()
+            .get({ name: instanceName })
+        ))
+        .then(({ owner }) => {
+          if (owner.email === currentUserEmail) {
+            return RoutesUtil.checkActiveSubscriptions(nextState, replace, callback);
+          }
+
+          return callback();
+        })
+        .catch(console.error);
+    }
+
+    return callback();
   },
 
   isInstanceAvailable(instanceName) {
@@ -87,6 +125,10 @@ const RoutesUtil = {
       });
     }
 
+    if (nextState.location.query.invitation_key) {
+      return AuthStore.acceptInvitationFromUrl();
+    }
+
     if (auth.loggedIn() && nextState.location.pathname === '/' && !query.token) {
       return this.redirectToLastPathname(nextState, replace);
     }
@@ -122,8 +164,9 @@ const RoutesUtil = {
     const lastInstanceName = localStorage.getItem('lastInstanceName');
 
     if (lastInstanceName) {
-      this.isInstanceAvailable(lastInstanceName)
-        .then(replace({ pathname: `/instances/${lastInstanceName}/sockets/` }));
+      this.isInstanceAvailable(lastInstanceName).then(() => replace({
+        pathname: `/instances/${lastInstanceName}/sockets/`
+      }));
     }
   },
 

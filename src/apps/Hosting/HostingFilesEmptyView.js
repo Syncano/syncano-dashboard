@@ -1,4 +1,5 @@
 import React from 'react';
+import pluralize from 'pluralize';
 
 import { colors as Colors } from 'material-ui/styles';
 import { LinearProgress, RaisedButton } from 'material-ui';
@@ -66,14 +67,15 @@ const HostingFilesEmptyView = ({
       data-e2e="add-files-button"
     />
   );
-
   const actionButton = isActionInProgress ? progressBar : uploadFilesButton;
+  const pluralizedFiles = pluralize('files', filesCount);
+  const pluralizedDescription = `${filesCount} ${pluralizedFiles} ready for upload.`;
   const defaultDescription = 'Choose your files from disk:';
-  const uploadingFilesDescription = `${action} ${uploadingFilesCount} files...`;
-  const descriptionWithFiles = isActionInProgress ? uploadingFilesDescription : `${filesCount} files ready for upload.`;
+  const uploadingFilesDescription = `${action} ${uploadingFilesCount} ${pluralizedFiles}...`;
+  const descriptionWithFiles = isActionInProgress ? uploadingFilesDescription : pluralizedDescription;
   const description = hasFiles || isActionInProgress ? descriptionWithFiles : defaultDescription;
   const isFilesQueue = hasFiles || isUploading;
-  const iconClassName = isFilesQueue ? 'synicon-cloud-upload' : 'synicon-hosting-files-types';
+  const iconClassName = isFilesQueue && 'synicon-cloud-upload';
   const iconColor = isFilesQueue ? Colors.blue500 : Colors.grey600;
   const bashSnippets = [
     { description: 'Install Syncano CLI:', snippet: 'pip install syncano-cli' },
@@ -95,6 +97,7 @@ const HostingFilesEmptyView = ({
       hostingDocsUrl="http://docs.syncano.io/docs/hosting"
       hostingDocsButtonLabel="View Hosting Docs"
       isUploadFinished={isUploadFinished}
+      headerImageSrc="/img/illustrations/hosting-files-types.svg"
       iconClassName={iconClassName}
       iconColor={iconColor}
       mainTitle="Hosting Files"

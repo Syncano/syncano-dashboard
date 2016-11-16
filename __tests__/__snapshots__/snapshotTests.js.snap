@@ -112,7 +112,8 @@ exports[`<DialogContent /> renders correctly 1`] = `
 
 exports[`<DialogContentSection /> renders correctly 1`] = `
 <div
-  className="vm-3-b">
+  className="vm-3-b"
+  style={Object {}}>
   <div
     className="row"
     style={undefined} />

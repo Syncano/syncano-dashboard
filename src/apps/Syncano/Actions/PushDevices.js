@@ -10,9 +10,9 @@ export default {
           .please()
           .list()
           .ordering('desc')
-          .then((devices) => this.completed({ config, devices }))
-          .catch(this.failure);
-      });
+          .then((devices) => this.completed({ config, devices }));
+      })
+      .catch(this.failure);
   },
 
   createAPNSDevice(payload) {
@@ -66,9 +66,9 @@ export default {
           .please()
           .list()
           .ordering('desc')
-          .then((devices) => this.completed({ config, devices }))
-          .catch(this.failure);
-      });
+          .then((devices) => this.completed({ config, devices }));
+      })
+      .catch(this.failure);
   },
 
   createGCMDevice(payload) {

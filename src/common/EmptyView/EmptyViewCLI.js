@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import pluralize from 'pluralize';
 
 import Show from '../Show';
 import {
@@ -27,6 +28,7 @@ const EmptyViewCLI = ({
   handleClick,
   hostingDocsUrl,
   hostingDocsButtonLabel,
+  headerImageSrc,
   iconClassName,
   iconColor,
   mainTitle,
@@ -59,6 +61,9 @@ const EmptyViewCLI = ({
       borderRadius: 5,
       margin: '50px auto 0 auto',
       color: '#000'
+    },
+    headerImage: {
+      display: 'block'
     },
     icon: {
       fontSize: 72
@@ -114,6 +119,26 @@ const EmptyViewCLI = ({
     }
   };
 
+  const renderHeaderImage = () => {
+    if (iconClassName) {
+      return (
+        <FontIcon
+          className={iconClassName}
+          color={iconColor}
+          style={styles.icon}
+        />
+      );
+    }
+
+    return (
+      <img
+        src={headerImageSrc}
+        alt="sample hosting file icons"
+        style={styles.headerImage}
+      />
+    );
+  };
+
   const renderSnippets = (
     _.map(bashSnippets, (item) => (
       <BashSnippet
@@ -143,7 +168,7 @@ const EmptyViewCLI = ({
       );
     })
   );
-
+  const pluralizedFiles = pluralize('files', errorResponses.length);
   const renderErrorsView = (
     <div>
       <div style={styles.title}>
@@ -156,7 +181,7 @@ const EmptyViewCLI = ({
         <span>Errors</span>
       </div>
       <div style={styles.description}>
-        The following {errorResponses.length} files had problems while uploading.
+        The following {errorResponses.length} {pluralizedFiles} had problems while uploading.
       </div>
       <Table style={styles.table}>
         <TableHeader
@@ -164,14 +189,10 @@ const EmptyViewCLI = ({
           adjustForCheckbox={false}
         >
           <TableRow style={styles.tableRow}>
-            <TableHeaderColumn
-              style={{ ...styles.tableHeaderColumnLeft, ...styles.alignCenter }}
-            >
+            <TableHeaderColumn style={{ ...styles.tableHeaderColumnLeft, ...styles.alignCenter }}>
               Path
             </TableHeaderColumn>
-            <TableHeaderColumn
-              style={{ ...styles.tableHeaderColumnRight, ...styles.alignCenter }}
-            >
+            <TableHeaderColumn style={{ ...styles.tableHeaderColumnRight, ...styles.alignCenter }}>
               Error
             </TableHeaderColumn>
           </TableRow>
@@ -217,11 +238,7 @@ const EmptyViewCLI = ({
       style={styles.mainContainer}
     >
       <div style={styles.container}>
-        <FontIcon
-          className={iconClassName}
-          color={iconColor}
-          style={styles.icon}
-        />
+        {renderHeaderImage()}
         <div style={styles.title}>
           {mainTitle}
         </div>
