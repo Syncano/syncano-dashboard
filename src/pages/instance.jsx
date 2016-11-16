@@ -116,7 +116,6 @@ const Instance = React.createClass({
                   iconClassName="synicon-account-star-variant"
                   primaryText="Administrators"
                 />
-
                 <Sidebar.ListItem
                   key="globalConfig"
                   iconClassName="synicon-earth"
