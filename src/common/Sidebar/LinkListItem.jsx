@@ -34,9 +34,9 @@ const LinkListItem = React.createClass({
     return (
       <ListItem
         style={{ ...style, ...(isActive && styles.active) }}
-        onTouchTap={() => this.handleTouchTap(routeName)}
-        href={this.getMenuItemHref(routeName)}
+        href={routeName && this.getMenuItemHref(routeName)}
         iconColor={isActive ? styles.active.color : null}
+        onTouchTap={() => this.handleTouchTap(routeName)}
         {...other}
       />
     );

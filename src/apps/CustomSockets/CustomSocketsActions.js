@@ -41,7 +41,6 @@ export default CreateActions(
     }
   },
   {
-    withCheck: true,
     withDialog: true
   }
 );

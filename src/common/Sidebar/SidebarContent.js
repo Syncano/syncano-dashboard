@@ -25,11 +25,11 @@ export default React.createClass({
   },
 
   render() {
-    const { children } = this.props;
+    const { children, style } = this.props;
     const styles = this.getStyles();
 
     return (
-      <div style={styles}>
+      <div style={{ ...styles, ...style }}>
         {children}
       </div>
     );

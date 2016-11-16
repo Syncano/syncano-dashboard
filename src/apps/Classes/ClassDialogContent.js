@@ -645,7 +645,7 @@ const ClassDialogContent = React.createClass({
           >
             <div className="row align-middle vp-4-t vp-4-b">
               <div className="col-sm-11">
-                <ColorIconPicker.Preview
+                <ColorIconPicker.PreviewCircle
                   color={metadata.color}
                   icon={metadata.icon}
                 />

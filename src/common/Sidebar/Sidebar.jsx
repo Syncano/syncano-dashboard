@@ -31,7 +31,7 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const { children, style, ...other } = this.props;
+    const { children, style, contentStyle, backgroundStyle, ...other } = this.props;
 
     return (
       <div
@@ -39,8 +39,8 @@ export default Radium(React.createClass({
         style={{ ...style, ...styles.root }}
         {...other}
       >
-        <div style={styles.background} />
-        <SidebarContent>
+        <div style={{ ...styles.background, ...backgroundStyle }} />
+        <SidebarContent style={contentStyle}>
           {children}
         </SidebarContent>
       </div>
