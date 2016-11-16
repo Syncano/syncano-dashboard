@@ -279,7 +279,7 @@ const DataEndpointDialog = React.createClass({
     this.setState({ query: value });
   },
 
-  handleOrderChange(value) {
+  handleOrderChange(event, key, value) {
     this.setSelectFieldValue('order_by', value);
   },
 
