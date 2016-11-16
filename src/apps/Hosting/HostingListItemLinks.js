@@ -12,11 +12,13 @@ const HostingListItemLinks = ({ items, isDefault, params }) => {
   let isCnameFounded = false;
 
   const getLinkUrl = (domain) => {
+    const isValidCname = /\.[a-zA-Z]+$/.test(domain);
+
     if (domain === 'default' && isDefault) {
       return `https://${params.instanceName}.syncano.site`;
     }
 
-    if (!isCnameFounded) {
+    if (!isCnameFounded && isValidCname) {
       isCnameFounded = true;
       return domain;
     }
