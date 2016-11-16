@@ -131,7 +131,7 @@ const ChannelDialog = React.createClass({
               <TextField
                 ref="description"
                 name="description"
-                value={description}
+                defaultValue={description}
                 onChange={this.handleChangeDescription}
                 errorText={this.getValidationMessages('description').join(' ')}
                 fullWidth={true}
