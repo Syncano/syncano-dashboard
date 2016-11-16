@@ -17,6 +17,7 @@ export default addTestNamePrefixes({
     const endpointName = utils.addSuffix('data-endpoint');
     const endpointDesc = utils.addSuffix('desc');
     const className = utils.addSuffix('class');
+    const orderOption = dataEndpointsPage.elements.endpointOrderByChoice.selector;
 
     dataEndpointsPage
       .goToUrl(instanceName, 'data-endpoints')
@@ -32,6 +33,7 @@ export default addTestNamePrefixes({
       .click('@addClassFieldButton')
       .clickElement('@endpointConfirm')
       .fillInput('@endpointPageSize', 20)
+      .clickDropdown('@endpointOrderBy', orderOption)
       .clickElement('@endpointConfirm')
       .clickElement('@endpointCloseSummary')
       .verify.containsText('@enpointListItemClassName', className);
