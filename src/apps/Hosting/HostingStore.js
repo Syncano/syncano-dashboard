@@ -55,10 +55,12 @@ export default Reflux.createStore({
   },
 
   onCreateHostingCompleted(payload) {
+    this.refreshData();
     this.sendHostingAnalytics('add', payload);
   },
 
   onUpdateHostingCompleted(payload) {
+    this.refreshData();
     this.sendHostingAnalytics('edit', payload);
   },
 
