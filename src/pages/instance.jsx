@@ -80,16 +80,16 @@ const Instance = React.createClass({
                   autoGenerateNestedIndicator={false}
                   /*
                   nestedItems={[
-                    <Sidebar.NestedLinkListItem
-                      key="iOSDevices"
-                      routeName="apns-devices"
-                      primaryText="iOS Devices"
-                    />,
-                    <Sidebar.NestedLinkListItem
-                      key="androidDevices"
-                      routeName="gcm-devices"
-                      primaryText="Android Devices"
-                    />
+                  <Sidebar.NestedLinkListItem
+                  key="iOSDevices"
+                  routeName="apns-devices"
+                  primaryText="iOS Devices"
+                  />,
+                  <Sidebar.NestedLinkListItem
+                  key="androidDevices"
+                  routeName="gcm-devices"
+                  primaryText="Android Devices"
+                  />
                   ]}
                   */
                 />
@@ -104,16 +104,16 @@ const Instance = React.createClass({
                   autoGenerateNestedIndicator={false}
                   /*
                   nestedItems={[
-                    <Sidebar.NestedLinkListItem
-                      key="iOSMessages"
-                      routeName="apns-messages"
-                      primaryText="iOS Messages"
-                    />,
-                    <Sidebar.NestedLinkListItem
-                      key="androidMessages"
-                      routeName="gcm-messages"
-                      primaryText="Android Messages"
-                    />
+                  <Sidebar.NestedLinkListItem
+                  key="iOSMessages"
+                  routeName="apns-messages"
+                  primaryText="iOS Messages"
+                  />,
+                  <Sidebar.NestedLinkListItem
+                  key="androidMessages"
+                  routeName="gcm-messages"
+                  primaryText="Android Messages"
+                  />
                   ]}
                   */
                 />
@@ -144,13 +144,7 @@ const Instance = React.createClass({
                   iconClassName="synicon-account-star-variant"
                   primaryText="Administrators"
                 />
-                <Sidebar.LinkListItem
-                  key="API Keys"
-                  routeName="api-keys"
-                  data-e2e="left-sidebar-api-keys"
-                  iconClassName="synicon-key-variant"
-                  primaryText="API Keys"
-                />
+
                 <Sidebar.ListItem
                   key="globalConfig"
                   iconClassName="synicon-earth"
