@@ -20,15 +20,11 @@ const CreateHostingDialog = React.createClass({
   ],
 
   validatorConstraints() {
-    const { cname } = this.state;
+    const { cname, name } = this.state;
     const isCnameValid = /\.[a-zA-Z]+$/.test(cname);
     const validateObj = {
       name: {
         presence: true,
-        exclusion: {
-          within: ['default', 'Default'],
-          message: "can't be a 'default'"
-        },
         format: {
           pattern: '[a-zA-Z0-9-_]+$',
           message: 'can contain only a-z, 0-9, no spaces '
@@ -46,6 +42,12 @@ const CreateHostingDialog = React.createClass({
         inclusion: {
           message: '^CNAME is not a valid url '
         }
+      };
+    }
+
+    if (name.toLowerCase() === 'default') {
+      validateObj.name.inclusion = {
+        message: "can't be a 'default'"
       };
     }
 
