@@ -179,7 +179,7 @@ const ProfileBillingPlanCancelForm = Radium(React.createClass({
                   multiLine={true}
                   rows={textFieldRows}
                   fullWidth={true}
-                  value={this.state.additionalFeedback}
+                  defaultValue={this.state.additionalFeedback}
                   onChange={(event, value) => this.setState({ additionalFeedback: value })}
                   onFocus={() => this.setState({ textFieldRows: 5 })}
                 />
