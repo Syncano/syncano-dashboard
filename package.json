@@ -48,7 +48,7 @@
     "react-addons-transition-group": "15.4.0-rc.3",
     "react-addons-update": "15.4.0-rc.3",
     "react-copy-to-clipboard": "4.2.3",
-    "react-dom": "15.4.0-rc.3",
+    "react-dom": "15.4.0",
     "react-dropzone": "3.7.3",
     "react-fittext": "0.1.1",
     "react-helmet": "3.2.2",
