@@ -23,6 +23,7 @@ export default Reflux.createStore({
     this.routes = null;
     this.theme = null;
     this.signUpMode = null;
+    this.isInvalidRoute = null;
 
     if (this.isAuthenticated() && !this.user) {
       Actions.fetchUser();
@@ -67,6 +68,10 @@ export default Reflux.createStore({
 
   getSignUpMode() {
     return this.signUpMode;
+  },
+
+  getInvalidRoute() {
+    return this.isInvalidRoute;
   },
 
   getTheme(empty) {
@@ -160,6 +165,11 @@ export default Reflux.createStore({
 
   setInstance(instance) {
     this.instance = instance;
+    this.trigger(this);
+  },
+
+  clearInvalidRoute() {
+    this.isInvalidRoute = null;
     this.trigger(this);
   },
 
@@ -268,7 +278,8 @@ export default Reflux.createStore({
   },
 
   onHandleInvalidURL() {
-    this.getRouter().push('instances');
+    this.isInvalidRoute = true;
+    this.trigger(this);
   },
 
   isAuthenticated() {

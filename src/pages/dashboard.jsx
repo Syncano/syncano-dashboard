@@ -33,6 +33,15 @@ const Dashboard = React.createClass({
     RuntimeActions.fetch();
   },
 
+  componentDidUpdate() {
+    const { router } = this.props;
+
+    if (SessionStore.getInvalidRoute()) {
+      SessionStore.clearInvalidRoute();
+      router.push('instances');
+    }
+  },
+
   componentWillUnmount() {
     ProfileBillingPlanStore.clearData();
   },
