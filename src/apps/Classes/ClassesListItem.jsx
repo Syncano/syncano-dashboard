@@ -4,20 +4,11 @@ import { Link, withRouter } from 'react-router';
 
 import { DialogsMixin } from '../../mixins';
 
-import Actions from './ClassesActions';
-
-import { MenuItem } from 'material-ui';
 import { ColumnList, Color, DataObjectsAmount } from '../../common';
 
 const Column = ColumnList.Column;
 
 const ClassesListItem = Radium(React.createClass({
-  displayName: 'ClassesListItem',
-
-  propTypes: {
-    onIconClick: React.PropTypes.func.isRequired,
-    showDeleteDialog: React.PropTypes.func.isRequired
-  },
 
   contextTypes: {
     params: React.PropTypes.object
@@ -25,26 +16,48 @@ const ClassesListItem = Radium(React.createClass({
 
   mixins: [DialogsMixin],
 
+  getStyles() {
+    return {
+      checkIcon: {
+        fileName: {
+          width: '35vw',
+          color: '#1976d2',
+          ':hover': {
+            color: '#42a5f5'
+          }
+        },
+        fileDescription: {
+          width: '35vw'
+        }
+      }
+    };
+  },
+
   render() {
     const { params } = this.context;
-    const { item, onIconClick, showDeleteDialog } = this.props;
+    const { item, router } = this.props;
     const metadata = item.metadata;
+    const redirectPath = `/instances/${params.instanceName}/classes/${item.name}/objects/`;
+    const redirectToDataObjects = () => router.push(redirectPath);
+    const styles = this.getStyles();
 
     return (
       <ColumnList.Item
         key={item.name}
         id={item.name}
-        checked={item.checked}
       >
         <Column.CheckIcon
+          clickable={true}
+          className="col-flex-3"
+          customStyles={styles.checkIcon}
           id={item.name}
           iconClassName={metadata && metadata.icon ? metadata.icon : 'table-large'}
           background={Color.getColorByName(metadata && metadata.color ? metadata.color : 'blue')}
-          checked={item.checked}
           keyName="name"
-          handleIconClick={onIconClick}
+          handleIconClick={redirectToDataObjects}
           primaryText={item.name}
           secondaryText={item.description}
+          handleClick={redirectToDataObjects}
         />
         <Column.Desc className="col-flex-1">
           <DataObjectsAmount
@@ -63,34 +76,6 @@ const ClassesListItem = Radium(React.createClass({
             {item.group}
           </Link>
         </Column.ID>
-        <Column.Desc className="col-flex-1">
-          <div>
-            <div>group: {item.group_permissions}</div>
-            <div>other: {item.other_permissions}</div>
-          </div>
-        </Column.Desc>
-        <Column.Date date={item.created_at} />
-        <Column.Menu handleClick={() => Actions.setClickedClass(item)}>
-          <MenuItem
-            className="dropdown-item-add-object"
-            onTouchTap={() => this.props.router.push({
-              pathname: `${this.props.location.pathname}/${item.name}/objects/`,
-              state: { showDialog: true }
-            })}
-            primaryText="Add object"
-          />
-          <MenuItem
-            className="dropdown-item-edit-class"
-            onTouchTap={() => Actions.showDialog({ classData: item })}
-            primaryText="Edit"
-          />
-          <MenuItem
-            className="dropdown-item-delete-class"
-            disabled={item.protectedFromDelete}
-            onTouchTap={showDeleteDialog}
-            primaryText="Delete"
-          />
-        </Column.Menu>
       </ColumnList.Item>
     );
   }
