@@ -19,23 +19,37 @@ const CreateHostingDialog = React.createClass({
     FormMixin
   ],
 
-  validatorConstraints: {
-    name: {
-      presence: true,
-      exclusion: {
-        within: ['default', 'Default'],
-        message: "can't be a 'default'"
+  validatorConstraints() {
+    const { cname } = this.state;
+    const isCnameValid = /\.[a-zA-Z]+$/.test(cname);
+    const validateObj = {
+      name: {
+        presence: true,
+        exclusion: {
+          within: ['default', 'Default'],
+          message: "can't be a 'default'"
+        },
+        format: {
+          pattern: '[a-zA-Z0-9-_]+$',
+          message: 'can contain only a-z, 0-9, no spaces '
+        }
       },
-      format: {
-        pattern: '[a-zA-Z0-9-_]+$',
-        message: 'can contain only a-z, 0-9, no spaces '
+      description: {
+        length: {
+          maximum: 256
+        }
       }
-    },
-    description: {
-      length: {
-        maximum: 256
-      }
+    };
+
+    if (!isCnameValid) {
+      validateObj.cname = {
+        inclusion: {
+          message: '^CNAME is not a valid url '
+        }
+      };
     }
+
+    return validateObj;
   },
 
   getHostingParams() {
@@ -236,6 +250,7 @@ const CreateHostingDialog = React.createClass({
             value={cname}
             name="CNAME"
             onChange={this.handleCNAMEChange}
+            errorText={this.getValidationMessages('cname').join(' ')}
             floatingLabelText="CNAME"
             data-e2e="hosting-dialog-cname-input"
           />

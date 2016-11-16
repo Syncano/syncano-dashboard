@@ -3,31 +3,33 @@ import { withRouter } from 'react-router';
 import _ from 'lodash';
 import { LinkWithIcon } from '../../common';
 
-const HostingListItemLinks = ({ hostingLabel, items, isDefault, params }) => {
+const HostingListItemLinks = ({ items, isDefault, params }) => {
   const styles = {
     item: {
       padding: '4px 0'
     }
   };
+  let isCnameFounded = false;
 
   const getLinkUrl = (domain) => {
     if (domain === 'default' && isDefault) {
       return `https://${params.instanceName}.syncano.site`;
     }
 
-    if (domain === hostingLabel) {
-      return `https://${domain}--${params.instanceName}.syncano.site`;
+    if (!isCnameFounded) {
+      isCnameFounded = true;
+      return domain;
     }
 
-    return domain;
+    return `https://${domain}--${params.instanceName}.syncano.site`;
   };
 
   return (
     <div>
-      {_.map(items, (item) => (
+      {_.map(items, (item, index) => (
         <div
           style={styles.item}
-          key={`domain-${item}`}
+          key={`domain-${item}-${index}`}
         >
           <LinkWithIcon url={getLinkUrl(item)} />
         </div>
