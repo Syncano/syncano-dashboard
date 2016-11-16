@@ -8,6 +8,7 @@ const SelectFieldWrapper = ({ name, disabled, itemStyles = {}, options, type = '
     <SelectField
       name={name}
       className={`${name}-dropdown`}
+      data-e2e={`${name}-dropdown`}
       fullWidth={true}
       floatingLabelText={_.capitalize(name)}
       {...other}
