@@ -11,8 +11,7 @@ import ScriptsActions from '../Scripts/ScriptsActions';
 import SchedulesList from './SchedulesList';
 import ScheduleDialog from './ScheduleDialog';
 import { RaisedButton } from 'material-ui';
-import { Container } from '../../common/';
-import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
+import { Container, InnerToolbar } from '../../common/';
 
 export default React.createClass({
   displayName: 'ScheduleSockets',
@@ -35,7 +34,7 @@ export default React.createClass({
         <Helmet title="Schedules" />
         <ScheduleDialog />
 
-        <SocketsInnerToolbar>
+        <InnerToolbar>
           <RaisedButton
             data-e2e="schedule-add-button"
             label="Add"
@@ -43,7 +42,7 @@ export default React.createClass({
             style={{ marginRight: 0 }}
             onTouchTap={Actions.showDialog}
           />
-        </SocketsInnerToolbar>
+        </InnerToolbar>
 
         <Container>
           <SchedulesList

@@ -11,10 +11,9 @@ import Store from './CustomSocketsStore';
 
 // Components
 import { RaisedButton } from 'material-ui';
-import { Container } from '../../common/';
+import { Container, InnerToolbar } from '../../common/';
 
 // Local components
-import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 import CustomSocketsList from './CustomSocketsList';
 import CustomSocketsDialog from '../CustomSocketsRegistry/CustomSocketsRegistryDialog';
 
@@ -36,7 +35,7 @@ const CustomSockets = React.createClass({
       <div>
         <Helmet title="Custom Sockets" />
         <CustomSocketsDialog />
-        <SocketsInnerToolbar>
+        <InnerToolbar>
           <RaisedButton
             data-e2e="custom-sockets-toolbar-add-button"
             style={{ marginRight: 0 }}
@@ -44,7 +43,7 @@ const CustomSockets = React.createClass({
             primary={true}
             onTouchTap={Actions.showDialog}
           />
-        </SocketsInnerToolbar>
+        </InnerToolbar>
         <Container>
           <CustomSocketsList
             isLoading={isLoading}

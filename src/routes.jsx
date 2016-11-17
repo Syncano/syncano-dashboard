@@ -151,6 +151,12 @@ export default (
       />
 
       <Route
+        name="socket-details"
+        component={Sockets.Details}
+        path="instances/:instanceName/sockets/:socketId"
+      />
+
+      <Route
         name="instance"
         onEnter={RoutesUtil.checkInstanceActiveSubscription}
         component={InstancePage}
@@ -160,8 +166,8 @@ export default (
         {/* Sockets */}
         <Route
           name="sockets"
-          path="sockets"
           component={Sockets}
+          path="sockets"
         />
 
         {/* Hosting */}

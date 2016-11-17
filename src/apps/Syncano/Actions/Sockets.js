@@ -1,59 +1,83 @@
+/* eslint-disable no-undef, consistent-return  */
+import Syncano from 'syncano';
 import _ from 'lodash';
 
 export default {
-  list(params = {}) {
-    _.defaults(params, { ordering: 'desc' });
+  fetchInfo(id) {
+    const accountKey = SYNCANO_CUSTOM_SOCKETS_REGISTRY_ACCOUNT_KEY;
+    let socketObj = null;
+    const connection = Syncano({
+      accountKey,
+      defaults: {
+        instanceName: 'syncano_socket_registry',
+        className: 'registry'
+      }
+    });
 
-    const { baseUrl, accountKey } = this.NewLibConnection;
-    const instanceName = this.NewLibConnection.getInstanceName();
-    const query = _.map(params, (value, key) => `${key}=${value}`).join('&');
-    const keys = [
-      'customSockets',
-      'data',
-      'scriptEndpoints',
-      'triggers',
-      'schedules',
-      'channels',
-      'hosting',
-      'gcmPushNotifications',
-      'apnsPushNotifications',
-      'gcmDevices',
-      'apnsDevices'
-    ];
-    const requests = [
-      { method: 'GET', path: `/v1.1/instances/${instanceName}/sockets/?${query}` },
-      { method: 'GET', path: `/v1.1/instances/${instanceName}/endpoints/data/?${query}` },
-      { method: 'GET', path: `/v1.1/instances/${instanceName}/endpoints/scripts/?${query}` },
-      { method: 'GET', path: `/v1.1/instances/${instanceName}/triggers/?${query}` },
-      { method: 'GET', path: `/v1.1/instances/${instanceName}/schedules/?${query}` },
-      { method: 'GET', path: `/v1.1/instances/${instanceName}/channels/?${query}` },
-      { method: 'GET', path: `/v1.1/instances/${instanceName}/hosting/?${query}` },
-      { method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/gcm/config/?${query}` },
-      { method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/apns/config/?${query}` },
-      { method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/gcm/devices/?${query}` },
-      { method: 'GET', path: `/v1.1/instances/${instanceName}/push_notifications/apns/devices/?${query}` }
-    ];
+    connection
+      .DataObject
+      .please()
+      .list()
+      .then((sockets) => {
+        const socket = _.find(sockets, ['id', Number(id)]);
 
-    this.Promise
-      .post(`${baseUrl}/v1.1/instances/${instanceName}/batch/?api_key=${accountKey}`, { requests, serialize: false })
-      .then((responses) => (
-        _.reduce(responses.data, (result, response, index) => {
-          const key = keys[index];
+        if (socket) {
+          return this.Promise
+            .get(socket.url)
+            .then((socketDataObject) => {
+              const { url } = socket;
+              const licenseFileUrl = `${url.slice(0, _.lastIndexOf(url, '/'))}/LICENSE`;
 
-          if (response.code === 200) {
-            if (key === 'gcmPushNotifications' || key === 'apnsPushNotifications') {
-              result[key] = response.content;
-            } else {
-              result[key] = response.content.objects;
-            }
-          } else {
-            result[key] = [];
-          }
+              socketDataObject.license = 'N/A';
+              socketDataObject.ymlUrl = url;
+              socketObj = socketDataObject;
 
-          return result;
-        }, {})
-      ))
+              this.Promise
+                .get(licenseFileUrl)
+                .then((licenseFile) => {
+                  socketDataObject.license = licenseFile.data.split(' ')[0];
+                  this.completed(socketObj);
+                })
+                .catch(() => this.completed(socketObj));
+            });
+        }
+      })
+      .catch(this.failure);
+  },
+
+  list() {
+    const accountKey = SYNCANO_CUSTOM_SOCKETS_REGISTRY_ACCOUNT_KEY;
+    const connection = Syncano({
+      accountKey,
+      defaults: {
+        instanceName: 'syncano_socket_registry',
+        className: 'registry'
+      }
+    });
+
+    connection
+      .DataObject
+      .please()
+      .list()
       .then(this.completed)
+      .catch(this.failure);
+  },
+
+  install(payload, name, install_url) {
+    this.NewLibConnection
+      .CustomSocket
+      .please()
+      .installFromUrl(payload, name, install_url)
+      .then((createdCustomSocketRegistry) => this.completed(createdCustomSocketRegistry, payload.instanceName))
+      .catch(this.failure);
+  },
+
+  get(name, instanceName, action) {
+    this.NewLibConnection
+      .CustomSocket
+      .please()
+      .get({ instanceName, name })
+      .then((createdCustomSocketRegistry) => this.completed(createdCustomSocketRegistry, instanceName, action))
       .catch(this.failure);
   }
 };

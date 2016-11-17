@@ -9,10 +9,9 @@ import Store from './TriggersStore';
 import ScriptsActions from '../Scripts/ScriptsActions';
 
 import { RaisedButton } from 'material-ui';
-import { Container } from '../../common/';
+import { Container, InnerToolbar } from '../../common/';
 import TriggersList from './TriggersList';
 import TriggerDialog from './TriggerDialog';
-import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 
 export default React.createClass({
   displayName: 'TriggerSockets',
@@ -35,7 +34,7 @@ export default React.createClass({
         <Helmet title="Triggers" />
         <TriggerDialog />
 
-        <SocketsInnerToolbar>
+        <InnerToolbar>
           <RaisedButton
             data-e2e="trigger-add-button"
             label="Add"
@@ -43,7 +42,7 @@ export default React.createClass({
             style={{ marginRight: 0 }}
             onTouchTap={Actions.showDialog}
           />
-        </SocketsInnerToolbar>
+        </InnerToolbar>
 
         <Container>
           <TriggersList

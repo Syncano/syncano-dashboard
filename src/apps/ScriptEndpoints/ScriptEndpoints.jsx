@@ -12,10 +12,9 @@ import Store from './ScriptEndpointsStore';
 
 // Components
 import { RaisedButton } from 'material-ui';
-import { Container } from '../../common/';
+import { Container, InnerToolbar } from '../../common/';
 
 // Local components
-import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 import ScriptEndpointsList from './ScriptEndpointsList';
 import ScriptEndpointDialog from './ScriptEndpointDialog';
 
@@ -41,7 +40,7 @@ export default React.createClass({
         <Helmet title="Script Endpoints" />
         <ScriptEndpointDialog />
 
-        <SocketsInnerToolbar>
+        <InnerToolbar>
           <RaisedButton
             data-e2e="script-socket-toolbar-add-button"
             label="Add"
@@ -49,7 +48,7 @@ export default React.createClass({
             primary={true}
             onTouchTap={Actions.showDialog}
           />
-        </SocketsInnerToolbar>
+        </InnerToolbar>
 
         <Container>
           <ScriptEndpointsList

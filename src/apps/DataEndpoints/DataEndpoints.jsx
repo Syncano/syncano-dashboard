@@ -11,10 +11,9 @@ import Store from './DataEndpointsStore';
 
 // Components
 import { RaisedButton } from 'material-ui';
-import { Container } from '../../common/';
+import { Container, InnerToolbar } from '../../common/';
 
 // Local components
-import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 import DataEndpointsList from './DataEndpointsList';
 import DataEndpointDialog from './DataEndpointDialog';
 
@@ -39,7 +38,7 @@ export default React.createClass({
         <Helmet title="Data Endpoints" />
         <DataEndpointDialog />
 
-        <SocketsInnerToolbar>
+        <InnerToolbar>
           <RaisedButton
             data-e2e="data-endpoint-sockets-toolbar-add-button"
             style={{ marginRight: 0 }}
@@ -47,7 +46,7 @@ export default React.createClass({
             primary={true}
             onTouchTap={Actions.showDialog}
           />
-        </SocketsInnerToolbar>
+        </InnerToolbar>
 
         <Container>
           <DataEndpointsList

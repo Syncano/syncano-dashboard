@@ -7,7 +7,6 @@ import { CheckListStoreMixin, StoreHelpersMixin, WaitForStoreMixin, StoreLoading
 
 import Actions from './ClassesActions';
 import SessionActions from '../Session/SessionActions';
-import SocketsActions from '../Sockets/SocketsActions';
 import DataEndpointsActions from '../DataEndpoints/DataEndpointsActions';
 
 export default Reflux.createStore({
@@ -44,7 +43,6 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
-    this.listenTo(SocketsActions.fetchSockets.completed, Actions.fetchClasses);
     this.listenTo(DataEndpointsActions.createClass.completed, Actions.fetchClasses);
     this.setLoadingStates();
   },

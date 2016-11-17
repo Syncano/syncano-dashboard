@@ -11,10 +11,9 @@ import Store from './ChannelsStore';
 
 // Components
 import { RaisedButton } from 'material-ui';
-import { Container } from '../../common/';
+import { Container, InnerToolbar } from '../../common/';
 
 // Local components
-import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 import ChannelsList from './ChannelsList';
 import ChannelDialog from './ChannelDialog';
 import SendChannelMessageDialog from './SendChannelMessageDialog';
@@ -41,14 +40,14 @@ export default React.createClass({
         <ChannelDialog />
         <SendChannelMessageDialog />
 
-        <SocketsInnerToolbar>
+        <InnerToolbar>
           <RaisedButton
             label="Add"
             primary={true}
             style={{ marginRight: 0 }}
             onTouchTap={Actions.showDialog}
           />
-        </SocketsInnerToolbar>
+        </InnerToolbar>
 
         <Container>
           <ChannelsList
