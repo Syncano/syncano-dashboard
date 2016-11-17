@@ -35,7 +35,7 @@ import BackupAndRestore from './apps/BackupAndRestore';
 import ChannelHistory from './apps/ChannelHistory';
 import Channels from './apps/Channels';
 import Classes from './apps/Classes';
-import Sockets from './apps/CustomSockets';
+import CustomSockets from './apps/CustomSockets';
 import SocketsRegistry from './apps/SocketsRegistry';
 import ScriptEndpoints from './apps/ScriptEndpoints';
 import Script from './apps/Script';
@@ -43,7 +43,7 @@ import Scripts from './apps/Scripts';
 import DataObjects from './apps/DataObjects/DataObjects';
 import DataEndpoints from './apps/DataEndpoints';
 import Users from './apps/Users/Users';
-import SocketsOld from './apps/Sockets';
+import Sockets from './apps/Sockets';
 import Snippets from './apps/Snippets';
 import Template from './apps/Template';
 import Templates from './apps/Templates';
@@ -159,9 +159,9 @@ export default (
 
         {/* Sockets */}
         <Route
-          name="sockets-old"
-          path="sockets-old"
-          component={SocketsOld}
+          name="sockets"
+          path="sockets"
+          component={Sockets}
         />
 
         {/* Hosting */}
@@ -213,15 +213,15 @@ export default (
 
         {/* Custom Sockets */}
         <Route
-          name="sockets"
-          path="sockets"
+          name="custom-sockets"
+          path="custom-sockets"
         >
           <Route
-            name="socket-detail"
+            name="custom-socket-detail"
             path=":socketName"
-            component={Sockets.Endpoints}
+            component={CustomSockets.Endpoints}
           />
-          <IndexRoute component={Sockets} />
+          <IndexRoute component={CustomSockets} />
         </Route>
 
         {/* General */}
