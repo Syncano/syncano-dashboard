@@ -4,17 +4,31 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="74px" height="76px" viewBox="0 0 74 76" enable-background="new 0 0 74 76" xml:space="preserve">
 <g>
-	<defs>
-		<rect id="SVGID_1_" x="-1" y="-1" width="74" height="76"/>
-	</defs>
-	<clipPath id="SVGID_2_">
-		<use xlink:href="#SVGID_1_"  overflow="visible"/>
-	</clipPath>
-	
-		<polygon clip-path="url(#SVGID_2_)" fill="none" stroke="#42A5F5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
-		36.534,3.056 70.347,20.401 70.347,55.091 36.534,72.437 2.722,55.091 2.722,20.401 	"/>
-	<g clip-path="url(#SVGID_2_)">
-		<text transform="matrix(1 0 0 1 21.4497 49.6104)" fill="#42A5F5" font-family="'Avenir-Medium'" font-size="36">C</text>
+	<g>
+		<g>
+			<defs>
+				<rect id="SVGID_1_" x="-1" y="-1" width="74" height="76"/>
+			</defs>
+			<clipPath id="SVGID_2_">
+				<use xlink:href="#SVGID_1_"  overflow="visible"/>
+			</clipPath>
+			
+				<polygon clip-path="url(#SVGID_2_)" fill="none" stroke="#42A5F5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+				36.534,3.056 70.348,20.401 70.348,55.091 36.534,72.438 2.722,55.091 2.722,20.401 			"/>
+		</g>
+	</g>
+	<g>
+		<g>
+			<defs>
+				<rect id="SVGID_3_" y="1" width="74" height="76"/>
+			</defs>
+			<clipPath id="SVGID_4_">
+				<use xlink:href="#SVGID_3_"  overflow="visible"/>
+			</clipPath>
+			<g clip-path="url(#SVGID_4_)">
+				<text transform="matrix(1 0 0 1 23.4497 52.6104)" fill="#42A5F5" font-family="'ArimoForPowerline'" font-size="40">S</text>
+			</g>
+		</g>
 	</g>
 </g>
 </svg>
