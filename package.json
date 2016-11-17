@@ -1,6 +1,6 @@
 {
   "name": "syncano-dashboard",
-  "version": "4.1.20",
+  "version": "4.1.23",
   "license": "MIT",
   "description": "Syncano Dashboard",
   "main": "js/app.jsx",
@@ -165,6 +165,6 @@
     "deployment-branch": "gulp deployment-branch",
     "git-config": "git config --global user.email \"ci@syncano.com\" && git config --global user.name \"CI\"",
     "predeployment-master": "npm version patch -m \"Release v%s [ci skip]\"",
-    "postversion": "git push origin master && git push origin --tags"
+    "postversion": "git push origin master --follow-tags"
   }
 }
