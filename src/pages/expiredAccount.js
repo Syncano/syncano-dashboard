@@ -6,6 +6,7 @@ import AlertPageContent from '../common/AlertPageContent';
 
 class ExpiredAccount extends Component {
   componentDidMount() {
+    console.log('SessionStore.clearInvalidRouteMode();');
     SessionStore.clearInvalidRouteMode();
   }
 

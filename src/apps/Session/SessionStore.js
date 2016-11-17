@@ -199,6 +199,7 @@ export default Reflux.createStore({
   },
 
   clearInvalidRouteMode() {
+    console.log('clearInvalidRouteMode');
     this.invalidRouteMode = null;
     this.trigger(this);
   },
