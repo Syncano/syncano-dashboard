@@ -85,7 +85,7 @@
     "babel-preset-react-hmre": "1.1.1",
     "babel-preset-stage-0": "6.16.0",
     "compass-mixins": "0.12.10",
-    "css-loader": "0.25.0",
+    "css-loader": "0.26.0",
     "del": "1.2.1",
     "eslint": "3.10.2",
     "eslint-config-airbnb": "13.0.0",
