@@ -5,13 +5,13 @@ import { Element as ScrollHook } from 'react-scroll';
 import { FontIcon } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
 import { MethodLabel, Show } from '../../../common';
-import MethodDescription from './CustomSocketMethodDescription';
-import ParamsList from './CustomSocketParametersList';
-import DependenciesList from './CustomSocketDependenciesList';
-import CodeExample from './CustomSocketCodeExample';
-import AuthorInfo from './CustomSocketAuthorInfo';
+import MethodDescription from './SocketMethodDescription';
+import ParamsList from './SocketParametersList';
+import DependenciesList from './SocketDependenciesList';
+import CodeExample from './SocketCodeExample';
+import AuthorInfo from './SocketAuthorInfo';
 
-const CustomSocketsRegistryContentSection = ({
+const SocketsRegistryContentSection = ({
   author,
   socketName,
   socketDescription,
@@ -206,4 +206,4 @@ const CustomSocketsRegistryContentSection = ({
   );
 };
 
-export default CustomSocketsRegistryContentSection;
+export default SocketsRegistryContentSection;

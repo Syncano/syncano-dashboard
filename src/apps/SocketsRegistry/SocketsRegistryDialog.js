@@ -5,18 +5,18 @@ import { withRouter } from 'react-router';
 
 import { DialogMixin, DialogsMixin, FormMixin } from '../../mixins';
 
-import DialogStore from './CustomSocketsRegistryDialogStore';
-import Actions from './CustomSocketsRegistryActions';
-import CustomSocketsActions from '../CustomSockets/CustomSocketsActions';
+import DialogStore from './SocketsRegistryDialogStore';
+import Actions from './SocketsRegistryActions';
+import SocketsActions from '../Sockets/SocketsActions';
 
 import { FontIcon, FlatButton, TextField, RaisedButton } from 'material-ui';
 import { AutoCompleteWrapper, ColorIconPicker, Dialog, Loading, Stepper } from '../../common/';
 import { colors as Colors } from 'material-ui/styles';
 
-import CustomSocketsRegistryDialogSidebar from './CustomSocketsRegistryDialogSidebar';
-import CustomSocketsRegistrySummary from './CustomSocketsRegistrySummary';
+import SocketsRegistryDialogSidebar from './SocketsRegistryDialogSidebar';
+import SocketsRegistrySummary from './SocketsRegistrySummary';
 
-const CustomSocketsRegistryDialog = React.createClass({
+const SocketsRegistryDialog = React.createClass({
   mixins: [
     Reflux.connect(DialogStore),
     DialogMixin,
@@ -53,14 +53,14 @@ const CustomSocketsRegistryDialog = React.createClass({
     const { url } = this.props;
     const params = { instanceName, description, twitterApiKey };
 
-    this.handleFinish(() => Actions.installCustomSocketRegistry(params, name, url));
+    this.handleFinish(() => Actions.installSocketRegistry(params, name, url));
   },
 
   handleEditSubmit() {
     const { description, instanceName, initialName, name, metadata, twitterApiKey } = this.state;
     const params = { description, name, instanceName, metadata, twitterApiKey };
 
-    this.handleFinish(() => CustomSocketsActions.updateCustomSocket(initialName, params));
+    this.handleFinish(() => SocketsActions.updateSocket(initialName, params));
   },
 
   handleFinish(finishAction) {
@@ -105,8 +105,8 @@ const CustomSocketsRegistryDialog = React.createClass({
     this.setState({ metadata: _.merge({}, metadata, { icon }) });
   },
 
-  handleDeleteCustomSocket() {
-    this.refs.removeCustomSocketsDialog.show();
+  handleDeleteSocket() {
+    this.refs.removeSocketsDialog.show();
   },
 
   handleCloseSummary() {
@@ -122,7 +122,7 @@ const CustomSocketsRegistryDialog = React.createClass({
   redirectToCreatedSocket() {
     const { router } = this.props;
     const { instanceName, name } = this.state;
-    const redirectUrl = `/instances/${instanceName}/custom-sockets/${name}/`;
+    const redirectUrl = `/instances/${instanceName}/sockets/${name}/`;
 
     router.push(redirectUrl);
   },
@@ -134,10 +134,10 @@ const CustomSocketsRegistryDialog = React.createClass({
     return [{
       dialog: Dialog.Delete,
       params: {
-        key: 'removeCustomSocketsDialog',
-        ref: 'removeCustomSocketsDialog',
+        key: 'removeSocketsDialog',
+        ref: 'removeSocketsDialog',
         title: `Delete ${name}`,
-        handleConfirm: CustomSocketsActions.removeCustomSockets,
+        handleConfirm: SocketsActions.removeSockets,
         items: [this.state],
         withConfirm: true,
         groupName: name,
@@ -148,7 +148,7 @@ const CustomSocketsRegistryDialog = React.createClass({
 
   renderStepContent(stepIndex) {
     const {
-      createdCustomSocketRegistry,
+      createdSocketRegistry,
       description,
       instanceName,
       isLoading,
@@ -172,7 +172,7 @@ const CustomSocketsRegistryDialog = React.createClass({
               disabled={isEditMode}
               errorText={this.getValidationMessages('instanceName').join(' ')}
               showDividers={false}
-              data-e2e="custom-socket-instance-name"
+              data-e2e="socket-instance-name"
             />
             <TextField
               name="name"
@@ -180,8 +180,8 @@ const CustomSocketsRegistryDialog = React.createClass({
               value={name}
               onChange={this.handleNameChange}
               errorText={this.getValidationMessages('name').join(' ')}
-              floatingLabelText="Custom Socket name"
-              data-e2e="custom-socket-name"
+              floatingLabelText=" Socket name"
+              data-e2e="socket-name"
             />
             <TextField
               name="description"
@@ -190,7 +190,7 @@ const CustomSocketsRegistryDialog = React.createClass({
               onChange={this.handleDecsriptionChange}
               errorText={this.getValidationMessages('description').join(' ')}
               floatingLabelText="Description (optional)"
-              data-e2e="custom-socket-description"
+              data-e2e="socket-description"
             />
           </Dialog.ContentSection>
           <Dialog.ContentSection title="Configuration" >
@@ -201,16 +201,16 @@ const CustomSocketsRegistryDialog = React.createClass({
               onChange={this.handleTwitterApiKeyChange}
               errorText={this.getValidationMessages('twitterApiKey').join(' ')}
               floatingLabelText="Twitter API Key"
-              data-e2e="custom-socket-twitter-api-key"
+              data-e2e="socket-twitter-api-key"
             />
           </Dialog.ContentSection>
         </div>
       ),
       step1: (
-        <Loading show={isLoading || !createdCustomSocketRegistry}>
-          <CustomSocketsRegistrySummary
+        <Loading show={isLoading || !createdSocketRegistry}>
+          <SocketsRegistrySummary
             hasEditMode={this.hasEditMode()}
-            item={createdCustomSocketRegistry}
+            item={createdSocketRegistry}
           />
         </Loading>
       )
@@ -220,8 +220,8 @@ const CustomSocketsRegistryDialog = React.createClass({
   },
 
   renderStepTitle(stepIndex) {
-    const { createdCustomSocketRegistry, initialName, name } = this.state;
-    const metadata = createdCustomSocketRegistry && createdCustomSocketRegistry.metadata;
+    const { createdSocketRegistry, initialName, name } = this.state;
+    const metadata = createdSocketRegistry && createdSocketRegistry.metadata;
     const metaIcon = metadata && metadata.icon ? metadata.icon : 'socket-custom-socket';
     const title = this.hasEditMode() ? 'Edit' : 'Install';
     const stepTitleMap = {
@@ -267,7 +267,7 @@ const CustomSocketsRegistryDialog = React.createClass({
             style={{ float: 'left' }}
             labelStyle={{ color: Colors.red400 }}
             label={`DELETE ${name}`}
-            onTouchTap={this.handleDeleteCustomSocket}
+            onTouchTap={this.handleDeleteSocket}
           />
         }
         <Dialog.StandardButtons
@@ -287,7 +287,7 @@ const CustomSocketsRegistryDialog = React.createClass({
     const isEditMode = this.hasEditMode();
     const sidebarContentMap = {
       step0: ([
-        <CustomSocketsRegistryDialogSidebar
+        <SocketsRegistryDialogSidebar
           metadata={metadata}
           handleColorChange={this.handleColorChange}
           handleIconChange={this.handleIconChange}
@@ -316,6 +316,7 @@ const CustomSocketsRegistryDialog = React.createClass({
 
   renderDialogTitle() {
     const { initialName, stepIndex, isFinished } = this.state;
+
     const dataE2e = isFinished ? 'sockets-registry-dialog-summary-title' : 'sockets-registry-dialog-title';
     const title = this.hasEditMode() ? 'Edit' : 'Install';
 
@@ -355,4 +356,4 @@ const CustomSocketsRegistryDialog = React.createClass({
   }
 });
 
-export default withRouter(CustomSocketsRegistryDialog);
+export default withRouter(SocketsRegistryDialog);

@@ -6,9 +6,9 @@ import { ColumnList, Color } from '../../common/';
 
 const Column = ColumnList.Column;
 
-const CustomSocketsRegistryListItem = ({ item, onIconClick, router }) => {
+const SocketsRegistryListItem = ({ item, onIconClick, router }) => {
   const handleRedirectToDetailsView = () => {
-    router.push(`/custom-sockets-registry/${item.id}/details/`);
+    router.push(`/sockets-registry/${item.id}/details/`);
   };
 
   const { metadata } = item;
@@ -54,8 +54,8 @@ const CustomSocketsRegistryListItem = ({ item, onIconClick, router }) => {
   );
 };
 
-CustomSocketsRegistryListItem.propTypes = {
+SocketsRegistryListItem.propTypes = {
   onIconClick: React.PropTypes.func.isRequired
 };
 
-export default withRouter(CustomSocketsRegistryListItem);
+export default withRouter(SocketsRegistryListItem);

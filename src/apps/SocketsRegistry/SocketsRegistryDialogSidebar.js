@@ -1,14 +1,14 @@
 import React from 'react';
 import { Dialog } from '../../common/';
 
-const CustomSocketsRegistryDialogSidebar = () => (
+const SocketsRegistryDialogSidebar = () => (
   <Dialog.SidebarBox>
     <Dialog.SidebarSection title="Instance name">
-      An Instance where your Custom Socket will be installed.
+      An Instance where your  Socket will be installed.
       You can choose New Instance option to create a new one during installation.
     </Dialog.SidebarSection>
-    <Dialog.SidebarSection title="Custom Socket name">
-      Tou can change the default name of the custom socket
+    <Dialog.SidebarSection title="Socket name">
+      Tou can change the default name of the socket
     </Dialog.SidebarSection>
     <Dialog.SidebarSection title="Twitter API Key">
       Your application consumer key. Can be found at&nbsp;
@@ -19,4 +19,4 @@ const CustomSocketsRegistryDialogSidebar = () => (
   </Dialog.SidebarBox>
 );
 
-export default CustomSocketsRegistryDialogSidebar;
+export default SocketsRegistryDialogSidebar;

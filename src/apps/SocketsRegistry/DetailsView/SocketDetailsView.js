@@ -3,15 +3,15 @@ import { withRouter } from 'react-router';
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import Store from '../CustomSocketsRegistryStore';
-import Actions from '../CustomSocketsRegistryActions';
+import Store from '../SocketsRegistryStore';
+import Actions from '../SocketsRegistryActions';
 
 import { Loading, RegistryEmptyView } from '../../../common';
-import InfoBar from './CustomSocketDetailInfoBar';
-import ContentSection from './CustomSocketDetailContentSection';
-import CustomSocketInstallDialog from '../CustomSocketsRegistryDialog';
+import InfoBar from './SocketDetailInfoBar';
+import ContentSection from './SocketDetailContentSection';
+import SocketInstallDialog from '../SocketsRegistryDialog';
 
-const CustomSocketsRegistryDetailsView = React.createClass({
+const SocketsRegistryDetailsView = React.createClass({
   mixins: [Reflux.connect(Store)],
 
   getInitialState() {
@@ -21,9 +21,9 @@ const CustomSocketsRegistryDetailsView = React.createClass({
   },
 
   componentDidMount() {
-    const { customSocketId } = this.props.params;
+    const { socketId } = this.props.params;
 
-    Actions.fetchCustomSocketsInfo(customSocketId);
+    Actions.fetchSocketsInfo(socketId);
   },
 
   getStyles() {
@@ -35,9 +35,9 @@ const CustomSocketsRegistryDetailsView = React.createClass({
   },
 
   getAuthorInfo() {
-    const { customSocketId } = this.props.params;
+    const { socketId } = this.props.params;
     const { currentSocket } = this.state;
-    const currentSocketObject = Store.getCustomSocketById(customSocketId);
+    const currentSocketObject = Store.getSocketById(socketId);
 
     if (currentSocketObject) {
       const githubSplitedLink = currentSocketObject.url.split('/');
@@ -133,7 +133,7 @@ const CustomSocketsRegistryDetailsView = React.createClass({
     const { currentSocket, currentLanguage } = this.state;
     const styles = this.getStyles();
     const endpoints = this.getEndpointsObjects();
-    const customSocketImageDir = '/img/custom-socket-assemble.svg';
+    const socketImageDir = '/img/socket-assemble.svg';
 
     if (!currentSocket) {
       return (
@@ -141,15 +141,15 @@ const CustomSocketsRegistryDetailsView = React.createClass({
           title="This Socket is unavailable"
           description={`It looks like the Socket is not valid. Please use another Socket, or if this is your own Socket,
             try checking if YAML file is correct.`}
-          src={customSocketImageDir}
-          altText="No Custom Socket"
+          src={socketImageDir}
+          altText="No  Socket"
         />
       );
     }
 
     return (
       <Loading show={isLoading}>
-        <CustomSocketInstallDialog
+        <SocketInstallDialog
           shouldRedirect={true}
           url={currentSocket && currentSocket.ymlUrl}
         />
@@ -173,4 +173,4 @@ const CustomSocketsRegistryDetailsView = React.createClass({
   }
 });
 
-export default withRouter(CustomSocketsRegistryDetailsView);
+export default withRouter(SocketsRegistryDetailsView);

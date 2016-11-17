@@ -4,7 +4,7 @@ import YAML from 'js-yaml';
 
 import { CheckListStoreMixin, StoreLoadingMixin } from '../../mixins';
 
-import Actions from './CustomSocketsRegistryActions';
+import Actions from './SocketsRegistryActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -30,11 +30,11 @@ export default Reflux.createStore({
     this.setLoadingStates();
   },
 
-  getCustomSocketsRegistry(empty) {
+  getSocketsRegistry(empty) {
     return this.data.items || empty || null;
   },
 
-  getCustomSocketById(id) {
+  getSocketById(id) {
     const { items } = this.data;
 
     return _.find(items, ['id', Number(id)]);
@@ -57,14 +57,14 @@ export default Reflux.createStore({
 
   refreshData() {
     const { currentSocketId } = this.data;
-    const currentSocket = this.getCustomSocketById(currentSocketId);
+    const currentSocket = this.getSocketById(currentSocketId);
 
     this.data.currentSocket = currentSocket;
 
-    Actions.fetchCustomSocketsInfo(currentSocket.url);
+    Actions.fetchSocketsInfo(currentSocket.url);
   },
 
-  onFetchCustomSocketsInfoCompleted({ data, license, ymlUrl }) {
+  onFetchSocketsInfoCompleted({ data, license, ymlUrl }) {
     try {
       this.data.currentSocket = YAML.safeLoad(data);
       this.data.currentSocket.license = license;
@@ -75,7 +75,7 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchCustomSocketsRegistryCompleted(items) {
+  onFetchSocketsRegistryCompleted(items) {
     this.data.items = items;
     this.trigger(this.data);
   }

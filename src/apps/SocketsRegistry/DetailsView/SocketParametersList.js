@@ -1,43 +1,50 @@
 import React from 'react';
 import _ from 'lodash';
+
 import { colors as Colors } from 'material-ui/styles';
 
-const CustomSocketDependenciesList = ({ dependencies }) => {
+const SocketParametersList = ({ parameters }) => {
   const styles = {
     name: {
       fontWeight: 600
     },
-    dependenciesHeader: {
+    paramtetersHeader: {
       backgroundColor: Colors.indigo500,
       color: Colors.grey100,
-      margin: '0 0 32px 0',
+      marginBottom: 32,
       padding: 2
     },
-    dependenciesRuntimeHeader: {
-      padding: '0 24px'
-    },
-    runtimeName: {
+    type: {
       color: Colors.grey500
+    },
+    description: {
+      padding: '0 24px'
     }
   };
-  const dependenciesList = _.map(dependencies.scripts, (dependencyData, dependencyName) => (
+  const paramatersList = _.map(parameters, (info, parameterName) => (
     <div
       className="row vm-2-b"
-      key={dependencyName}
+      key={parameterName}
     >
       <div className="col-sm-8">
         <div
           style={styles.name}
           className="align-right row"
         >
-          {dependencyName}
+          {parameterName}
+        </div>
+        <div
+          style={styles.type}
+          className="align-right row"
+        >
+          {info.type}
         </div>
       </div>
       <div
-        style={{ ...styles.dependenciesRuntimeHeader, ...styles.runtimeName }}
+        style={styles.description}
         className="col-sm-27"
       >
-        {dependencyData.runtime_name}
+        {info.description}
       </div>
     </div>
   ));
@@ -46,23 +53,23 @@ const CustomSocketDependenciesList = ({ dependencies }) => {
     <div>
       <div
         className="row"
-        style={styles.dependenciesHeader}
+        style={styles.paramtetersHeader}
       >
         <div className="col-sm-8">
           <div className="align-right row">
-            Script name
+            Name
           </div>
         </div>
         <div
-          style={styles.dependenciesRuntimeHeader}
+          style={styles.description}
           className="col-sm-27"
         >
-          Runtime name
+          Description
         </div>
       </div>
-      {dependenciesList}
+      {paramatersList}
     </div>
   );
 };
 
-export default CustomSocketDependenciesList;
+export default SocketParametersList;

@@ -36,7 +36,7 @@ import ChannelHistory from './apps/ChannelHistory';
 import Channels from './apps/Channels';
 import Classes from './apps/Classes';
 import CustomSockets from './apps/CustomSockets';
-import CustomSocketsRegistry from './apps/CustomSocketsRegistry';
+import SocketsRegistry from './apps/SocketsRegistry';
 import ScriptEndpoints from './apps/ScriptEndpoints';
 import Script from './apps/Script';
 import Scripts from './apps/Scripts';
@@ -218,7 +218,7 @@ export default (
         >
           <Route
             name="custom-socket-detail"
-            path=":customSocketName"
+            path=":socketName"
             component={CustomSockets.Endpoints}
           />
           <IndexRoute component={CustomSockets} />
@@ -511,22 +511,22 @@ export default (
 
       {/* Custom Sockets Registry */}
       <Route
-        name="custom-sockets-registry"
-        component={CustomSocketsRegistry}
-        path="custom-sockets-registry"
+        name="sockets-registry"
+        component={SocketsRegistry}
+        path="sockets-registry"
       >
         <Route
-          name="custom-sockets-registry-list"
-          component={CustomSocketsRegistry.List}
+          name="sockets-registry-list"
+          component={SocketsRegistry.List}
           path="list"
         />
         <Route
-          name="custom-sockets-registry-details"
-          component={CustomSocketsRegistry.Details}
-          path=":customSocketId/details"
+          name="sockets-registry-details"
+          component={SocketsRegistry.Details}
+          path=":socketId/details"
         />
 
-        <IndexRoute component={CustomSocketsRegistry.List} />
+        <IndexRoute component={SocketsRegistry.List} />
       </Route>
 
       {/* Solutions */}

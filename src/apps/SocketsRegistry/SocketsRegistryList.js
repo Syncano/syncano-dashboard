@@ -2,19 +2,19 @@ import React from 'react';
 import pluralize from 'pluralize';
 import _ from 'lodash';
 
-import Actions from './CustomSocketsRegistryActions';
-import Store from './CustomSocketsRegistryStore';
+import Actions from './SocketsRegistryActions';
+import Store from './SocketsRegistryStore';
 
 import { ColumnList, Lists, Container, RegistryEmptyView } from '../../common/';
-import ListItem from './CustomSocketsRegistryListItem';
+import ListItem from './SocketsRegistryListItem';
 
 const Column = ColumnList.Column;
 
-const CustomSocketsRegistryList = React.createClass({
+const SocketsRegistryList = React.createClass({
 
   getDefaultProps() {
     return {
-      emptyItemContent: 'Add a Custom Socket',
+      emptyItemContent: 'Add a  Socket',
       emptyItemHandleClick: Actions.showDialog,
       getCheckedItems: Store.getCheckedItems,
       checkItem: Actions.checkItem
@@ -84,11 +84,11 @@ const CustomSocketsRegistryList = React.createClass({
 
   renderItem(item) {
     const { checkItem } = this.props;
-    const showDeleteDialog = () => this.showDialog('removeCustomSocketsDialog', item);
+    const showDeleteDialog = () => this.showDialog('removeSocketsDialog', item);
 
     return (
       <ListItem
-        key={`custom-sockets-registry-list-item-${item.name}`}
+        key={`sockets-registry-list-item-${item.name}`}
         item={item}
         onIconClick={checkItem}
         showDeleteDialog={showDeleteDialog}
@@ -108,10 +108,10 @@ const CustomSocketsRegistryList = React.createClass({
           columnName="CHECK_ICON"
           handleClick={handleTitleClick}
         >
-          Custom Sockets
+          Sockets
         </Column.ColumnHeader>
         <Column.ColumnHeader
-          columnName="DESC"
+          columnName="AUTHOR"
           registry={true}
           className="col-sm-5"
         >
@@ -125,6 +125,7 @@ const CustomSocketsRegistryList = React.createClass({
           Description
         </Column.ColumnHeader>
         <Column.ColumnHeader
+          columnName="DETAILS"
           className="col-sm-7"
           registry={true}
           styles={styles.detailsColumnHeader}
@@ -142,7 +143,7 @@ const CustomSocketsRegistryList = React.createClass({
     } = this.props;
     const items = this.getFilteredData();
     const styles = this.getStyles();
-    const customSocketImageDir = '/img/custom-socket-assemble.svg';
+    const socketImageDir = '/img/socket-assemble.svg';
     const pluralizedResults = pluralize('result', items.length);
     const containsItems = (!items || !items.length) && !isLoading;
 
@@ -163,10 +164,10 @@ const CustomSocketsRegistryList = React.createClass({
       return (
         <RegistryEmptyView
           title="Supercharge your project with Sockets from the community"
-          description={`Think of Sockets Registry a package manager for Syncano Sockets. You can search for Custom
+          description={`Think of Sockets Registry a package manager for Syncano Sockets. You can search for
             Sockets created by community and add them to your projects.`}
-          src={customSocketImageDir}
-          altText="No Custom Socket"
+          src={socketImageDir}
+          altText="No Socket"
         />
       );
     }
@@ -193,4 +194,4 @@ const CustomSocketsRegistryList = React.createClass({
   }
 });
 
-export default CustomSocketsRegistryList;
+export default SocketsRegistryList;
