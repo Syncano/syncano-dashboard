@@ -5,7 +5,7 @@ import BackupAndRestore from './BackupAndRestore';
 import Channels from './Channels';
 import Classes from './Classes';
 import CustomSockets from './CustomSockets';
-import CustomSocketsRegistry from './CustomSocketsRegistry';
+import SocketsRegistry from './SocketsRegistry';
 import DataEndpoints from './DataEndpoints';
 import DataObjects from './DataObjects';
 import GlobalConfig from './GlobalConfig';
@@ -37,7 +37,7 @@ export default {
   Channels,
   Classes,
   CustomSockets,
-  CustomSocketsRegistry,
+  SocketsRegistry,
   DataEndpoints,
   DataObjects,
   GlobalConfig,

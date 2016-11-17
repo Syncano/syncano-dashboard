@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 
-import Actions from './CustomSocketsRegistryActions';
+import Actions from './SocketsRegistryActions';
 
 import { InnerToolbar } from '../../common/';
 import { RaisedButton, FlatButton } from 'material-ui';
@@ -9,7 +9,7 @@ import { RaisedButton, FlatButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
 import Sticky from 'react-stickydiv';
 
-const CustomSocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
+const SocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
   const styles = {
     toolbar: {
       display: 'flex',
@@ -35,7 +35,7 @@ const CustomSocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
     }
   };
   const handleBackClick = () => {
-    router.push('/custom-sockets-registry');
+    router.push('/sockets-registry');
   };
 
   const setFilterAll = () => {
@@ -87,7 +87,7 @@ const CustomSocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
 
     return isCurrentFilter ? activeColorConfigObj : inactiveColorConfigObj;
   };
-  const isRegistryListRouteActive = router.getCurrentLocation().pathname === '/custom-sockets-registry';
+  const isRegistryListRouteActive = router.getCurrentLocation().pathname === '/sockets-registry';
 
   return (
     <Sticky
@@ -98,7 +98,7 @@ const CustomSocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
         style={styles.innerToolbar}
         backButton={!isRegistryListRouteActive}
         backFallback={handleBackClick}
-        backButtonTooltip="Go back to Custom Sockets Registry List"
+        backButtonTooltip="Go back to Sockets Registry List"
       >
         <div style={styles.toolbar}>
           <div>
@@ -175,4 +175,4 @@ const CustomSocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
   );
 };
 
-export default withRouter(CustomSocketsRegistryToolbar);
+export default withRouter(SocketsRegistryToolbar);

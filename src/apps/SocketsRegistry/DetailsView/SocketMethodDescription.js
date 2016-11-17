@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Divider } from 'material-ui';
 
-const CustomSocketMethodDescription = ({ headerLabel, className, style, headerStyle, contentStyle, children }) => {
+const SocketMethodDescription = ({ headerLabel, className, style, headerStyle, contentStyle, children }) => {
   const styles = {
     root: {
       lineHeight: 1.6,
@@ -36,4 +36,4 @@ const CustomSocketMethodDescription = ({ headerLabel, className, style, headerSt
   );
 };
 
-export default CustomSocketMethodDescription;
+export default SocketMethodDescription;

@@ -1,50 +1,43 @@
 import React from 'react';
 import _ from 'lodash';
-
 import { colors as Colors } from 'material-ui/styles';
 
-const CustomSocketParametersList = ({ parameters }) => {
+const SocketDependenciesList = ({ dependencies }) => {
   const styles = {
     name: {
       fontWeight: 600
     },
-    paramtetersHeader: {
+    dependenciesHeader: {
       backgroundColor: Colors.indigo500,
       color: Colors.grey100,
-      marginBottom: 32,
+      margin: '0 0 32px 0',
       padding: 2
     },
-    type: {
-      color: Colors.grey500
-    },
-    description: {
+    dependenciesRuntimeHeader: {
       padding: '0 24px'
+    },
+    runtimeName: {
+      color: Colors.grey500
     }
   };
-  const paramatersList = _.map(parameters, (info, parameterName) => (
+  const dependenciesList = _.map(dependencies.scripts, (dependencyData, dependencyName) => (
     <div
       className="row vm-2-b"
-      key={parameterName}
+      key={dependencyName}
     >
       <div className="col-sm-8">
         <div
           style={styles.name}
           className="align-right row"
         >
-          {parameterName}
-        </div>
-        <div
-          style={styles.type}
-          className="align-right row"
-        >
-          {info.type}
+          {dependencyName}
         </div>
       </div>
       <div
-        style={styles.description}
+        style={{ ...styles.dependenciesRuntimeHeader, ...styles.runtimeName }}
         className="col-sm-27"
       >
-        {info.description}
+        {dependencyData.runtime_name}
       </div>
     </div>
   ));
@@ -53,23 +46,23 @@ const CustomSocketParametersList = ({ parameters }) => {
     <div>
       <div
         className="row"
-        style={styles.paramtetersHeader}
+        style={styles.dependenciesHeader}
       >
         <div className="col-sm-8">
           <div className="align-right row">
-            Name
+            Script name
           </div>
         </div>
         <div
-          style={styles.description}
+          style={styles.dependenciesRuntimeHeader}
           className="col-sm-27"
         >
-          Description
+          Runtime name
         </div>
       </div>
-      {paramatersList}
+      {dependenciesList}
     </div>
   );
 };
 
-export default CustomSocketParametersList;
+export default SocketDependenciesList;

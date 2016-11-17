@@ -2,7 +2,7 @@ import React from 'react';
 
 import { colors as Colors } from 'material-ui/styles';
 
-const CustomSocketAuthorInfo = ({ author, runtimes }) => {
+const SocketAuthorInfo = ({ author, runtimes }) => {
   const styles = {
     container: {
       padding: '32px 24px',
@@ -54,4 +54,4 @@ const CustomSocketAuthorInfo = ({ author, runtimes }) => {
   );
 };
 
-export default CustomSocketAuthorInfo;
+export default SocketAuthorInfo;

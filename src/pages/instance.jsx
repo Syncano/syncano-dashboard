@@ -78,20 +78,6 @@ const Instance = React.createClass({
                   iconClassName="synicon-cellphone-iphone"
                   initiallyOpen={true}
                   autoGenerateNestedIndicator={false}
-                  /*
-                  nestedItems={[
-                    <Sidebar.NestedLinkListItem
-                      key="iOSDevices"
-                      routeName="apns-devices"
-                      primaryText="iOS Devices"
-                    />,
-                    <Sidebar.NestedLinkListItem
-                      key="androidDevices"
-                      routeName="gcm-devices"
-                      primaryText="Android Devices"
-                    />
-                  ]}
-                  */
                 />
 
                 <Sidebar.LinkListItem
@@ -102,20 +88,6 @@ const Instance = React.createClass({
                   iconClassName="synicon-cellphone-iphone"
                   initiallyOpen={true}
                   autoGenerateNestedIndicator={false}
-                  /*
-                  nestedItems={[
-                    <Sidebar.NestedLinkListItem
-                      key="iOSMessages"
-                      routeName="apns-messages"
-                      primaryText="iOS Messages"
-                    />,
-                    <Sidebar.NestedLinkListItem
-                      key="androidMessages"
-                      routeName="gcm-messages"
-                      primaryText="Android Messages"
-                    />
-                  ]}
-                  */
                 />
 
               </Sidebar.List>
@@ -143,13 +115,6 @@ const Instance = React.createClass({
                   data-e2e="left-sidebar-admins"
                   iconClassName="synicon-account-star-variant"
                   primaryText="Administrators"
-                />
-                <Sidebar.LinkListItem
-                  key="API Keys"
-                  routeName="api-keys"
-                  data-e2e="left-sidebar-api-keys"
-                  iconClassName="synicon-key-variant"
-                  primaryText="API Keys"
                 />
                 <Sidebar.ListItem
                   key="globalConfig"

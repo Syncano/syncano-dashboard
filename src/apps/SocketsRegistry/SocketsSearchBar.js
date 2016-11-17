@@ -46,7 +46,7 @@ const SocketsSearchBar = React.createClass({
   render() {
     const { term, handleChangeSearchTerm, onClick } = this.props;
     const styles = this.getStyles();
-    const customSocketImageDir = '/img/custom-socket-logo.svg';
+    const socketImageDir = '/img/socket-logo.svg';
 
     return (
       <Toolbar
@@ -54,12 +54,12 @@ const SocketsSearchBar = React.createClass({
       >
         <div style={styles.toolbarContent}>
           <span style={styles.text}>
-            _custom <br />
-            sockets
+            sockets <br />
+            registry
           </span>
           <img
             alt="logo"
-            src={customSocketImageDir}
+            src={socketImageDir}
             style={styles.logo}
           />
           <input
