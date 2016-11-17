@@ -149,7 +149,7 @@
     "lint": "eslint src --quiet --ext .js --ext .jsx",
     "lint-tests": "eslint test --quiet --ext .js --ext .jsx",
     "lint-all": "eslint src test --quiet --ext .js --ext .jsx --fix",
-    "selenium-install": "selenium-standalone install",
+    "selenium-install": "selenium-standalone install --silent",
     "selenium-start": "selenium-standalone start -- -Djava.security.egd=file:/dev/./urandom",
     "e2e": "./test.sh",
     "e2e-branch": "nightwatch -e chrome --suiteRetries 1 --skiptags socialLogins,demoApp,customSocket",
