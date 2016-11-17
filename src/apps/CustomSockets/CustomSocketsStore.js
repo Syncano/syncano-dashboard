@@ -4,7 +4,7 @@ import { CheckListStoreMixin, StoreLoadingMixin, WaitForStoreMixin } from '../..
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './CustomSocketsActions';
-import ActionsDialog from '../CustomSocketsRegistry/CustomSocketsRegistryActions';
+import ActionsDialog from '../CustomSocketsRegistry/SocketsRegistryActions';
 
 export default Reflux.createStore({
   listenables: Actions,

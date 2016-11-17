@@ -3,7 +3,7 @@ import _ from 'lodash';
 import shortId from 'shortid';
 import { Events, scroller, animateScroll } from 'react-scroll';
 
-import DialogActions from '../../CustomSockets/CustomSocketsActions';
+import DialogActions from '../../Sockets/SocketsActions';
 
 import { colors as Colors } from 'material-ui/styles';
 import { RaisedButton, ListItem } from 'material-ui';
@@ -11,7 +11,7 @@ import Sticky from 'react-stickydiv';
 
 import { Sidebar, MethodLabel } from '../../../common';
 
-class CustomSocketsRegistryInfoBar extends Component {
+class SocketsRegistryInfoBar extends Component {
   /* eslint-disable no-useless-constructor */
   constructor(props) {
     super(props);
@@ -108,7 +108,7 @@ class CustomSocketsRegistryInfoBar extends Component {
         <Sticky offsetTop={130}>
           <div className="hm-2-l">
             <RaisedButton
-              label="install Custom Socket"
+              label="install  Socket"
               backgroundColor={Colors.amber400}
               onTouchTap={DialogActions.showDialog}
             />
@@ -135,4 +135,4 @@ class CustomSocketsRegistryInfoBar extends Component {
   }
 }
 
-export default CustomSocketsRegistryInfoBar;
+export default SocketsRegistryInfoBar;

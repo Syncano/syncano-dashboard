@@ -35,15 +35,15 @@ import BackupAndRestore from './apps/BackupAndRestore';
 import ChannelHistory from './apps/ChannelHistory';
 import Channels from './apps/Channels';
 import Classes from './apps/Classes';
-import CustomSockets from './apps/CustomSockets';
-import CustomSocketsRegistry from './apps/CustomSocketsRegistry';
+import Sockets from './apps/CustomSockets';
+import SocketsRegistry from './apps/CustomSocketsRegistry';
 import ScriptEndpoints from './apps/ScriptEndpoints';
 import Script from './apps/Script';
 import Scripts from './apps/Scripts';
 import DataObjects from './apps/DataObjects/DataObjects';
 import DataEndpoints from './apps/DataEndpoints';
 import Users from './apps/Users/Users';
-import Sockets from './apps/Sockets';
+import SocketsOld from './apps/Sockets';
 import Snippets from './apps/Snippets';
 import Template from './apps/Template';
 import Templates from './apps/Templates';
@@ -159,9 +159,9 @@ export default (
 
         {/* Sockets */}
         <Route
-          name="sockets"
-          path="sockets"
-          component={Sockets}
+          name="sockets-old"
+          path="sockets-old"
+          component={SocketsOld}
         />
 
         {/* Hosting */}
@@ -213,15 +213,15 @@ export default (
 
         {/* Custom Sockets */}
         <Route
-          name="custom-sockets"
-          path="custom-sockets"
+          name="sockets"
+          path="sockets"
         >
           <Route
-            name="custom-socket-detail"
-            path=":customSocketName"
-            component={CustomSockets.Endpoints}
+            name="socket-detail"
+            path=":socketName"
+            component={Sockets.Endpoints}
           />
-          <IndexRoute component={CustomSockets} />
+          <IndexRoute component={Sockets} />
         </Route>
 
         {/* General */}
@@ -511,22 +511,22 @@ export default (
 
       {/* Custom Sockets Registry */}
       <Route
-        name="custom-sockets-registry"
-        component={CustomSocketsRegistry}
-        path="custom-sockets-registry"
+        name="sockets-registry"
+        component={SocketsRegistry}
+        path="sockets-registry"
       >
         <Route
-          name="custom-sockets-registry-list"
-          component={CustomSocketsRegistry.List}
+          name="sockets-registry-list"
+          component={SocketsRegistry.List}
           path="list"
         />
         <Route
-          name="custom-sockets-registry-details"
-          component={CustomSocketsRegistry.Details}
-          path=":customSocketId/details"
+          name="sockets-registry-details"
+          component={SocketsRegistry.Details}
+          path=":socketId/details"
         />
 
-        <IndexRoute component={CustomSocketsRegistry.List} />
+        <IndexRoute component={SocketsRegistry.List} />
       </Route>
 
       {/* Solutions */}

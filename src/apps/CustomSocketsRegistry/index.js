@@ -1,18 +1,18 @@
-import CustomSocketsRegistry from './CustomSocketsRegistry';
-import CustomSocketsRegistryStore from './CustomSocketsRegistryStore';
-import CustomSocketsRegistryList from './CustomSocketsRegistryList';
-import CustomSocketsRegistryListItem from './CustomSocketsRegistryListItem';
-import CustomSocketsRegistryActions from './CustomSocketsRegistryActions';
-import CustomSocketsRegistryDialog from './CustomSocketsRegistryDialog';
-import CustomSocketsRegistryDialogStore from './CustomSocketsRegistryDialogStore';
-import CustomSocketsRegistryDetailsView from './DetailsView/CustomSocketDetailsView';
+import SocketsRegistry from './SocketsRegistry';
+import SocketsRegistryStore from './SocketsRegistryStore';
+import SocketsRegistryList from './SocketsRegistryList';
+import SocketsRegistryListItem from './SocketsRegistryListItem';
+import SocketsRegistryActions from './SocketsRegistryActions';
+import SocketsRegistryDialog from './SocketsRegistryDialog';
+import SocketsRegistryDialogStore from './SocketsRegistryDialogStore';
+import SocketsRegistryDetailsView from './DetailsView/SocketDetailsView';
 
-CustomSocketsRegistry.Store = CustomSocketsRegistryStore;
-CustomSocketsRegistry.List = CustomSocketsRegistryList;
-CustomSocketsRegistry.ListItem = CustomSocketsRegistryListItem;
-CustomSocketsRegistry.Actions = CustomSocketsRegistryActions;
-CustomSocketsRegistry.Dialog = CustomSocketsRegistryDialog;
-CustomSocketsRegistry.DialogStore = CustomSocketsRegistryDialogStore;
-CustomSocketsRegistry.Details = CustomSocketsRegistryDetailsView;
+SocketsRegistry.Store = SocketsRegistryStore;
+SocketsRegistry.List = SocketsRegistryList;
+SocketsRegistry.ListItem = SocketsRegistryListItem;
+SocketsRegistry.Actions = SocketsRegistryActions;
+SocketsRegistry.Dialog = SocketsRegistryDialog;
+SocketsRegistry.DialogStore = SocketsRegistryDialogStore;
+SocketsRegistry.Details = SocketsRegistryDetailsView;
 
-export default CustomSocketsRegistry;
+export default SocketsRegistry;

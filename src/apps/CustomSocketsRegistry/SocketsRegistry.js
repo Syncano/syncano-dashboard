@@ -4,22 +4,22 @@ import Helmet from 'react-helmet';
 import _ from 'lodash';
 
 import InstancesActions from '../Instances/InstancesActions';
-import Actions from './CustomSocketsRegistryActions';
-import Store from './CustomSocketsRegistryStore';
+import Actions from './SocketsRegistryActions';
+import Store from './SocketsRegistryStore';
 
 import { Show } from '../../common/';
 
 import SocketsRegistryInnerToolbar from './SocketsRegistryInnerToolbar';
 import SocketsSearchBar from './SocketsSearchBar';
 
-const CustomSocketsRegistry = React.createClass({
+const SocketsRegistry = React.createClass({
   mixins: [
     Reflux.connect(Store)
   ],
 
   componentDidMount() {
     InstancesActions.fetch();
-    Actions.fetchCustomSocketsRegistry();
+    Actions.fetchSocketsRegistry();
   },
 
   handleChangeSearchTerm(term) {
@@ -69,7 +69,7 @@ const CustomSocketsRegistry = React.createClass({
 
     return (
       <div>
-        <Helmet title="Custom Sockets Registry" />
+        <Helmet title="Sockets Registry" />
         <SocketsSearchBar
           items={items}
           onClick={this.handleStartFilter}
@@ -89,4 +89,4 @@ const CustomSocketsRegistry = React.createClass({
   }
 });
 
-export default CustomSocketsRegistry;
+export default SocketsRegistry;

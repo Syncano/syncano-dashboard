@@ -7,25 +7,25 @@ export default CreateActions(
     setFilter: {},
     setSearchFilter: {},
     setCurrentSocketId: {},
-    setCustomSocketsRegistry: {},
-    fetchCustomSocketsRegistry: {
+    setSocketsRegistry: {},
+    fetchSocketsRegistry: {
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.CustomSocketsRegistry.list'
     },
-    installCustomSocketRegistry: {
+    installSocketRegistry: {
       asyncResult: true,
       asyncForm: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.CustomSocketsRegistry.install'
     },
-    getCustomSocketRegistry: {
+    getSocketRegistry: {
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.CustomSocketsRegistry.get'
     },
-    fetchCustomSocketsInfo: {
+    fetchSocketsInfo: {
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],

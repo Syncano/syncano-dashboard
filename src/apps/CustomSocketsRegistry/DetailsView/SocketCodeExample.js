@@ -8,7 +8,7 @@ import SessionStore from '../../Session/SessionStore';
 import { colors as Colors } from 'material-ui/styles';
 import { CodePreview } from '../../../common';
 
-const CustomSocketCodeExamples = ({ socketName, currentLanguage, endpointName, methodType, codeExamples }) => {
+const SocketCodeExamples = ({ socketName, currentLanguage, endpointName, methodType, codeExamples }) => {
   const getCurrentLanguageExample = (language) => {
     const isGetMethod = methodType === 'GET';
     const accountKey = SessionStore.getToken();
@@ -123,4 +123,4 @@ const CustomSocketCodeExamples = ({ socketName, currentLanguage, endpointName, m
   );
 };
 
-export default CustomSocketCodeExamples;
+export default SocketCodeExamples;
