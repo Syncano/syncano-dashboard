@@ -6,7 +6,6 @@ import Actions from './APNSPushNotificationsActions';
 import DevicesActions from '../../PushDevices/APNSDevices/APNSDevicesActions';
 import DevicesStore from '../../PushDevices/APNSDevices/APNSDevicesStore';
 import SessionActions from '../../Session/SessionActions';
-import ConfigStore from './APNSConfigDialogStore';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -19,8 +18,7 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items: [],
-      isLoading: true
+      items: []
     };
   },
 
@@ -56,9 +54,5 @@ export default Reflux.createStore({
     });
 
     this.trigger(this.data);
-  },
-
-  onRemoveCertificateCompleted() {
-    ConfigStore.refreshData();
   }
 });

@@ -35,12 +35,16 @@ export default {
       .catch(this.failure);
   },
 
-  removeCertificate(params = {}) {
+  removeCertificate(type) {
+    const params = {
+      [`${type}_certificate`]: true
+    };
+
     this.NewLibConnection
       .APNSConfig
       .please()
-      .removeCertificate(params)
-      .then(this.completed)
+      .removeCertificate({}, params)
+      .then(() => this.completed(type))
       .catch(this.failure);
   },
 

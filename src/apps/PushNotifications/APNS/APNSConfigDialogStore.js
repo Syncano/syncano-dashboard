@@ -1,4 +1,6 @@
 import Reflux from 'reflux';
+import Syncano from 'syncano';
+import _ from 'lodash';
 
 // Utils & Mixins
 import { DialogStoreMixin, WaitForStoreMixin, StoreLoadingMixin, StoreFormMixin } from '../../../mixins';
@@ -75,5 +77,28 @@ export default Reflux.createStore({
     if (config.development_certificate || config.production_certificate) {
       APNSPushNotificationsSummaryDialogActions.showDialog();
     }
+  },
+
+  onSetCertificate(type, file) {
+    const certificate = _.isArray(file) ? file[0] : file;
+
+    const params = {
+      [`${type}_certificate_name`]: certificate.name,
+      [`${type}_certificate`]: Syncano.file(certificate)
+    };
+
+    this.data = { ...this.data, ...params };
+    this.trigger(this.data);
+  },
+
+  onRemoveCertificateCompleted(type) {
+    const params = {
+      [`${type}_certificate`]: false,
+      [`${type}_certificate_name`]: null,
+      [`${type}_bundle_identifier`]: null
+    };
+
+    this.data = { ...this.data, ...params };
+    this.trigger(this.data);
   }
 });
