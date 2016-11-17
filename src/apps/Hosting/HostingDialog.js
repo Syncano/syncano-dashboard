@@ -40,7 +40,7 @@ const CreateHostingDialog = React.createClass({
     if (!isCnameValid) {
       validateObj.cname = {
         inclusion: {
-          message: '^CNAME is not a valid url '
+          message: '^CNAME is not a valid domain '
         }
       };
     }
