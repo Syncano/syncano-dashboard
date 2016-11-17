@@ -75,6 +75,14 @@ export default Reflux.createStore({
     });
   },
 
+  onAddBillingCard() {
+    this.data.isLoading = true;
+    this.trigger(this.data);
+    this.setSnackbarNotification({
+      message: 'Please, wait. We are adding your card.'
+    });
+  },
+
   onAddBillingCardCompleted(payload) {
     this.setCard(payload);
     this.setSnackbarNotification({
