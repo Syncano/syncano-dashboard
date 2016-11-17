@@ -36,7 +36,7 @@ import ChannelHistory from './apps/ChannelHistory';
 import Channels from './apps/Channels';
 import Classes from './apps/Classes';
 import Sockets from './apps/CustomSockets';
-import SocketsRegistry from './apps/CustomSocketsRegistry';
+import SocketsRegistry from './apps/SocketsRegistry';
 import ScriptEndpoints from './apps/ScriptEndpoints';
 import Script from './apps/Script';
 import Scripts from './apps/Scripts';

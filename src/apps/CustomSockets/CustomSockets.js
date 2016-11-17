@@ -16,7 +16,7 @@ import { Container } from '../../common/';
 // Local components
 import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
 import CustomSocketsList from './CustomSocketsList';
-import SocketsDialog from '../CustomSocketsRegistry/SocketsRegistryDialog';
+import SocketsDialog from '../SocketsRegistry/SocketsRegistryDialog';
 
 const CustomSockets = React.createClass({
 

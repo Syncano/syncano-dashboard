@@ -16,7 +16,7 @@ import { Container, Loading, Show, Dialog, PageIntro } from '../../common/';
 
 import DataEndpoints from '../DataEndpoints';
 import Channels from '../Channels';
-import CustomSocketsRegistry from '../CustomSocketsRegistry';
+import SocketsRegistry from '../SocketsRegistry';
 import Schedules from '../Schedules';
 import Triggers from '../Triggers';
 import ScriptEndpoints from '../ScriptEndpoints';
@@ -178,7 +178,7 @@ const Sockets = React.createClass({
     return (
       <div>
         <Helmet title="Sockets" />
-        <CustomSocketsRegistry.Dialog />
+        <SocketsRegistry.Dialog />
         <SocketsDialog />
         <ScriptEndpoints.Dialog />
         <DataEndpoints.Dialog />

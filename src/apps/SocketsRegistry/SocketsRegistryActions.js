@@ -12,24 +12,24 @@ export default CreateActions(
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.CustomSocketsRegistry.list'
+      method: 'Syncano.Actions.SocketsRegistry.list'
     },
     installSocketRegistry: {
       asyncResult: true,
       asyncForm: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.CustomSocketsRegistry.install'
+      method: 'Syncano.Actions.SocketsRegistry.install'
     },
     getSocketRegistry: {
       asyncResult: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.CustomSocketsRegistry.get'
+      method: 'Syncano.Actions.SocketsRegistry.get'
     },
     fetchSocketsInfo: {
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.CustomSocketsRegistry.fetchInfo'
+      method: 'Syncano.Actions.SocketsRegistry.fetchInfo'
     }
   },
   {
