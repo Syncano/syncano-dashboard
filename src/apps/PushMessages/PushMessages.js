@@ -88,6 +88,7 @@ const PushMessages = React.createClass({
     const { children } = this.props;
     const hasGCMItems = gcmDevices.items && gcmDevices.items.length;
     const hasAPNSItems = apnsDevices.items && apnsDevices.items.length;
+    const isLoadingMessages = gcmDevices.isLoading && apnsDevices.isLoading;
 
     return (
       <div>
@@ -108,7 +109,7 @@ const PushMessages = React.createClass({
             </InnerToolbar.Dropdown>
           }
         >
-          {this.renderSendMessagesButton()}
+          {!isLoadingMessages && this.renderSendMessagesButton()}
           <Popover
             ref="sendMessagePopover"
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
