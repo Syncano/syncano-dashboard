@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Helmet from 'react-helmet';
 
 import APNSDevicesStore from './APNSDevices/APNSDevicesStore';
 import APNSDevicesActions from './APNSDevices/APNSDevicesActions';
@@ -54,6 +55,7 @@ const AllDevicesList = React.createClass({
 
     return (
       <div>
+        <Helmet title="Push Devices" />
         {this.renderDoubleEmptyViews()}
 
         <Show if={!this.renderDoubleEmptyViews()}>
