@@ -17,9 +17,6 @@ export default {
     scriptName: {
       selector: 'input[data-e2e="script-name"]'
     },
-    emptySocketsHeading: {
-      selector: '[data-e2e="empty-sockets-heading"]'
-    },
     addApnsSocket: {
       selector: '[data-e2e="apns-socket-popover"]'
     },

@@ -94,7 +94,7 @@ const SocketsList = React.createClass({
     const pluralizedResults = pluralize('result', items.length);
 
     return (
-      <Lists.Container>
+      <Lists.Container data-e2e="sockets-list">
         <div style={styles.ammount}>
           Found
           <span style={styles.foundSocketsCount}>
