@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import _ from 'lodash';
+import shortid from 'shortid';
 import { LinkWithIcon } from '../../common';
 
 const HostingListItemLinks = ({ items, isDefault, params }) => {
@@ -9,7 +10,7 @@ const HostingListItemLinks = ({ items, isDefault, params }) => {
       padding: '4px 0'
     }
   };
-  let isCnameFounded = false;
+  let isCnameFound = false;
 
   const getLinkUrl = (domain) => {
     const isValidCname = /\.[a-zA-Z]+$/.test(domain);
@@ -18,8 +19,8 @@ const HostingListItemLinks = ({ items, isDefault, params }) => {
       return `https://${params.instanceName}.syncano.site`;
     }
 
-    if (!isCnameFounded && isValidCname) {
-      isCnameFounded = true;
+    if (!isCnameFound && isValidCname) {
+      isCnameFound = true;
       return domain;
     }
 
@@ -28,10 +29,10 @@ const HostingListItemLinks = ({ items, isDefault, params }) => {
 
   return (
     <div>
-      {_.map(items, (item, index) => (
+      {_.map(items, (item) => (
         <div
           style={styles.item}
-          key={`domain-${item}-${index}`}
+          key={`domain-${item}-${shortid.generate()}`}
         >
           <LinkWithIcon url={getLinkUrl(item)} />
         </div>
