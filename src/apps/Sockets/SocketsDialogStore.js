@@ -1,19 +1,19 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import { StoreFormMixin, DialogStoreMixin } from '../../mixins';
+import { StoreFormMixin, DialogStoreMixin, StoreLoadingMixin } from '../../mixins';
 import Actions from './SocketsActions';
 
 import InstancesStore from '../Instances/InstancesStore';
 import InstancesActions from '../Instances/InstancesActions';
 
 export default Reflux.createStore({
-  listenables: [
-    Actions
-  ],
+  listenables: Actions,
+
   mixins: [
     StoreFormMixin,
-    DialogStoreMixin
+    DialogStoreMixin,
+    StoreLoadingMixin
   ],
 
   sendSocketAnalytics(type, payload) {
@@ -51,10 +51,6 @@ export default Reflux.createStore({
     this.trigger({ stepIndex: step, isFinished: step >= 1 });
   },
 
-  onInstallSocket() {
-    this.trigger({ isLoading: true });
-  },
-
   onInstallSocketCompleted(payload, instanceName) {
     console.debug('SocketsDialogStore::onInstallSocketCompleted');
     Actions.getSocket(payload.name, instanceName, 'add');
@@ -71,18 +67,14 @@ export default Reflux.createStore({
       processing: () => getSocket(createdSocket.name, instanceName),
       checking: () => getSocket(createdSocket.name, instanceName),
       ok: () => {
-        this.trigger({ createdSocket, isLoading: false });
         Actions.changeStep(1);
         this.sendSocketAnalytics(action, createdSocket);
+        this.trigger({ createdSocket, isLoading: false });
       },
       error: () => this.trigger({ feedback: createdSocket.status_info, isLoading: false })
     };
 
     actions[createdSocket.status]();
-  },
-
-  onUpdateSocket() {
-    this.trigger({ isLoading: true });
   },
 
   onUpdateSocketCompleted(payload, instanceName) {
