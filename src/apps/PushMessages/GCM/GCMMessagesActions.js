@@ -5,7 +5,6 @@ export default CreateActions({
   fetchMessages: {
     asyncResult: true,
     loading: true,
-    redirectOnFailure: true,
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.PushNotifications.listGCMMessages'
   }

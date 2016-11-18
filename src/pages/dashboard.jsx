@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Reflux from 'reflux';
 import { withRouter } from 'react-router';
 import { Grid, Breakpoint } from 'react-responsive-grid';
@@ -13,7 +13,7 @@ import InstanceDialog from '../apps/Instances/InstanceDialog';
 
 const Dashboard = React.createClass({
   contextTypes: {
-    location: React.PropTypes.object
+    location: PropTypes.object
   },
 
   mixins: [Reflux.connect(ProfileBillingPlanStore, 'billing')],
@@ -31,17 +31,6 @@ const Dashboard = React.createClass({
 
     ProfileBillingPlanStore.init();
     RuntimeActions.fetch();
-  },
-
-  componentDidUpdate() {
-    const { router } = this.props;
-    const invalidRouteMode = SessionStore.getInvalidRouteMode();
-
-    if (invalidRouteMode) {
-      console.log('invalidRouteMode', invalidRouteMode);
-      SessionStore.clearInvalidRouteMode();
-      router.push('instances');
-    }
   },
 
   componentWillUnmount() {
