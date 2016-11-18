@@ -52,12 +52,10 @@ export default Reflux.createStore({
   },
 
   onInstallSocketCompleted(payload, instanceName) {
-    console.debug('SocketsDialogStore::onInstallSocketCompleted');
     Actions.getSocket(payload.name, instanceName, 'add');
   },
 
   onInstallSocketFailure() {
-    console.debug('SocketDialogStore::onInstallSocketFailure');
     this.trigger({ isLoading: false });
   },
 

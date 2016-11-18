@@ -17,9 +17,6 @@ export default {
     scriptName: {
       selector: 'input[data-e2e="script-name"]'
     },
-    scriptSampleOption: {
-      selector: `[data-e2e="${utils.getRandomSampleScriptName()}-sample-option"]`
-    },
     emptySocketsHeading: {
       selector: '[data-e2e="empty-sockets-heading"]'
     },
