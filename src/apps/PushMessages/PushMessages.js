@@ -88,7 +88,7 @@ const PushMessages = React.createClass({
     const { children } = this.props;
     const hasGCMItems = gcmDevices.items && gcmDevices.items.length;
     const hasAPNSItems = apnsDevices.items && apnsDevices.items.length;
-    const isLoadingMessages = gcmDevices.isLoading && apnsDevices.isLoading;
+    const isLoadingMessages = gcmDevices.isLoading || apnsDevices.isLoading;
 
     return (
       <div>
