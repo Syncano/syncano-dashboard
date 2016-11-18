@@ -86,10 +86,7 @@ const SocketsList = React.createClass({
   },
 
   render() {
-    const {
-      isLoading,
-      items
-    } = this.props;
+    const { isLoading, items } = this.props;
     const styles = this.getStyles();
     const pluralizedResults = pluralize('result', items.length);
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import shortid from 'shortid';
 
 import { Dialog, MethodLabel } from '../../common/';
 import { Card, CardTitle, CardText } from 'material-ui';
@@ -54,9 +55,9 @@ const CustomSocketsRegistrySummary = ({ item }) => {
   const renderCallMethodsLabel = (call) => {
     const methods = call.methods[0] === '*' ? ['get', 'post', 'put', 'patch'] : call.methods;
 
-    return _.map(methods, (method, index) => (
+    return _.map(methods, (method) => (
       <div
-        key={index}
+        key={shortid.generate()}
         style={styles.call}
       >
         <MethodLabel method={method} />
@@ -68,9 +69,9 @@ const CustomSocketsRegistrySummary = ({ item }) => {
   };
 
   const renderCalls = (calls) => (
-    _.map(calls, (call, index) => (
+    _.map(calls, (call) => (
       <div
-        key={index}
+        key={shortid.generate()}
         style={styles.callMethodLabel}
       >
         {renderCallMethodsLabel(call)}
