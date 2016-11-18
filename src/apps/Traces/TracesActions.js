@@ -12,16 +12,6 @@ export default CreateActions({
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.ScriptEndpoints.listTraces'
   },
-  fetchTriggerTraces: {
-    asyncResult: true,
-    children: ['completed', 'failure'],
-    method: 'Syncano.Actions.Triggers.listTraces'
-  },
-  fetchScheduleTraces: {
-    asyncResult: true,
-    children: ['completed', 'failure'],
-    method: 'Syncano.Actions.Schedules.listTraces'
-  },
   fetchCurrentScript: {
     asyncResult: true,
     redirectOnFailure: true,
@@ -33,17 +23,5 @@ export default CreateActions({
     redirectOnFailure: true,
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.ScriptEndpoints.get'
-  },
-  fetchCurrentTrigger: {
-    asyncResult: true,
-    redirectOnFailure: true,
-    children: ['completed', 'failure'],
-    method: 'Syncano.Actions.Triggers.get'
-  },
-  fetchCurrentSchedule: {
-    asyncResult: true,
-    redirectOnFailure: true,
-    children: ['completed', 'failure'],
-    method: 'Syncano.Actions.Schedules.get'
   }
 });

@@ -7,7 +7,6 @@ import { CheckListStoreMixin, StoreHelpersMixin, WaitForStoreMixin, StoreLoading
 
 import Actions from './ClassesActions';
 import SessionActions from '../Session/SessionActions';
-import DataEndpointsActions from '../DataEndpoints/DataEndpointsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -43,14 +42,12 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
-    this.listenTo(DataEndpointsActions.createClass.completed, Actions.fetchClasses);
     this.setLoadingStates();
   },
 
   refreshData() {
     Promise.all([
-      Actions.fetchClasses(),
-      Actions.fetchTriggers()
+      Actions.fetchClasses()
     ]).then(() => {
       this.data.isLoading = false;
       this.trigger(this.data);
@@ -224,15 +221,6 @@ export default Reflux.createStore({
 
   onFetchClassesCompleted(items) {
     Actions.setClasses(items);
-  },
-
-  onFetchTriggersCompleted(items) {
-    this.setTriggers(items);
-  },
-
-  setTriggers(items) {
-    this.data.triggers = items;
-    this.trigger(this.data);
   },
 
   onRemoveClassesCompleted(payload) {

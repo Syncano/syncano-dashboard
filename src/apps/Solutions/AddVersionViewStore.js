@@ -139,7 +139,6 @@ export default Reflux.createStore({
       Actions.fetchClasses.completed,
       Actions.fetchDataEndpoints.completed,
       Actions.fetchScriptEndpoints.completed,
-      Actions.fetchTriggers.completed,
       Actions.fetchScripts.completed,
       Actions.fetchSchedules.completed,
       Actions.fetchChannels.completed,
@@ -152,7 +151,6 @@ export default Reflux.createStore({
     Actions.fetchClasses();
     Actions.fetchDataEndpoints();
     Actions.fetchScriptEndpoints();
-    Actions.fetchTriggers();
     Actions.fetchScripts();
     Actions.fetchSchedules();
     Actions.fetchChannels();
@@ -164,10 +162,6 @@ export default Reflux.createStore({
 
   onFetchScriptEndpointsCompleted(obj) {
     this.data.instanceData.scriptEndpoints = obj;
-  },
-
-  onFetchTriggersCompleted(obj) {
-    this.data.instanceData.triggers = obj;
   },
 
   onFetchSchedulesCompleted(obj) {
