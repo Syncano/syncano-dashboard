@@ -3,7 +3,7 @@ var stripDebug = require('gulp-strip-debug'),
 
 module.exports = function() {
   gulp.src('./dist/js/app.js')
-    .pipe(stripDebug())
+    // .pipe(stripDebug())
     .pipe(gulp.dest('./dist/js'));
 };
 
