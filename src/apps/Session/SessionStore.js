@@ -189,8 +189,8 @@ export default Reflux.createStore({
     this.signUpMode = true;
   },
 
-  setInvalidRouteMode() {
-    this.invalidRouteMode = true;
+  setInvalidRouteMode(actionName) {
+    this.invalidRouteMode = actionName;
     this.trigger(this);
   },
 

@@ -5,8 +5,8 @@ import SessionStore from '../apps/Session/SessionStore';
 import AlertPageContent from '../common/AlertPageContent';
 
 class ExpiredAccount extends Component {
-  componentDidMount() {
-    console.log('SessionStore.clearInvalidRouteMode();');
+  componentWillMount() {
+    console.log('ExpiredAccount::SessionStore.clearInvalidRouteMode();');
     SessionStore.clearInvalidRouteMode();
   }
 
