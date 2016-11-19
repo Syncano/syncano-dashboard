@@ -1,3 +1,4 @@
+import _ from 'lodash';
 export default {
   configGCMPushNotification(params = {}) {
     this.NewLibConnection
@@ -9,12 +10,34 @@ export default {
   },
 
   configAPNSPushNotification(params = {}) {
-    this.NewLibConnection
-      .APNSConfig
-      .please()
-      .update({}, params)
-      .then(this.completed)
-      .catch(this.failure);
+    const removeCertificates = [];
+    let APNSConfigParams = { };
+
+    _.forEach(params.certificateTypes, (type) => {
+      if (params[`${type}_certificate_changed`] && params[`${type}_certificate_name`] === null) {
+        removeCertificates.push(
+          this.NewLibConnection
+            .APNSConfig
+            .please()
+            .removeCertificate({}, { [`${type}_certificate`]: true })
+        );
+      }
+
+      if (params[`${type}_certificate_changed`] && !_.isEmpty(params[`${type}_certificate_name`])) {
+        const typeParams = _.pickBy(params, (param, paramKey) => _.startsWith(paramKey, type));
+
+        APNSConfigParams = { ...APNSConfigParams, ...typeParams };
+      }
+    });
+
+    this.Promise.all(removeCertificates).then(
+      this.NewLibConnection
+        .APNSConfig
+        .please()
+        .update({}, APNSConfigParams)
+        .then(this.completed)
+        .catch(this.failure)
+    );
   },
 
   getGCMPushNotificationConfig() {
@@ -43,9 +66,7 @@ export default {
     this.NewLibConnection
       .APNSConfig
       .please()
-      .removeCertificate({}, params)
-      .then(() => this.completed(type))
-      .catch(this.failure);
+      .removeCertificate({}, params);
   },
 
   listGCMMessages() {

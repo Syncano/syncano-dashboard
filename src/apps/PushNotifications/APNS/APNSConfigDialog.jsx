@@ -94,12 +94,24 @@ export default Radium(React.createClass({
     };
   },
 
-  handleAddSubmit() {
-    Actions.configAPNSPushNotification(this.removeEmptyParams(this.state));
+  getParams() {
+    const { certificateTypes } = this.state;
+    const params = { certificateTypes };
+    const typeParams = ['certificate', 'certificate_name', 'bundle_identifier', 'certificate_changed'];
+
+    _.forEach(certificateTypes, (type) => {
+      _.forEach(typeParams, (param) => {
+        params[`${type}_${param}`] = this.state[`${type}_${param}`];
+      });
+    });
+
+    console.error('params', params);
+
+    return params;
   },
 
-  removeEmptyParams(params) {
-    return _.omitBy(params, _.isEmpty);
+  handleAddSubmit() {
+    Actions.configAPNSPushNotification(this.getParams());
   },
 
   renderDropzoneDescription(type) {
