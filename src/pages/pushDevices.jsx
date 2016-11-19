@@ -116,6 +116,20 @@ const PushDevicesPage = React.createClass({
     );
   },
 
+  renderActionButtons() {
+    const { routes } = this.context;
+    const { gcmDevices, apnsDevices } = this.state;
+    const shouldRenderMap = {
+      'all-push-notification-devices': !(gcmDevices.isLoading && apnsDevices.isLoading),
+      'apns-devices': !apnsDevices.isLoading,
+      'gcm-devices': !gcmDevices.isLoading
+    };
+    const sendMessageButton = this.renderSendMessagesButton();
+    const addButton = this.renderAddButton();
+
+    return shouldRenderMap[routes[routes.length - 1].name] && [sendMessageButton, addButton];
+  },
+
   render() {
     const { children } = this.props;
     const { gcmDevices, apnsDevices } = this.state;
@@ -135,8 +149,7 @@ const PushDevicesPage = React.createClass({
         <GCMSendMessageDialog />
         <APNSSendMessageDialog />
         <InnerToolbar title={title}>
-          {this.renderSendMessagesButton()}
-          {this.renderAddButton()}
+          {this.renderActionButtons()}
           <Popover
             ref="addDevicePopover"
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}

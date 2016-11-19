@@ -18,25 +18,14 @@ function selenium_install {
       message "Installing selenium..."
       fi
 
-      gulp selenium-install
+      npm run selenium-install
       mkdir -p reports/
     fi
 }
 
 function selenium_start {
-    SELENIUM_JAR="java -jar ./node_modules/selenium-standalone/.selenium/selenium-server/2.53.0-server.jar"
-    SELENIUM_ENTROPY="-Djava.security.egd=file:/dev/./urandom"
-    SELENIUM="${SELENIUM_JAR} ${SELENIUM_ENTROPY}"
-
-    SELENIUM_ROLE_HUB="-role hub"
-    SELENIUM_SERVER="${SELENIUM} ${SELENIUM_ROLE_HUB}"
-
-    SELENIUM_CHROMEDRIVER="-Dwebdriver.chrome.driver=./node_modules/selenium-standalone/.selenium/chromedriver/2.25-x64-chromedriver"
-    SELENIUM_ROLE_WEBDRIVER="-role webdriver -hub http://localhost:4444/grid/register"
-    SELENIUM_CHROMEDRIVER="${SELENIUM} ${SELENIUM_CHROMEDRIVER} ${SELENIUM_ROLE_WEBDRIVER}"
-
-    nohup $SELENIUM_SERVER > ./reports/selenium-server.log 2>&1&
-    nohup $SELENIUM_CHROMEDRIVER > ./reports/selenium-chrome.log 2>&1&
+    # Use defult config for selenium-standalone lib
+    nohup npm run selenium-start > ./reports/selenium.log 2>&1&
 }
 
 function http_server_start {
@@ -90,10 +79,13 @@ function ci_tests {
 }
 
 function local_cleanup {
-    message "Closing selenium server. Please wait..."
+    message "Closing selenium server..."
+    pkill -f selenium-standalone
+
+    message "Cleaning account from test instances..."
     babel-node ./test/setup/deleteTestInstances.js
-    kill $(ps aux | grep '[.]selenium' | awk '{print $2}') \
-      && message "Done"
+
+    message "Done"
 }
 
 function local_setup {
@@ -111,6 +103,7 @@ function local_setup {
 
 function local_tests {
     local_setup
+    message "Checking tests with lint..."
     npm run lint-tests -- --fix
 
     if [ -n "$1" ]; then
