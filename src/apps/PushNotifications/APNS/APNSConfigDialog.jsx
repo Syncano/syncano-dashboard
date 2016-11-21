@@ -105,8 +105,6 @@ export default Radium(React.createClass({
       });
     });
 
-    console.error('params', params);
-
     return params;
   },
 
@@ -117,6 +115,8 @@ export default Radium(React.createClass({
   renderDropzoneDescription(type) {
     const styles = this.getStyles();
     const handleRemoveCertificate = () => Actions.removeCertificate(type);
+    const setCertificateName = (event, value) => this.setState({ [`${type}_certificate_name`]: value });
+    const setCertificateBundleIdentfier = (event, value) => this.setState({ [`${type}_bundle_identifier`]: value });
 
     if (!this.state[`${type}_certificate`]) {
       return null;
@@ -143,7 +143,7 @@ export default Radium(React.createClass({
                 data-e2e={`${type}-certificate-name-input`}
                 fullWidth={true}
                 value={this.state[`${type}_certificate_name`]}
-                onChange={(event, value) => this.setState({ [`${type}_certificate_name`]: value })}
+                onChange={setCertificateName}
                 errorText={this.getValidationMessages(`${type}_certificate_name`).join(' ')}
                 floatingLabelText="Apple Push Notification Certificate Name"
               />
@@ -164,7 +164,7 @@ export default Radium(React.createClass({
               <TextField
                 fullWidth={true}
                 value={this.state[`${type}_bundle_identifier`]}
-                onChange={(event, value) => this.setState({ [`${type}_bundle_identifier`]: value })}
+                onChange={setCertificateBundleIdentfier}
                 errorText={this.getValidationMessages(`${type}_bundle_identifier`).join(' ')}
                 floatingLabelText="Bundle Identifier"
               />

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+
 export default {
   configGCMPushNotification(params = {}) {
     this.NewLibConnection
@@ -14,7 +15,10 @@ export default {
     let APNSConfigParams = { };
 
     _.forEach(params.certificateTypes, (type) => {
-      if (params[`${type}_certificate_changed`] && params[`${type}_certificate_name`] === null) {
+      const ifCertificateChanged = params[`${type}_certificate_changed`];
+      const ifCertificateHasName = params[`${type}_certificate_name`];
+
+      if (ifCertificateChanged && ifCertificateHasName === null) {
         removeCertificates.push(
           this.NewLibConnection
             .APNSConfig
@@ -23,7 +27,7 @@ export default {
         );
       }
 
-      if (params[`${type}_certificate_changed`] && !_.isEmpty(params[`${type}_certificate_name`])) {
+      if (ifCertificateChanged && !_.isEmpty(ifCertificateHasName)) {
         const typeParams = _.pickBy(params, (param, paramKey) => _.startsWith(paramKey, type));
 
         APNSConfigParams = { ...APNSConfigParams, ...typeParams };
