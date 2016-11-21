@@ -38,10 +38,10 @@ const SocketsDetailsView = React.createClass({
     const { currentSocket } = this.state;
 
     if (currentSocket) {
-      const githubSplitedLink = currentSocket.ymlUrl.split('/');
-      const socketLink = `https://github.com/${githubSplitedLink[3]}/${githubSplitedLink[4]}`;
-      const authorLink = `https://github.com/${githubSplitedLink[3]}`;
-      const githubSubLink = `/${githubSplitedLink[3]}/${githubSplitedLink[4]}`;
+      const githubSplitLink = currentSocket.ymlUrl.split('/');
+      const socketLink = `https://github.com/${githubSplitLink[3]}/${githubSplitLink[4]}`;
+      const authorLink = `https://github.com/${githubSplitLink[3]}`;
+      const githubSubLink = `/${githubSplitLink[3]}/${githubSplitLink[4]}`;
       const authorObj = {
         subLink: githubSubLink,
         name: currentSocket.author.name,
