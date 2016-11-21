@@ -10,7 +10,6 @@ export default CreateActions(
     setInstance: {},
     setInvitationFromUrl: {},
     getInvitationFromUrl: {},
-    handleInvalidURL: {},
     fetchUser: {
       asyncResult: true,
       children: ['completed', 'failure'],

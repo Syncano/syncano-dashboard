@@ -11,7 +11,6 @@ export default CreateActions(
     clearStore: {},
     fetchCurrentClassObj: {
       asyncResult: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.getClass'
     },
