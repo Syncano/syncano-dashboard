@@ -22,6 +22,7 @@ import EmptyView from './EmptyView';
 import Header from './Header';
 import Icon from './Icon';
 import InnerToolbar from './InnerToolbar';
+import LinkWithIcon from './LinkWithIcon';
 import LinkWrapper from './LinkWrapper';
 import Lists from './Lists';
 import Loading from './Loading';
@@ -50,13 +51,13 @@ import Stepper from './Stepper';
 import SyncanoTheme from './SyncanoTheme';
 import Tags from './Tags';
 import TogglePanel from './TogglePanel';
+import ToolbarTitle from './ToolbarTitle';
 import Tooltip from './Tooltip';
 import { TraceResult, TraceBigResult } from './TraceResult';
 import Truncate from './Truncate';
 import UpgradeButton from './UpgradeButton';
 import UpgradeNowToolbar from './UpgradeNowToolbar';
 import StatusLabel from './StatusLabel';
-import LinkWithIcon from './LinkWithIcon';
 
 export { AlertPageContent };
 export { AutoCompleteWrapper };
@@ -82,6 +83,7 @@ export { EmptyView };
 export { Header };
 export { Icon };
 export { InnerToolbar };
+export { LinkWithIcon };
 export { LinkWrapper };
 export { Lists };
 export { Loading };
@@ -110,6 +112,7 @@ export { Stepper };
 export { SyncanoTheme };
 export { Tags };
 export { TogglePanel };
+export { ToolbarTitle };
 export { Tooltip };
 export { TraceResult };
 export { TraceBigResult };
@@ -117,7 +120,6 @@ export { Truncate };
 export { UpgradeButton };
 export { UpgradeNowToolbar };
 export { StatusLabel };
-export { LinkWithIcon };
 
 export default {
   AlertPageContent,
@@ -144,6 +146,7 @@ export default {
   Header,
   Icon,
   InnerToolbar,
+  LinkWithIcon,
   LinkWrapper,
   Lists,
   Loading,
@@ -172,12 +175,12 @@ export default {
   SyncanoTheme,
   Tags,
   TogglePanel,
+  ToolbarTitle,
   Tooltip,
   TraceResult,
   TraceBigResult,
   Truncate,
   UpgradeButton,
-  StatusLabel,
-  LinkWithIcon,
-  UpgradeNowToolbar
+  UpgradeNowToolbar,
+  StatusLabel
 };

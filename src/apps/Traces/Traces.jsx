@@ -9,7 +9,7 @@ import Store from './TracesStore';
 import Actions from './TracesActions';
 
 import { IconButton } from 'material-ui';
-import { Container, InnerToolbar } from '../../common/';
+import { Container, InnerToolbar, ToolbarTitle } from '../../common/';
 
 import TracesList from './TracesList';
 
@@ -55,21 +55,22 @@ const Traces = Radium(React.createClass({
     }[this.props.tracesFor];
   },
 
-  getTracesFor() {
-    if (this.props.tracesFor === 'scriptEndpoint') {
+  getTracesSource() {
+    const { tracesFor } = this.props;
+
+    if (tracesFor === 'scriptEndpoint') {
       return 'Script Endpoint';
     }
 
-    return _.capitalize(this.props.tracesFor);
+    return _.capitalize(tracesFor);
   },
 
   getToolbarTitleText() {
     const { currentObjectName } = this.state;
-    const tracesFor = this.getTracesFor();
-    const toolbarIdText = this.props.hasHeaderId ? `(id: ${this.props.objectId})` : '';
+    const tracesFor = this.getTracesSource();
 
     if (currentObjectName) {
-      return `${tracesFor}: ${currentObjectName} ${toolbarIdText}`;
+      return `${tracesFor}: ${currentObjectName}`;
     }
 
     return '';
@@ -84,7 +85,7 @@ const Traces = Radium(React.createClass({
 
   render() {
     const { items, isLoading } = this.state;
-    const { tracesFor, handleFetchTraces } = this.props;
+    const { handleFetchTraces, hasHeaderId, objectId, tracesFor } = this.props;
     const config = this.getConfig();
     const toolbarTitleText = this.getToolbarTitleText();
 
@@ -92,10 +93,13 @@ const Traces = Radium(React.createClass({
       <div>
         <Helmet title={toolbarTitleText} />
         <InnerToolbar
-          title={toolbarTitleText}
           backFallback={this.handleBackClick}
           backButtonTooltip={config.backLabel}
         >
+          <ToolbarTitle
+            id={hasHeaderId ? objectId : null}
+            title={toolbarTitleText}
+          />
           <IconButton
             iconClassName="synicon-refresh"
             tooltip="Reload Traces"

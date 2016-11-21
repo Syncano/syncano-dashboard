@@ -11,13 +11,11 @@ import Actions from './DataEndpointsPreviewActions';
 import Store from './DataEndpointsPreviewStore';
 
 import { IconButton } from 'material-ui';
-import { InnerToolbar, Loading, Dialog, Container } from '../../common';
+import { Container, Dialog, InnerToolbar, Loading, ToolbarTitle } from '../../common';
 import DataObjectsTable from '../DataObjects/DataObjectsTable';
 import ReadOnlyTooltip from '../DataObjects/ReadOnlyTooltip';
 
 const DataEndpointsPreview = React.createClass({
-  displayName: 'DataEndpointsPreview',
-
   mixins: [
     Reflux.connect(Store),
     DialogsMixin
@@ -37,12 +35,20 @@ const DataEndpointsPreview = React.createClass({
   },
 
   componentWillUpdate(nextProps, nextState) {
-    console.info('DataObjects::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
   },
 
   componentWillUnmount() {
     Actions.clearStore();
+  },
+
+  getStyles() {
+    return {
+      iconButtons: {
+        fontSize: 25,
+        marginTop: 5
+      }
+    };
   },
 
   isClassProtected() {
@@ -108,26 +114,27 @@ const DataEndpointsPreview = React.createClass({
   render() {
     const { isLoading, classObject, selectedRows, currentPage, hasNextPage, items } = this.state;
     const { dataEndpointName } = this.props.params;
+    const styles = this.getStyles();
 
     return (
       <div>
         {this.getDialogs()}
         <Helmet title={`Data Endpoint ${dataEndpointName} Preview`} />
         <InnerToolbar
-          title={`Response preview for Data Endpoint ${dataEndpointName}`}
           backFallback={this.handleBackClick}
           backButtonTooltip="Go back to Data Endpoints list"
         >
+          <ToolbarTitle title={`Response preview for Data Endpoint ${dataEndpointName}`} />
           <IconButton
             data-e2e="data-object-delete-button"
-            style={{ fontSize: 25, marginTop: 5 }}
+            style={styles.iconButtons}
             iconClassName="synicon-delete"
             tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={classObject.name} /> : 'Delete Data Objects'}
             disabled={(selectedRows && !selectedRows.length) || this.isClassProtected()}
             onTouchTap={() => this.showDialog('deleteDataObjectDialog')}
           />
           <IconButton
-            style={{ fontSize: 25, marginTop: 5 }}
+            style={styles.iconButtons}
             iconClassName="synicon-refresh"
             tooltip="Reload Data Objects"
             onTouchTap={() => Actions.fetchData(currentPage)}

@@ -14,7 +14,7 @@ import Store from './DataObjectsStore';
 
 // Components
 import { IconButton } from 'material-ui';
-import { Container, Dialog, InnerToolbar, Loading } from '../../common/';
+import { Container, Dialog, InnerToolbar, Loading, ToolbarTitle } from '../../common/';
 
 // Local components
 import ReadOnlyTooltip from './ReadOnlyTooltip';
@@ -126,9 +126,8 @@ const DataObjects = React.createClass({
         <Helmet title={title} />
         {this.getDialogs()}
 
-        <InnerToolbar
-          title={`${title} ${selectedMessageText}`}
-        >
+        <InnerToolbar>
+          <ToolbarTitle title={`${title} ${selectedMessageText}`} />
           <DataObjectSearchInput />
           <IconButton
             data-e2e="data-object-add-button"

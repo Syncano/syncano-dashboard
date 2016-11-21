@@ -14,7 +14,7 @@ import HostingUploadDialogActions from './HostingUploadDialogActions';
 import HostingFilesFolderForm from './HostingFilesFolderForm';
 
 import { FontIcon, RaisedButton } from 'material-ui';
-import { InnerToolbar, Container, Show, Tooltip } from '../../common';
+import { InnerToolbar, Container, Show, ToolbarTitle } from '../../common';
 import HostingFilesList from './HostingFilesList';
 import HostingDialog from './HostingDialog';
 import HostingPublishDialog from './HostingPublishDialog';
@@ -56,12 +56,6 @@ const HostingFilesView = React.createClass({
         display: 'flex',
         alignItems: 'center'
       },
-      customToolbarTitle: {
-        fontSize: 20,
-        lineHeight: '56px',
-        color: 'rgba(0, 0, 0, .4)',
-        padding: '0 24px 0 0'
-      },
       newFolderNameInput: {
         width: 10,
         marginRight: 10,
@@ -73,9 +67,6 @@ const HostingFilesView = React.createClass({
       actionButtons: {
         display: 'flex',
         alignItems: 'center'
-      },
-      toolbarTooltip: {
-        top: 30
       }
     };
   },
@@ -89,24 +80,6 @@ const HostingFilesView = React.createClass({
     const hostingUrl = this.isDefaultHosting() ? defaultHostingUrl : customDomainUrl;
 
     return hostingUrl;
-  },
-
-  getFullTitle() {
-    const { hostingDetails, isLoading } = this.state;
-
-    return hostingDetails && !isLoading ? `Hosting: ${hostingDetails.name} (id: ${hostingDetails.id})` : '';
-  },
-
-  getTruncatedTitle() {
-    const { hostingDetails, isLoading } = this.state;
-
-    if (hostingDetails && !isLoading) {
-      const hostingName = `Hosting: ${hostingDetails.name}`;
-
-      return `${_.truncate(hostingName, { length: 55 })} (id: ${hostingDetails.id})`;
-    }
-
-    return '';
   },
 
   isDefaultHosting() {
@@ -252,8 +225,6 @@ const HostingFilesView = React.createClass({
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const hostingUrl = this.getHostingUrl();
-    const fullTitle = this.getFullTitle();
-    const truncatedTitle = this.getTruncatedTitle();
 
     if (!hostingDetails) {
       return null;
@@ -261,7 +232,7 @@ const HostingFilesView = React.createClass({
 
     return (
       <div>
-        <Helmet title={fullTitle} />
+        <Helmet title={hostingDetails.name} />
         <HostingDialog />
         <HostingPublishDialog />
 
@@ -271,14 +242,10 @@ const HostingFilesView = React.createClass({
           forceBackFallback={true}
           backButtonTooltip="Go Back to Hosting"
         >
-          <Tooltip
-            label={fullTitle}
-            horizontalPosition="right"
-            style={styles.toolbarTooltip}
-          >
-            <span style={styles.customToolbarTitle}>{truncatedTitle}</span>
-          </Tooltip>
-          <div style={{ flex: 1 }} />
+          <ToolbarTitle
+            id={hostingDetails.id}
+            title={`Hosting: ${hostingDetails.name}`}
+          />
           <div style={styles.buttonsWrapper}>
             <Show if={items.length && !isLoading}>
               {this.renderActionButtons()}
