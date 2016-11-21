@@ -21,12 +21,7 @@ const GCMDevices = React.createClass({
   ],
 
   componentDidMount() {
-    const { routes } = this.props;
-    const currentRouteName = routes[routes.length - 1].name;
-
-    if (currentRouteName !== 'all-push-notification-devices') {
-      Actions.fetch();
-    }
+    Actions.fetch();
   },
 
   getDefaultProps() {
@@ -51,11 +46,13 @@ const GCMDevices = React.createClass({
 
   render() {
     const { hideDialogs, isLoading, items, hasConfig, ...other } = this.state;
-    const { visibleItems, emptyView, noConfigView } = this.props;
+    const { visibleItems, emptyView, noConfigView, routes } = this.props;
+    const currentRouteName = routes[routes.length - 1].name;
+    const isSingleView = currentRouteName !== 'all-push-notification-devices';
 
     return (
       <Container>
-        <Helmet title="Android Devices" />
+        {isSingleView && <Helmet title="Android Devices" />}
         <GCMSummaryDialog />
         <DevicesList
           titleVisible={this.shouldShowTitle()}

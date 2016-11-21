@@ -203,10 +203,6 @@ export default Reflux.createStore({
     Actions.setInstance(payload);
   },
 
-  onFetchInstanceFailure() {
-    Actions.handleInvalidURL();
-  },
-
   onFetchUserCompleted(payload) {
     Actions.setUser(payload.data);
   },
@@ -265,10 +261,6 @@ export default Reflux.createStore({
     if (this.router) {
       this.router.push({ pathname: '/login', query: _.merge(this.location.query, { next: this.location.pathname }) });
     }
-  },
-
-  onHandleInvalidURL() {
-    this.getRouter().push('instances');
   },
 
   isAuthenticated() {

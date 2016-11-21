@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import SessionActions from '../apps/Session/SessionActions';
 
 export default {
   setLoadingStates() {
@@ -8,7 +7,6 @@ export default {
 
       _.forEach(listenables, (listenable) => {
         this.bindLoadingListeners(listenable);
-        this.bindFailureListeners(listenable);
       });
     }
   },
@@ -27,12 +25,6 @@ export default {
         this.listenTo(action.completed, () => this.setLoading(false, trigger.completed));
         this.listenTo(action.failure, () => this.setLoading(false, trigger.failure));
       }
-    });
-  },
-
-  bindFailureListeners(listenable) {
-    _.forEach(listenable, (action) => {
-      action.redirectOnFailure && this.listenTo(action.failure, SessionActions.handleInvalidURL);
     });
   },
 

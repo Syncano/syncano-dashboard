@@ -16,7 +16,6 @@ export default CreateActions(
     fetchCurrentDataEndpoint: {
       asyncResult: true,
       loading: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataEndpoints.get'
     },

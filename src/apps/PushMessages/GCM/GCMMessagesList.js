@@ -16,12 +16,7 @@ const GCMMessagesList = React.createClass({
   mixins: [Reflux.connect(Store)],
 
   componentDidMount() {
-    const { routes } = this.props;
-    const currentRouteName = routes[routes.length - 1].name;
-
-    if (currentRouteName !== 'all-push-notification-messages') {
-      Actions.fetch();
-    }
+    Actions.fetch();
   },
 
   getDefaultProps() {
