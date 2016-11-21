@@ -44,7 +44,7 @@ const ScriptDialogContent = ({
       <TextField
         name="description"
         onFocus={enableBindShortcuts}
-        value={description}
+        defaultValue={description}
         onChange={handleOnChangeDescription}
         errorText={_.union(_.get(errors, 'description') || []).join(' ')}
         fullWidth={true}

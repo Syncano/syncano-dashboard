@@ -7,7 +7,6 @@ export default CreateActions(
     fetchApiKeys: {
       asyncResult: true,
       loading: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.ApiKeys.list'
     },

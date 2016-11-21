@@ -14,7 +14,7 @@ export default addTestNamePrefixes({
   'Administrator adds a Hosting Socket': (client) => {
     const hostingPage = client.page.hostingPage();
     const hosting = utils.addSuffix('hosting');
-    const domain = `${utils.randomString(10)}domain`;
+    const domain = `${utils.randomString(10)}domain.io`;
     const { instanceName } = instances.secondInstance;
 
     hostingPage
@@ -29,7 +29,7 @@ export default addTestNamePrefixes({
   'Administrator edits a Hosting Socket': (client) => {
     const hostingPage = client.page.hostingPage();
     const dropdownOption = hostingPage.elements.hostingListItemDropdownEditOption.selector;
-    const domain = `${utils.randomString(10)}editedDomain`;
+    const domain = `${utils.randomString(10)}editedDomain.io`;
 
     hostingPage
       .clickDropdown('@hostingDropdownIcon', dropdownOption)

@@ -10,7 +10,6 @@ export default CreateActions(
     fetchSockets: {
       asyncResult: true,
       loading: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Sockets.list'
     }

@@ -57,6 +57,12 @@ export default {
     endpointPageSize: {
       selector: 'input[name="page_size"]'
     },
+    endpointOrderBy: {
+      selector: '[data-e2e="order_by-dropdown"]'
+    },
+    endpointOrderByChoice: {
+      selector: '[data-e2e="dropdown-choice-created_at (descending)"]'
+    },
     endpointCloseSummary: {
       selector: 'button[data-e2e="data-endpoint-close-summary"]'
     },
