@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { getBaseScript } from '../../Scripts/BaseScripts';
 
 export default {
   get(id) {
@@ -61,28 +60,6 @@ export default {
 
         this.completed(itemsObject);
       })
-      .catch(this.failure);
-  },
-
-  create(payload) {
-    const { runtime_name, label, description } = payload;
-    const source = {
-      python3: getBaseScript('base_python'),
-      'python_library_v4.2': getBaseScript('base_python'),
-      'python_library_v5.0': getBaseScript('base_python'),
-      'nodejs_library_v0.4': '// Start coding!',
-      'nodejs_library_v1.0': getBaseScript('base_nodejs'),
-      ruby: '# Start coding!',
-      golang: '// Start coding!',
-      swift: '// Start coding!',
-      php: getBaseScript('base_php')
-    }[runtime_name];
-
-    this.NewLibConnection
-      .Script
-      .please()
-      .create({ runtime_name, label, description, source })
-      .then(this.completed)
       .catch(this.failure);
   },
 

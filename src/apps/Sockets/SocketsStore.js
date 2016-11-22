@@ -1,150 +1,75 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
+import YAML from 'js-yaml';
 
-import { CheckListStoreMixin, StoreHelpersMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
+import { CheckListStoreMixin, StoreLoadingMixin } from '../../mixins';
 
-import CustomSocketsActions from '../CustomSockets/CustomSocketsActions';
-import SessionActions from '../Session/SessionActions';
 import Actions from './SocketsActions';
-import DataActions from '../DataEndpoints/DataEndpointsActions';
-import ScriptEndpointsActions from '../ScriptEndpoints/ScriptEndpointsActions';
-import TriggersActions from '../Triggers/TriggersActions';
-import SchedulesActions from '../Schedules/SchedulesActions';
-import ChannelsActions from '../Channels/ChannelsActions';
-import APNSActions from '../PushNotifications/APNS/APNSPushNotificationsActions';
-import GCMActions from '../PushNotifications/GCM/GCMPushNotificationsActions';
-import ScriptsActions from '../Scripts/ScriptsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
 
   mixins: [
-    Reflux.ListenerMixin,
     CheckListStoreMixin,
-    StoreHelpersMixin,
-    StoreLoadingMixin,
-    WaitForStoreMixin
+    StoreLoadingMixin
   ],
 
   getInitialState() {
     return {
-      customSockets: [],
-      data: [],
-      hosting: [],
-      scriptEndpoints: [],
-      triggers: [],
-      schedules: [],
-      channels: [],
-      gcmPushNotifications: [],
-      apnsPushNotifications: [],
-      hasAnyItem: false,
-      isLoading: true
+      items: [],
+      isLoading: true,
+      currentSocket: null,
+      currentSocketId: null
     };
   },
 
-  socketsListenables: [
-    SessionActions.setInstance,
-    CustomSocketsActions.createCustomSocket.completed,
-    CustomSocketsActions.updateCustomSocket.completed,
-    CustomSocketsActions.removeCustomSockets.completed,
-    DataActions.createDataEndpoint.completed,
-    DataActions.updateDataEndpoint.completed,
-    DataActions.removeDataEndpoints.completed,
-    ScriptEndpointsActions.createScriptEndpoint.completed,
-    ScriptEndpointsActions.updateScriptEndpoint.completed,
-    ScriptEndpointsActions.createScriptEndpointWithScript.completed,
-    ScriptEndpointsActions.updateScriptEndpointWithScript.completed,
-    ScriptEndpointsActions.removeScriptEndpoints.completed,
-    TriggersActions.createTrigger.completed,
-    TriggersActions.createTriggerWithScript.completed,
-    TriggersActions.updateTrigger.completed,
-    TriggersActions.updateTriggerWithScript.completed,
-    TriggersActions.removeTriggers.completed,
-    SchedulesActions.createSchedule.completed,
-    SchedulesActions.createScheduleWithScript.completed,
-    SchedulesActions.updateSchedule.completed,
-    SchedulesActions.updateScheduleWithScript.completed,
-    SchedulesActions.removeSchedules.completed,
-    ChannelsActions.createChannel.completed,
-    ChannelsActions.updateChannel.completed,
-    ChannelsActions.removeChannels.completed,
-    APNSActions.configAPNSPushNotification.completed,
-    APNSActions.removeCertificate.completed,
-    GCMActions.configGCMPushNotification.completed
-  ],
-
   init() {
     this.data = this.getInitialState();
-    this.waitFor(
-      SessionActions.setInstance,
-      this.refreshData
-    );
     this.setLoadingStates();
   },
 
-  refreshData() {
-    Actions.fetchSockets();
-    ScriptsActions.fetchScripts();
+  getSockets(empty) {
+    return this.data.items || empty || null;
   },
 
-  addSocketsListeners() {
-    _.forEach(this.socketsListenables, (listenable) => this.listenTo(listenable, () => {
-      this.refreshData();
-      Actions.dismissDialog();
-    }));
+  getSocketById(id) {
+    const { items } = this.data;
+
+    return _.find(items, ['id', Number(id)]);
   },
 
-  removeSocketsListeners() {
-    _.forEach(this.socketsListenables, (listenable) => this.stopListeningTo(listenable));
-  },
-
-  clearSockets() {
-    this.data = this.getInitialState();
+  onSetCurrentSocketId(id) {
+    this.data.currentSocketId = Number(id);
     this.trigger(this.data);
   },
 
-  hasGCMConfig(items = this.data.gcmPushNotifications) {
-    if (items.length) {
-      return !_.isEmpty(items[0].development_api_key) || !_.isEmpty(items[0].production_api_key);
+  refreshData() {
+    const { currentSocketId } = this.data;
+    const currentSocket = this.getSocketById(currentSocketId);
+
+    this.data.currentSocket = currentSocket;
+
+    Actions.fetchSocketsInfo(currentSocket.url);
+  },
+
+  onFetchSocketsInfoCompleted({ data, license, ymlUrl }) {
+    try {
+      this.data.currentSocket = YAML.safeLoad(data);
+      this.data.currentSocket.license = license;
+      this.data.currentSocket.ymlUrl = ymlUrl;
+    } catch (e) {
+      this.data.currentSocket = null;
     }
-
-    return false;
+    this.trigger(this.data);
   },
 
-  hasAPNSConfig(items = this.data.apnsPushNotifications) {
-    if (items.length) {
-      return items[0].development_certificate || items[0].production_certificate;
-    }
-
-    return false;
+  onFetchSocketsInfoFailure() {
+    this.data.currentSocket = null;
+    this.trigger(this.data);
   },
 
-  getPushNotificationsItems(items, type, devicesCount) {
-    return _.map(items, (item) => {
-      item.name = type;
-      item.hasConfig = type === 'GCM' ? this.hasGCMConfig(items) : this.hasAPNSConfig(items);
-      item.devicesCount = devicesCount;
-
-      return item;
-    }).filter((item) => item.hasConfig);
-  },
-
-  onFetchSocketsCompleted(sockets) {
-    const gcmDevicesCount = sockets.gcmDevices.length;
-    const apnsDevicesCount = sockets.apnsDevices.length;
-    const gcmItems = this.getPushNotificationsItems([sockets.gcmPushNotifications], 'GCM', gcmDevicesCount);
-    const apnsItems = this.getPushNotificationsItems([sockets.apnsPushNotifications], 'APNS', apnsDevicesCount);
-
-    this.data.customSockets = sockets.customSockets;
-    this.data.data = sockets.data;
-    this.data.scriptEndpoints = sockets.scriptEndpoints;
-    this.data.triggers = sockets.triggers;
-    this.data.schedules = sockets.schedules;
-    this.data.channels = sockets.channels;
-    this.data.gcmPushNotifications = gcmItems;
-    this.data.apnsPushNotifications = apnsItems;
-    this.data.hasAnyItem = _.some(this.data, (value) => value.length);
-
+  onFetchSocketsCompleted(items) {
+    this.data.items = items;
     this.trigger(this.data);
   }
 });

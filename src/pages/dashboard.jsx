@@ -5,7 +5,6 @@ import { Grid, Breakpoint } from 'react-responsive-grid';
 
 import SessionStore from '../apps/Session/SessionStore';
 import ProfileBillingPlanStore from '../apps/Profile/ProfileBillingPlanStore';
-import RuntimeActions from '../apps/Runtimes/RuntimesActions';
 
 import { RaisedButton } from 'material-ui';
 import { Header, MobileOnboarding, UpgradeNowToolbar } from '../common/';
@@ -30,7 +29,6 @@ const Dashboard = React.createClass({
     }
 
     ProfileBillingPlanStore.init();
-    RuntimeActions.fetch();
   },
 
   componentWillUnmount() {

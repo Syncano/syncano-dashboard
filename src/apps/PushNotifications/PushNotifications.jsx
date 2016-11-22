@@ -14,8 +14,7 @@ import GCMConfigDialog from './GCM/GCMConfigDialog';
 import GCMSummaryDialog from './GCM/GCMSummaryDialog';
 import ConfigPushNotificationsPopover from './ConfigPushNotificationsPopover';
 import { RaisedButton } from 'material-ui';
-import { Container, Loading } from '../../common/';
-import SocketsInnerToolbar from '../Sockets/SocketsInnerToolbar';
+import { Container, InnerToolbar, Loading } from '../../common/';
 import PushNotificationsEmptyViewDouble from './PushNotificationsEmptyViewDouble';
 
 export default React.createClass({
@@ -72,7 +71,7 @@ export default React.createClass({
         <APNSConfigDialog />
         <GCMConfigDialog />
         <GCMSummaryDialog />
-        <SocketsInnerToolbar>
+        <InnerToolbar>
           <RaisedButton
             data-e2e="push-notification-toolbar-add-button"
             label="Add"
@@ -80,7 +79,7 @@ export default React.createClass({
             style={{ marginRight: 0 }}
             onTouchTap={pushSocketPopover ? pushSocketPopover.toggle : null}
           />
-        </SocketsInnerToolbar>
+        </InnerToolbar>
         <ConfigPushNotificationsPopover ref="pushSocketPopover" />
         <Container>
           {this.renderContent()}

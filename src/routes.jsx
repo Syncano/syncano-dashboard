@@ -9,7 +9,6 @@ import ClassesPage from './pages/classes';
 import DashboardPage from './pages/dashboard';
 import InstancePage from './pages/instance';
 import ProfilePage from './pages/profile';
-import ScriptsPage from './pages/scripts';
 import SetupPage from './pages/setup';
 import NotFoundPage from './pages/notfound';
 import PushDevicesPage from './pages/pushDevices';
@@ -32,23 +31,14 @@ import Solutions from './apps/Solutions';
 import Admins from './apps/Admins/Admins';
 import ApiKeys from './apps/ApiKeys/ApiKeys';
 import BackupAndRestore from './apps/BackupAndRestore';
-import ChannelHistory from './apps/ChannelHistory';
-import Channels from './apps/Channels';
 import Classes from './apps/Classes';
 import CustomSockets from './apps/CustomSockets';
 import SocketsRegistry from './apps/SocketsRegistry';
-import ScriptEndpoints from './apps/ScriptEndpoints';
+import ScriptEndpointTraces from './apps/ScriptEndpoints';
 import Script from './apps/Script';
-import Scripts from './apps/Scripts';
 import DataObjects from './apps/DataObjects/DataObjects';
-import DataEndpoints from './apps/DataEndpoints';
 import Users from './apps/Users/Users';
 import Sockets from './apps/Sockets';
-import Snippets from './apps/Snippets';
-import Template from './apps/Template';
-import Templates from './apps/Templates';
-import Triggers from './apps/Triggers';
-import Schedules from './apps/Schedules';
 import PushNotifications from './apps/PushNotifications';
 import PushDevices from './apps/PushDevices';
 import Usage from './apps/Usage';
@@ -151,6 +141,12 @@ export default (
       />
 
       <Route
+        name="socket-details"
+        component={Sockets.Details}
+        path="instances/:instanceName/sockets/:socketId"
+      />
+
+      <Route
         name="instance"
         onEnter={RoutesUtil.checkInstanceActiveSubscription}
         component={InstancePage}
@@ -160,8 +156,8 @@ export default (
         {/* Sockets */}
         <Route
           name="sockets"
-          path="sockets"
           component={Sockets}
+          path="sockets"
         />
 
         {/* Hosting */}
@@ -181,20 +177,6 @@ export default (
           />
 
           <IndexRoute component={Hosting} />
-        </Route>
-
-        {/* Data */}
-        <Route
-          name="data"
-          path="data-endpoints"
-        >
-          <Route
-            name="data-endpoints-preview"
-            path=":dataEndpointName/preview"
-            component={DataEndpoints.Preview}
-          />
-
-          <IndexRoute component={DataEndpoints} />
         </Route>
 
         {/* Admins */}
@@ -336,48 +318,16 @@ export default (
           <IndexRoute component={BackupAndRestore.Full} />
         </Route>
 
-
-        {/* ScriptEndpoints */}
+        {/* ScriptEndpoints Traces */}
         <Route
-          name="script-endpoints"
-          path="script-endpoints"
-        >
-
-
-          {/* ScriptEndpoints Traces */}
-          <Route
-            name="scriptEndpoint-traces"
-            component={ScriptEndpoints.Traces}
-            path=":scriptEndpointName/traces"
-          />
-
-          <IndexRoute component={ScriptEndpoints} />
-
-        </Route>
-
-        <Route
-          name="snippets"
-          path="snippets"
-          component={Snippets}
+          name="scriptEndpoint-traces"
+          component={ScriptEndpointTraces}
+          path="script-endpoints/:scriptEndpointName/traces"
         />
-
-        {/* Templates */}
-        <Route
-          name="templates"
-          path="templates"
-        >
-          <Route
-            name="template"
-            component={Template}
-            path=":templateName"
-          />
-          <IndexRoute component={Templates} />
-        </Route>
 
         {/* Scripts */}
         <Route
           name="scripts"
-          component={ScriptsPage}
           path="scripts"
         >
           <Route
@@ -385,13 +335,7 @@ export default (
             component={Script}
             path=":scriptId"
           />
-          <IndexRoute component={Scripts} />
         </Route>
-        <Route
-          name="scripts-add"
-          component={Scripts}
-          path="scripts/:action"
-        />
 
         {/* Data Objects */}
         <Route
@@ -399,50 +343,6 @@ export default (
           component={DataObjects}
           path="objects"
         />
-
-        {/* Triggers */}
-        <Route
-          name="triggers"
-          path="triggers"
-        >
-
-          <Route
-            name="trigger-traces"
-            component={Triggers.Traces}
-            path=":triggerId/traces"
-          />
-
-          <IndexRoute component={Triggers} />
-        </Route>
-
-        {/* Schedules */}
-        <Route
-          name="schedules"
-          path="schedules"
-        >
-
-          <Route
-            name="schedule-traces"
-            component={Schedules.Traces}
-            path=":scheduleId/traces"
-          />
-
-          <IndexRoute component={Schedules} />
-        </Route>
-
-        {/* Channels */}
-        <Route
-          name="channels"
-          path="channels"
-        >
-          <Route
-            name="channel-history"
-            component={ChannelHistory.Messages}
-            path=":channelName/history"
-          />
-
-          <IndexRoute component={Channels} />
-        </Route>
 
         {/* Users */}
         <Route

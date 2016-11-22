@@ -1,88 +1,115 @@
 import React from 'react';
-import { withRouter } from 'react-router';
-import _ from 'lodash';
 import pluralize from 'pluralize';
 
 import Actions from './SocketsActions';
-import Store from './SocketsStore';
 
-import CustomSocketsList from '../CustomSockets/CustomSocketsList';
-import DataEndpointsList from '../DataEndpoints/DataEndpointsList';
-import ScriptEndpointsList from '../ScriptEndpoints/ScriptEndpointsList';
-import TriggersList from '../Triggers/TriggersList';
-import SchedulesList from '../Schedules/SchedulesList';
-import ChannelsList from '../Channels/ChannelsList';
-import { Show, ShowMore } from '../../common/';
+import { ColumnList, Lists, Container } from '../../common/';
+import ListItem from './SocketsListItem';
 
-const SocketsList = ({ router, params, sockets, handleTitleClick, visibleItems = 3 }) => {
-  const listsMap = {
-    data: {
-      component: DataEndpointsList,
-      routeName: 'data-endpoints'
-    },
-    scriptEndpoints: {
-      component: ScriptEndpointsList,
-      routeName: 'script-endpoints'
-    },
-    triggers: {
-      component: TriggersList,
-      routeName: 'triggers'
-    },
-    schedules: {
-      component: SchedulesList,
-      routeName: 'schedules'
-    },
-    channels: {
-      component: ChannelsList,
-      routeName: 'channels'
-    },
-    customSockets: {
-      component: CustomSocketsList,
-      routeName: 'custom-sockets'
-    }
-  };
+const Column = ColumnList.Column;
 
-  const onClickTitle = (pathName) => {
-    if (_.isFunction(handleTitleClick)) {
-      return handleTitleClick();
-    }
+const SocketsList = React.createClass({
 
-    return router.push(`/instances/${params.instanceName}/${pathName}/`);
-  };
+  getDefaultProps() {
+    return {
+      checkItem: Actions.checkItem
+    };
+  },
 
-  return (
-    <div>
-      {_.map(listsMap, (list, socketName) => {
-        const itemsCount = sockets[socketName].length;
-        const shouldApplyListStyle = itemsCount <= visibleItems;
-        const pluralizedItemName = pluralize(_.startCase(list.routeName), itemsCount);
-        const label = `Show all ${itemsCount} ${pluralizedItemName}`;
+  getStyles() {
+    return {
+      ammount: {
+        marginTop: 24,
+        textAlign: 'center',
+        fontSize: '1em'
+      },
+      foundSocketsCount: {
+        fontWeight: 500
+      },
+      detailsColumnHeader: {
+        padding: '0 32px'
+      }
+    };
+  },
 
-        return (
-          <Show
-            key={`${socketName}SocketsList`}
-            if={itemsCount}
-          >
-            {React.createElement(list.component, {
-              style: shouldApplyListStyle && { marginBottom: 48 },
-              getCheckedItems: () => Store.getCheckedItems(socketName),
-              checkItem: (checkId, value, itemKeyName) => Actions.checkItem(checkId, value, itemKeyName, socketName),
-              handleSelectAll: () => Actions.selectVisible(socketName, visibleItems),
-              handleUnselectAll: () => Actions.uncheckAll(socketName),
-              items: sockets[socketName].slice(0, visibleItems),
-              handleTitleClick: () => onClickTitle(list.routeName)
-            })}
-            <ShowMore
-              label={label}
-              style={{ marginBottom: 40 }}
-              visible={itemsCount > visibleItems}
-              onTouchTap={() => onClickTitle(_.kebabCase(list.routeName))}
-            />
-          </Show>
-        );
-      })}
-    </div>
-  );
-};
+  renderItem(item) {
+    const { checkItem } = this.props;
+    const showDeleteDialog = () => this.showDialog('removeCustomSocketsDialog', item);
 
-export default withRouter(SocketsList);
+    return (
+      <ListItem
+        key={`custom-sockets-registry-list-item-${item.name}`}
+        item={item}
+        onIconClick={checkItem}
+        showDeleteDialog={showDeleteDialog}
+      />
+    );
+  },
+
+  renderHeader() {
+    const { handleTitleClick } = this.props;
+    const styles = this.getStyles();
+
+    return (
+      <ColumnList.Header>
+        <Column.ColumnHeader
+          className="col-sm-10"
+          primary={true}
+          columnName="CHECK_ICON"
+          handleClick={handleTitleClick}
+        >
+          Sockets
+        </Column.ColumnHeader>
+        <Column.ColumnHeader
+          columnName="DESC"
+          registry={true}
+          className="col-sm-5"
+        >
+          Author
+        </Column.ColumnHeader>
+        <Column.ColumnHeader
+          columnName="DESC"
+          registry={true}
+          className="col-flex-2"
+        >
+          Description
+        </Column.ColumnHeader>
+        <Column.ColumnHeader
+          className="col-sm-7"
+          registry={true}
+          styles={styles.detailsColumnHeader}
+        >
+          Details
+        </Column.ColumnHeader>
+      </ColumnList.Header>
+    );
+  },
+
+  render() {
+    const { isLoading, items } = this.props;
+    const styles = this.getStyles();
+    const pluralizedResults = pluralize('result', items.length);
+
+    return (
+      <Lists.Container data-e2e="sockets-list">
+        <div style={styles.ammount}>
+          Found
+          <span style={styles.foundSocketsCount}>
+            {` ${items.length} `}
+          </span>
+          {pluralizedResults}
+        </div>
+        <Container>
+          {this.renderHeader()}
+          <Lists.List
+            isLoading={isLoading}
+            items={items}
+            renderItem={this.renderItem}
+          />
+        </Container>
+      </Lists.Container>
+    );
+  }
+});
+
+export default SocketsList;

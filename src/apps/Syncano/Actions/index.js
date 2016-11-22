@@ -19,9 +19,6 @@ import PushDevices from './PushDevices';
 import PushNotifications from './PushNotifications';
 import Sockets from './Sockets';
 import Solutions from './Solutions';
-import Schedules from './Schedules';
-import Templates from './Templates';
-import Triggers from './Triggers';
 import Groups from './Groups';
 import Users from './Users';
 import Usage from './Usage';
@@ -51,12 +48,9 @@ export default {
   PushNotifications,
   Sockets,
   Solutions,
-  Schedules,
-  Triggers,
   Groups,
   Users,
   Usage,
-  Templates,
   GlobalConfig,
   DemoApps,
   Hosting

@@ -3,7 +3,6 @@ import _ from 'lodash';
 
 import { AutoComplete, MenuItem, FontIcon } from 'material-ui';
 import { Color } from '../../common/';
-import RuntimeStore from '../../apps/Runtimes/RuntimesStore';
 
 export default ({ name, items, showDividers = true, ...other }) => {
   const titles = {
@@ -49,7 +48,6 @@ export default ({ name, items, showDividers = true, ...other }) => {
   const userDataDividerItem = { text: '', value: userDataDivider, type: 'userDataDivider' };
 
   const getIconInfo = (item) => {
-    const runtime = item.runtime_name && RuntimeStore.getRuntimeByKey(item.runtime_name) || {};
     const iconInfo = {
       instanceName: item.metadata && {
         icon: item.metadata.icon,
@@ -58,10 +56,6 @@ export default ({ name, items, showDividers = true, ...other }) => {
       class: item.metadata && {
         icon: item.metadata.icon,
         color: Color.getColorByName(item.metadata.color)
-      },
-      script: {
-        icon: runtime.icon,
-        color: runtime.color
       }
     }[name];
 

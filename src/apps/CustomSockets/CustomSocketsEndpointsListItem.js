@@ -67,7 +67,7 @@ const CustomSocketsEndpointsListItem = React.createClass({
     const metaIconColor = Color.getColorByName(metadata && metadata.color ? metadata.color : 'purple');
     const link = `/v1.1/instances/${instanceName}/endpoints/sockets/${socketName}/${item.endpointName}/`;
     const scriptTraceLink = `/instances/${instanceName}/script-endpoints/${item.name}/traces/`;
-    const scriptId = item.scriptEndpoint.script;
+    const scriptId = item && item.scriptEndpoint && item.scriptEndpoint.script;
     const scriptLink = `/instances/${instanceName}/scripts/${scriptId}/`;
 
     return (
