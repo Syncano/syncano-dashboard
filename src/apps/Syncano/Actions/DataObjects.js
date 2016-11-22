@@ -47,7 +47,8 @@ export default {
     nextParams.next()
       .then((nextDataObjects) => {
         allItems.dataObjects = nextDataObjects;
-        if (users) {
+
+        if (allItems.dataObjects[0].className === 'user_profile') {
           return users.next()
             .then((nextUsers) => {
               allItems.users = [...users, ...nextUsers];
