@@ -47,12 +47,15 @@ export default {
     nextParams.next()
       .then((nextDataObjects) => {
         allItems.dataObjects = nextDataObjects;
-        users.next()
-          .then((nextUsers) => {
-            allItems.users = [...users, ...nextUsers];
-            allItems.users.next = nextUsers.next;
-            return this.completed(allItems);
-          });
+        if (users) {
+          return users.next()
+            .then((nextUsers) => {
+              allItems.users = [...users, ...nextUsers];
+              allItems.users.next = nextUsers.next;
+              return this.completed(allItems);
+            });
+        }
+        return this.completed(allItems);
       })
       .catch(this.failure);
   },
