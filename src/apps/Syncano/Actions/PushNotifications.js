@@ -11,8 +11,18 @@ export default {
   },
 
   configAPNSPushNotification(params = {}) {
-    const removeCertificates = [];
     let APNSConfigParams = {};
+    const runPromisesInSequence = (p, fn) => p.then(fn);
+    const promises = [
+      () => (
+        this.NewLibConnection
+        .APNSConfig
+        .please()
+        .update({}, APNSConfigParams)
+        .then(this.completed)
+        .catch(this.failure)
+      )
+    ];
 
     _.forEach(params.certificateTypes, (type) => {
       const ifCertificateHasName = params[`${type}_certificate_name`];
@@ -22,11 +32,12 @@ export default {
         const removeParams = _.pickBy(params, (param, paramKey) => _.startsWith(paramKey, type));
 
         removeParams[`${type}_certificate`] = true;
-        removeCertificates.push(
+        promises.unshift(() => (
           this.NewLibConnection
             .APNSConfig
             .please()
             .removeCertificate({}, removeParams)
+          )
         );
       }
 
@@ -39,14 +50,7 @@ export default {
       }
     });
 
-    this.Promise.all(removeCertificates).then(
-      this.NewLibConnection
-        .APNSConfig
-        .please()
-        .update({}, APNSConfigParams)
-        .then(this.completed)
-        .catch(this.failure)
-    );
+    promises.reduce(runPromisesInSequence, Promise.resolve());
   },
 
   getGCMPushNotificationConfig() {
