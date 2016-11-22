@@ -84,8 +84,7 @@ export default Reflux.createStore({
 
     const params = {
       [`${type}_certificate_name`]: certificate.name,
-      [`${type}_certificate`]: Syncano.file(certificate),
-      [`${type}_certificate_changed`]: true
+      [`${type}_certificate`]: Syncano.file(certificate)
     };
 
     this.data = { ...this.data, ...params };
@@ -96,8 +95,7 @@ export default Reflux.createStore({
     const params = {
       [`${type}_certificate`]: false,
       [`${type}_certificate_name`]: null,
-      [`${type}_bundle_identifier`]: null,
-      [`${type}_certificate_changed`]: true
+      [`${type}_bundle_identifier`]: null
     };
 
     this.data = { ...this.data, ...params };

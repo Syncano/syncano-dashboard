@@ -97,7 +97,7 @@ export default Radium(React.createClass({
   getParams() {
     const { certificateTypes } = this.state;
     const params = { certificateTypes };
-    const typeParams = ['certificate', 'certificate_name', 'bundle_identifier', 'certificate_changed'];
+    const typeParams = ['certificate', 'certificate_name', 'bundle_identifier'];
 
     _.forEach(certificateTypes, (type) => {
       _.forEach(typeParams, (param) => {
@@ -163,6 +163,7 @@ export default Radium(React.createClass({
             <div className="col-xs-23">
               <TextField
                 fullWidth={true}
+                disabled={!_.isObject(this.state[`${type}_certificate`])}
                 value={this.state[`${type}_bundle_identifier`]}
                 onChange={setCertificateBundleIdentfier}
                 errorText={this.getValidationMessages(`${type}_bundle_identifier`).join(' ')}

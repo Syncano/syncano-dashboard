@@ -12,23 +12,28 @@ export default {
 
   configAPNSPushNotification(params = {}) {
     const removeCertificates = [];
-    let APNSConfigParams = { };
+    let APNSConfigParams = {};
 
     _.forEach(params.certificateTypes, (type) => {
-      const ifCertificateChanged = params[`${type}_certificate_changed`];
       const ifCertificateHasName = params[`${type}_certificate_name`];
 
-      if (ifCertificateChanged && ifCertificateHasName === null) {
+
+      if (_.isEmpty(ifCertificateHasName)) {
+        const removeParams = _.pickBy(params, (param, paramKey) => _.startsWith(paramKey, type));
+
+        removeParams[`${type}_certificate`] = true;
         removeCertificates.push(
           this.NewLibConnection
             .APNSConfig
             .please()
-            .removeCertificate({}, { [`${type}_certificate`]: true })
+            .removeCertificate({}, removeParams)
         );
       }
 
-      if (ifCertificateChanged && !_.isEmpty(ifCertificateHasName)) {
-        const typeParams = _.pickBy(params, (param, paramKey) => _.startsWith(paramKey, type));
+      if (!_.isEmpty(ifCertificateHasName)) {
+        const typeParams = _.pickBy(params, (param, paramKey) => (
+          _.startsWith(paramKey, type) && _.isObject(params[`${type}_certificate`]))
+        );
 
         APNSConfigParams = { ...APNSConfigParams, ...typeParams };
       }
@@ -60,17 +65,6 @@ export default {
       .get()
       .then(this.completed)
       .catch(this.failure);
-  },
-
-  removeCertificate(type) {
-    const params = {
-      [`${type}_certificate`]: true
-    };
-
-    this.NewLibConnection
-      .APNSConfig
-      .please()
-      .removeCertificate({}, params);
   },
 
   listGCMMessages() {
