@@ -134,7 +134,7 @@ const DataObjects = React.createClass({
         <Helmet title={title} />
         {this.getDialogs()}
 
-        <InnerToolbar title={{ text: `${title} ${selectedMessageText}` }}>
+        <InnerToolbar title={`${title} ${selectedMessageText}`}>
           <div style={styles.buttonsWrapper}>
             <DataObjectSearchInput />
             <IconButton

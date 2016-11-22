@@ -698,7 +698,7 @@ const Script = React.createClass({
         forceBackFallback={true}
         backButtonTooltip="Go back to Scripts list"
         title={{
-          text: `Script: ${scriptLabel}`,
+          title: `Script: ${scriptLabel}`,
           id: scriptId
         }}
       >
