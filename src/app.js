@@ -1,4 +1,6 @@
 import 'normalize.css';
+import './assets/css/avenir.css';
+import './assets/css/synicons.css';
 import './raven';
 import './stripe';
 import './segment';

@@ -32,7 +32,7 @@ export default ({ item, hasEditMode }) => {
                 <CodePreview.Item
                   title="cURL"
                   languageClassName="markup"
-                  code={`curl -X GET\n-H "X-API-KEY: ${token}"\n"${SYNCANO_BASE_URL}/v1.1/instances/` +
+                  code={`curl -X GET\n-H "X-API-KEY: ${token}"\n"${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/` +
                   `${currentInstance.name}/schedules/${item.id}"`}
                 />
                 <CodePreview.Item

@@ -1,14 +1,12 @@
-/* eslint-disable */
 import Syncano from 'syncano';
 import _ from 'lodash';
 
+const accountKey = APP_CONFIG.SYNCANO_DEMO_APPS_ACCOUNT_KEY;
+const baseUrl = APP_CONFIG.SYNCANO_BASE_URL;
+
 export default {
   list() {
-    const accountKey = SYNCANO_DEMO_APPS_ACCOUNT_KEY;
-    const connection = Syncano({
-      accountKey,
-      baseUrl: SYNCANO_BASE_URL
-    })
+    const connection = Syncano({ accountKey, baseUrl });
 
     connection
       .Instance
@@ -19,11 +17,7 @@ export default {
   },
 
   getDetails(instanceName) {
-    const accountKey = SYNCANO_DEMO_APPS_ACCOUNT_KEY;
-    const connection = Syncano({
-      accountKey,
-      baseUrl: SYNCANO_BASE_URL
-    })
+    const connection = Syncano({ accountKey, baseUrl });
 
     connection
       .Instance
@@ -35,10 +29,9 @@ export default {
 
   install(payload) {
     const { email, instanceName } = payload;
-    const accountKey = SYNCANO_DEMO_APPS_ACCOUNT_KEY;
     const connection = Syncano({
       accountKey,
-      baseUrl: SYNCANO_BASE_URL,
+      baseUrl,
       defaults: {
         instanceName
       }
@@ -47,7 +40,7 @@ export default {
       instanceName,
       email,
       role: 'read'
-    }
+    };
 
     connection
       .InstanceInvitation
@@ -60,7 +53,7 @@ export default {
         return this.NewLibConnection
           .Invitation
           .please()
-          .accept(invitationToAccept.key)
+          .accept(invitationToAccept.key);
       })
       .then(this.completed)
       .catch(this.failure);

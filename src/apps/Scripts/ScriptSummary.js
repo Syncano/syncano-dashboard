@@ -33,7 +33,7 @@ const ScriptSummary = ({ createdScript }) => {
                   title="cURL"
                   languageClassName="markup"
                   code={`curl -X POST \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" \\\n` +
-                  `-d '{"payload":{"KEY":"VALUE"}}' \\\n"${SYNCANO_BASE_URL}/v1.1/instances/` +
+                  `-d '{"payload":{"KEY":"VALUE"}}' \\\n"${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/` +
                   `${currentInstance.name}/snippets/scripts/${createdScript.id}/run/"`}
                 />
                 <CodePreview.Item

@@ -2,9 +2,6 @@
   "presets": ["es2015", "react", "stage-0"],
   "plugins": ["add-module-exports", "lodash"],
   "env": {
-    "development": {
-      "presets": ["react-hmre"]
-    },
     "testing": {
       "presets": []
     }

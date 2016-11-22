@@ -49,7 +49,7 @@ const Template = React.createClass({
         };
       }
 
-      if (value && value.indexOf(SYNCANO_BASE_URL) === -1) {
+      if (value && value.indexOf(APP_CONFIG.SYNCANO_BASE_URL) === -1) {
         urlValidation = {
           inclusion: {
             within: [],
@@ -361,7 +361,7 @@ const Template = React.createClass({
           value={this.state.dataSourceUrl}
           onChange={this.handleDataSourceUrlChange}
           errorText={this.getValidationMessages('dataSourceUrl').join(' ')}
-          hintText={`e.g. ${SYNCANO_BASE_URL}/v1.1/instances/${instanceName}/classes/`}
+          hintText={`e.g. ${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/${instanceName}/classes/`}
           floatingLabelText="Data source URL"
         />
       </TogglePanel>

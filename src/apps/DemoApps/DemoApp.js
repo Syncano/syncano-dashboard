@@ -12,6 +12,7 @@ import SessionStore from '../Session/SessionStore';
 import { RaisedButton, FontIcon } from 'material-ui';
 import { InnerToolbar, Dialog, Show, Notification } from '../../common';
 import DemoAppBlogLink from './DemoAppBlogLink';
+import DemoAppsConfig from './DemoAppsConfig';
 
 const DemoApp = React.createClass({
   mixins: [
@@ -166,7 +167,6 @@ const DemoApp = React.createClass({
   renderDescContainer() {
     const styles = this.getStyles();
     const { appName, appTitle, appDesc, appGithubSrc, appTutorialSrc, feedback } = this.state;
-    const appImageSrc = `/img/static/${appName}.png`;
 
     return (
       <div style={styles.descContainer}>
@@ -177,7 +177,7 @@ const DemoApp = React.createClass({
         <div style={styles.appDescContainer}>
           <div style={styles.appImage}>
             <img
-              src={appImageSrc}
+              src={DemoAppsConfig.getAvatar(appName)}
               alt="demo app"
               style={styles.appImage}
             />
@@ -228,13 +228,16 @@ const DemoApp = React.createClass({
   renderSchemaContainer() {
     const styles = this.getStyles();
     const { appName } = this.state;
-    const appSchemaSrc = `/img/static/${appName}-schema.svg`;
+
+    if (!appName) {
+      return null;
+    }
 
     return (
       <div style={styles.schemaContainer}>
         <Isvg
           wrapper={React.DOM.div}
-          src={appSchemaSrc}
+          src={DemoAppsConfig.getSchema(appName)}
           alt="demo app schema"
         />
       </div>

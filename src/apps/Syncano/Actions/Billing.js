@@ -120,7 +120,7 @@ export default {
   },
 
   cancelSubscriptionRequest(data) {
-    const action = `https://formspree.io/${SYNCANO_SUPPORT_EMAIL}`;
+    const action = `https://formspree.io/${APP_CONFIG.SYNCANO_SUPPORT_EMAIL}`;
 
     this.Promise.post(action, data)
       .then(this.completed)

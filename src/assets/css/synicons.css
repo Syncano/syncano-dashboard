@@ -1,10 +1,9 @@
 @font-face {
 	font-family: "Syncano-Icons";
-	src: url('/fonts/icons/Syncano-Icons.eot');
-	src: url('/fonts/icons/Syncano-Icons.eot?#iefix') format('eot'),
-		url('/fonts/icons/Syncano-Icons.woff') format('woff'),
-		url('/fonts/icons/Syncano-Icons.ttf') format('truetype'),
-		url('/fonts/icons/Syncano-Icons.svg#Syncano-Icons') format('svg');
+	src: url('../fonts/icons/Syncano-Icons.eot');
+	src: url('../fonts/icons/Syncano-Icons.eot?#iefix') format('eot'),
+		url('../fonts/icons/Syncano-Icons.woff') format('woff'),
+		url('../fonts/icons/Syncano-Icons.ttf') format('truetype');
 }
 
 [class*="synicon-"]:before {

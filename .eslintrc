@@ -7,20 +7,7 @@
   },
   "extends": "airbnb",
   "globals": {
-    "FACEBOOK_ID": true,
-    "GOOGLE_ID": true,
-    "GITHUB_ID": true,
-    "SENTRY_DSN": true,
-    "ANALYTICS_WRITE_KEY": true,
-    "STRIPE_PUBLISHABLE_KEY": true,
-    "SYNCANO_BASE_URL": true,
-    "ENV": true,
-    "CIRCLE_BRANCH": true,
-    "CIRCLE_SHA1": true,
-    "VERSION": true,
-    "SYNCANO_BILLING_EMAIL": true,
-    "SYNCANO_SUPPORT_EMAIL": true,
-    "SYNCANO_BASE_DOMAIN": true
+    "APP_CONFIG": true
   },
   "rules": {
     "react/sort-comp": [2, {

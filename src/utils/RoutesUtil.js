@@ -32,7 +32,8 @@ const RoutesUtil = {
 
         redirectRoute && replace(redirectRoute);
         callback();
-      });
+      })
+      .catch(console.error);
   },
 
   checkInstanceActiveSubscription(nextState, replace, callback) {
@@ -191,7 +192,7 @@ const RoutesUtil = {
       });
     }
 
-    Cookies.remove('logged_in', { domain: SYNCANO_BASE_DOMAIN });
+    Cookies.remove('logged_in', { domain: APP_CONFIG.SYNCANO_BASE_DOMAIN });
 
     return replace({ name: 'login', query: _.merge({ next: nextState.location.pathname }, query) });
   }

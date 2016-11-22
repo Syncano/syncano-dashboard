@@ -52,7 +52,9 @@ const ProfileBillingPlanCancel = Radium(React.createClass({
           There was an error sending your request.
         </div>
         <div>
-          Sorry about that. Please write us at <a href={`mailto:${SYNCANO_BILLING_EMAIL}`}>{SYNCANO_BILLING_EMAIL}</a>.
+          {'Sorry about that. Please write us at '}
+          <a href={`mailto:${APP_CONFIG.SYNCANO_BILLING_EMAIL}`}>{APP_CONFIG.SYNCANO_BILLING_EMAIL}</a>
+          .
         </div>
       </div>
     );
@@ -76,7 +78,7 @@ const ProfileBillingPlanCancel = Radium(React.createClass({
         </div>
         <div className="vp-2-t">
           {'If you have any questions regarding your plan, please write to '}
-          <a href={`mailto:${SYNCANO_BILLING_EMAIL}`}>{SYNCANO_BILLING_EMAIL}</a>.
+          <a href={`mailto:${APP_CONFIG.SYNCANO_BILLING_EMAIL}`}>{APP_CONFIG.SYNCANO_BILLING_EMAIL}</a>.
         </div>
       </div>
     );

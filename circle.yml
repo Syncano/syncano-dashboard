@@ -27,15 +27,15 @@ deployment:
     branch: master
     commands:
       - npm run git-config
-      - NODE_ENV=production npm run deployment-master
+      - npm run deploy
 
   staging:
     branch: devel
     commands:
-      - NODE_ENV=staging npm run deployment-devel
-      - NODE_ENV=beta npm run deployment-beta
+      - npm run deploy
+      - npm run deploy:beta
 
   sockets:
     branch: /.*/
     commands:
-      - NODE_ENV=staging npm run deployment-branch
+      - npm run deploy

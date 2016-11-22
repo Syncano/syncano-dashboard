@@ -150,7 +150,7 @@ const Header = Radium(React.createClass({
   },
 
   getFallBackAvatar() {
-    return `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`;
+    return require('../../assets/img/fox.png');
   },
 
   getGravatarUrl() {
@@ -219,7 +219,7 @@ const Header = Radium(React.createClass({
   renderBetaBadge() {
     const styles = this.getStyles();
 
-    if (process.env.NODE_ENV !== 'beta') {
+    if (APP_CONFIG.ENV !== 'beta') {
       return null;
     }
 
