@@ -11,7 +11,7 @@ import Actions from './DataEndpointsPreviewActions';
 import Store from './DataEndpointsPreviewStore';
 
 import { IconButton } from 'material-ui';
-import { Container, Dialog, InnerToolbar, Loading, ToolbarTitle } from '../../common';
+import { Container, Dialog, InnerToolbar, Loading } from '../../common';
 import DataObjectsTable from '../DataObjects/DataObjectsTable';
 import ReadOnlyTooltip from '../DataObjects/ReadOnlyTooltip';
 
@@ -121,10 +121,10 @@ const DataEndpointsPreview = React.createClass({
         {this.getDialogs()}
         <Helmet title={`Data Endpoint ${dataEndpointName} Preview`} />
         <InnerToolbar
+          customTitle={{ text: `Response preview for Data Endpoint ${dataEndpointName}` }}
           backFallback={this.handleBackClick}
           backButtonTooltip="Go back to Data Endpoints list"
         >
-          <ToolbarTitle title={`Response preview for Data Endpoint ${dataEndpointName}`} />
           <IconButton
             data-e2e="data-object-delete-button"
             style={styles.iconButtons}

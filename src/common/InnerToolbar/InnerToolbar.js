@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import Sticky from 'react-stickydiv';
 
 import { Toolbar, ToolbarGroup, ToolbarTitle, IconButton } from 'material-ui';
+import { CustomTitle } from '../../common/';
 
 const InnerToolbar = Radium(React.createClass({
   getDefaultProps() {
@@ -70,12 +71,25 @@ const InnerToolbar = Radium(React.createClass({
   },
 
   renderChildren(children) {
+    const { customTitle } = this.props;
     const styles = this.getStyles();
 
     return (
       <ToolbarGroup style={styles.toolbarRight}>
+        {customTitle ? this.renderCustomTitle(customTitle) : null}
         {children}
       </ToolbarGroup>
+    );
+  },
+
+  renderCustomTitle(customTitle) {
+    const { id, text } = customTitle;
+
+    return (
+      <CustomTitle
+        id={id}
+        title={text}
+      />
     );
   },
 

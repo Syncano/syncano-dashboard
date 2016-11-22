@@ -14,7 +14,7 @@ import HostingUploadDialogActions from './HostingUploadDialogActions';
 import HostingFilesFolderForm from './HostingFilesFolderForm';
 
 import { FontIcon, RaisedButton } from 'material-ui';
-import { InnerToolbar, Container, Show, ToolbarTitle } from '../../common';
+import { InnerToolbar, Container, Show } from '../../common';
 import HostingFilesList from './HostingFilesList';
 import HostingDialog from './HostingDialog';
 import HostingPublishDialog from './HostingPublishDialog';
@@ -241,11 +241,11 @@ const HostingFilesView = React.createClass({
           backFallback={this.handleBackClick}
           forceBackFallback={true}
           backButtonTooltip="Go Back to Hosting"
+          customTitle={{
+            text: `Hosting: ${hostingDetails.name}`,
+            id: hostingDetails.id
+          }}
         >
-          <ToolbarTitle
-            id={hostingDetails.id}
-            title={`Hosting: ${hostingDetails.name}`}
-          />
           <div style={styles.buttonsWrapper}>
             <Show if={items.length && !isLoading}>
               {this.renderActionButtons()}

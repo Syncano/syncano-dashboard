@@ -2,9 +2,12 @@ import React from 'react';
 import Tooltip from '../Tooltip';
 import Truncate from '../Truncate';
 
-const ToolbarTitle = React.createClass({
+const CustomTitle = React.createClass({
   getStyles() {
     return {
+      id: {
+        paddingRight: 5
+      },
       titleWrapper: {
         display: 'flex',
         flex: 1,
@@ -27,7 +30,9 @@ const ToolbarTitle = React.createClass({
   },
 
   renderId(id) {
-    return <span>(id: {id})</span>;
+    const styles = this.getStyles();
+
+    return <span style={styles.id}>(id: {id})</span>;
   },
 
   render() {
@@ -41,7 +46,7 @@ const ToolbarTitle = React.createClass({
         rootStyle={styles.tooltipRootStyle}
         touch={true}
       >
-        <div className="test_div" style={styles.titleWrapper}>
+        <div style={styles.titleWrapper}>
           <Truncate
             text={title}
           />
@@ -52,4 +57,4 @@ const ToolbarTitle = React.createClass({
   }
 });
 
-export default ToolbarTitle;
+export default CustomTitle;

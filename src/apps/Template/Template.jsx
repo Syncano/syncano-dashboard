@@ -11,7 +11,7 @@ import TemplateStore from './TemplateStore';
 import TemplateActions from './TemplateActions';
 
 import { Checkbox, FontIcon, RaisedButton, TextField } from 'material-ui';
-import { Editor, InnerToolbar, Loading, Notification, Show, TogglePanel, ToolbarTitle } from '../../common/';
+import { Editor, InnerToolbar, Loading, Notification, Show, TogglePanel } from '../../common/';
 
 const Template = React.createClass({
   contextTypes: {
@@ -256,8 +256,7 @@ const Template = React.createClass({
     const title = `Template: ${template.name}`;
 
     return (
-      <InnerToolbar>
-        <ToolbarTitle title={title} />
+      <InnerToolbar customTitle={{ text: title }}>
         <Show if={!isLoading}>
           <div style={styles.toolbarCheckbox}>
             <Checkbox

@@ -23,8 +23,7 @@ import {
   DialogRefreshButton,
   SelectFieldWrapper,
   Show,
-  TogglePanel,
-  ToolbarTitle
+  TogglePanel
 } from '../../common';
 import Traces from '../Traces';
 
@@ -698,11 +697,11 @@ const Script = React.createClass({
         backFallback={this.handleBackClick}
         forceBackFallback={true}
         backButtonTooltip="Go back to Scripts list"
+        customTitle={{
+          text: `Script: ${scriptLabel}`,
+          id: scriptId
+        }}
       >
-        <ToolbarTitle
-          id={scriptId}
-          title={`Script: ${scriptLabel}`}
-        />
         <div style={styles.buttonsWrapper}>
           <div style={styles.toolbarCheckbox}>
             <Checkbox

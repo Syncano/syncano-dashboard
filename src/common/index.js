@@ -12,6 +12,7 @@ import ColumnList from './ColumnList';
 import Container from './Container';
 import CreditCard from './CreditCard';
 import CreditCardForm from './CreditCardForm';
+import CustomTitle from './CustomTitle';
 import DataObjectsAmount from './DataObjectsAmount';
 import Dialog from './Dialog';
 import DirectoryNavigation from './DirectoryNavigation';
@@ -51,7 +52,6 @@ import Stepper from './Stepper';
 import SyncanoTheme from './SyncanoTheme';
 import Tags from './Tags';
 import TogglePanel from './TogglePanel';
-import ToolbarTitle from './ToolbarTitle';
 import Tooltip from './Tooltip';
 import { TraceResult, TraceBigResult } from './TraceResult';
 import Truncate from './Truncate';
@@ -73,6 +73,7 @@ export { ColumnList };
 export { Container };
 export { CreditCard };
 export { CreditCardForm };
+export { CustomTitle };
 export { DataObjectsAmount };
 export { Dialog };
 export { DirectoryNavigation };
@@ -112,7 +113,6 @@ export { Stepper };
 export { SyncanoTheme };
 export { Tags };
 export { TogglePanel };
-export { ToolbarTitle };
 export { Tooltip };
 export { TraceResult };
 export { TraceBigResult };
@@ -136,6 +136,7 @@ export default {
   Container,
   CreditCard,
   CreditCardForm,
+  CustomTitle,
   DataObjectsAmount,
   Dialog,
   DirectoryNavigation,
@@ -175,7 +176,6 @@ export default {
   SyncanoTheme,
   Tags,
   TogglePanel,
-  ToolbarTitle,
   Tooltip,
   TraceResult,
   TraceBigResult,

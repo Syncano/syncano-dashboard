@@ -9,7 +9,7 @@ import Store from './TracesStore';
 import Actions from './TracesActions';
 
 import { IconButton } from 'material-ui';
-import { Container, InnerToolbar, ToolbarTitle } from '../../common/';
+import { Container, InnerToolbar } from '../../common/';
 
 import TracesList from './TracesList';
 
@@ -88,6 +88,7 @@ const Traces = Radium(React.createClass({
     const { handleFetchTraces, hasHeaderId, objectId, tracesFor } = this.props;
     const config = this.getConfig();
     const toolbarTitleText = this.getToolbarTitleText();
+    const headerId = hasHeaderId ? objectId : null;
 
     return (
       <div>
@@ -95,11 +96,11 @@ const Traces = Radium(React.createClass({
         <InnerToolbar
           backFallback={this.handleBackClick}
           backButtonTooltip={config.backLabel}
+          customTitle={{
+            text: toolbarTitleText,
+            id: headerId
+          }}
         >
-          <ToolbarTitle
-            id={hasHeaderId ? objectId : null}
-            title={toolbarTitleText}
-          />
           <IconButton
             iconClassName="synicon-refresh"
             tooltip="Reload Traces"
