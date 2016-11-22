@@ -241,7 +241,7 @@ const HostingFilesView = React.createClass({
           backFallback={this.handleBackClick}
           forceBackFallback={true}
           backButtonTooltip="Go Back to Hosting"
-          customTitle={{
+          title={{
             text: `Hosting: ${hostingDetails.name}`,
             id: hostingDetails.id
           }}

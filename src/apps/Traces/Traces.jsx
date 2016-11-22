@@ -96,7 +96,7 @@ const Traces = Radium(React.createClass({
         <InnerToolbar
           backFallback={this.handleBackClick}
           backButtonTooltip={config.backLabel}
-          customTitle={{
+          title={{
             text: toolbarTitleText,
             id: headerId
           }}

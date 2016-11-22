@@ -6,7 +6,7 @@ const CustomTitle = React.createClass({
   getStyles() {
     return {
       id: {
-        paddingRight: 5
+        padding: '0 5px'
       },
       titleWrapper: {
         display: 'flex',

@@ -256,7 +256,7 @@ const Template = React.createClass({
     const title = `Template: ${template.name}`;
 
     return (
-      <InnerToolbar customTitle={{ text: title }}>
+      <InnerToolbar title={{ text: title }}>
         <Show if={!isLoading}>
           <div style={styles.toolbarCheckbox}>
             <Checkbox

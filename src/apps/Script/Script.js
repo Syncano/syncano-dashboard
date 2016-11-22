@@ -697,7 +697,7 @@ const Script = React.createClass({
         backFallback={this.handleBackClick}
         forceBackFallback={true}
         backButtonTooltip="Go back to Scripts list"
-        customTitle={{
+        title={{
           text: `Script: ${scriptLabel}`,
           id: scriptId
         }}

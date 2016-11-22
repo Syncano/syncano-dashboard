@@ -121,7 +121,7 @@ const DataEndpointsPreview = React.createClass({
         {this.getDialogs()}
         <Helmet title={`Data Endpoint ${dataEndpointName} Preview`} />
         <InnerToolbar
-          customTitle={{ text: `Response preview for Data Endpoint ${dataEndpointName}` }}
+          title={{ text: `Response preview for Data Endpoint ${dataEndpointName}` }}
           backFallback={this.handleBackClick}
           backButtonTooltip="Go back to Data Endpoints list"
         >
