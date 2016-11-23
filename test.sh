@@ -29,9 +29,8 @@ function selenium_start {
 }
 
 function http_server_start {
-    KEY="--key ./node_modules/webpack-dev-server/ssl/server.key"
-    CERT="--cert ./node_modules/webpack-dev-server/ssl/server.crt"
-    HTTP_SERVER="http-server ./dist_e2e --ssl ${CERT} ${KEY}"
+    SSL_CONFIG="./node_modules/webpack-dev-server/ssl/server.pem"
+    HTTP_SERVER="http-server ./dist_e2e --ssl --cert=${SSL_CONFIG} --key=${SSL_CONFIG}"
 
     nohup $HTTP_SERVER > ./reports/http-server.log 2>&1&
     sleep 10
