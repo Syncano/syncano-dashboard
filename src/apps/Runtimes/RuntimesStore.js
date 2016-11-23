@@ -45,7 +45,7 @@ export default Reflux.createStore({
       return null;
     }
 
-    return _.pickBy(this.data.runtimes, (runtime, key) => isRuntimeMatched(runtime, key) && !runtime.deprecated);
+    return _.find(this.data.runtimes, (runtime, key) => isRuntimeMatched(runtime, key) && !runtime.deprecated);
   },
 
   getDividedRuntimes() {
