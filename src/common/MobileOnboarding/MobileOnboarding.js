@@ -22,7 +22,7 @@ class MobileOnboarding extends Component {
       background: '#244273',
       display: 'flex',
       alignItems: 'center',
-      padding: '0 15px'
+      padding: '0 24px'
     },
     headerLogo: {
       height: 20

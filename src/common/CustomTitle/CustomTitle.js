@@ -2,7 +2,7 @@ import React from 'react';
 import Tooltip from '../Tooltip';
 import Truncate from '../Truncate';
 
-const CustomTitle = ({ title, id, style }) => {
+const CustomTitle = ({ title, id, style, ...other }) => {
   const styles = {
     id: {
       padding: '0 5px'
@@ -47,7 +47,10 @@ const CustomTitle = ({ title, id, style }) => {
       touch={true}
     >
       <div style={styles.titleWrapper}>
-        <Truncate text={title} />
+        <Truncate
+          data-e2e={other[`data-e2e`]}
+          text={title}
+        />
         {renderId()}
       </div>
     </Tooltip>
