@@ -47,19 +47,16 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    console.debug('APNSConfigDialogStore::refreshData');
     Actions.fetchAPNSPushNotificationConfig();
     APNSDevicesActions.fetchAPNSConfig();
   },
 
   onFetchAPNSPushNotificationConfig() {
-    console.debug('APNSConfigDialogStore::onFetchAPNSPushNotificationConfig');
     this.data.isCertLoading = true;
     this.trigger(this.data);
   },
 
   onFetchAPNSPushNotificationConfigCompleted(config) {
-    console.debug('APNSConfigDialogStore::onFetchAPNSPushNotificationConfigCompleted');
     Object.keys(config).forEach((key) => {
       if (this.data.hasOwnProperty(key)) {
         this.data[key] = config[key];
@@ -70,7 +67,6 @@ export default Reflux.createStore({
   },
 
   onConfigAPNSPushNotificationCompleted(config) {
-    console.debug('APNSConfigDialogStore::onConfigAPNSPushNotification');
     this.dismissDialog();
     this.refreshData();
 

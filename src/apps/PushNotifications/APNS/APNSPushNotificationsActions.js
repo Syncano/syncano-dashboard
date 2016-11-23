@@ -24,6 +24,7 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.PushNotifications.removeCertificates'
     },
+    removeCertificate: {},
     setCertificate: {}
   },
   {
