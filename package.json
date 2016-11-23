@@ -43,7 +43,7 @@
     "react": "15.4.0",
     "react-addons-create-fragment": "15.4.1",
     "react-addons-linked-state-mixin": "15.4.1",
-    "react-addons-pure-render-mixin": "15.4.0",
+    "react-addons-pure-render-mixin": "15.4.1",
     "react-addons-test-utils": "15.4.1",
     "react-addons-transition-group": "15.4.0",
     "react-addons-update": "15.4.1",
