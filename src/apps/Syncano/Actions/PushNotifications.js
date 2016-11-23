@@ -25,23 +25,19 @@ export default {
     ];
 
     _.forEach(params.certificateTypes, (type) => {
-      const ifCertificateHasName = params[`${type}_certificate_name`];
+      const certificateName = params[`${type}_certificate_name`];
 
-
-      if (_.isEmpty(ifCertificateHasName)) {
-        const removeParams = _.pickBy(params, (param, paramKey) => _.startsWith(paramKey, type));
-
-        removeParams[`${type}_certificate`] = true;
+      if (!certificateName) {
         promises.unshift(() => (
           this.NewLibConnection
             .APNSConfig
             .please()
-            .removeCertificate({}, removeParams)
+            .removeCertificate({}, { [`${type}_certificate`]: true })
           )
         );
       }
 
-      if (!_.isEmpty(ifCertificateHasName)) {
+      if (certificateName) {
         const typeParams = _.pickBy(params, (param, paramKey) => (
           _.startsWith(paramKey, type) && _.isObject(params[`${type}_certificate`]))
         );
@@ -93,6 +89,20 @@ export default {
 
         this.completed(push);
       })
+      .catch(this.failure);
+  },
+
+  removeCertificates() {
+    const params = {
+      production_certificate: true,
+      development_certificate: true
+    };
+
+    this.NewLibConnection
+      .APNSConfig
+      .please()
+      .removeCertificate({}, params)
+      .then(this.completed)
       .catch(this.failure);
   },
 
