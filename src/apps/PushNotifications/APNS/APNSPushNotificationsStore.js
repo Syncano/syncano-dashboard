@@ -19,8 +19,7 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items: [],
-      isLoading: true
+      items: []
     };
   },
 
@@ -58,7 +57,7 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onRemoveCertificateCompleted() {
+  onRemoveCertificatesCompleted() {
     ConfigStore.refreshData();
   }
 });

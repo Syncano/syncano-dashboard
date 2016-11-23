@@ -1,4 +1,6 @@
 import Reflux from 'reflux';
+import Syncano from 'syncano';
+import _ from 'lodash';
 
 // Utils & Mixins
 import { DialogStoreMixin, WaitForStoreMixin, StoreLoadingMixin, StoreFormMixin } from '../../../mixins';
@@ -45,19 +47,16 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    console.debug('APNSConfigDialogStore::refreshData');
     Actions.fetchAPNSPushNotificationConfig();
     APNSDevicesActions.fetchAPNSConfig();
   },
 
   onFetchAPNSPushNotificationConfig() {
-    console.debug('APNSConfigDialogStore::onFetchAPNSPushNotificationConfig');
     this.data.isCertLoading = true;
     this.trigger(this.data);
   },
 
   onFetchAPNSPushNotificationConfigCompleted(config) {
-    console.debug('APNSConfigDialogStore::onFetchAPNSPushNotificationConfigCompleted');
     Object.keys(config).forEach((key) => {
       if (this.data.hasOwnProperty(key)) {
         this.data[key] = config[key];
@@ -68,12 +67,34 @@ export default Reflux.createStore({
   },
 
   onConfigAPNSPushNotificationCompleted(config) {
-    console.debug('APNSConfigDialogStore::onConfigAPNSPushNotification');
     this.dismissDialog();
     this.refreshData();
 
     if (config.development_certificate || config.production_certificate) {
       APNSPushNotificationsSummaryDialogActions.showDialog();
     }
+  },
+
+  onSetCertificate(type, file) {
+    const certificate = _.isArray(file) ? file[0] : file;
+
+    const params = {
+      [`${type}_certificate_name`]: certificate.name,
+      [`${type}_certificate`]: Syncano.file(certificate)
+    };
+
+    this.data = { ...this.data, ...params };
+    this.trigger(this.data);
+  },
+
+  onRemoveCertificate(type) {
+    const params = {
+      [`${type}_certificate`]: false,
+      [`${type}_certificate_name`]: null,
+      [`${type}_bundle_identifier`]: null
+    };
+
+    this.data = { ...this.data, ...params };
+    this.trigger(this.data);
   }
 });

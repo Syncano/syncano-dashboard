@@ -69,7 +69,7 @@ export default Reflux.createStore({
     ChannelsActions.updateChannel.completed,
     ChannelsActions.removeChannels.completed,
     APNSActions.configAPNSPushNotification.completed,
-    APNSActions.removeCertificate.completed,
+    APNSActions.removeCertificates.completed,
     GCMActions.configGCMPushNotification.completed
   ],
 
