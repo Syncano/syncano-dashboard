@@ -273,27 +273,29 @@ const Script = React.createClass({
   },
 
   isSaved() {
-    const { currentScript } = this.state;
+    const { currentScript, editorSource } = this.state;
 
-    if (!currentScript || !this.refs.editorSource) {
+    // console.error('dua', this.refs);
+
+    if (!currentScript || !editorSource) {
       return true;
     }
 
     const initialSource = currentScript.source;
-    const currentSource = this.refs.editorSource.editor.getValue();
+    const currentSource = editorSource;
 
     return _.isEqual(initialSource, currentSource) && _.isEqual(currentScript.config, this.getConfigObject());
   },
 
-  handleOnSourceChange() {
-    this.resetForm();
-    this.runAutoSave();
+  handleOnSourceChange(editorSource) {
+    this.setState({ editorSource });
+    // this.runAutoSave();
   },
 
   handleRunScript() {
-    const { currentScript, payload } = this.state;
+    const { currentScript, editorSource, payload } = this.state;
     const config = this.getConfigObject();
-    const source = this.refs.editorSource.editor.getValue();
+    const source = editorSource;
     const updateParams = {
       config,
       source
@@ -335,11 +337,12 @@ const Script = React.createClass({
 
   handleUpdate() {
     if (this.areEditorsLoaded()) {
+      const { editorSource } = this.state;
       const { id } = this.state.currentScript;
 
       this.handleAddFieldOnSave();
       const config = this.getConfigObject();
-      const source = this.refs.editorSource.editor.getValue();
+      const source = editorSource;
 
       this.clearAutosaveTimer();
       Actions.updateScript(id, { config, source });
@@ -747,6 +750,7 @@ const Script = React.createClass({
       editorMode = RuntimeStore.getEditorMode(currentScript.runtime_name);
     }
 
+
     return (
       <div
         className="col-flex-1"
@@ -780,7 +784,7 @@ const Script = React.createClass({
               mode={editorMode}
               onChange={this.handleOnSourceChange}
               onLoad={this.clearAutosaveTimer}
-              value={source}
+              defaultValue={source}
               width="100%"
               height="100%"
               style={{ position: 'absolute' }}
