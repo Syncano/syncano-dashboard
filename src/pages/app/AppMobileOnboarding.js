@@ -1,8 +1,6 @@
 import React from 'react';
-
 import { RaisedButton } from 'material-ui';
-
-import MobileOnboarding from './MobileOnboarding';
+import { MobileOnboarding } from '../../common/';
 
 const AppMobileOnboarding = () => (
   <MobileOnboarding>

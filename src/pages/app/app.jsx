@@ -5,14 +5,14 @@ import Helmet from 'react-helmet';
 import localStorage from 'local-storage-fallback';
 import { Breakpoint } from 'react-responsive-grid';
 
-import SessionStore from '../apps/Session/SessionStore';
-import SessionActions from '../apps/Session/SessionActions';
+import SessionStore from '../../apps/Session/SessionStore';
+import SessionActions from '../../apps/Session/SessionActions';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { SnackbarNotification } from './../apps';
-import { SyncanoTheme } from '../common/';
-import { AppMobileOnboarding } from '../common/MobileOnboarding';
+import { SnackbarNotification } from '../../apps';
+import { SyncanoTheme } from '../../common/';
+import AppMobileOnboarding from './AppMobileOnboarding';
 
 const App = React.createClass({
   childContextTypes: {
@@ -78,24 +78,16 @@ const App = React.createClass({
     SessionStore.setRoutes(routes);
   },
 
-  renderHelmet() {
-    // link attr is required to get rest favicons working properly
-
-    return (
-      <Helmet
-        titleTemplate="%s - Syncano Dashboard"
-        link={[{ rel: 'icon', type: 'image/png', href: 'img/favicon-32x32.png', sizes: '32x32' }]}
-      />
-    );
-  },
-
   render() {
     const styles = this.getStyles();
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(SyncanoTheme)}>
         <div style={styles.root}>
-          {this.renderHelmet()}
+          <Helmet
+            titleTemplate="%s - Syncano Dashboard"
+            link={[{ rel: 'icon', type: 'image/png', href: 'img/favicon-32x32.png', sizes: '32x32' }]}
+          />
           <Breakpoint
             maxWidth={768}
             widthMethod="pageWidth"
