@@ -2,10 +2,8 @@ import Reflux from 'reflux';
 import Syncano from 'syncano';
 import _ from 'lodash';
 
-// Utils & Mixins
-import { DialogStoreMixin, WaitForStoreMixin, StoreLoadingMixin, StoreFormMixin } from '../../../mixins';
+import { DialogStoreMixin, WaitForStoreMixin, StoreFormMixin } from '../../../mixins';
 
-// Stores & Actions
 import SessionActions from '../../Session/SessionActions';
 import APNSPushNotificationsSummaryDialogActions from './APNSPushNotificationsSummaryDialogActions';
 import Actions from './APNSPushNotificationsActions';
@@ -17,7 +15,6 @@ export default Reflux.createStore({
   mixins: [
     DialogStoreMixin,
     WaitForStoreMixin,
-    StoreLoadingMixin,
     StoreFormMixin
   ],
 
@@ -43,7 +40,6 @@ export default Reflux.createStore({
       this.refreshData
     );
     this.listenToForms();
-    this.setLoadingStates();
   },
 
   refreshData() {
