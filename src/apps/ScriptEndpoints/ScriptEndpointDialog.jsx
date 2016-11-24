@@ -166,6 +166,10 @@ export default React.createClass({
     } = this.state;
 
     const handleNewRequest = (value) => {
+      if (!value.item) {
+        return;
+      }
+
       const newScriptData = {
         label: value.item.text,
         id: value.item.payload
