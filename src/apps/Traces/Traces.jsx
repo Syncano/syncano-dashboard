@@ -55,21 +55,22 @@ const Traces = Radium(React.createClass({
     }[this.props.tracesFor];
   },
 
-  getTracesFor() {
-    if (this.props.tracesFor === 'scriptEndpoint') {
+  getTracesSource() {
+    const { tracesFor } = this.props;
+
+    if (tracesFor === 'scriptEndpoint') {
       return 'Script Endpoint';
     }
 
-    return _.capitalize(this.props.tracesFor);
+    return _.capitalize(tracesFor);
   },
 
   getToolbarTitleText() {
     const { currentObjectName } = this.state;
-    const tracesFor = this.getTracesFor();
-    const toolbarIdText = this.props.hasHeaderId ? `(id: ${this.props.objectId})` : '';
+    const tracesFor = this.getTracesSource();
 
     if (currentObjectName) {
-      return `${tracesFor}: ${currentObjectName} ${toolbarIdText}`;
+      return `${tracesFor}: ${currentObjectName}`;
     }
 
     return '';
@@ -84,17 +85,21 @@ const Traces = Radium(React.createClass({
 
   render() {
     const { items, isLoading } = this.state;
-    const { tracesFor, handleFetchTraces } = this.props;
+    const { handleFetchTraces, hasHeaderId, objectId, tracesFor } = this.props;
     const config = this.getConfig();
     const toolbarTitleText = this.getToolbarTitleText();
+    const headerId = hasHeaderId ? objectId : null;
 
     return (
       <div>
         <Helmet title={toolbarTitleText} />
         <InnerToolbar
-          title={toolbarTitleText}
           backFallback={this.handleBackClick}
           backButtonTooltip={config.backLabel}
+          title={{
+            title: toolbarTitleText,
+            id: headerId
+          }}
         >
           <IconButton
             iconClassName="synicon-refresh"

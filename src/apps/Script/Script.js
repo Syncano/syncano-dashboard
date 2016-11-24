@@ -165,6 +165,10 @@ const Script = React.createClass({
       dialogRefreshButtonIcon: {
         fontSize: 36
       },
+      buttonsWrapper: {
+        display: 'flex',
+        alignItems: 'center'
+      },
       codeContainer: {
         display: 'flex',
         borderRight: '1px solid rgba(224, 224, 224, .5)'
@@ -686,16 +690,22 @@ const Script = React.createClass({
 
   renderToolbar() {
     const styles = this.getStyles();
-    const { isLoading, isSidebarHidden } = this.state;
+    const { currentScript, isSidebarHidden } = this.state;
+    const scriptLabel = currentScript && currentScript.label;
+    const scriptId = currentScript && currentScript.id;
 
     return (
       <InnerToolbar
-        title={this.getToolbarTitle()}
+        backButton={true}
         backFallback={this.handleBackClick}
         forceBackFallback={true}
         backButtonTooltip="Go back to Scripts list"
+        title={{
+          title: `Script: ${scriptLabel}`,
+          id: scriptId
+        }}
       >
-        <Show if={!isLoading}>
+        <div style={styles.buttonsWrapper}>
           <div style={styles.toolbarCheckbox}>
             <Checkbox
               label="Show Sidebar"
@@ -733,7 +743,7 @@ const Script = React.createClass({
             onTouchTap={this.handleRunTouchTap}
             data-e2e="script-run-button"
           />
-        </Show>
+        </div>
       </InnerToolbar>
     );
   },
