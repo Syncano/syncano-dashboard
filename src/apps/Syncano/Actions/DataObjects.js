@@ -14,11 +14,8 @@ export default {
         .list()
         .orderBy(orderBy)
         .pageSize(Constants.DATAOBJECTS_PAGE_SIZE)
-        // .count()
         .then((items) => {
           allItems.dataObjects = [...allItems, ...items];
-          // allItems.count = items.objects_count;
-          // allItems.count = 5000;
 
           return items;
         })
@@ -43,26 +40,6 @@ export default {
       })
       .catch(this.failure);
   },
-
-  // subList(nextParams, users) {
-  //   const allItems = { dataObjects: [], users: [] };
-  //
-  //   nextParams.next()
-  //     .then((nextDataObjects) => {
-  //       allItems.dataObjects = nextDataObjects;
-  //
-  //       if (allItems.dataObjects[0].className === 'user_profile') {
-  //         return users.next()
-  //           .then((nextUsers) => {
-  //             allItems.users = [...users, ...nextUsers];
-  //             allItems.users.next = nextUsers.next;
-  //             return this.completed(allItems);
-  //           });
-  //       }
-  //       return this.completed(allItems);
-  //     })
-  //     .catch(this.failure);
-  // },
 
   get(payload) {
     this.NewLibConnection
