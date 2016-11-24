@@ -12,6 +12,7 @@ import ColumnList from './ColumnList';
 import Container from './Container';
 import CreditCard from './CreditCard';
 import CreditCardForm from './CreditCardForm';
+import CustomTitle from './CustomTitle';
 import DataObjectsAmount from './DataObjectsAmount';
 import Dialog from './Dialog';
 import DirectoryNavigation from './DirectoryNavigation';
@@ -22,6 +23,7 @@ import EmptyView from './EmptyView';
 import Header from './Header';
 import Icon from './Icon';
 import InnerToolbar from './InnerToolbar';
+import LinkWithIcon from './LinkWithIcon';
 import LinkWrapper from './LinkWrapper';
 import Lists from './Lists';
 import Loading from './Loading';
@@ -56,7 +58,6 @@ import Truncate from './Truncate';
 import UpgradeButton from './UpgradeButton';
 import UpgradeNowToolbar from './UpgradeNowToolbar';
 import StatusLabel from './StatusLabel';
-import LinkWithIcon from './LinkWithIcon';
 
 export { AlertPageContent };
 export { AutoCompleteWrapper };
@@ -72,6 +73,7 @@ export { ColumnList };
 export { Container };
 export { CreditCard };
 export { CreditCardForm };
+export { CustomTitle };
 export { DataObjectsAmount };
 export { Dialog };
 export { DirectoryNavigation };
@@ -82,6 +84,7 @@ export { EmptyView };
 export { Header };
 export { Icon };
 export { InnerToolbar };
+export { LinkWithIcon };
 export { LinkWrapper };
 export { Lists };
 export { Loading };
@@ -117,7 +120,6 @@ export { Truncate };
 export { UpgradeButton };
 export { UpgradeNowToolbar };
 export { StatusLabel };
-export { LinkWithIcon };
 
 export default {
   AlertPageContent,
@@ -134,6 +136,7 @@ export default {
   Container,
   CreditCard,
   CreditCardForm,
+  CustomTitle,
   DataObjectsAmount,
   Dialog,
   DirectoryNavigation,
@@ -144,6 +147,7 @@ export default {
   Header,
   Icon,
   InnerToolbar,
+  LinkWithIcon,
   LinkWrapper,
   Lists,
   Loading,
@@ -177,7 +181,6 @@ export default {
   TraceBigResult,
   Truncate,
   UpgradeButton,
-  StatusLabel,
-  LinkWithIcon,
-  UpgradeNowToolbar
+  UpgradeNowToolbar,
+  StatusLabel
 };

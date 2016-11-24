@@ -8,8 +8,7 @@ export default {
       locateStrategy: 'xpath'
     },
     invoicesPageTitle: {
-      selector: '//div[@class="col-flex-1"]//span[text()="Invoices"]',
-      locateStrategy: 'xpath'
+      selector: '[data-e2e="invoices-page-title"]'
     },
     invoiceAmountColumn: {
       selector: '(//div[@class="invoices-list"]//div[@class="description-field col-flex-1"])[3]',

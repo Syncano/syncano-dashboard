@@ -47,12 +47,16 @@ export default {
     nextParams.next()
       .then((nextDataObjects) => {
         allItems.dataObjects = nextDataObjects;
-        users.next()
-          .then((nextUsers) => {
-            allItems.users = [...users, ...nextUsers];
-            allItems.users.next = nextUsers.next;
-            return this.completed(allItems);
-          });
+
+        if (allItems.dataObjects[0].className === 'user_profile') {
+          return users.next()
+            .then((nextUsers) => {
+              allItems.users = [...users, ...nextUsers];
+              allItems.users.next = nextUsers.next;
+              return this.completed(allItems);
+            });
+        }
+        return this.completed(allItems);
       })
       .catch(this.failure);
   },

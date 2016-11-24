@@ -8,7 +8,6 @@ export default CreateActions(
     fetchTemplates: {
       asyncResult: true,
       loading: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Templates.list'
     },

@@ -22,8 +22,6 @@ import DataObjectsTable from './DataObjectsTable';
 import DataObjectSearchInput from './DataObjectSearchInput';
 
 const DataObjects = React.createClass({
-  displayName: 'DataObjects',
-
   mixins: [
     Reflux.connect(Store),
     DialogsMixin
@@ -45,6 +43,15 @@ const DataObjects = React.createClass({
 
   componentWillUnmount() {
     Actions.clearStore();
+  },
+
+  getStyles() {
+    return {
+      buttonsWrapper: {
+        display: 'flex',
+        alignItems: 'center'
+      }
+    };
   },
 
   isClassProtected() {
@@ -114,6 +121,7 @@ const DataObjects = React.createClass({
   render() {
     const { className } = this.props.params;
     const { isLoading, selectedRows } = this.state;
+    const styles = this.getStyles();
     const title = `Data Class: ${className}`;
     let selectedMessageText = '';
 
@@ -126,29 +134,29 @@ const DataObjects = React.createClass({
         <Helmet title={title} />
         {this.getDialogs()}
 
-        <InnerToolbar
-          title={`${title} ${selectedMessageText}`}
-        >
-          <DataObjectSearchInput />
-          <IconButton
-            data-e2e="data-object-add-button"
-            iconClassName="synicon-plus"
-            tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Add Data Objects'}
-            disabled={this.isClassProtected()}
-            onClick={Actions.showDialog}
-          />
-          <IconButton
-            data-e2e="data-object-delete-button"
-            iconClassName="synicon-delete"
-            tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Delete Data Objects'}
-            disabled={(selectedRows && !selectedRows.length) || this.isClassProtected()}
-            onTouchTap={() => this.showDialog('deleteDataObjectDialog')}
-          />
-          <IconButton
-            iconClassName="synicon-refresh"
-            tooltip="Reload Data Objects"
-            onTouchTap={Actions.fetch}
-          />
+        <InnerToolbar title={`${title} ${selectedMessageText}`}>
+          <div style={styles.buttonsWrapper}>
+            <DataObjectSearchInput />
+            <IconButton
+              data-e2e="data-object-add-button"
+              iconClassName="synicon-plus"
+              tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Add Data Objects'}
+              disabled={this.isClassProtected()}
+              onClick={Actions.showDialog}
+            />
+            <IconButton
+              data-e2e="data-object-delete-button"
+              iconClassName="synicon-delete"
+              tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Delete Data Objects'}
+              disabled={(selectedRows && !selectedRows.length) || this.isClassProtected()}
+              onTouchTap={() => this.showDialog('deleteDataObjectDialog')}
+            />
+            <IconButton
+              iconClassName="synicon-refresh"
+              tooltip="Reload Data Objects"
+              onTouchTap={Actions.fetch}
+            />
+          </div>
         </InnerToolbar>
         <Container>
           <Loading show={isLoading}>

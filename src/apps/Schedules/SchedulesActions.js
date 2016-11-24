@@ -8,7 +8,6 @@ export default CreateActions(
     fetchSchedules: {
       asyncResult: true,
       loading: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Schedules.list'
     },
