@@ -104,7 +104,12 @@ const Instances = React.createClass({
         <Helmet title={title} />
         {this.getDialogs()}
 
-        <InnerToolbar title={title}>
+        <InnerToolbar
+          title={{
+            title,
+            [`data-e2e`]: 'instances-page-title'
+          }}
+        >
           <RaisedButton
             primary={true}
             label="Add"

@@ -32,7 +32,7 @@ const HostingFilesView = React.createClass({
       presence: true,
       format: {
         pattern: '[a-zA-Z0-9-_]+$',
-        message: 'can contain only a-z, 0-9, no spaces '
+        message: 'can contain only a-z, 0-9'
       },
       length: {
         maximum: 64
@@ -48,10 +48,21 @@ const HostingFilesView = React.createClass({
   },
 
   getStyles() {
+    const { errors } = this.state;
+    const hasErrors = errors.name && errors.name.length;
+
     return {
       buttonsWrapper: {
         display: 'flex',
         alignItems: 'center'
+      },
+      newFolderNameInput: {
+        width: 10,
+        marginRight: 10,
+        marginBottom: hasErrors && 22
+      },
+      newFolderButton: {
+        marginRight: 10
       },
       actionButtons: {
         display: 'flex',
@@ -69,12 +80,6 @@ const HostingFilesView = React.createClass({
     const hostingUrl = this.isDefaultHosting() ? defaultHostingUrl : customDomainUrl;
 
     return hostingUrl;
-  },
-
-  getToolbarTitle() {
-    const { hostingDetails, isLoading } = this.state;
-
-    return hostingDetails && !isLoading ? `Website Hosting: ${hostingDetails.name} (id: ${hostingDetails.id})` : '';
   },
 
   isDefaultHosting() {
@@ -142,7 +147,7 @@ const HostingFilesView = React.createClass({
     HostingFilesActions.uploadFiles(hostingId, filesToUpload);
   },
 
-  handleOnTouchTap(url) {
+  handleGoToWebsite(url) {
     const hasHostingUrl = !_.isEmpty(url);
 
     return !hasHostingUrl && this.showMissingDomainsSnackbar;
@@ -220,7 +225,6 @@ const HostingFilesView = React.createClass({
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const hostingUrl = this.getHostingUrl();
-    const pageTitle = this.getToolbarTitle();
 
     if (!hostingDetails) {
       return null;
@@ -228,16 +232,19 @@ const HostingFilesView = React.createClass({
 
     return (
       <div>
-        <Helmet title={pageTitle} />
+        <Helmet title={hostingDetails.name} />
         <HostingDialog />
         <HostingPublishDialog />
 
         <InnerToolbar
-          title={pageTitle}
           backButton={true}
           backFallback={this.handleBackClick}
           forceBackFallback={true}
           backButtonTooltip="Go Back to Hosting"
+          title={{
+            title: `Hosting: ${hostingDetails.name}`,
+            id: hostingDetails.id
+          }}
         >
           <div style={styles.buttonsWrapper}>
             <Show if={items.length && !isLoading}>
@@ -248,7 +255,6 @@ const HostingFilesView = React.createClass({
               primary={true}
               icon={<FontIcon className="synicon-open-in-new" />}
               onTouchTap={() => this.handleOnTouchTap(hostingUrl)}
-              href={hostingUrl}
               target="_blank"
             />
           </div>
