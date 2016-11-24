@@ -86,6 +86,8 @@ export default Reflux.createStore({
   },
 
   onFetchScriptRuntimesCompleted(runtimes) {
+    runtimes.nodejs = runtimes['nodejs_library_v0.4'];
+    runtimes.python = runtimes['python_library_v4.2'];
     const runtimesDict = _.forEach(runtimes, this.getRuntimeIconInfo);
 
     this.data.runtimes = runtimesDict;
