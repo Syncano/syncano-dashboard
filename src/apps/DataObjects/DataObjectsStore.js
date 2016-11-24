@@ -29,7 +29,9 @@ export default Reflux.createStore({
       items: [],
       isLoading: true,
       selectedRows: [],
-      currentPage: 1
+      currentPage: 1,
+      currentOrderBy: null,
+      pagesCount: null
     };
   },
 
@@ -51,13 +53,22 @@ export default Reflux.createStore({
   },
 
   refreshDataObjects() {
-    DataObjectsActions.fetchDataObjects(this.data.currentPage);
+    const { currentPage, currentOrderBy } = this.data;
+
+    DataObjectsActions.getDataObjectsCount();
+
+    if (!currentOrderBy) {
+      DataObjectsActions.fetchDataObjects(currentPage);
+    } else {
+      DataObjectsActions.fetchDataObjects(currentPage, currentOrderBy);
+    }
   },
 
   getCurrentClassName() {
     if (this.data.classObj) {
       return this.data.classObj.name;
     }
+
     return null;
   },
 
@@ -69,6 +80,7 @@ export default Reflux.createStore({
     if (this.data.selectedRows) {
       return this.data.selectedRows.length;
     }
+
     return null;
   },
 
@@ -116,14 +128,9 @@ export default Reflux.createStore({
     DataObjectsActions.setDataObjects(dataObjects, rawData);
   },
 
-  onSubFetchDataObjects() {
-    this.trigger({ isLoading: true });
-  },
-
-  onSubFetchDataObjectsCompleted({ dataObjects, users }) {
-    this.data.currentPage += 1;
-    this.data.users = users;
-    DataObjectsActions.setDataObjects(dataObjects, dataObjects);
+  onGetDataObjectsCountCompleted({ objects_count }) {
+    this.data.pagesCount = _.ceil(objects_count / 100);
+    this.trigger(this.data);
   },
 
   onGetDataObjectCompleted(fetchedItem) {
@@ -175,5 +182,23 @@ export default Reflux.createStore({
 
   clearStore() {
     this.data = this.getInitialState();
+  },
+
+  onGoToPage(page) {
+    this.data.currentPage = page;
+    this.trigger(this.data);
+    this.refreshDataObjects();
+  },
+
+  onSelectSorting(method) {
+    if (method === this.data.currentOrderBy) {
+      this.data.currentOrderBy = `-${method}`;
+    } else {
+      this.data.currentOrderBy = method;
+    }
+
+    this.data.currentPage = 1;
+    this.trigger(this.data);
+    this.refreshDataObjects();
   }
 });

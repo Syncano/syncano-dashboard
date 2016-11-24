@@ -31,6 +31,7 @@ import MobileOnboarding from './MobileOnboarding';
 import NoMobileInfo from './NoMobileInfo';
 import Notification from './Notification';
 import PageIntro from './PageIntro';
+import Pagination from './Pagination';
 import PaymentIcon from './PaymentIcon';
 import PaymentIcons from './PaymentIcons';
 import Popover from './Popover';
@@ -91,6 +92,7 @@ export { MobileOnboarding };
 export { NoMobileInfo };
 export { Notification };
 export { PageIntro };
+export { Pagination };
 export { PaymentIcon };
 export { PaymentIcons };
 export { Popover };
@@ -153,6 +155,7 @@ export default {
   NoMobileInfo,
   Notification,
   PageIntro,
+  Pagination,
   PaymentIcon,
   PaymentIcons,
   Popover,

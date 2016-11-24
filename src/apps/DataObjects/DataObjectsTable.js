@@ -3,18 +3,9 @@ import _ from 'lodash';
 import Moment from 'moment';
 import localStorage from 'local-storage-fallback';
 
-import Store from './DataObjectsStore';
+import DataObjectsStore from './DataObjectsStore';
 
-import {
-  Table,
-  TableBody,
-  TableRow,
-  TableRowColumn,
-  FontIcon,
-  TableHeaderColumn,
-  TableHeader
-} from 'material-ui';
-import { ShowMore } from '../../common';
+import { Table, TableBody, TableRow, TableRowColumn, FontIcon, TableHeader, TableHeaderColumn } from 'material-ui';
 import ColumnsFilterMenu from './ColumnsFilterMenu';
 
 class DataObjectsTable extends Component {
@@ -28,68 +19,60 @@ class DataObjectsTable extends Component {
     let columns = [
       {
         id: 'id',
+        sortable: true,
         width: 90,
-        tooltip: 'Built-in property: ID',
         checked: true
       },
       {
         id: 'revision',
         width: 20,
-        tooltip: 'Built-in property: Revision',
         checked: true
       },
       {
         id: 'owner',
         width: 90,
-        tooltip: 'Owner',
         checked: false
       },
       {
         id: 'group',
         width: 90,
-        tooltip: 'Built-in property: Group',
         checked: false
       },
       {
         id: 'owner_permissions',
         width: 90,
-        tooltip: 'Built-in property: Owner Permissions',
         checked: false
       },
       {
         id: 'group_permissions',
         width: 90,
-        tooltip: 'Built-in property: Group Permissions',
         checked: false
       },
       {
         id: 'other_permissions',
         width: 90,
-        tooltip: 'Built-in property: Other Permissions',
         checked: false
       },
       {
         id: 'channel',
         width: 90,
-        tooltip: 'Built-in property: Channel',
         checked: false
       },
       {
         id: 'channel_room',
         width: 90,
-        tooltip: 'Built-in property: Channel room',
         checked: false
       },
       {
         id: 'created_at',
+        sortable: true,
         width: 120,
-        tooltip: 'Built-in property: Created At',
         checked: true
       },
       {
         id: 'updated_at',
+        sortable: true,
         width: 120,
-        tooltip: 'Built-in property: Updated At',
         checked: true
       }
     ];
@@ -102,7 +85,7 @@ class DataObjectsTable extends Component {
     const schemaColumns = _.map(classObject.schema, (item) => ({
       id: item.name,
       name: item.name,
-      tooltip: `Custom property: ${item.name} (type: ${item.type})`,
+      sortable: item.order_index,
       checked: true
     }));
 
@@ -112,7 +95,6 @@ class DataObjectsTable extends Component {
       columns.unshift({
         id: 'username',
         width: 120,
-        tooltip: 'Built-in property: Username',
         checked: true
       });
     }
@@ -152,7 +134,7 @@ class DataObjectsTable extends Component {
 
   showDataObjectEditDialog = (cellNumber, columnNumber) => {
     if (columnNumber > -1) {
-      Store.getSelectedRowObj(cellNumber);
+      DataObjectsStore.getSelectedRowObj(cellNumber);
     }
   }
 
@@ -228,16 +210,6 @@ class DataObjectsTable extends Component {
         />
       </TableHeaderColumn>
     );
-    const getTooltipPosition = (index) => {
-      if (index === columns.length - 1) {
-        return { left: '-75%' };
-      }
-      if (index === columns.length - 2) {
-        return { left: '-50%' };
-      }
-
-      return null;
-    };
 
     // Initial columns
     const columnsComponents = _.map(columns, (item, index) => {
@@ -250,10 +222,14 @@ class DataObjectsTable extends Component {
               whiteSpace: 'normal',
               wordWrap: 'normal'
             }}
-            tooltip={item.tooltip}
-            tooltipStyle={getTooltipPosition(index)}
           >
             {item.id}
+            {item.sortable && <span
+              onClick={() => { this.props.handleSortingSelection(item.id); }}
+              style={{ marginLeft: 8, color: 'blue' }}
+            >
+              sort
+            </span>}
           </TableHeaderColumn>
         );
       }
@@ -358,14 +334,7 @@ class DataObjectsTable extends Component {
   }
 
   render() {
-    const {
-      items,
-      isLoading,
-      hasNextPage,
-      selectedRows,
-      handleMoreRows,
-      handleRowSelection
-    } = this.props;
+    const { items, selectedRows, handleRowSelection } = this.props;
     const { columns } = this.state;
     const { withEditDialog } = this.props;
     const tableData = this.renderTableData(items, selectedRows);
@@ -392,18 +361,6 @@ class DataObjectsTable extends Component {
             {tableData}
           </TableBody>
         </Table>
-
-        <div
-          className="row align-center"
-          style={{ margin: '50px 0 20px' }}
-        >
-          <div>Loaded {tableData.length} Data Objects</div>
-        </div>
-        <ShowMore
-          label="Load more"
-          visible={hasNextPage && !isLoading}
-          onTouchTap={handleMoreRows}
-        />
       </div>
     );
   }

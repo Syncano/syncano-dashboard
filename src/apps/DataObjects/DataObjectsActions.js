@@ -9,22 +9,23 @@ export default CreateActions(
     setSelectedRows: {},
     getIDsFromTable: {},
     clearStore: {},
+    goToPage: {},
+    selectSorting: {},
     fetchCurrentClassObj: {
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.getClass'
+    },
+    getDataObjectsCount: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.DataObjects.getCount'
     },
     fetchDataObjects: {
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.list'
-    },
-    subFetchDataObjects: {
-      asyncResult: true,
-      loading: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataObjects.subList'
     },
     getDataObject: {
       asyncResult: true,
