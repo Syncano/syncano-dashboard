@@ -81,13 +81,19 @@ export default Reflux.createStore({
     return runtime;
   },
 
+  createRuntimesAliases(runtimes) {
+    runtimes.nodejs = runtimes['nodejs_library_v0.4'];
+    runtimes.python = runtimes['python_library_v4.2'];
+
+    return runtimes;
+  },
+
   onFetchScriptRuntimes() {
     this.trigger({ isLoading: true });
   },
 
   onFetchScriptRuntimesCompleted(runtimes) {
-    runtimes.nodejs = runtimes['nodejs_library_v0.4'];
-    runtimes.python = runtimes['python_library_v4.2'];
+    this.createRuntimesAliases(runtimes);
     const runtimesDict = _.forEach(runtimes, this.getRuntimeIconInfo);
 
     this.data.runtimes = runtimesDict;
