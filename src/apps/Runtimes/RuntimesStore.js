@@ -93,8 +93,8 @@ export default Reflux.createStore({
   },
 
   onFetchScriptRuntimesCompleted(runtimes) {
-    this.createRuntimesAliases(runtimes);
-    const runtimesDict = _.forEach(runtimes, this.getRuntimeIconInfo);
+    const extendedRuntimes = this.createRuntimesAliases(runtimes);
+    const runtimesDict = _.forEach(extendedRuntimes, this.getRuntimeIconInfo);
 
     this.data.runtimes = runtimesDict;
     this.trigger({ runtimes: runtimesDict, isLoading: false });
