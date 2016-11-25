@@ -49,6 +49,7 @@ import Solutions from './Solutions';
 import Spacing from './Spacing';
 import Stepper from './Stepper';
 import SyncanoTheme from './SyncanoTheme';
+import TableHeaderColumn from './TableHeaderColumn';
 import Tags from './Tags';
 import TogglePanel from './TogglePanel';
 import Tooltip from './Tooltip';
@@ -110,6 +111,7 @@ export { Solutions };
 export { Spacing };
 export { Stepper };
 export { SyncanoTheme };
+export { TableHeaderColumn };
 export { Tags };
 export { TogglePanel };
 export { Tooltip };
@@ -173,6 +175,7 @@ export default {
   Spacing,
   Stepper,
   SyncanoTheme,
+  TableHeaderColumn,
   Tags,
   TogglePanel,
   Tooltip,

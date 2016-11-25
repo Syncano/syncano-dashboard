@@ -94,6 +94,7 @@ const DataObjects = React.createClass({
           classObject={classObj}
           handleRowSelection={this.handleRowSelection}
           handleSortingSelection={DataObjectsActions.selectSorting}
+          currentOrderBy={this.state.currentOrderBy}
         />
         <Pagination
           pageNum={this.state.pagesCount}

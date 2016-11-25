@@ -5,8 +5,9 @@ import localStorage from 'local-storage-fallback';
 
 import DataObjectsStore from './DataObjectsStore';
 
-import { Table, TableBody, TableRow, TableRowColumn, FontIcon, TableHeader, TableHeaderColumn } from 'material-ui';
 import ColumnsFilterMenu from './ColumnsFilterMenu';
+import { Table, TableBody, TableRow, TableRowColumn, FontIcon, TableHeader } from 'material-ui';
+import { TableHeaderColumn } from '../../common';
 
 class DataObjectsTable extends Component {
   static defaultProps = {
@@ -166,13 +167,12 @@ class DataObjectsTable extends Component {
   // Columns renderers
   renderColumnDate = (value) => {
     if (!value) {
-      return '';
+      return null;
     }
 
     return (
-      <div>
-        <div>{Moment(value).format('DD/MM/YYYY')}</div>
-        <div>{Moment(value).format('LTS')}</div>
+      <div title={`${Moment(value).format('DD/MM/YYYY')} ${Moment(value).format('LTS')}`}>
+        {Moment(value).format('DD/MM/YYYY')}
       </div>
     );
   }
@@ -222,14 +222,12 @@ class DataObjectsTable extends Component {
               whiteSpace: 'normal',
               wordWrap: 'normal'
             }}
+            id={item.id}
+            sortable={item.sortable}
+            currentOrderBy={this.props.currentOrderBy}
+            clickHandler={() => this.props.handleSortingSelection(item.id)}
           >
             {item.id}
-            {item.sortable && <span
-              onClick={() => { this.props.handleSortingSelection(item.id); }}
-              style={{ marginLeft: 8, color: 'blue' }}
-            >
-              sort
-            </span>}
           </TableHeaderColumn>
         );
       }
@@ -265,6 +263,10 @@ class DataObjectsTable extends Component {
             whiteSpace: 'normal',
             wordWrap: 'normal'
           }}
+          id={item.id}
+          sortable={item.sortable}
+          currentOrderBy={this.props.currentOrderBy}
+          clickHandler={() => this.props.handleSortingSelection(item.id)}
         />
       );
       const columnsComponents = _.map(columns, (column, idx) => {
@@ -307,9 +309,9 @@ class DataObjectsTable extends Component {
 
         return (
           <TableRowColumn
-            data-e2e={`${column.id}-data-object-column`}
             key={`${column.id}-${idx}`}
             style={{ width: column.width ? column.width : 100 }}
+            data-e2e={`${column.id}-data-object-column`}
           >
             {value}
           </TableRowColumn>
@@ -320,10 +322,10 @@ class DataObjectsTable extends Component {
 
       return (
         <TableRow
-          data-e2e={`${index}-data-object-row`}
           style={{ cursor: 'pointer' }}
           key={`row-${item.id}`}
           selected={selected}
+          data-e2e={`${index}-data-object-row`}
         >
           {columnsComponents}
         </TableRow>
