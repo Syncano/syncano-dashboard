@@ -280,7 +280,11 @@ const DataEndpointDialog = React.createClass({
   },
 
   handleQueryValue(value) {
-    return JSON.stringify(value, null, '\t');
+    if (typeof value === 'object') {
+      return JSON.stringify(value, null, '\t');
+    }
+
+    return value;
   },
 
   handleOrderChange(event, key, value) {

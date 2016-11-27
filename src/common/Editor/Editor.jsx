@@ -26,12 +26,14 @@ class Editor extends React.Component {
 
   render() {
     const styles = this.getStyles();
-    const { style, ...other } = this.props;
+    const { style, editorName, ...other } = this.props;
 
     return (
       <AceEditor
-        id={name}
-        ref="editor"
+        id={editorName}
+        name={editorName}
+        ref={`editor-${editorName}`}
+        editorProps={{ $blockScrolling: 'Infinity' }}
         style={{ ...styles.root, ...style }}
         {...other}
       />

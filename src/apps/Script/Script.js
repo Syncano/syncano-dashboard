@@ -279,8 +279,6 @@ const Script = React.createClass({
   isSaved() {
     const { currentScript, editorSource } = this.state;
 
-    // console.error('dua', this.refs);
-
     if (!currentScript || !editorSource) {
       return true;
     }
@@ -292,17 +290,16 @@ const Script = React.createClass({
   },
 
   handleOnSourceChange(editorSource) {
+    this.runAutoSave();
     this.setState({ editorSource });
-    // this.runAutoSave();
   },
 
   handleRunScript() {
     const { currentScript, editorSource, payload } = this.state;
     const config = this.getConfigObject();
-    const source = editorSource;
     const updateParams = {
       config,
-      source
+      source: editorSource
     };
     const runParams = {
       id: currentScript.id,
@@ -750,16 +747,17 @@ const Script = React.createClass({
 
   renderContent() {
     const styles = this.getStyles();
-    const { currentScript } = this.state;
+    const { currentScript, editorSource } = this.state;
     const linkToPackages = currentScript && this.getLinkToPackages(currentScript);
-    let source = null;
-    let editorMode = 'python';
+    const editorMode = currentScript ? RuntimeStore.getEditorMode(currentScript.runtime_name) : 'python';
 
-    if (currentScript) {
-      source = currentScript.source;
-      editorMode = RuntimeStore.getEditorMode(currentScript.runtime_name);
-    }
+    const editorSourceValue = () => {
+      if (typeof editorSource === 'string') {
+        return editorSource;
+      }
 
+      return currentScript && currentScript.source;
+    };
 
     return (
       <div
@@ -790,11 +788,12 @@ const Script = React.createClass({
           <div style={styles.codeEditorContainer}>
             <Editor
               ref="editorSource"
-              name="editorSource"
+              editorName="editorSource"
               mode={editorMode}
               onChange={this.handleOnSourceChange}
               onLoad={this.clearAutosaveTimer}
-              defaultValue={source}
+              defaultValue={currentScript ? currentScript.source : null}
+              value={editorSourceValue()}
               width="100%"
               height="100%"
               style={{ position: 'absolute' }}
@@ -826,19 +825,20 @@ const Script = React.createClass({
   },
 
   renderSidebarPayloadSection() {
+    const { payload } = this.state;
     const styles = this.getStyles();
 
     return (
       <div>
         <TogglePanel title="Payload">
           <Editor
-            name="payload-editor"
+            editorName="payloadSource"
             ref="payloadSource"
             mode="json"
             height="120px"
             onChange={this.handlePayloadChange}
-            onLoad={this.clearAutosaveTimer}
-            value={this.handlePayloadValue()}
+            defaultValue={this.handlePayloadValue()}
+            value={payload || this.handlePayloadValue()}
           />
         </TogglePanel>
         <Show if={this.getValidationMessages('payload').length}>
