@@ -29,14 +29,16 @@ class Editor extends React.Component {
     const { style, editorName, ...other } = this.props;
 
     return (
-      <AceEditor
-        id={editorName}
-        name={editorName}
-        ref={`editor-${editorName}`}
-        editorProps={{ $blockScrolling: 'Infinity' }}
-        style={{ ...styles.root, ...style }}
-        {...other}
-      />
+      <div data-e2e={other['data-e2e']}>
+        <AceEditor
+          id={editorName}
+          name={editorName}
+          ref={`editor-${editorName}`}
+          editorProps={{ $blockScrolling: 'Infinity' }}
+          style={{ ...styles.root, ...style }}
+          {...other}
+        />
+      </div>
     );
   }
 }
