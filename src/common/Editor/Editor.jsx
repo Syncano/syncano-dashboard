@@ -34,6 +34,8 @@ class Editor extends React.Component {
           id={editorName}
           name={editorName}
           ref={`editor-${editorName}`}
+          showPrintMargin={false}
+          theme={'tomorrow'}
           editorProps={{ $blockScrolling: 'Infinity' }}
           style={{ ...styles.root, ...style }}
           {...other}
