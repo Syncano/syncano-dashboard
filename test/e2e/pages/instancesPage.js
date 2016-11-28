@@ -109,12 +109,7 @@ export default {
       locateStrategy: 'xpath'
     },
     instancesHeaderTitle: {
-      selector: '//span[text()="Instances"]',
-      locateStrategy: 'xpath'
-    },
-    socketsHeaderTitle: {
-      selector: '//span[text()="Sockets"]',
-      locateStrategy: 'xpath'
+      selector: '[data-e2e="instances-page-title"]'
     },
     setupPageContent: {
       selector: '[data-e2e="setup-page-content"]'

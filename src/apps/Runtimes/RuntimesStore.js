@@ -45,7 +45,7 @@ export default Reflux.createStore({
       return null;
     }
 
-    return _.pickBy(this.data.runtimes, (runtime, key) => isRuntimeMatched(runtime, key) && !runtime.deprecated);
+    return _.find(this.data.runtimes, (runtime, key) => isRuntimeMatched(runtime, key) && !runtime.deprecated);
   },
 
   getDividedRuntimes() {
@@ -81,12 +81,20 @@ export default Reflux.createStore({
     return runtime;
   },
 
+  createRuntimesAliases(runtimes) {
+    runtimes.nodejs = runtimes['nodejs_library_v0.4'];
+    runtimes.python = runtimes['python_library_v4.2'];
+
+    return runtimes;
+  },
+
   onFetchScriptRuntimes() {
     this.trigger({ isLoading: true });
   },
 
   onFetchScriptRuntimesCompleted(runtimes) {
-    const runtimesDict = _.forEach(runtimes, this.getRuntimeIconInfo);
+    const extendedRuntimes = this.createRuntimesAliases(runtimes);
+    const runtimesDict = _.forEach(extendedRuntimes, this.getRuntimeIconInfo);
 
     this.data.runtimes = runtimesDict;
     this.trigger({ runtimes: runtimesDict, isLoading: false });

@@ -59,7 +59,12 @@ const ProfileBillingInvoices = React.createClass({
     return (
       <Loading show={isLoading}>
         <Helmet title={title} />
-        <InnerToolbar title={title} />
+        <InnerToolbar
+          title={{
+            title,
+            [`data-e2e`]: 'invoices-page-title'
+          }}
+        />
 
         <Show if={!invoices.length}>
           <Container.Empty

@@ -11,7 +11,7 @@ import Actions from './DataEndpointsPreviewActions';
 import Store from './DataEndpointsPreviewStore';
 
 import { IconButton } from 'material-ui';
-import { InnerToolbar, Loading, Dialog, Container, DataObjectsTable } from '../../common';
+import { Container, Dialog, InnerToolbar, Loading, DataObjectsTable } from '../../common';
 import ReadOnlyTooltip from '../DataObjects/ReadOnlyTooltip';
 
 const DataEndpointsPreview = React.createClass({
@@ -39,6 +39,15 @@ const DataEndpointsPreview = React.createClass({
 
   componentWillUnmount() {
     Actions.clearStore();
+  },
+
+  getStyles() {
+    return {
+      iconButtons: {
+        fontSize: 25,
+        marginTop: 5
+      }
+    };
   },
 
   isClassProtected() {
@@ -104,6 +113,7 @@ const DataEndpointsPreview = React.createClass({
   render() {
     const { isLoading, classObject, selectedRows, currentPage, hasNextPage, items } = this.state;
     const { dataEndpointName } = this.props.params;
+    const styles = this.getStyles();
 
     return (
       <div>
@@ -116,14 +126,14 @@ const DataEndpointsPreview = React.createClass({
         >
           <IconButton
             data-e2e="data-object-delete-button"
-            style={{ fontSize: 25, marginTop: 5 }}
+            style={styles.iconButtons}
             iconClassName="synicon-delete"
             tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={classObject.name} /> : 'Delete Data Objects'}
             disabled={(selectedRows && !selectedRows.length) || this.isClassProtected()}
             onTouchTap={() => this.showDialog('deleteDataObjectDialog')}
           />
           <IconButton
-            style={{ fontSize: 25, marginTop: 5 }}
+            style={styles.iconButtons}
             iconClassName="synicon-refresh"
             tooltip="Reload Data Objects"
             onTouchTap={() => Actions.fetchData(currentPage)}

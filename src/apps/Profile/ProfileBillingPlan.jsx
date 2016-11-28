@@ -230,12 +230,10 @@ const ProfileBillingPlan = Radium(React.createClass({
         <PlanDialog onDismiss={this.handlePlanDialogDismiss} />
         <PlanReceiptDialog />
         <InnerToolbar
-          title={
-            <div>
-              {'Your plan: '}
-              <span><strong data-e2e="plan-name-text">{pricingPlanName}</strong></span>
-            </div>
-          }
+          title={{
+            title: `Your plan: ${pricingPlanName}`,
+            [`data-e2e`]: 'plan-name-text'
+          }}
         />
         <Container>
           <div className="row">
