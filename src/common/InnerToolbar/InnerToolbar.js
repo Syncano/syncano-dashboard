@@ -2,10 +2,25 @@ import React from 'react';
 import Radium from 'radium';
 import { withRouter } from 'react-router';
 import Sticky from 'react-stickydiv';
+import _ from 'lodash';
 
-import { Toolbar, ToolbarGroup, ToolbarTitle, IconButton } from 'material-ui';
+import { Toolbar, ToolbarGroup, IconButton } from 'material-ui';
+import { CustomTitle } from '../../common/';
 
 const InnerToolbar = Radium(React.createClass({
+  propTypes: {
+    title: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.shape({
+        title: React.PropTypes.string.isRequired,
+        id: React.PropTypes.oneOfType([
+          React.PropTypes.string,
+          React.PropTypes.number
+        ])
+      })
+    ])
+  },
+
   getDefaultProps() {
     return {
       backButton: false,
@@ -15,6 +30,8 @@ const InnerToolbar = Radium(React.createClass({
   },
 
   getStyles() {
+    const { menu } = this.props;
+
     return {
       toolbar: {
         background: 'rgba(243, 243, 243, .90)',
@@ -27,15 +44,24 @@ const InnerToolbar = Radium(React.createClass({
         marginLeft: -16,
         marginRight: 10
       },
+      toolbarLeft: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        minWidth: 0,
+        flex: 1,
+        alignItems: 'center'
+      },
       toolbarRight: {
         height: '100%',
         display: 'flex',
         alignItems: 'center',
-        flex: 1,
         justifyContent: 'flex-end'
       },
       icon: {
         color: 'rgba(0, 0, 0, .4)'
+      },
+      title: {
+        flex: menu ? 'initial' : 'inherit'
       }
     };
   },
@@ -68,29 +94,23 @@ const InnerToolbar = Radium(React.createClass({
     );
   },
 
-  renderChildren(children) {
+  renderTitle(title) {
     const styles = this.getStyles();
 
-    return (
-      <ToolbarGroup style={styles.toolbarRight}>
-        {children}
-      </ToolbarGroup>
-    );
-  },
+    if (_.isString(title)) {
+      return (
+        <CustomTitle
+          style={styles.title}
+          title={title}
+        />
+      );
+    }
 
-  renderMenu(menu) {
     return (
-      <ToolbarGroup>
-        {menu}
-      </ToolbarGroup>
-    );
-  },
-
-  renderTitle(title) {
-    return (
-      <ToolbarGroup>
-        <ToolbarTitle text={title} />
-      </ToolbarGroup>
+      <CustomTitle
+        style={styles.title}
+        {...title}
+      />
     );
   },
 
@@ -105,9 +125,13 @@ const InnerToolbar = Radium(React.createClass({
           data-e2e="inner-toolbar"
         >
           {backFallback && backButton ? this.renderBackButton() : null}
-          {title ? this.renderTitle(title) : null}
-          {menu ? this.renderMenu(menu) : null}
-          {children ? this.renderChildren(children) : null}
+          <ToolbarGroup style={styles.toolbarLeft}>
+            {this.renderTitle(title)}
+            {menu}
+          </ToolbarGroup>
+          <ToolbarGroup style={styles.toolbarRight}>
+            {children}
+          </ToolbarGroup>
         </Toolbar>
       </Sticky>
     );

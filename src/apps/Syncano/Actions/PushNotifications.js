@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default {
   configGCMPushNotification(params = {}) {
     this.NewLibConnection
@@ -9,12 +11,42 @@ export default {
   },
 
   configAPNSPushNotification(params = {}) {
-    this.NewLibConnection
-      .APNSConfig
-      .please()
-      .update({}, params)
-      .then(this.completed)
-      .catch(this.failure);
+    let APNSConfigParams = {};
+    const runPromisesInSequence = (p, fn) => p.then(fn);
+    const promises = [
+      () => (
+        this.NewLibConnection
+        .APNSConfig
+        .please()
+        .update({}, APNSConfigParams)
+        .then(this.completed)
+        .catch(this.failure)
+      )
+    ];
+
+    _.forEach(params.certificateTypes, (type) => {
+      const certificateName = params[`${type}_certificate_name`];
+
+      if (!certificateName) {
+        promises.unshift(() => (
+          this.NewLibConnection
+            .APNSConfig
+            .please()
+            .removeCertificate({}, { [`${type}_certificate`]: true })
+          )
+        );
+      }
+
+      if (certificateName) {
+        const typeParams = _.pickBy(params, (param, paramKey) => (
+          _.startsWith(paramKey, type) && _.isObject(params[`${type}_certificate`]))
+        );
+
+        APNSConfigParams = { ...APNSConfigParams, ...typeParams };
+      }
+    });
+
+    promises.reduce(runPromisesInSequence, Promise.resolve());
   },
 
   getGCMPushNotificationConfig() {
@@ -31,15 +63,6 @@ export default {
       .APNSConfig
       .please()
       .get()
-      .then(this.completed)
-      .catch(this.failure);
-  },
-
-  removeCertificate(params = {}) {
-    this.NewLibConnection
-      .APNSConfig
-      .please()
-      .removeCertificate(params)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -66,6 +89,20 @@ export default {
 
         this.completed(push);
       })
+      .catch(this.failure);
+  },
+
+  removeCertificates() {
+    const params = {
+      production_certificate: true,
+      development_certificate: true
+    };
+
+    this.NewLibConnection
+      .APNSConfig
+      .please()
+      .removeCertificate({}, params)
+      .then(this.completed)
       .catch(this.failure);
   },
 

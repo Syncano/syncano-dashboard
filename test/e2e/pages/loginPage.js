@@ -72,12 +72,7 @@ export default {
       selector: 'div[id=instances]'
     },
     instancesHeaderTitle: {
-      selector: '//span[text()="Instances"]',
-      locateStrategy: 'xpath'
-    },
-    socketsHeaderTitle: {
-      selector: '//span[text()="Sockets"]',
-      locateStrategy: 'xpath'
+      selector: '[data-e2e="instances-page-title"]'
     }
   }
 };
