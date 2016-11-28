@@ -80,16 +80,6 @@ const Template = React.createClass({
     this._handleRender = _.debounce(this.handleRender, 500, { leading: true });
   },
 
-  componentDidUpdate() {
-    const { renderedTemplate } = this.state;
-
-    if (renderedTemplate) {
-      const value = _.isObject(renderedTemplate) ? JSON.stringify(renderedTemplate, null, '\t') : renderedTemplate;
-
-      this.refs.previewEditor.editor.setValue(value);
-    }
-  },
-
   componentWillUnmount() {
     TemplateActions.clearTemplate();
   },
@@ -148,15 +138,13 @@ const Template = React.createClass({
   },
 
   isSaved() {
-    const { template } = this.state;
+    const { template, contentSource, contextSource } = this.state;
     const contentEditor = this.refs.contentEditor;
     const contextEditor = this.refs.contextEditor;
 
     if (template && contentEditor && contextEditor) {
-      const contentEditorValue = contentEditor.editor.getValue();
-      const contextEditorValue = contextEditor.editor.getValue();
-      const isContentSaved = _.isEqual(template.content, contentEditorValue);
-      const isContextSaved = _.isEqual(JSON.stringify(template.context, null, '\t'), contextEditorValue);
+      const isContentSaved = _.isEqual(template.content, contentSource);
+      const isContextSaved = _.isEqual(JSON.stringify(template.context, null, '\t'), contextSource);
 
       return isContentSaved && isContextSaved;
     }
@@ -165,21 +153,24 @@ const Template = React.createClass({
   },
 
   handleUpdate() {
-    const { template } = this.state;
-    const content = this.refs.contentEditor.editor.getValue();
-    const context = this.refs.contextEditor.editor.getValue();
+    const { template, contentSource, contextSource } = this.state;
 
     if (this.areEditorsLoaded()) {
       this.clearAutosaveTimer();
       TemplateActions.setDataSource(this.refs.dataSourceUrl.getValue());
-      TemplateActions.updateTemplate(template.name, { content, context });
+      TemplateActions.updateTemplate(template.name, { content: contentSource, context: contextSource });
       this.setSnackbarNotification({ message: 'Saving...' });
     }
   },
 
-  handleOnSourceChange() {
-    this.resetForm();
+  handleContentSourceChange(contentSource) {
     this.runAutoSave();
+    this.setState({ contentSource });
+  },
+
+  handleContextSourceChange(contextSource) {
+    this.runAutoSave();
+    this.setState({ contextSource });
   },
 
   handleShowSidebarCheckboxCheck(event, isInputChecked) {
@@ -290,16 +281,18 @@ const Template = React.createClass({
   },
 
   renderCodeEditor() {
-    const { template } = this.state;
+    const { template, contentSource } = this.state;
+    const value = typeof contentSource === 'string' ? contentSource : template.content;
 
     return (
       <Editor
         ref="contentEditor"
         name="contentEditor"
         mode="django"
-        onChange={this.handleOnSourceChange}
+        onChange={this.handleContentSourceChange}
         onLoad={this.clearAutosaveTimer}
-        value={template.content}
+        defaultValue={template.content}
+        value={value}
         width="100%"
         height="100%"
         style={{ position: 'absolute' }}
@@ -370,7 +363,8 @@ const Template = React.createClass({
 
   renderSidebarContextSection() {
     const styles = this.getStyles();
-    const { template } = this.state;
+    const { template, contextSource } = this.state;
+    const value = typeof contextSource === 'string' ? contextSource : JSON.stringify(template.context, null, '\t');
 
     return (
       <TogglePanel
@@ -383,14 +377,15 @@ const Template = React.createClass({
           ref="contextEditor"
           mode="json"
           height="200px"
-          onChange={this.handleOnSourceChange}
+          onChange={this.handleContextSourceChange}
           onLoad={this.clearAutosaveTimer}
-          value={JSON.stringify(template.context, null, '\t') || [
+          defaultValue={value || JSON.stringify(template.context, null, '\t') || [
             '{',
             '    "foo": "bar",',
             '    "bar": "foo"',
             '}'
           ].join('\n')}
+          value={value}
         />
       </TogglePanel>
     );
@@ -398,6 +393,8 @@ const Template = React.createClass({
 
   renderSidebarPreviewSection() {
     const styles = this.getStyles();
+    const { renderedTemplate } = this.state;
+    const value = _.isObject(renderedTemplate) ? JSON.stringify(renderedTemplate, null, '\t') : renderedTemplate;
 
     return (
       <TogglePanel
@@ -413,6 +410,8 @@ const Template = React.createClass({
             readOnly={true}
             width="100%"
             height="200px"
+            defaultValue={value}
+            value={value}
           />
         </div>
       </TogglePanel>
