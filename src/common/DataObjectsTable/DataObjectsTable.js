@@ -6,10 +6,10 @@ import DataObjectsTableInitialColumns from './DataObjectsTableInitialColumns';
 
 import DataObjectsStore from '../../apps/DataObjects/DataObjectsStore';
 
-import { FontIcon, Table, TableBody, TableHeader, TableRow, TableRowColumn } from 'material-ui';
+import { Table, TableBody, TableHeader, TableRow, TableRowColumn } from 'material-ui';
 import { TableHeaderSortableColumn } from '../';
 import ColumnsFilterMenu from './ColumnsFilterMenu';
-import DataObjectsTableDateCell from './DataObjectsTableDateCell';
+import DataObjectsTableCell from './DataObjectsTableCell';
 
 class DataObjectsTable extends Component {
   static defaultProps = {
@@ -76,15 +76,6 @@ class DataObjectsTable extends Component {
     return columns;
   }
 
-  getColumnRenderer(column) {
-    const renderers = {
-      created_at: this.renderColumnDate,
-      updated_at: this.renderColumnDate
-    };
-
-    return renderers[column];
-  }
-
   getCheckedColumnsIDs() {
     const { columns } = this.state;
 
@@ -95,12 +86,6 @@ class DataObjectsTable extends Component {
 
       return null;
     });
-  }
-
-  handleFileOnClick = (event, value) => {
-    event.preventDefault();
-    event.stopPropagation();
-    window.open(value, '_blank');
   }
 
   showDataObjectEditDialog = (cellNumber, columnNumber) => {
@@ -125,18 +110,6 @@ class DataObjectsTable extends Component {
     });
     this.updateLocalStorage();
     this.setState({ columns });
-  }
-
-  renderColumnDate = (value) => <DataObjectsTableDateCell value={value} />;
-
-  renderReference = (obj) => <div>{`${obj.target}: ${obj.value}`}</div>;
-
-  renderFile(obj) {
-    return (
-      <div onClick={(event) => this.handleFileOnClick(event, obj.value)}>
-        <FontIcon className="synicon-download" />
-      </div>
-    );
   }
 
   renderTableHeader() {
@@ -212,46 +185,17 @@ class DataObjectsTable extends Component {
           return false;
         }
 
-        let value = item[column.id];
-        const valueIsObject = _.isObject(value);
-        const renderer = this.getColumnRenderer(column.id);
-        const typesMap = {
-          reference: () => this.renderReference(value),
-          relation: () => this.renderReference(value),
-          file: () => this.renderFile(value),
-          datetime: () => this.renderColumnDate(value.value)
-        };
-
-        if (valueIsObject) {
-          if (value.type && _.keys(typesMap).includes(value.type)) {
-            value = typesMap[value.type]();
-          } else {
-            value = JSON.stringify(value);
-          }
-        }
-
-        if (renderer) {
-          // Simple string or renderer
-          value = renderer(item[column.id]);
-        }
-
-        if (_.isBoolean(value) || _.isNumber(value)) {
-          value = value !== null ? value.toString() : value;
-        }
-
-        if (column.id === 'username') {
-          const user = _.find(users, ['id', item.owner]);
-
-          value = user ? user.username : 'No user';
-        }
-
         return (
           <TableRowColumn
             key={`${column.id}-${idx}`}
             style={{ width: column.width ? column.width : 100 }}
             data-e2e={`${column.id}-data-object-column`}
           >
-            {value}
+            <DataObjectsTableCell
+              column={column}
+              users={users}
+              item={item}
+            />
           </TableRowColumn>
         );
       });
