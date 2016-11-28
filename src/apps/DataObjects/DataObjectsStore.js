@@ -26,12 +26,12 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items: [],
-      isLoading: true,
-      selectedRows: [],
-      currentPage: 1,
       currentOrderBy: null,
-      pagesCount: null
+      currentPage: 1,
+      isLoading: true,
+      items: [],
+      pagesCount: null,
+      selectedRows: []
     };
   },
 
@@ -44,7 +44,6 @@ export default Reflux.createStore({
     );
     this.listenToForms();
     this.setLoadingStates();
-
     this.listenTo(DataObjectsActions.setCurrentClassObj, this.refreshDataObjects);
   },
 
@@ -90,10 +89,6 @@ export default Reflux.createStore({
     DataObjectsActions.getDataObject({ id, className });
   },
 
-  getItems() {
-    return this.data.items;
-  },
-
   setSelectedRows(selectedRows) {
     this.data.selectedRows = selectedRows;
     this.trigger(this.data);
@@ -108,7 +103,6 @@ export default Reflux.createStore({
 
     this.data.items = [...this.data.items, ...items];
     this.data.nextParams = rawData;
-    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
@@ -186,7 +180,6 @@ export default Reflux.createStore({
 
   onGoToPage(page) {
     this.data.currentPage = page;
-    this.trigger(this.data);
     this.refreshDataObjects();
   },
 
@@ -198,7 +191,6 @@ export default Reflux.createStore({
     }
 
     this.data.currentPage = 1;
-    this.trigger(this.data);
     this.refreshDataObjects();
   }
 });

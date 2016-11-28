@@ -31,9 +31,4 @@ const ColumnsFilterMenu = ({ checkToggleColumn, columns }) => (
   </IconMenu>
 );
 
-ColumnsFilterMenu.propTypes = {
-  columns: React.PropTypes.array,
-  checkToggleColumn: React.PropTypes.func
-};
-
 export default ColumnsFilterMenu;

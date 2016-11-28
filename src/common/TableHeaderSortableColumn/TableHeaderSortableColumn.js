@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { colors as Colors } from 'material-ui/styles';
-import { FontIcon, TableHeaderColumn as MaterialUITableHeaderColumn } from 'material-ui';
+import { FontIcon, TableHeaderColumn } from 'material-ui';
 
-const TableHeaderColumn = ({ id, sortable, clickHandler, currentOrderBy, children, ...other }) => {
+const TableHeaderSortableColumn = ({ id, sortable, clickHandler, currentOrderBy, children, ...other }) => {
   const styles = {
     children: {
       color: Colors.blue500,
@@ -58,10 +58,10 @@ const TableHeaderColumn = ({ id, sortable, clickHandler, currentOrderBy, childre
   };
 
   return (
-    <MaterialUITableHeaderColumn {...other}>
+    <TableHeaderColumn {...other}>
       {renderChildren()}
-    </MaterialUITableHeaderColumn>
+    </TableHeaderColumn>
   );
 };
 
-export default TableHeaderColumn;
+export default TableHeaderSortableColumn;

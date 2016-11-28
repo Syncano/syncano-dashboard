@@ -11,10 +11,9 @@ import DataObjectsActions from './DataObjectsActions';
 import DataObjectsStore from './DataObjectsStore';
 
 import { IconButton } from 'material-ui';
-import { Container, Dialog, InnerToolbar, Loading, Pagination } from '../../common/';
+import { Container, DataObjectsTable, Dialog, InnerToolbar, Loading, Pagination } from '../../common/';
 
 import ReadOnlyTooltip from './ReadOnlyTooltip';
-import DataObjectsTable from './DataObjectsTable';
 import DataObjectSearchInput from './DataObjectSearchInput';
 
 const DataObjects = React.createClass({

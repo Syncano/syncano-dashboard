@@ -16,10 +16,10 @@ const Pagination = ({ pageNum, currentPage, clickCallback }) => {
     <nav className="pagination">
       <ReactPaginate
         pageNum={pageNum}
+        forceSelected={currentPage - 1}
         pageRangeDisplayed={5}
         marginPagesDisplayed={0}
         clickCallback={handleClick}
-        forceSelected={currentPage - 1}
       />
     </nav>
   );

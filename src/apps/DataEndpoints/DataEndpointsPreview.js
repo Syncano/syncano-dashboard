@@ -11,13 +11,10 @@ import Actions from './DataEndpointsPreviewActions';
 import Store from './DataEndpointsPreviewStore';
 
 import { IconButton } from 'material-ui';
-import { InnerToolbar, Loading, Dialog, Container } from '../../common';
-import DataObjectsTable from '../DataObjects/DataObjectsTable';
+import { InnerToolbar, Loading, Dialog, Container, DataObjectsTable } from '../../common';
 import ReadOnlyTooltip from '../DataObjects/ReadOnlyTooltip';
 
 const DataEndpointsPreview = React.createClass({
-  displayName: 'DataEndpointsPreview',
-
   mixins: [
     Reflux.connect(Store),
     DialogsMixin
@@ -37,7 +34,6 @@ const DataEndpointsPreview = React.createClass({
   },
 
   componentWillUpdate(nextProps, nextState) {
-    console.info('DataObjects::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
   },
 
@@ -137,7 +133,6 @@ const DataEndpointsPreview = React.createClass({
           <Loading show={isLoading}>
             <DataObjectsTable
               withEditDialog={false}
-              isLoading={isLoading}
               items={items}
               hasNextPage={hasNextPage}
               selectedRows={selectedRows}

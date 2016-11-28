@@ -13,6 +13,7 @@ import Container from './Container';
 import CreditCard from './CreditCard';
 import CreditCardForm from './CreditCardForm';
 import DataObjectsAmount from './DataObjectsAmount';
+import DataObjectsTable from './DataObjectsTable';
 import Dialog from './Dialog';
 import DirectoryNavigation from './DirectoryNavigation';
 import DropZone from './DropZone';
@@ -49,7 +50,7 @@ import Solutions from './Solutions';
 import Spacing from './Spacing';
 import Stepper from './Stepper';
 import SyncanoTheme from './SyncanoTheme';
-import TableHeaderColumn from './TableHeaderColumn';
+import TableHeaderSortableColumn from './TableHeaderSortableColumn';
 import Tags from './Tags';
 import TogglePanel from './TogglePanel';
 import Tooltip from './Tooltip';
@@ -75,6 +76,7 @@ export { Container };
 export { CreditCard };
 export { CreditCardForm };
 export { DataObjectsAmount };
+export { DataObjectsTable };
 export { Dialog };
 export { DirectoryNavigation };
 export { DropZone };
@@ -111,7 +113,7 @@ export { Solutions };
 export { Spacing };
 export { Stepper };
 export { SyncanoTheme };
-export { TableHeaderColumn };
+export { TableHeaderSortableColumn };
 export { Tags };
 export { TogglePanel };
 export { Tooltip };
@@ -139,6 +141,7 @@ export default {
   CreditCard,
   CreditCardForm,
   DataObjectsAmount,
+  DataObjectsTable,
   Dialog,
   DirectoryNavigation,
   DropZone,
@@ -175,7 +178,7 @@ export default {
   Spacing,
   Stepper,
   SyncanoTheme,
-  TableHeaderColumn,
+  TableHeaderSortableColumn,
   Tags,
   TogglePanel,
   Tooltip,

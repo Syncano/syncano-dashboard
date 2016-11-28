@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import Moment from 'moment';
 import localStorage from 'local-storage-fallback';
 
-import DataObjectsStore from './DataObjectsStore';
+import DataObjectsTableInitialColumns from './DataObjectsTableInitialColumns';
 
+import DataObjectsStore from '../../apps/DataObjects/DataObjectsStore';
+
+import { FontIcon, Table, TableBody, TableHeader, TableRow, TableRowColumn } from 'material-ui';
+import { TableHeaderSortableColumn } from '../';
 import ColumnsFilterMenu from './ColumnsFilterMenu';
-import { Table, TableBody, TableRow, TableRowColumn, FontIcon, TableHeader } from 'material-ui';
-import { TableHeaderColumn } from '../../common';
+import DataObjectsTableDateCell from './DataObjectsTableDateCell';
 
 class DataObjectsTable extends Component {
   static defaultProps = {
@@ -17,72 +19,35 @@ class DataObjectsTable extends Component {
   constructor(props) {
     super(props);
 
-    let columns = [
-      {
-        id: 'id',
-        sortable: true,
-        width: 90,
-        checked: true
-      },
-      {
-        id: 'revision',
-        width: 20,
-        checked: true
-      },
-      {
-        id: 'owner',
-        width: 90,
-        checked: false
-      },
-      {
-        id: 'group',
-        width: 90,
-        checked: false
-      },
-      {
-        id: 'owner_permissions',
-        width: 90,
-        checked: false
-      },
-      {
-        id: 'group_permissions',
-        width: 90,
-        checked: false
-      },
-      {
-        id: 'other_permissions',
-        width: 90,
-        checked: false
-      },
-      {
-        id: 'channel',
-        width: 90,
-        checked: false
-      },
-      {
-        id: 'channel_room',
-        width: 90,
-        checked: false
-      },
-      {
-        id: 'created_at',
-        sortable: true,
-        width: 120,
-        checked: true
-      },
-      {
-        id: 'updated_at',
-        sortable: true,
-        width: 120,
-        checked: true
-      }
-    ];
+    this.state = {
+      columns: this.getColumns()
+    };
+  }
+
+  getStyles = () => ({
+    tableWrapper: {
+      minHeight: 120
+    },
+    tableHeaderSortableColumn: {
+      width: 20,
+      paddingLeft: 6,
+      paddingRight: 30,
+      whiteSpace: 'normal',
+      wordWrap: 'normal'
+    },
+    tableBody: {
+      overflowX: 'visible',
+      overflowY: 'initial'
+    }
+  });
+
+  getColumns() {
+    let columns = DataObjectsTableInitialColumns;
 
     const { classObject } = this.props;
     const className = classObject.className;
     const settings = localStorage.getItem(`dataobjects_checkedcolumns_${className}`);
 
-    // Update columns from Class
     const schemaColumns = _.map(classObject.schema, (item) => ({
       id: item.name,
       name: item.name,
@@ -108,11 +73,16 @@ class DataObjectsTable extends Component {
       });
     }
 
-    this.state = { columns };
+    return columns;
   }
 
   getColumnRenderer(column) {
-    return this.columnsRenderers()[column];
+    const renderers = {
+      created_at: this.renderColumnDate,
+      updated_at: this.renderColumnDate
+    };
+
+    return renderers[column];
   }
 
   getCheckedColumnsIDs() {
@@ -157,29 +127,9 @@ class DataObjectsTable extends Component {
     this.setState({ columns });
   }
 
-  columnsRenderers() {
-    return {
-      created_at: this.renderColumnDate,
-      updated_at: this.renderColumnDate
-    };
-  }
+  renderColumnDate = (value) => <DataObjectsTableDateCell value={value} />;
 
-  // Columns renderers
-  renderColumnDate = (value) => {
-    if (!value) {
-      return null;
-    }
-
-    return (
-      <div title={`${Moment(value).format('DD/MM/YYYY')} ${Moment(value).format('LTS')}`}>
-        {Moment(value).format('DD/MM/YYYY')}
-      </div>
-    );
-  }
-
-  renderReference = (obj) => (
-    <div>{`${obj.target}: ${obj.value}`}</div>
-  )
+  renderReference = (obj) => <div>{`${obj.target}: ${obj.value}`}</div>;
 
   renderFile(obj) {
     return (
@@ -189,33 +139,27 @@ class DataObjectsTable extends Component {
     );
   }
 
-  // Header
   renderTableHeader() {
+    const styles = this.getStyles();
     const { columns } = this.state;
+    const { currentOrderBy, handleSortingSelection } = this.props;
     const columnCheckMenu = (
-      <TableHeaderColumn
+      <TableHeaderSortableColumn
         key="header-column-check-menu"
-        style={{
-          paddingLeft: 6,
-          paddingRight: 30,
-          width: 20,
-          whiteSpace: 'normal',
-          wordWrap: 'normal'
-        }}
+        style={styles.tableHeaderSortableColumn}
         tooltip="Manage columns"
       >
         <ColumnsFilterMenu
           columns={columns}
           checkToggleColumn={(columnId) => this.checkToggleColumn(columnId)}
         />
-      </TableHeaderColumn>
+      </TableHeaderSortableColumn>
     );
 
-    // Initial columns
     const columnsComponents = _.map(columns, (item, index) => {
       if (item.checked) {
         return (
-          <TableHeaderColumn
+          <TableHeaderSortableColumn
             key={`header-column-${index}`}
             style={{
               width: item.width ? item.width : 100,
@@ -224,11 +168,11 @@ class DataObjectsTable extends Component {
             }}
             id={item.id}
             sortable={item.sortable}
-            currentOrderBy={this.props.currentOrderBy}
-            clickHandler={() => this.props.handleSortingSelection(item.id)}
+            currentOrderBy={currentOrderBy}
+            clickHandler={() => handleSortingSelection(item.id)}
           >
             {item.id}
-          </TableHeaderColumn>
+          </TableHeaderSortableColumn>
         );
       }
 
@@ -246,27 +190,21 @@ class DataObjectsTable extends Component {
     );
   }
 
-  // Table Body
-  renderTableData(items, selectedRows) {
+  renderTableData() {
+    const styles = this.getStyles();
     const { columns } = this.state;
-    const { users } = this.props;
+    const { users, items, selectedRows, currentOrderBy, handleSortingSelection } = this.props;
 
-    const dataColumns = _.map(items, (item, index) => {
+    const tableData = _.map(items, (item, index) => {
       const selected = (selectedRows || []).indexOf(index) > -1;
       const columnCheckMenu = (
-        <TableHeaderColumn
+        <TableHeaderSortableColumn
           key={`header-column-check-menu-${item.id}`}
-          style={{
-            paddingLeft: 6,
-            paddingRight: 30,
-            width: 20,
-            whiteSpace: 'normal',
-            wordWrap: 'normal'
-          }}
+          style={styles.tableHeaderSortableColumn}
           id={item.id}
           sortable={item.sortable}
-          currentOrderBy={this.props.currentOrderBy}
-          clickHandler={() => this.props.handleSortingSelection(item.id)}
+          currentOrderBy={currentOrderBy}
+          clickHandler={() => handleSortingSelection(item.id)}
         />
       );
       const columnsComponents = _.map(columns, (column, idx) => {
@@ -322,9 +260,9 @@ class DataObjectsTable extends Component {
 
       return (
         <TableRow
-          style={{ cursor: 'pointer' }}
           key={`row-${item.id}`}
           selected={selected}
+          style={{ cursor: 'pointer' }}
           data-e2e={`${index}-data-object-row`}
         >
           {columnsComponents}
@@ -332,36 +270,38 @@ class DataObjectsTable extends Component {
       );
     });
 
-    return dataColumns;
+    return tableData;
+  }
+
+  renderTableBody() {
+    return (
+      <TableBody
+        className="mui-table-body"
+        deselectOnClickaway={false}
+        showRowHover={true}
+        stripedRows={false}
+      >
+        {this.renderTableData()}
+      </TableBody>
+    );
   }
 
   render() {
-    const { items, selectedRows, handleRowSelection } = this.props;
-    const { columns } = this.state;
-    const { withEditDialog } = this.props;
-    const tableData = this.renderTableData(items, selectedRows);
-    const tableHeader = this.renderTableHeader(columns);
+    const styles = this.getStyles();
+    const { withEditDialog, handleRowSelection } = this.props;
 
     return (
       <div data-e2e="data-objects-table">
         <Table
-          ref="table"
           multiSelectable={true}
           showRowHover={true}
-          onCellClick={withEditDialog && this.showDataObjectEditDialog}
+          wrapperStyle={styles.tableWrapper}
+          bodyStyle={styles.tableBody}
           onRowSelection={handleRowSelection}
-          wrapperStyle={{ minHeight: '120px' }}
-          bodyStyle={{ overflowX: 'visible', overflowY: 'initial' }}
+          onCellClick={withEditDialog && this.showDataObjectEditDialog}
         >
-          {tableHeader}
-          <TableBody
-            className="mui-table-body"
-            deselectOnClickaway={false}
-            showRowHover={true}
-            stripedRows={false}
-          >
-            {tableData}
-          </TableBody>
+          {this.renderTableHeader()}
+          {this.renderTableBody()}
         </Table>
       </div>
     );
