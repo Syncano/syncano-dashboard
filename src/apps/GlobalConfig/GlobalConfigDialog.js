@@ -99,12 +99,13 @@ const GlobalConfigDialog = React.createClass({
               onChange={this.handleConfigChange}
               onFocus={disableBindShortcuts}
               onBlur={enableBindShortcuts}
-              value={globalConfig || [
+              defaultValue={globalConfig || [
                 '{',
                 '    "name": "John",',
                 '    "lastName": "Doe"',
                 '}'
               ].join('\n')}
+              value={globalConfig}
               data-e2e="global-config-editor"
             />
           </Loading>
