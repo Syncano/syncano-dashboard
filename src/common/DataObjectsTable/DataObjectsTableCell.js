@@ -4,7 +4,7 @@ import Moment from 'moment';
 
 import { FontIcon } from 'material-ui';
 
-const DataObjectsTableCell = ({ column, users, item }) => {
+const DataObjectsTableCell = ({ item, columnId, users }) => {
   const renderDate = (value) => {
     const date = Moment(value).format('DD/MM/YYYY');
     const time = Moment(value).format('LTS');
@@ -57,7 +57,7 @@ const DataObjectsTableCell = ({ column, users, item }) => {
       }
     }
 
-    if (_.includes(['created_at', 'updated_at'], column.id)) {
+    if (_.includes(['created_at', 'updated_at'], columnId)) {
       renderedContent = renderDate(content.value);
     }
 
@@ -65,7 +65,7 @@ const DataObjectsTableCell = ({ column, users, item }) => {
       renderedContent = content !== null ? content.toString() : content;
     }
 
-    if (column.id === 'username') {
+    if (columnId === 'username') {
       const user = _.find(users, ['id', item.owner]);
 
       renderedContent = user ? user.username : 'No user';
@@ -76,7 +76,7 @@ const DataObjectsTableCell = ({ column, users, item }) => {
 
   return (
     <div>
-      {renderContent(item[column.id])}
+      {renderContent(item[columnId])}
     </div>
   );
 };

@@ -4,9 +4,7 @@ import localStorage from 'local-storage-fallback';
 
 import DataObjectsTableInitialColumns from './DataObjectsTableInitialColumns';
 
-import DataObjectsStore from '../../apps/DataObjects/DataObjectsStore';
-
-import { Table, TableBody, TableHeader, TableRow, TableRowColumn } from 'material-ui';
+import { Table, TableBody, TableHeader, TableRow, TableRowColumn, TableHeaderColumn } from 'material-ui';
 import { TableHeaderSortableColumn } from '../';
 import ColumnsFilterMenu from './ColumnsFilterMenu';
 import DataObjectsTableCell from './DataObjectsTableCell';
@@ -20,7 +18,7 @@ class DataObjectsTable extends Component {
     super(props);
 
     this.state = {
-      columns: this.getColumns()
+      columns: this.getInitialColumns()
     };
   }
 
@@ -28,7 +26,7 @@ class DataObjectsTable extends Component {
     tableWrapper: {
       minHeight: 120
     },
-    tableHeaderSortableColumn: {
+    tableHeaderColumn: {
       width: 20,
       paddingLeft: 6,
       paddingRight: 30,
@@ -38,22 +36,27 @@ class DataObjectsTable extends Component {
     tableBody: {
       overflowX: 'visible',
       overflowY: 'initial'
+    },
+    tableRow: {
+      cursor: 'pointer'
     }
   });
 
-  getColumns() {
-    let columns = DataObjectsTableInitialColumns;
-
-    const { classObject } = this.props;
-    const className = classObject.className;
-    const settings = localStorage.getItem(`dataobjects_checkedcolumns_${className}`);
-
-    const schemaColumns = _.map(classObject.schema, (item) => ({
+  getSchemaColumns = (schema) => (
+    _.map(schema, (item) => ({
       id: item.name,
       name: item.name,
-      sortable: item.order_index,
-      checked: true
-    }));
+      checked: true,
+      sortable: item.order_index
+    }))
+  )
+
+  getInitialColumns() {
+    let columns = DataObjectsTableInitialColumns;
+    const { classObject } = this.props;
+    const { className } = classObject;
+    const settings = localStorage.getItem(`dataobjects_checkedcolumns_${className}`);
+    const schemaColumns = this.getSchemaColumns(classObject.schema);
 
     columns = [...columns, ...schemaColumns];
 
@@ -80,18 +83,12 @@ class DataObjectsTable extends Component {
     const { columns } = this.state;
 
     return _.map(columns, (column) => {
-      if (column.checked) {
-        return column.id;
+      if (!column.checked) {
+        return null;
       }
 
-      return null;
+      return column.id;
     });
-  }
-
-  showDataObjectEditDialog = (cellNumber, columnNumber) => {
-    if (columnNumber > -1) {
-      DataObjectsStore.getSelectedRowObj(cellNumber);
-    }
   }
 
   updateLocalStorage() {
@@ -108,6 +105,7 @@ class DataObjectsTable extends Component {
         item.checked = !item.checked;
       }
     });
+
     this.updateLocalStorage();
     this.setState({ columns });
   }
@@ -116,47 +114,47 @@ class DataObjectsTable extends Component {
     const styles = this.getStyles();
     const { columns } = this.state;
     const { currentOrderBy, handleSortingSelection } = this.props;
-    const columnCheckMenu = (
-      <TableHeaderSortableColumn
-        key="header-column-check-menu"
-        style={styles.tableHeaderSortableColumn}
-        tooltip="Manage columns"
-      >
-        <ColumnsFilterMenu
-          columns={columns}
-          checkToggleColumn={(columnId) => this.checkToggleColumn(columnId)}
-        />
-      </TableHeaderSortableColumn>
-    );
 
     const columnsComponents = _.map(columns, (item, index) => {
-      if (item.checked) {
-        return (
-          <TableHeaderSortableColumn
-            key={`header-column-${index}`}
-            style={{
-              width: item.width ? item.width : 100,
-              whiteSpace: 'normal',
-              wordWrap: 'normal'
-            }}
-            id={item.id}
-            sortable={item.sortable}
-            currentOrderBy={currentOrderBy}
-            clickHandler={() => handleSortingSelection(item.id)}
-          >
-            {item.id}
-          </TableHeaderSortableColumn>
-        );
+      if (!item.checked) {
+        return null;
       }
 
-      return null;
-    });
+      const handleTableHeaderSortableColumnClick = () => {
+        handleSortingSelection(item.id);
+      };
 
-    columnsComponents.unshift(columnCheckMenu);
+      return (
+        <TableHeaderSortableColumn
+          key={`header-column-${index}`}
+          style={{
+            width: item.width || 100,
+            whiteSpace: 'normal',
+            wordWrap: 'normal'
+          }}
+          id={item.id}
+          sortable={item.sortable}
+          currentOrderBy={currentOrderBy}
+          clickHandler={handleTableHeaderSortableColumnClick}
+        >
+          {item.id}
+        </TableHeaderSortableColumn>
+      );
+    });
 
     return (
       <TableHeader key="header">
         <TableRow key="header-row">
+          <TableHeaderColumn
+            key="header-column-check-menu"
+            tooltip="Manage columns"
+            style={styles.tableHeaderColumn}
+          >
+            <ColumnsFilterMenu
+              columns={columns}
+              checkToggleColumn={(columnId) => this.checkToggleColumn(columnId)}
+            />
+          </TableHeaderColumn>
           {columnsComponents}
         </TableRow>
       </TableHeader>
@@ -166,49 +164,41 @@ class DataObjectsTable extends Component {
   renderTableData() {
     const styles = this.getStyles();
     const { columns } = this.state;
-    const { users, items, selectedRows, currentOrderBy, handleSortingSelection } = this.props;
+    const { users, items, selectedRows } = this.props;
 
     const tableData = _.map(items, (item, index) => {
       const selected = (selectedRows || []).indexOf(index) > -1;
-      const columnCheckMenu = (
-        <TableHeaderSortableColumn
-          key={`header-column-check-menu-${item.id}`}
-          style={styles.tableHeaderSortableColumn}
-          id={item.id}
-          sortable={item.sortable}
-          currentOrderBy={currentOrderBy}
-          clickHandler={() => handleSortingSelection(item.id)}
-        />
-      );
       const columnsComponents = _.map(columns, (column, idx) => {
         if (!column.checked) {
-          return false;
+          return null;
         }
 
         return (
           <TableRowColumn
             key={`${column.id}-${idx}`}
-            style={{ width: column.width ? column.width : 100 }}
+            style={{ width: column.width || 100 }}
             data-e2e={`${column.id}-data-object-column`}
           >
             <DataObjectsTableCell
-              column={column}
-              users={users}
               item={item}
+              columnId={column.id}
+              users={users}
             />
           </TableRowColumn>
         );
       });
 
-      columnsComponents.unshift(columnCheckMenu);
-
       return (
         <TableRow
           key={`row-${item.id}`}
           selected={selected}
-          style={{ cursor: 'pointer' }}
+          style={styles.tableRow}
           data-e2e={`${index}-data-object-row`}
         >
+          <TableHeaderColumn
+            key={`header-column-check-menu-${item.id}`}
+            style={styles.tableHeaderColumn}
+          />
           {columnsComponents}
         </TableRow>
       );
@@ -232,7 +222,7 @@ class DataObjectsTable extends Component {
 
   render() {
     const styles = this.getStyles();
-    const { withEditDialog, handleRowSelection } = this.props;
+    const { handleRowSelection, withEditDialog, onCellClick } = this.props;
 
     return (
       <div data-e2e="data-objects-table">
@@ -242,7 +232,7 @@ class DataObjectsTable extends Component {
           wrapperStyle={styles.tableWrapper}
           bodyStyle={styles.tableBody}
           onRowSelection={handleRowSelection}
-          onCellClick={withEditDialog && this.showDataObjectEditDialog}
+          onCellClick={withEditDialog && onCellClick}
         >
           {this.renderTableHeader()}
           {this.renderTableBody()}

@@ -1,15 +1,14 @@
 .pagination
   display: flex
   justify-content: center
-  border-top: 1px solid rgb(238, 238, 238)
   margin-top: 20px
-  padding-top: 20px
 
   ul
     list-style: none
     display: flex
     justify-content: center
     align-items: center
+    padding: 0
 
   li
     font-size: 14px
@@ -32,3 +31,6 @@
       border-color: rgb(33, 150, 243)
       background: rgb(33, 150, 243)
       color: #fff
+
+    &.disabled a
+      color: rgb(170, 170, 170)

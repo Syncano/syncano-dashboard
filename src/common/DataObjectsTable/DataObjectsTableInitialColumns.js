@@ -13,27 +13,27 @@ const DataObjectsTableColumns = [
   {
     id: 'owner',
     width: 90,
-    checked: false
+    checked: true
   },
   {
     id: 'group',
     width: 90,
-    checked: false
+    checked: true
   },
   {
     id: 'owner_permissions',
     width: 90,
-    checked: false
+    checked: true
   },
   {
     id: 'group_permissions',
     width: 90,
-    checked: false
+    checked: true
   },
   {
     id: 'other_permissions',
     width: 90,
-    checked: false
+    checked: true
   },
   {
     id: 'channel',

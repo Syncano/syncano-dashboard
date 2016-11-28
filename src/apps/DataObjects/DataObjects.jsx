@@ -72,6 +72,13 @@ const DataObjects = React.createClass({
     DataObjectsActions.setSelectedRows(_.isString(selectedRows) ? selectedRowsMap[selectedRows] : selectedRows);
   },
 
+  handleTableCellClick(cellNumber, columnNumber) {
+    console.log('handleTableCellClick');
+    if (columnNumber > -1) {
+      DataObjectsStore.getSelectedRowObj(cellNumber);
+    }
+  },
+
   initDialogs() {
     const { isLoading } = this.props;
 
@@ -91,7 +98,7 @@ const DataObjects = React.createClass({
   },
 
   renderTable() {
-    const { isLoading, items, users, selectedRows, classObj } = this.state;
+    const { isLoading, items, users, selectedRows, classObj, currentOrderBy } = this.state;
 
     return (
       <Loading show={isLoading}>
@@ -102,7 +109,8 @@ const DataObjects = React.createClass({
           classObject={classObj}
           handleRowSelection={this.handleRowSelection}
           handleSortingSelection={DataObjectsActions.selectSorting}
-          currentOrderBy={this.state.currentOrderBy}
+          currentOrderBy={currentOrderBy}
+          onCellClick={this.handleTableCellClick}
         />
         <Pagination
           pageNum={this.state.pagesCount}

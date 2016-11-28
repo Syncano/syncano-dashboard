@@ -183,13 +183,19 @@ export default Reflux.createStore({
     this.refreshDataObjects();
   },
 
-  onSelectSorting(method) {
-    if (method === this.data.currentOrderBy) {
-      this.data.currentOrderBy = `-${method}`;
-    } else {
-      this.data.currentOrderBy = method;
+  onSelectSorting(field) {
+    let newField = field;
+    const { currentOrderBy } = this.data;
+
+    if (currentOrderBy === field) {
+      newField = `-${field}`;
     }
 
+    if (currentOrderBy === `-${field}`) {
+      newField = null;
+    }
+
+    this.data.currentOrderBy = newField;
     this.data.currentPage = 1;
     this.refreshDataObjects();
   }

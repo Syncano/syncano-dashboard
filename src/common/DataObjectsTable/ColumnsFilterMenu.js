@@ -1,5 +1,6 @@
 import React from 'react';
-import { Checkbox, IconMenu, ListItem, IconButton } from 'material-ui';
+
+import { Checkbox, IconButton, IconMenu, ListItem } from 'material-ui';
 
 const ColumnsFilterMenu = ({ checkToggleColumn, columns }) => (
   <IconMenu
@@ -18,8 +19,7 @@ const ColumnsFilterMenu = ({ checkToggleColumn, columns }) => (
       <ListItem
         key={column.id}
         id={column.id}
-        primaryText={column.name || column.id}
-        secondaryText={column.tooltip}
+        primaryText={column.id}
         leftCheckbox={
           <Checkbox
             checked={column.checked}
