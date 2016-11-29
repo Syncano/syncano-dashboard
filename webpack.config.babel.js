@@ -105,11 +105,18 @@ const getS3Config = (env) => {
 };
 
 const webpackConfig = (env = {development: true}) => {
-  const {ifProduction, ifNotProduction, ifNotDevelopment, ifDebug} = getIfUtils(env);
+  const {ifProduction, ifNotProduction, ifDevelopment, ifNotDevelopment} = getIfUtils(env);
   const config = {
     context: resolve('src'),
     entry: {
-      app: './app.js'
+      app: [
+        'react-hot-loader/patch',
+        './app.js'
+      ],
+      vendor: [
+        'react-hot-loader/patch',
+        ...Object.keys(packageJSON.dependencies)
+      ]
     },
     output: {
       filename: ifProduction('bundle.[name].[chunkhash].js', 'bundle.[name].js'),
@@ -150,7 +157,8 @@ const webpackConfig = (env = {development: true}) => {
       ],
     },
     plugins: removeEmpty([
-      new ProgressBarPlugin(),
+      ifDevelopment(new ProgressBarPlugin()),
+      new webpack.NoErrorsPlugin(),
       new ExtractTextPlugin(ifProduction('styles.[name].[chunkhash].css', 'styles.[name].css')),
       new HtmlWebpackPlugin({
         template: './index.html'
@@ -167,7 +175,7 @@ const webpackConfig = (env = {development: true}) => {
           }
         }
       }),
-      new FaviconsWebpackPlugin('./assets/img/syncano-symbol.svg'),
+      ifNotDevelopment(new FaviconsWebpackPlugin('./assets/img/syncano-symbol.svg')),
       ifNotDevelopment(new CompressionPlugin({
         asset: "[path].gz[query]",
         algorithm: "gzip",

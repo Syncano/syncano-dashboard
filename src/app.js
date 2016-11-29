@@ -8,16 +8,33 @@ import './app.sass';
 
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, useRouterHistory } from 'react-router';
-import createHistory from 'history/lib/createHashHistory';
+import { AppContainer } from 'react-hot-loader';
 
-import routes from './routes';
+import Root from './Root';
 import tapPlugin from 'react-tap-event-plugin';
-import useNamedRoutes from 'use-named-routes';
+
+const container = document.getElementById('app');
 
 tapPlugin();
 
-const container = document.getElementById('app');
-const history = useNamedRoutes(useRouterHistory(createHistory))({ routes });
-
-render(<Router history={history} routes={routes} />, container);
+try {
+  render(
+    <AppContainer>
+      <Root />
+    </AppContainer>,
+    container
+  );
+  if (module.hot) {
+    module.hot.accept('./Root', () => {
+      const NextApp = require('./Root'); // eslint-disable-line
+      render(
+        <AppContainer>
+          <NextApp />
+        </AppContainer>,
+        container
+      );
+    });
+  }
+} catch (err) {
+  console.log('Render error', err);
+}
