@@ -14,7 +14,6 @@ import CreditCard from './CreditCard';
 import CreditCardForm from './CreditCardForm';
 import CustomTitle from './CustomTitle';
 import DataObjectsAmount from './DataObjectsAmount';
-import DataObjectsTable from './DataObjectsTable';
 import Dialog from './Dialog';
 import DirectoryNavigation from './DirectoryNavigation';
 import DropZone from './DropZone';
@@ -78,7 +77,6 @@ export { CreditCard };
 export { CreditCardForm };
 export { CustomTitle };
 export { DataObjectsAmount };
-export { DataObjectsTable };
 export { Dialog };
 export { DirectoryNavigation };
 export { DropZone };
@@ -144,7 +142,6 @@ export default {
   CreditCardForm,
   CustomTitle,
   DataObjectsAmount,
-  DataObjectsTable,
   Dialog,
   DirectoryNavigation,
   DropZone,

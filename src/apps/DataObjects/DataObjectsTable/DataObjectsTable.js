@@ -3,7 +3,7 @@ import _ from 'lodash';
 import localStorage from 'local-storage-fallback';
 
 import { Table, TableBody, TableHeader, TableRow, TableRowColumn, TableHeaderColumn } from 'material-ui';
-import { TableHeaderSortableColumn } from '../';
+import { TableHeaderSortableColumn } from '../../../common/';
 import ColumnsFilterMenu from './ColumnsFilterMenu';
 import DataObjectsTableCell from './DataObjectsTableCell';
 
@@ -24,7 +24,7 @@ class DataObjectsTable extends Component {
     tableWrapper: {
       minHeight: 120
     },
-    tableHeaderColumn: {
+    tableHeaderFilterColumn: {
       width: 20,
       paddingLeft: 6,
       paddingRight: 30,
@@ -110,28 +110,22 @@ class DataObjectsTable extends Component {
     const { currentOrderBy, handleSortingSelection } = this.props;
     const checkedColumns = _.filter(columns, (column) => column.checked);
 
-    const columnsComponents = _.map(checkedColumns, (item) => {
-      const handleTableHeaderSortableColumnClick = () => {
-        handleSortingSelection(item.id);
-      };
-
-      return (
-        <TableHeaderSortableColumn
-          key={`table-header-column-${item.id}`}
-          style={{
-            width: item.width || 100,
-            whiteSpace: 'normal',
-            wordWrap: 'normal'
-          }}
-          id={item.id}
-          sortable={item.sortable}
-          currentOrderBy={currentOrderBy}
-          clickHandler={handleTableHeaderSortableColumnClick}
-        >
-          {item.id}
-        </TableHeaderSortableColumn>
-      );
-    });
+    const columnsComponents = _.map(checkedColumns, (item) => (
+      <TableHeaderSortableColumn
+        key={`table-header-column-${item.id}`}
+        style={{
+          width: item.width || 100,
+          whiteSpace: 'normal',
+          wordWrap: 'normal'
+        }}
+        id={item.id}
+        sortable={item.sortable}
+        currentOrderBy={currentOrderBy}
+        onLabelClick={handleSortingSelection}
+      >
+        {item.id}
+      </TableHeaderSortableColumn>
+    ));
 
     return (
       <TableHeader key="header">
@@ -139,7 +133,7 @@ class DataObjectsTable extends Component {
           <TableHeaderColumn
             key="header-column-check-menu"
             tooltip="Manage columns"
-            style={styles.tableHeaderColumn}
+            style={styles.tableHeaderFilterColumn}
           >
             <ColumnsFilterMenu
               columns={columns}
@@ -159,7 +153,7 @@ class DataObjectsTable extends Component {
     const checkedColumns = _.filter(columns, (column) => column.checked);
 
     const tableData = _.map(items, (item, index) => {
-      const selected = (selectedRows || []).indexOf(index) > -1;
+      const selected = _.includes(selectedRows, index);
       const columnsComponents = _.map(checkedColumns, (column) => (
         <TableRowColumn
           key={`table-row-column-${column.id}`}
@@ -183,7 +177,7 @@ class DataObjectsTable extends Component {
         >
           <TableHeaderColumn
             key={`header-column-check-menu-${item.id}`}
-            style={styles.tableHeaderColumn}
+            style={styles.tableHeaderFilterColumn}
           />
           {columnsComponents}
         </TableRow>

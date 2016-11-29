@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { colors as Colors } from 'material-ui/styles';
 import { FontIcon, TableHeaderColumn } from 'material-ui';
 
-const TableHeaderSortableColumn = ({ id, sortable, clickHandler, currentOrderBy, children, ...other }) => {
+const TableHeaderSortableColumn = ({ id, sortable, onLabelClick, currentOrderBy, children, ...other }) => {
   const styles = {
     children: {
       color: Colors.blue500,
@@ -20,7 +20,7 @@ const TableHeaderSortableColumn = ({ id, sortable, clickHandler, currentOrderBy,
   };
 
   const renderSortingIcon = () => {
-    if (!sortable) {
+    if (!sortable || !onLabelClick) {
       return null;
     }
 
@@ -42,19 +42,23 @@ const TableHeaderSortableColumn = ({ id, sortable, clickHandler, currentOrderBy,
   };
 
   const renderChildren = () => {
-    if (sortable) {
-      return (
-        <div
-          style={styles.children}
-          onClick={clickHandler}
-        >
-          {children}
-          {renderSortingIcon()}
-        </div>
-      );
+    if (!sortable || !onLabelClick) {
+      return children;
     }
 
-    return children;
+    const handleClick = () => {
+      onLabelClick(id);
+    };
+
+    return (
+      <div
+        style={styles.children}
+        onClick={handleClick}
+      >
+        {children}
+        {renderSortingIcon()}
+      </div>
+    );
   };
 
   return (

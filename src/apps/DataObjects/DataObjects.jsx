@@ -12,10 +12,11 @@ import DataObjectsActions from './DataObjectsActions';
 import DataObjectsStore from './DataObjectsStore';
 
 import { IconButton } from 'material-ui';
-import { Container, DataObjectsTable, Dialog, InnerToolbar, Loading, Pagination } from '../../common/';
+import { Container, Dialog, InnerToolbar, Loading, Pagination } from '../../common/';
 
-import ReadOnlyTooltip from './ReadOnlyTooltip';
 import DataObjectSearchInput from './DataObjectSearchInput';
+import DataObjectsTable from './DataObjectsTable';
+import ReadOnlyTooltip from './ReadOnlyTooltip';
 
 const DataObjects = React.createClass({
   mixins: [
@@ -157,7 +158,7 @@ const DataObjects = React.createClass({
             />
             <IconButton
               iconClassName="synicon-refresh"
-              tooltip="Reload Data Objects"
+              tooltip="Rts"
               onTouchTap={DataObjectsActions.fetch}
             />
           </div>
