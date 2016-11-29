@@ -3,9 +3,9 @@ import ReactPaginate from 'react-paginate';
 
 import './Pagination.sass';
 
-const Pagination = ({ pageNum, currentPage, clickCallback }) => {
-  const handleClick = ({ selected }) => {
-    clickCallback(selected + 1);
+const Pagination = ({ pageNum, currentPage, onPageClick }) => {
+  const handlePageClick = ({ selected }) => {
+    onPageClick(selected + 1);
   };
 
   if (!pageNum) {
@@ -19,7 +19,7 @@ const Pagination = ({ pageNum, currentPage, clickCallback }) => {
         forceSelected={currentPage - 1}
         pageRangeDisplayed={5}
         marginPagesDisplayed={0}
-        clickCallback={handleClick}
+        clickCallback={handlePageClick}
       />
     </nav>
   );

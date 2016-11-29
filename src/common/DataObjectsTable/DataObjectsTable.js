@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import localStorage from 'local-storage-fallback';
 
-import DataObjectsTableInitialColumns from './DataObjectsTableInitialColumns';
-
 import { Table, TableBody, TableHeader, TableRow, TableRowColumn, TableHeaderColumn } from 'material-ui';
 import { TableHeaderSortableColumn } from '../';
 import ColumnsFilterMenu from './ColumnsFilterMenu';
@@ -12,7 +10,7 @@ import DataObjectsTableCell from './DataObjectsTableCell';
 class DataObjectsTable extends Component {
   static defaultProps = {
     withEditDialog: true
-  };
+  }
 
   constructor(props) {
     super(props);
@@ -40,7 +38,7 @@ class DataObjectsTable extends Component {
     tableRow: {
       cursor: 'pointer'
     }
-  });
+  })
 
   getSchemaColumns = (schema) => (
     _.map(schema, (item) => ({
@@ -52,13 +50,11 @@ class DataObjectsTable extends Component {
   )
 
   getInitialColumns() {
-    let columns = DataObjectsTableInitialColumns;
-    const { classObject } = this.props;
+    const { classObject, initialColumns } = this.props;
     const { className } = classObject;
     const settings = localStorage.getItem(`dataobjects_checkedcolumns_${className}`);
     const schemaColumns = this.getSchemaColumns(classObject.schema);
-
-    columns = [...columns, ...schemaColumns];
+    const columns = [...initialColumns, ...schemaColumns];
 
     if (className === 'user_profile') {
       columns.unshift({
@@ -82,22 +78,20 @@ class DataObjectsTable extends Component {
   getCheckedColumnsIDs() {
     const { columns } = this.state;
 
-    return _.map(columns, (column) => {
-      if (!column.checked) {
-        return null;
-      }
+    const checkedColumns = _.filter(columns, (column) => column.checked);
+    const checkedColumnsIDs = _.map(checkedColumns, (column) => column.id);
 
-      return column.id;
-    });
+    return checkedColumnsIDs;
   }
 
   updateLocalStorage() {
     const { className } = this.props.classObject;
+    const checkedColumnsIDs = this.getCheckedColumnsIDs();
 
-    localStorage.setItem(`dataobjects_checkedcolumns_${className}`, JSON.stringify(this.getCheckedColumnsIDs()));
+    localStorage.setItem(`dataobjects_checkedcolumns_${className}`, JSON.stringify(checkedColumnsIDs));
   }
 
-  checkToggleColumn(columnId) {
+  checkToggleColumn = (columnId) => {
     const { columns } = this.state;
 
     columns.forEach((item) => {
@@ -114,19 +108,16 @@ class DataObjectsTable extends Component {
     const styles = this.getStyles();
     const { columns } = this.state;
     const { currentOrderBy, handleSortingSelection } = this.props;
+    const checkedColumns = _.filter(columns, (column) => column.checked);
 
-    const columnsComponents = _.map(columns, (item, index) => {
-      if (!item.checked) {
-        return null;
-      }
-
+    const columnsComponents = _.map(checkedColumns, (item) => {
       const handleTableHeaderSortableColumnClick = () => {
         handleSortingSelection(item.id);
       };
 
       return (
         <TableHeaderSortableColumn
-          key={`header-column-${index}`}
+          key={`table-header-column-${item.id}`}
           style={{
             width: item.width || 100,
             whiteSpace: 'normal',
@@ -152,7 +143,7 @@ class DataObjectsTable extends Component {
           >
             <ColumnsFilterMenu
               columns={columns}
-              checkToggleColumn={(columnId) => this.checkToggleColumn(columnId)}
+              checkToggleColumn={this.checkToggleColumn}
             />
           </TableHeaderColumn>
           {columnsComponents}
@@ -165,28 +156,23 @@ class DataObjectsTable extends Component {
     const styles = this.getStyles();
     const { columns } = this.state;
     const { users, items, selectedRows } = this.props;
+    const checkedColumns = _.filter(columns, (column) => column.checked);
 
     const tableData = _.map(items, (item, index) => {
       const selected = (selectedRows || []).indexOf(index) > -1;
-      const columnsComponents = _.map(columns, (column, idx) => {
-        if (!column.checked) {
-          return null;
-        }
-
-        return (
-          <TableRowColumn
-            key={`${column.id}-${idx}`}
-            style={{ width: column.width || 100 }}
-            data-e2e={`${column.id}-data-object-column`}
-          >
-            <DataObjectsTableCell
-              item={item}
-              columnId={column.id}
-              users={users}
-            />
-          </TableRowColumn>
-        );
-      });
+      const columnsComponents = _.map(checkedColumns, (column) => (
+        <TableRowColumn
+          key={`table-row-column-${column.id}`}
+          style={{ width: column.width || 100 }}
+          data-e2e={`${column.id}-data-object-column`}
+        >
+          <DataObjectsTableCell
+            item={item}
+            columnId={column.id}
+            users={users}
+          />
+        </TableRowColumn>
+      ));
 
       return (
         <TableRow

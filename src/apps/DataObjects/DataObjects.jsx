@@ -6,6 +6,7 @@ import Helmet from 'react-helmet';
 
 import { DialogsMixin } from '../../mixins';
 import Constants from '../../constants/Constants';
+import DataObjectsTableInitialColumns from './DataObjectsTableInitialColumns';
 
 import DataObjectsActions from './DataObjectsActions';
 import DataObjectsStore from './DataObjectsStore';
@@ -73,7 +74,6 @@ const DataObjects = React.createClass({
   },
 
   handleTableCellClick(cellNumber, columnNumber) {
-    console.log('handleTableCellClick');
     if (columnNumber > -1) {
       DataObjectsStore.getSelectedRowObj(cellNumber);
     }
@@ -98,7 +98,7 @@ const DataObjects = React.createClass({
   },
 
   renderTable() {
-    const { isLoading, items, users, selectedRows, classObj, currentOrderBy } = this.state;
+    const { isLoading, items, users, selectedRows, classObj, currentOrderBy, pagesCount, currentPage } = this.state;
 
     return (
       <Loading show={isLoading}>
@@ -106,6 +106,7 @@ const DataObjects = React.createClass({
           items={items}
           users={users}
           selectedRows={selectedRows}
+          initialColumns={DataObjectsTableInitialColumns}
           classObject={classObj}
           handleRowSelection={this.handleRowSelection}
           handleSortingSelection={DataObjectsActions.selectSorting}
@@ -113,9 +114,9 @@ const DataObjects = React.createClass({
           onCellClick={this.handleTableCellClick}
         />
         <Pagination
-          pageNum={this.state.pagesCount}
-          currentPage={this.state.currentPage}
-          clickCallback={DataObjectsActions.goToPage}
+          pageNum={pagesCount}
+          currentPage={currentPage}
+          onPageClick={DataObjectsActions.goToPage}
         />
       </Loading>
     );

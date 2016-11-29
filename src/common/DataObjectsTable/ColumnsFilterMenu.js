@@ -1,8 +1,8 @@
 import React from 'react';
+import { IconButton, IconMenu } from 'material-ui';
+import ColumnsFilterMenuListItem from './ColumnsFilterMenuListItem';
 
-import { Checkbox, IconButton, IconMenu, ListItem } from 'material-ui';
-
-const ColumnsFilterMenu = ({ checkToggleColumn, columns }) => (
+const ColumnsFilterMenu = ({ columns, checkToggleColumn }) => (
   <IconMenu
     closeOnItemTouchTap={false}
     iconButtonElement={<IconButton iconClassName="synicon-view-column" />}
@@ -16,16 +16,9 @@ const ColumnsFilterMenu = ({ checkToggleColumn, columns }) => (
     }}
   >
     {columns.map((column) => (
-      <ListItem
-        key={column.id}
-        id={column.id}
-        primaryText={column.id}
-        leftCheckbox={
-          <Checkbox
-            checked={column.checked}
-            onCheck={() => checkToggleColumn(column.id)}
-          />
-      }
+      <ColumnsFilterMenuListItem
+        column={column}
+        checkToggleColumn={checkToggleColumn}
       />
     ))}
   </IconMenu>

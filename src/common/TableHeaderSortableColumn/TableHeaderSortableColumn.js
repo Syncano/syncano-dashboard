@@ -1,5 +1,5 @@
 import React from 'react';
-
+import classNames from 'classnames';
 import { colors as Colors } from 'material-ui/styles';
 import { FontIcon, TableHeaderColumn } from 'material-ui';
 
@@ -24,10 +24,10 @@ const TableHeaderSortableColumn = ({ id, sortable, clickHandler, currentOrderBy,
       return null;
     }
 
-    let className = null;
-
-    if (currentOrderBy === id) className = 'synicon-sort-ascending';
-    if (currentOrderBy === `-${id}`) className = 'synicon-sort-descending';
+    const className = classNames({
+      'synicon-sort-ascending': currentOrderBy === id,
+      'synicon-sort-descending': currentOrderBy === `-${id}`
+    });
 
     if (!className) {
       return null;
