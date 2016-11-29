@@ -20,7 +20,7 @@ dependencies:
 test:
   override:
     - npm test && npm run e2e:
-        timeout: 150
+        timeout: 400
 
 deployment:
   production:
