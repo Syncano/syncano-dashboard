@@ -277,30 +277,29 @@ const Script = React.createClass({
   },
 
   isSaved() {
-    const { currentScript } = this.state;
+    const { currentScript, editorSource } = this.state;
 
-    if (!currentScript || !this.refs.editorSource) {
+    if (!currentScript || !editorSource) {
       return true;
     }
 
     const initialSource = currentScript.source;
-    const currentSource = this.refs.editorSource.editor.getValue();
+    const currentSource = editorSource;
 
     return _.isEqual(initialSource, currentSource) && _.isEqual(currentScript.config, this.getConfigObject());
   },
 
-  handleOnSourceChange() {
-    this.resetForm();
+  handleOnSourceChange(editorSource) {
     this.runAutoSave();
+    this.setState({ editorSource });
   },
 
   handleRunScript() {
-    const { currentScript, payload } = this.state;
+    const { currentScript, editorSource, payload } = this.state;
     const config = this.getConfigObject();
-    const source = this.refs.editorSource.editor.getValue();
     const updateParams = {
       config,
-      source
+      source: editorSource
     };
     const runParams = {
       id: currentScript.id,
@@ -339,11 +338,12 @@ const Script = React.createClass({
 
   handleUpdate() {
     if (this.areEditorsLoaded()) {
+      const { editorSource } = this.state;
       const { id } = this.state.currentScript;
 
       this.handleAddFieldOnSave();
       const config = this.getConfigObject();
-      const source = this.refs.editorSource.editor.getValue();
+      const source = editorSource;
 
       this.clearAutosaveTimer();
       Actions.updateScript(id, { config, source });
@@ -747,15 +747,17 @@ const Script = React.createClass({
 
   renderContent() {
     const styles = this.getStyles();
-    const { currentScript } = this.state;
+    const { currentScript, editorSource } = this.state;
     const linkToPackages = currentScript && this.getLinkToPackages(currentScript);
-    let source = null;
-    let editorMode = 'python';
+    const editorMode = currentScript ? RuntimeStore.getEditorMode(currentScript.runtime_name) : 'python';
 
-    if (currentScript) {
-      source = currentScript.source;
-      editorMode = RuntimeStore.getEditorMode(currentScript.runtime_name);
-    }
+    const editorSourceValue = () => {
+      if (typeof editorSource === 'string') {
+        return editorSource;
+      }
+
+      return currentScript && currentScript.source;
+    };
 
     return (
       <div
@@ -786,11 +788,12 @@ const Script = React.createClass({
           <div style={styles.codeEditorContainer}>
             <Editor
               ref="editorSource"
-              name="editorSource"
+              editorName="editorSource"
               mode={editorMode}
               onChange={this.handleOnSourceChange}
               onLoad={this.clearAutosaveTimer}
-              value={source}
+              defaultValue={currentScript ? currentScript.source : null}
+              value={editorSourceValue()}
               width="100%"
               height="100%"
               style={{ position: 'absolute' }}
@@ -822,19 +825,20 @@ const Script = React.createClass({
   },
 
   renderSidebarPayloadSection() {
+    const { payload } = this.state;
     const styles = this.getStyles();
 
     return (
       <div>
         <TogglePanel title="Payload">
           <Editor
-            name="payload-editor"
+            editorName="payloadSource"
             ref="payloadSource"
             mode="json"
             height="120px"
             onChange={this.handlePayloadChange}
-            onLoad={this.clearAutosaveTimer}
-            value={this.handlePayloadValue()}
+            defaultValue={this.handlePayloadValue()}
+            value={payload || this.handlePayloadValue()}
           />
         </TogglePanel>
         <Show if={this.getValidationMessages('payload').length}>
