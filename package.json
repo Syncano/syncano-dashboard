@@ -135,6 +135,7 @@
     "prebuild": "rimraf dist dist_e2e",
     "build": "webpack --env.production -p",
     "build:beta": "webpack --env.beta -p",
+    "build:staging": "webpack --env.staging -p",
     "debug": "node-nightly --inspect --debug-brk node_modules/.bin/webpack --env.debug",
     "debug:dev": "npm run debug -- --env.development",
     "debug:prod": "npm run debug -- --env.production",
