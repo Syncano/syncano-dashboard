@@ -3,12 +3,20 @@ import CreateActions from '../../utils/ActionsConstructor';
 export default CreateActions(
   {
     checkToggleColumn: {},
-    fetch: {},
-    setDataObjects: {},
-    setCurrentClassObj: {},
-    setSelectedRows: {},
-    getIDsFromTable: {},
     clearStore: {},
+    fetch: {},
+    getIDsFromTable: {},
+    goToPage: {},
+    selectSorting: {},
+    setCurrentClassObj: {},
+    setDataObjects: {},
+    setSelectedRows: {},
+    createDataObject: {
+      asyncForm: true,
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.DataObjects.create'
+    },
     fetchCurrentClassObj: {
       asyncResult: true,
       children: ['completed', 'failure'],
@@ -16,37 +24,30 @@ export default CreateActions(
     },
     fetchDataObjects: {
       asyncResult: true,
-      loading: true,
       children: ['completed', 'failure'],
+      loading: true,
       method: 'Syncano.Actions.DataObjects.list'
-    },
-    subFetchDataObjects: {
-      asyncResult: true,
-      loading: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataObjects.subList'
     },
     getDataObject: {
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.get'
     },
-    createDataObject: {
-      asyncForm: true,
+    getDataObjectsCount: {
       asyncResult: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataObjects.create'
+      method: 'Syncano.Actions.DataObjects.getCount'
+    },
+    removeDataObjects: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.DataObjects.remove'
     },
     updateDataObject: {
       asyncForm: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.update'
-    },
-    removeDataObjects: {
-      asyncResult: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataObjects.remove'
     }
   },
   {

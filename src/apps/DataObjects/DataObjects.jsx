@@ -4,36 +4,33 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 import Helmet from 'react-helmet';
 
-// Utils
 import { DialogsMixin } from '../../mixins';
 import Constants from '../../constants/Constants';
+import DataObjectsTableInitialColumns from './DataObjectsTableInitialColumns';
 
-// Stores and Actions
-import Actions from './DataObjectsActions';
-import Store from './DataObjectsStore';
+import DataObjectsActions from './DataObjectsActions';
+import DataObjectsStore from './DataObjectsStore';
 
-// Components
 import { IconButton } from 'material-ui';
-import { Container, Dialog, InnerToolbar, Loading } from '../../common/';
+import { Container, Dialog, InnerToolbar, Loading, Pagination } from '../../common/';
 
-// Local components
-import ReadOnlyTooltip from './ReadOnlyTooltip';
-import DataObjectsTable from './DataObjectsTable';
 import DataObjectSearchInput from './DataObjectSearchInput';
+import DataObjectsTable from './DataObjectsTable';
+import ReadOnlyTooltip from './ReadOnlyTooltip';
 
 const DataObjects = React.createClass({
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(DataObjectsStore),
     DialogsMixin
   ],
 
   componentDidMount() {
     const { location } = this.props;
 
-    Actions.fetch();
+    DataObjectsActions.fetch();
 
     if (location.state && location.state.showDialog) {
-      Actions.showDialog();
+      DataObjectsActions.showDialog();
     }
   },
 
@@ -42,7 +39,7 @@ const DataObjects = React.createClass({
   },
 
   componentWillUnmount() {
-    Actions.clearStore();
+    DataObjectsActions.clearStore();
   },
 
   getStyles() {
@@ -63,7 +60,7 @@ const DataObjects = React.createClass({
   handleDelete() {
     const { classObj } = this.state;
 
-    Actions.removeDataObjects(classObj.name, Store.getIDsFromTable());
+    DataObjectsActions.removeDataObjects(classObj.name, DataObjectsStore.getIDsFromTable());
   },
 
   handleRowSelection(selectedRows) {
@@ -74,13 +71,13 @@ const DataObjects = React.createClass({
       none: []
     };
 
-    Actions.setSelectedRows(_.isString(selectedRows) ? selectedRowsMap[selectedRows] : selectedRows);
+    DataObjectsActions.setSelectedRows(_.isString(selectedRows) ? selectedRowsMap[selectedRows] : selectedRows);
   },
 
-  handleMoreRows() {
-    const { nextParams, users } = this.state;
-
-    Actions.subFetchDataObjects(nextParams, users);
+  handleTableCellClick(cellNumber, columnNumber) {
+    if (columnNumber > -1) {
+      DataObjectsStore.getSelectedRowObj(cellNumber);
+    }
   },
 
   initDialogs() {
@@ -93,35 +90,43 @@ const DataObjects = React.createClass({
         ref: 'deleteDataObjectDialog',
         title: 'Delete a Data Object',
         handleConfirm: this.handleDelete,
-        items: Store.getCheckedItems(),
+        items: DataObjectsStore.getCheckedItems(),
         groupName: 'Data Object',
-        children: `Do you really want to delete ${Store.getSelectedRowsLength()} Data Object(s)?`,
+        children: `Do you really want to delete ${DataObjectsStore.getSelectedRowsLength()} Data Object(s)?`,
         isLoading
       }
     }];
   },
 
   renderTable() {
-    const { hasNextPage, isLoading, items, selectedRows, classObj, users } = this.state;
+    const { isLoading, items, users, selectedRows, classObj, currentOrderBy, pagesCount, currentPage } = this.state;
 
     return (
-      <DataObjectsTable
-        isLoading={isLoading}
-        items={items}
-        users={users}
-        hasNextPage={hasNextPage}
-        selectedRows={selectedRows}
-        classObject={classObj}
-        handleRowSelection={this.handleRowSelection}
-        handleMoreRows={this.handleMoreRows}
-      />
+      <Loading show={isLoading}>
+        <DataObjectsTable
+          items={items}
+          users={users}
+          selectedRows={selectedRows}
+          initialColumns={DataObjectsTableInitialColumns}
+          classObject={classObj}
+          handleRowSelection={this.handleRowSelection}
+          handleSortingSelection={DataObjectsActions.selectSorting}
+          currentOrderBy={currentOrderBy}
+          onCellClick={this.handleTableCellClick}
+        />
+        <Pagination
+          pageNum={pagesCount}
+          currentPage={currentPage}
+          onPageClick={DataObjectsActions.goToPage}
+        />
+      </Loading>
     );
   },
 
   render() {
-    const { className } = this.props.params;
-    const { isLoading, selectedRows } = this.state;
     const styles = this.getStyles();
+    const { className } = this.props.params;
+    const { selectedRows } = this.state;
     const title = `Data Class: ${className}`;
     let selectedMessageText = '';
 
@@ -142,7 +147,7 @@ const DataObjects = React.createClass({
               iconClassName="synicon-plus"
               tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Add Data Objects'}
               disabled={this.isClassProtected()}
-              onClick={Actions.showDialog}
+              onClick={DataObjectsActions.showDialog}
             />
             <IconButton
               data-e2e="data-object-delete-button"
@@ -153,15 +158,14 @@ const DataObjects = React.createClass({
             />
             <IconButton
               iconClassName="synicon-refresh"
-              tooltip="Reload Data Objects"
-              onTouchTap={Actions.fetch}
+              tooltip="Rts"
+              onTouchTap={DataObjectsActions.fetch}
             />
           </div>
         </InnerToolbar>
+
         <Container>
-          <Loading show={isLoading}>
-            {this.renderTable()}
-          </Loading>
+          {this.renderTable()}
         </Container>
       </div>
     );
