@@ -3,16 +3,16 @@ import _ from 'lodash';
 import PromiseSeries from 'promise-series';
 
 export default {
-  list(pageNumber = 1, orderBy = '-created_at') {
+  list(pageNumber = 1) {
     const series = new PromiseSeries();
-    const allItems = { users: [], dataObjects: [] };
+    let allItems = { users: [], dataObjects: [] };
 
     series.add(() => (
       this.NewLibConnection
         .DataObject
         .please()
         .list()
-        .orderBy(orderBy)
+        .orderBy('-created_at')
         .pageSize(Constants.DATAOBJECTS_PAGE_SIZE)
         .then((items) => {
           allItems.dataObjects = [...allItems, ...items];
@@ -24,7 +24,7 @@ export default {
     _.times((pageNumber - 1), () => {
       series.add((nextParams) => (
         nextParams.next().then((items) => {
-          allItems.dataObjects = [...allItems, ...items];
+          allItems = [...allItems, ...items];
 
           return items;
         })
@@ -41,21 +41,31 @@ export default {
       .catch(this.failure);
   },
 
+  subList(nextParams, users) {
+    const allItems = { dataObjects: [], users: [] };
+
+    nextParams.next()
+      .then((nextDataObjects) => {
+        allItems.dataObjects = nextDataObjects;
+
+        if (allItems.dataObjects[0].className === 'user_profile') {
+          return users.next()
+            .then((nextUsers) => {
+              allItems.users = [...users, ...nextUsers];
+              allItems.users.next = nextUsers.next;
+              return this.completed(allItems);
+            });
+        }
+        return this.completed(allItems);
+      })
+      .catch(this.failure);
+  },
+
   get(payload) {
     this.NewLibConnection
       .DataObject
       .please()
       .get(payload)
-      .then(this.completed)
-      .catch(this.failure);
-  },
-
-  getCount() {
-    this.NewLibConnection
-      .DataObject
-      .please()
-      .list()
-      .count()
       .then(this.completed)
       .catch(this.failure);
   },

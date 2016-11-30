@@ -26,12 +26,10 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      currentOrderBy: null,
-      currentPage: 1,
-      isLoading: true,
       items: [],
-      pagesCount: null,
-      selectedRows: []
+      isLoading: true,
+      selectedRows: [],
+      currentPage: 1
     };
   },
 
@@ -44,6 +42,7 @@ export default Reflux.createStore({
     );
     this.listenToForms();
     this.setLoadingStates();
+
     this.listenTo(DataObjectsActions.setCurrentClassObj, this.refreshDataObjects);
   },
 
@@ -52,22 +51,13 @@ export default Reflux.createStore({
   },
 
   refreshDataObjects() {
-    const { currentPage, currentOrderBy } = this.data;
-
-    DataObjectsActions.getDataObjectsCount();
-
-    if (!currentOrderBy) {
-      DataObjectsActions.fetchDataObjects(currentPage);
-    } else {
-      DataObjectsActions.fetchDataObjects(currentPage, currentOrderBy);
-    }
+    DataObjectsActions.fetchDataObjects(this.data.currentPage);
   },
 
   getCurrentClassName() {
     if (this.data.classObj) {
       return this.data.classObj.name;
     }
-
     return null;
   },
 
@@ -79,7 +69,6 @@ export default Reflux.createStore({
     if (this.data.selectedRows) {
       return this.data.selectedRows.length;
     }
-
     return null;
   },
 
@@ -87,6 +76,10 @@ export default Reflux.createStore({
     const { id, className } = this.data.items[cellNumber];
 
     DataObjectsActions.getDataObject({ id, className });
+  },
+
+  getItems() {
+    return this.data.items;
   },
 
   setSelectedRows(selectedRows) {
@@ -103,6 +96,7 @@ export default Reflux.createStore({
 
     this.data.items = [...this.data.items, ...items];
     this.data.nextParams = rawData;
+    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
@@ -122,9 +116,14 @@ export default Reflux.createStore({
     DataObjectsActions.setDataObjects(dataObjects, rawData);
   },
 
-  onGetDataObjectsCountCompleted({ objects_count }) {
-    this.data.pagesCount = _.ceil(objects_count / 100);
-    this.trigger(this.data);
+  onSubFetchDataObjects() {
+    this.trigger({ isLoading: true });
+  },
+
+  onSubFetchDataObjectsCompleted({ dataObjects, users }) {
+    this.data.currentPage += 1;
+    this.data.users = users;
+    DataObjectsActions.setDataObjects(dataObjects, dataObjects);
   },
 
   onGetDataObjectCompleted(fetchedItem) {
@@ -176,27 +175,5 @@ export default Reflux.createStore({
 
   clearStore() {
     this.data = this.getInitialState();
-  },
-
-  onGoToPage(page) {
-    this.data.currentPage = page;
-    this.refreshDataObjects();
-  },
-
-  onSelectSorting(field) {
-    let newField = field;
-    const { currentOrderBy } = this.data;
-
-    if (currentOrderBy === field) {
-      newField = `-${field}`;
-    }
-
-    if (currentOrderBy === `-${field}`) {
-      newField = null;
-    }
-
-    this.data.currentOrderBy = newField;
-    this.data.currentPage = 1;
-    this.refreshDataObjects();
   }
 });
