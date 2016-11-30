@@ -3,20 +3,12 @@ import CreateActions from '../../utils/ActionsConstructor';
 export default CreateActions(
   {
     checkToggleColumn: {},
-    clearStore: {},
     fetch: {},
-    getIDsFromTable: {},
-    goToPage: {},
-    selectSorting: {},
-    setCurrentClassObj: {},
     setDataObjects: {},
+    setCurrentClassObj: {},
     setSelectedRows: {},
-    createDataObject: {
-      asyncForm: true,
-      asyncResult: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataObjects.create'
-    },
+    getIDsFromTable: {},
+    clearStore: {},
     fetchCurrentClassObj: {
       asyncResult: true,
       children: ['completed', 'failure'],
@@ -24,30 +16,37 @@ export default CreateActions(
     },
     fetchDataObjects: {
       asyncResult: true,
-      children: ['completed', 'failure'],
       loading: true,
+      children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.list'
+    },
+    subFetchDataObjects: {
+      asyncResult: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.DataObjects.subList'
     },
     getDataObject: {
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.get'
     },
-    getDataObjectsCount: {
+    createDataObject: {
+      asyncForm: true,
       asyncResult: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataObjects.getCount'
-    },
-    removeDataObjects: {
-      asyncResult: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataObjects.remove'
+      method: 'Syncano.Actions.DataObjects.create'
     },
     updateDataObject: {
       asyncForm: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.update'
+    },
+    removeDataObjects: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.DataObjects.remove'
     }
   },
   {

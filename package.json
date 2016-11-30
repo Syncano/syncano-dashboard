@@ -55,7 +55,6 @@
     "react-helmet": "3.2.2",
     "react-inlinesvg": "github:patrykkopycinski/react-inlinesvg#build",
     "react-input-mask": "0.7.5",
-    "react-paginate": "2.2.3",
     "react-responsive-grid": "0.3.4",
     "react-router": "3.0.0",
     "react-select": "0.9.1",

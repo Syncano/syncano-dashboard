@@ -6,15 +6,14 @@ import { withRouter } from 'react-router';
 
 import { DialogsMixin } from '../../mixins';
 import Constants from '../../constants/Constants';
-import DataObjectsTableInitialColumns from '../DataObjects/DataObjectsTableInitialColumns';
 
 import Actions from './DataEndpointsPreviewActions';
 import Store from './DataEndpointsPreviewStore';
 
 import { IconButton } from 'material-ui';
 import { Container, Dialog, InnerToolbar, Loading } from '../../common';
-import ReadOnlyTooltip from '../DataObjects/ReadOnlyTooltip';
 import DataObjectsTable from '../DataObjects/DataObjectsTable';
+import ReadOnlyTooltip from '../DataObjects/ReadOnlyTooltip';
 
 const DataEndpointsPreview = React.createClass({
   mixins: [
@@ -81,6 +80,12 @@ const DataEndpointsPreview = React.createClass({
     });
   },
 
+  handleMoreRows() {
+    const { nextLink } = this.state;
+
+    Actions.fetchNextDataPage(nextLink);
+  },
+
   handleDelete() {
     const { classObject, items, selectedRows } = this.state;
     const selectedDataObectsIds = _.map(selectedRows, (rowId) => items[rowId].id);
@@ -107,9 +112,9 @@ const DataEndpointsPreview = React.createClass({
   },
 
   render() {
-    const styles = this.getStyles();
-    const { isLoading, classObject, selectedRows, currentPage, items } = this.state;
+    const { isLoading, classObject, selectedRows, currentPage, hasNextPage, items } = this.state;
     const { dataEndpointName } = this.props.params;
+    const styles = this.getStyles();
 
     return (
       <div>
@@ -139,11 +144,13 @@ const DataEndpointsPreview = React.createClass({
           <Loading show={isLoading}>
             <DataObjectsTable
               withEditDialog={false}
+              isLoading={isLoading}
               items={items}
-              initialColumns={DataObjectsTableInitialColumns}
+              hasNextPage={hasNextPage}
               selectedRows={selectedRows}
               classObject={classObject}
               handleRowSelection={this.handleRowSelection}
+              handleMoreRows={this.handleMoreRows}
             />
           </Loading>
         </Container>
