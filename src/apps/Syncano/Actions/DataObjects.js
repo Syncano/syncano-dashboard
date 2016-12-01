@@ -3,7 +3,7 @@ import _ from 'lodash';
 import PromiseSeries from 'promise-series';
 
 export default {
-  list(pageNumber = 1, orderBy = '-created_at') {
+  list(pageNumber = 1, sortingField) {
     const series = new PromiseSeries();
     const allItems = { users: [], dataObjects: [] };
 
@@ -12,8 +12,8 @@ export default {
         .DataObject
         .please()
         .list()
-        .orderBy(orderBy)
-        .pageSize(Constants.DATAOBJECTS_PAGE_SIZE)
+        .orderBy(sortingField)
+        .pageSize(Constants.DATA_OBJECTS_PAGE_SIZE)
         .then((items) => {
           allItems.dataObjects = [...allItems, ...items];
 

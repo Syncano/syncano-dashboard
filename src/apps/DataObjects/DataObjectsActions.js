@@ -7,10 +7,10 @@ export default CreateActions(
     fetch: {},
     getIDsFromTable: {},
     goToPage: {},
-    selectSorting: {},
+    selectSortingField: {},
     setCurrentClassObj: {},
     setDataObjects: {},
-    setSelectedRows: {},
+    setSelectedItemsIDs: {},
     createDataObject: {
       asyncForm: true,
       asyncResult: true,

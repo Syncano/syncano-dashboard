@@ -1,12 +1,14 @@
 import React from 'react';
+import Truncate from '../../../common/Truncate';
 
 const DataObjectsTableJSONCell = ({ content }) => {
   const textContent = JSON.stringify(content);
 
   return (
-    <div title={textContent}>
-      {textContent}
-    </div>
+    <Truncate
+      text={textContent}
+      title={textContent}
+    />
   );
 };
 

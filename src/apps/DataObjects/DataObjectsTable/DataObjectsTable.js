@@ -107,7 +107,7 @@ class DataObjectsTable extends Component {
   renderTableHeader() {
     const styles = this.getStyles();
     const { columns } = this.state;
-    const { currentOrderBy, handleSortingSelection } = this.props;
+    const { currentSortingField, handleSortingFieldSelection } = this.props;
     const checkedColumns = _.filter(columns, (column) => column.checked);
 
     const columnsComponents = _.map(checkedColumns, (item) => (
@@ -120,8 +120,8 @@ class DataObjectsTable extends Component {
         }}
         id={item.id}
         sortable={item.sortable}
-        currentOrderBy={currentOrderBy}
-        onLabelClick={handleSortingSelection}
+        currentSortingField={currentSortingField}
+        onLabelClick={handleSortingFieldSelection}
       >
         {item.id}
       </TableHeaderSortableColumn>
@@ -148,12 +148,12 @@ class DataObjectsTable extends Component {
 
   renderTableData() {
     const styles = this.getStyles();
+    const { users, items, selectedItemsIDs } = this.props;
     const { columns } = this.state;
-    const { users, items, selectedRows } = this.props;
     const checkedColumns = _.filter(columns, (column) => column.checked);
 
     const tableData = _.map(items, (item, index) => {
-      const selected = _.includes(selectedRows, index);
+      const selected = _.includes(selectedItemsIDs, item.id);
       const columnsComponents = _.map(checkedColumns, (column) => (
         <TableRowColumn
           key={`table-row-column-${column.id}`}

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { colors as Colors } from 'material-ui/styles';
 import { FontIcon, TableHeaderColumn } from 'material-ui';
 
-const TableHeaderSortableColumn = ({ id, sortable, onLabelClick, currentOrderBy, children, ...other }) => {
+const TableHeaderSortableColumn = ({ id, sortable, onLabelClick, currentSortingField, children, ...other }) => {
   const styles = {
     children: {
       color: Colors.blue500,
@@ -25,8 +25,8 @@ const TableHeaderSortableColumn = ({ id, sortable, onLabelClick, currentOrderBy,
     }
 
     const className = classNames({
-      'synicon-sort-ascending': currentOrderBy === id,
-      'synicon-sort-descending': currentOrderBy === `-${id}`
+      'synicon-sort-ascending': currentSortingField === id,
+      'synicon-sort-descending': currentSortingField === `-${id}`
     });
 
     if (!className) {

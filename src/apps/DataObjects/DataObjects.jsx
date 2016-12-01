@@ -14,7 +14,7 @@ import DataObjectsStore from './DataObjectsStore';
 import { IconButton } from 'material-ui';
 import { Container, Dialog, InnerToolbar, Loading, Pagination } from '../../common/';
 
-import DataObjectSearchInput from './DataObjectSearchInput';
+import DataObjectSearchForm from './DataObjectSearchForm';
 import DataObjectsTable from './DataObjectsTable';
 import ReadOnlyTooltip from './ReadOnlyTooltip';
 
@@ -51,6 +51,36 @@ const DataObjects = React.createClass({
     };
   },
 
+  getSelectedItemsIDs(selectedRows) {
+    const { items, selectedItemsIDs } = this.state;
+
+    const visibleItemsIDs = _.map(items, (item) => item.id);
+
+    if (selectedRows === 'all') {
+      return _.union(selectedItemsIDs, visibleItemsIDs);
+    }
+
+    if (selectedRows === 'none') {
+      return _.filter(selectedItemsIDs, (id) => !_.includes(visibleItemsIDs, id));
+    }
+
+    const invisibleSelectedItemsIDs = _.filter(selectedItemsIDs, (id) => !_.includes(visibleItemsIDs, id));
+    const visibleSelectedItemsIDs = _.map(selectedRows, (index) => items[index].id);
+    const allSelectedItemsIDs = [...invisibleSelectedItemsIDs, ...visibleSelectedItemsIDs];
+
+    return allSelectedItemsIDs;
+  },
+
+  getTitleSelectedItemsText() {
+    const { selectedItemsIDs } = this.state;
+
+    if (_.isArray(selectedItemsIDs) && !_.isEmpty(selectedItemsIDs)) {
+      return `(selected: ${selectedItemsIDs.length})`;
+    }
+
+    return '';
+  },
+
   isClassProtected() {
     const { className } = this.props.params;
 
@@ -58,20 +88,15 @@ const DataObjects = React.createClass({
   },
 
   handleDelete() {
-    const { classObj } = this.state;
+    const { classObj, selectedItemsIDs } = this.state;
 
-    DataObjectsActions.removeDataObjects(classObj.name, DataObjectsStore.getIDsFromTable());
+    DataObjectsActions.removeDataObjects(classObj.name, selectedItemsIDs);
   },
 
   handleRowSelection(selectedRows) {
-    const { items } = this.state;
+    const selectedItemsIDs = this.getSelectedItemsIDs(selectedRows);
 
-    const selectedRowsMap = {
-      all: _.map(items, (item, index) => index),
-      none: []
-    };
-
-    DataObjectsActions.setSelectedRows(_.isString(selectedRows) ? selectedRowsMap[selectedRows] : selectedRows);
+    DataObjectsActions.setSelectedItemsIDs(selectedItemsIDs);
   },
 
   handleTableCellClick(cellNumber, columnNumber) {
@@ -82,6 +107,7 @@ const DataObjects = React.createClass({
 
   initDialogs() {
     const { isLoading } = this.props;
+    const { selectedItemsIDs } = this.state;
 
     return [{
       dialog: Dialog.Delete,
@@ -90,28 +116,36 @@ const DataObjects = React.createClass({
         ref: 'deleteDataObjectDialog',
         title: 'Delete a Data Object',
         handleConfirm: this.handleDelete,
-        items: DataObjectsStore.getCheckedItems(),
         groupName: 'Data Object',
-        children: `Do you really want to delete ${DataObjectsStore.getSelectedRowsLength()} Data Object(s)?`,
+        children: `Do you really want to delete ${selectedItemsIDs.length} Data Object(s)?`,
         isLoading
       }
     }];
   },
 
   renderTable() {
-    const { isLoading, items, users, selectedRows, classObj, currentOrderBy, pagesCount, currentPage } = this.state;
+    const {
+      isLoading,
+      items,
+      users,
+      selectedItemsIDs,
+      classObj,
+      currentSortingField,
+      pagesCount,
+      currentPage
+    } = this.state;
 
     return (
       <Loading show={isLoading}>
         <DataObjectsTable
           items={items}
           users={users}
-          selectedRows={selectedRows}
+          selectedItemsIDs={selectedItemsIDs}
           initialColumns={DataObjectsTableInitialColumns}
           classObject={classObj}
           handleRowSelection={this.handleRowSelection}
-          handleSortingSelection={DataObjectsActions.selectSorting}
-          currentOrderBy={currentOrderBy}
+          handleSortingFieldSelection={DataObjectsActions.selectSortingField}
+          currentSortingField={currentSortingField}
           onCellClick={this.handleTableCellClick}
         />
         <Pagination
@@ -126,22 +160,18 @@ const DataObjects = React.createClass({
   render() {
     const styles = this.getStyles();
     const { className } = this.props.params;
-    const { selectedRows } = this.state;
+    const { classObj, selectedItemsIDs } = this.state;
     const title = `Data Class: ${className}`;
-    let selectedMessageText = '';
-
-    if (_.isArray(selectedRows) && !_.isEmpty(selectedRows)) {
-      selectedMessageText = `selected: ${selectedRows.length}`;
-    }
+    const titleSelectedItemsText = this.getTitleSelectedItemsText();
 
     return (
       <div>
         <Helmet title={title} />
         {this.getDialogs()}
 
-        <InnerToolbar title={`${title} ${selectedMessageText}`}>
+        <InnerToolbar title={`${title} ${titleSelectedItemsText}`}>
           <div style={styles.buttonsWrapper}>
-            <DataObjectSearchInput />
+            <DataObjectSearchForm classObj={classObj} />
             <IconButton
               data-e2e="data-object-add-button"
               iconClassName="synicon-plus"
@@ -153,7 +183,7 @@ const DataObjects = React.createClass({
               data-e2e="data-object-delete-button"
               iconClassName="synicon-delete"
               tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Delete Data Objects'}
-              disabled={(selectedRows && !selectedRows.length) || this.isClassProtected()}
+              disabled={(selectedItemsIDs && !selectedItemsIDs.length) || this.isClassProtected()}
               onTouchTap={() => this.showDialog('deleteDataObjectDialog')}
             />
             <IconButton

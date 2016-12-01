@@ -5,6 +5,7 @@ import DataObjectsTableDateCell from './DataObjectsTableDateCell';
 import DataObjectsTableFileCell from './DataObjectsTableFileCell';
 import DataObjectsTableJSONCell from './DataObjectsTableJSONCell';
 import DataObjectsTableReferenceCell from './DataObjectsTableReferenceCell';
+import DataObjectsTableTextCell from './DataObjectsTableTextCell';
 
 const DataObjectsTableCell = ({ item, columnId, users }) => {
   const renderContent = (content) => {
@@ -21,7 +22,7 @@ const DataObjectsTableCell = ({ item, columnId, users }) => {
 
     if (_.isObject(content)) {
       if (content.type && _.keys(objectTypeRenderMethods).includes(content.type)) {
-        return objectTypeRenderMethods[content.type](content);
+        return objectTypeRenderMethods[content.type];
       }
 
       return <DataObjectsTableJSONCell content={content} />;
@@ -37,7 +38,7 @@ const DataObjectsTableCell = ({ item, columnId, users }) => {
       return user ? user.username : 'No user';
     }
 
-    return null;
+    return <DataObjectsTableTextCell content={content} />;
   };
 
   return (
