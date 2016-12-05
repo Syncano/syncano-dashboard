@@ -154,7 +154,7 @@
     "selenium-install": "selenium-standalone install --silent",
     "selenium-start": "selenium-standalone start -- -Djava.security.egd=file:/dev/./urandom",
     "e2e": "./test.sh",
-    "e2e-branch": "nightwatch -e chrome --suiteRetries 1 --skiptags socialLogins,demoApp,customSocket",
+    "e2e-branch": "nightwatch -e chrome --suiteRetries 1 --skiptags socialLogins,demoApp,customSocket,apns",
     "e2e-master-devel": "nightwatch -e chrome --suiteRetries 1 --skiptags demoApp,customSocket",
     "e2e-local": "nightwatch -e chrome --suiteRetries 1 --skiptags apns,administrators,customSocket --skipgroup billing,signup_logins,settings",
     "e2e-tag": "nightwatch -e chrome --suiteRetries 1 --tag",

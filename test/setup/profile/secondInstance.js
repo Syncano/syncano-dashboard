@@ -32,10 +32,10 @@ const secondInstance = () => {
     .then((scriptsNames) => {
       secondInstanceStructure.scriptsNames = scriptsNames;
 
-      return createAPNSSocket();
-    })
-    .then((apnsSocketState) => {
-      secondInstanceStructure.apnsSocketState = apnsSocketState;
+      // return createAPNSSocket();
+    // })
+    // .then((apnsSocketState) => {
+    //   secondInstanceStructure.apnsSocketState = apnsSocketState;
 
       return createGCMSocket();
     })
