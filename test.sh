@@ -109,7 +109,7 @@ function local_tests {
         message "Tag: ${1} local tests starts..."
         npm run e2e-tag $1
     else
-        if [ $CI = 'local' ]; then
+        if [[ $CI == 'local' ]]; then
           message "[INFO] Running internal full tests, be sure to export all variables"
           npm run e2e-branch
         else
