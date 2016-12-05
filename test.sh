@@ -45,7 +45,7 @@ function ci_cleanup {
 function ci_setup {
     selenium_install
 
-    npm run build:staging
+    npm run build:test
     mv ./dist ./dist_e2e
 
     babel-node ./test/setup/createTestInstances.js
