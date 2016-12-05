@@ -4,7 +4,7 @@ import createInstance from '../create/instance';
 import createTestClasses from '../create/classes';
 import createTestDataEndpoints from '../create/dataEndpoint';
 import createTestScripts from '../create/scripts';
-import createAPNSSocket from '../create/apnsSocket';
+// import createAPNSSocket from '../create/apnsSocket';
 import createGCMSocket from '../create/gcmSocket';
 import createAPNSDevices from '../create/apnsDevices';
 import createGCMDevices from '../create/gcmDevices';
