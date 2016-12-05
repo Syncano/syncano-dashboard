@@ -16,6 +16,6 @@ exports.command = function clickListItemDropdown(listItem, dropdownChoice) {
     .waitForElementNotPresent('//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div')
     .click(choice)
     // Waiting for dropdown to be removed from DOM
-    .waitForElementNotPresent(choice)
+    .waitForElementNotPresent('//iframe/following-sibling::div[@style]/div')
     .pause(1000);
 };
