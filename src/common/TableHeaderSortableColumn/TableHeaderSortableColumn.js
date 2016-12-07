@@ -5,15 +5,23 @@ import { FontIcon, TableHeaderColumn } from 'material-ui';
 
 const TableHeaderSortableColumn = ({ id, sortable, onLabelClick, currentSortingField, children, ...other }) => {
   const styles = {
-    children: {
+    root: {
       color: Colors.blue500,
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'flex-end'
     },
+    childrenContainer: {
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    },
+    fontIconContainer: {
+      flex: '0 0 18px',
+      marginLeft: 10
+    },
     fontIcon: {
       fontSize: 14,
-      marginLeft: 10,
       position: 'relative',
       top: 3
     }
@@ -34,28 +42,44 @@ const TableHeaderSortableColumn = ({ id, sortable, onLabelClick, currentSortingF
     }
 
     return (
-      <FontIcon
-        className={className}
-        style={styles.fontIcon}
-      />
+      <div style={styles.fontIconContainer}>
+        <FontIcon
+          className={className}
+          style={styles.fontIcon}
+        />
+      </div>
     );
   };
 
-  const renderChildren = () => {
+  const renderChildrenOnly = () => (
+    <div
+      title={children}
+      style={styles.childrenContainer}
+    >
+      {children}
+    </div>
+  );
+
+  const renderContent = () => {
     if (!sortable || !onLabelClick) {
-      return children;
+      return renderChildrenOnly();
     }
 
     const handleClick = () => {
       onLabelClick(id);
     };
 
+    const title = `Sort by ${children} field`;
+
     return (
       <div
-        style={styles.children}
+        title={title}
+        style={styles.root}
         onClick={handleClick}
       >
-        {children}
+        <div style={styles.childrenContainer}>
+          {children}
+        </div>
         {renderSortingIcon()}
       </div>
     );
@@ -63,7 +87,7 @@ const TableHeaderSortableColumn = ({ id, sortable, onLabelClick, currentSortingF
 
   return (
     <TableHeaderColumn {...other}>
-      {renderChildren()}
+      {renderContent()}
     </TableHeaderColumn>
   );
 };

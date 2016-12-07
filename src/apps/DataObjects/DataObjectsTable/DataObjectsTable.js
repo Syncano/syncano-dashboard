@@ -21,21 +21,17 @@ class DataObjectsTable extends Component {
   }
 
   getStyles = () => ({
-    tableWrapper: {
-      minHeight: 120
+    tableBody: {
+      // replace default MUI styles
+      overflow: null
     },
     tableHeaderFilterColumn: {
-      width: 20,
-      paddingLeft: 6,
-      paddingRight: 30,
-      whiteSpace: 'normal',
-      wordWrap: 'normal'
+      width: 58,
+      paddingLeft: 10,
+      paddingRight: 0,
+      whiteSpace: 'nowrap'
     },
-    tableBody: {
-      overflowX: 'visible',
-      overflowY: 'initial'
-    },
-    tableRow: {
+    tableBodyRow: {
       cursor: 'pointer'
     }
   })
@@ -59,7 +55,7 @@ class DataObjectsTable extends Component {
     if (className === 'user_profile') {
       columns.unshift({
         id: 'username',
-        width: 120,
+        width: 100,
         checked: true
       });
     }
@@ -114,9 +110,8 @@ class DataObjectsTable extends Component {
       <TableHeaderSortableColumn
         key={`table-header-column-${item.id}`}
         style={{
-          width: item.width || 100,
-          whiteSpace: 'normal',
-          wordWrap: 'normal'
+          width: item.width || 120,
+          padding: '0 10px'
         }}
         id={item.id}
         sortable={item.sortable}
@@ -157,7 +152,10 @@ class DataObjectsTable extends Component {
       const columnsComponents = _.map(checkedColumns, (column) => (
         <TableRowColumn
           key={`table-row-column-${column.id}`}
-          style={{ width: column.width || 100 }}
+          style={{
+            width: column.width || 120,
+            padding: '0 10px'
+          }}
           data-e2e={`${column.id}-data-object-column`}
         >
           <DataObjectsTableCell
@@ -172,7 +170,7 @@ class DataObjectsTable extends Component {
         <TableRow
           key={`row-${item.id}`}
           selected={selected}
-          style={styles.tableRow}
+          style={styles.tableBodyRow}
           data-e2e={`${index}-data-object-row`}
         >
           <TableHeaderColumn
@@ -209,7 +207,6 @@ class DataObjectsTable extends Component {
         <Table
           multiSelectable={true}
           showRowHover={true}
-          wrapperStyle={styles.tableWrapper}
           bodyStyle={styles.tableBody}
           onRowSelection={handleRowSelection}
           onCellClick={withEditDialog && onCellClick}

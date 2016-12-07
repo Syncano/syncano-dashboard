@@ -2,47 +2,47 @@ const DataObjectsTableColumns = [
   {
     id: 'id',
     sortable: true,
-    width: 90,
+    width: 80,
     checked: true
   },
   {
     id: 'revision',
-    width: 20,
+    width: 80,
     checked: true
   },
   {
     id: 'owner',
-    width: 90,
+    width: 80,
     checked: true
   },
   {
     id: 'group',
-    width: 90,
+    width: 80,
     checked: true
   },
   {
     id: 'owner_permissions',
-    width: 90,
+    width: 130,
     checked: true
   },
   {
     id: 'group_permissions',
-    width: 90,
+    width: 130,
     checked: true
   },
   {
     id: 'other_permissions',
-    width: 90,
+    width: 130,
     checked: true
   },
   {
     id: 'channel',
-    width: 90,
+    width: 80,
     checked: false
   },
   {
     id: 'channel_room',
-    width: 90,
+    width: 110,
     checked: false
   },
   {

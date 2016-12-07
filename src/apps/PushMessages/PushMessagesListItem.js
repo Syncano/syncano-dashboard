@@ -65,9 +65,7 @@ export default React.createClass({
             className={devicesIcon}
           />
         </Column.Desc>
-        <Column.Date
-          date={item.created_at}
-        />
+        <Column.Date date={item.created_at} />
       </ColumnList.Item>
     );
   }

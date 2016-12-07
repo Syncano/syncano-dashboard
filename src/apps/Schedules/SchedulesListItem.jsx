@@ -24,8 +24,8 @@ const SchedulesListItem = ({ item, onIconClick, showDeleteDialog, scriptLabel },
       secondaryText={`ID: ${item.id}`}
     />
     <Column.Date
-      className="col-flex-1"
       date={item.scheduled_next}
+      className="col-flex-1"
     />
     <Column.Desc className="col-flex-1">
       <Link

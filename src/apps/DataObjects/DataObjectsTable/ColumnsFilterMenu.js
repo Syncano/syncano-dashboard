@@ -4,16 +4,8 @@ import ColumnsFilterMenuListItem from './ColumnsFilterMenuListItem';
 
 const ColumnsFilterMenu = ({ columns, checkToggleColumn }) => (
   <IconMenu
-    closeOnItemTouchTap={false}
     iconButtonElement={<IconButton iconClassName="synicon-view-column" />}
-    anchorOrigin={{
-      vertical: 'top',
-      horizontal: 'left'
-    }}
-    targetOrigin={{
-      vertical: 'top',
-      horizontal: 'left'
-    }}
+    closeOnItemTouchTap={false}
   >
     {columns.map((column) => (
       <ColumnsFilterMenuListItem

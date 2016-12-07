@@ -104,7 +104,7 @@ const TracesListItem = ({ item, onToggle, onLoadMore, visible = true }) => {
         </Column.Desc>
         <Column.Date
           date={item.executed_at}
-          ifInvalid={item.status}
+          invalidDateText={item.status}
         />
       </ColumnList.Item>
       <div style={styles.traceResult}>
