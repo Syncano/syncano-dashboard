@@ -72,7 +72,7 @@
     "autoprefixer-loader": "3.2.0",
     "aws-sdk": "2.7.8",
     "babel-cli": "6.18.0",
-    "babel-core": "6.18.2",
+    "babel-core": "6.20.0",
     "babel-eslint": "7.1.1",
     "babel-jest": "17.0.2",
     "babel-loader": "6.2.8",
