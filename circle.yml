@@ -39,3 +39,11 @@ deployment:
     branch: /.*/
     commands:
       - npm run deploy
+
+experimental:
+  notify:
+    branches:
+      only:
+        - master
+        - devel
+        - sng
