@@ -84,6 +84,10 @@ export default React.createClass({
         association = schedulesAssociation;
       }
 
+      if (_.isFinite(item)) {
+        return <li key={item}>ID: {item}</li>;
+      }
+
       if (!_.isObject(item)) {
         return null;
       }

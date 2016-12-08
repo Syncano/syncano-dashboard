@@ -117,7 +117,7 @@ const DataObjects = React.createClass({
         title: 'Delete a Data Object',
         handleConfirm: this.handleDelete,
         groupName: 'Data Object',
-        children: `Do you really want to delete ${selectedItemsIDs.length} Data Object(s)?`,
+        items: selectedItemsIDs,
         isLoading
       }
     }];
