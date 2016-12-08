@@ -39,3 +39,11 @@ deployment:
     branch: /.*/
     commands:
       - NODE_ENV=staging npm run deployment-branch
+
+experimental:
+  notify:
+    branches:
+      only:
+        - master
+        - devel
+        - sng
