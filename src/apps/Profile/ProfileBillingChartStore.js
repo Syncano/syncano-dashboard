@@ -1,7 +1,8 @@
 import Reflux from 'reflux';
 import moment from 'moment';
-import d3 from 'd3';
 import _ from 'lodash';
+import numeral from 'numeral';
+import median from 'median';
 
 import ProfileBillingChartActions from './ProfileBillingChartActions';
 import ProfileBillingPlanActions from './ProfileBillingPlanActions';
@@ -104,7 +105,7 @@ export default Reflux.createStore({
             return title;
           },
           name: (name) => ({ api: 'API calls', cbx: 'Script seconds', total: 'Total' }[name]),
-          value: (value) => d3.format('$')(_.round(value, 5))
+          value: (value) => numeral(value).format('$0,0[.]00000')
         }
       },
       regions: [{
@@ -217,7 +218,7 @@ export default Reflux.createStore({
     // We need to calculate median for predictions
     const today = this.getToday();
     const medians = _.reduce(columns, (result, value, key) => {
-      result[key] = d3.median(_.values(value)) || 0;
+      result[key] = median(_.values(value)) || 0;
       return result;
     }, {});
 

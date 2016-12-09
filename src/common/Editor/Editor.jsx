@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import AceEditor from 'react-ace';
 
-import 'brace/mode/python';
-import 'brace/mode/javascript';
-import 'brace/mode/ruby';
-import 'brace/mode/golang';
-import 'brace/mode/swift';
-import 'brace/mode/php';
-import 'brace/mode/json';
-import 'brace/mode/html';
-import 'brace/mode/django';
-import 'brace/theme/tomorrow';
+class Editor extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
 
-class Editor extends React.Component {
+    Promise.all([System.import(`brace/mode/${props.mode}`), System.import(`brace/theme/tomorrow`)]).then(() => {
+      this.setState({ loaded: true });
+    });
+  }
+
   getStyles() {
     const { width, height } = this.props;
 
@@ -26,7 +24,12 @@ class Editor extends React.Component {
 
   render() {
     const styles = this.getStyles();
+    const { loaded } = this.state;
     const { style, editorName, ...other } = this.props;
+
+    if (!loaded) {
+      return null;
+    }
 
     return (
       <div data-e2e={other['data-e2e']}>
@@ -35,7 +38,7 @@ class Editor extends React.Component {
           name={editorName}
           ref={`editor-${editorName}`}
           showPrintMargin={false}
-          theme={'tomorrow'}
+          theme="tomorrow"
           editorProps={{ $blockScrolling: 'Infinity' }}
           style={{ ...styles.root, ...style }}
           {...other}

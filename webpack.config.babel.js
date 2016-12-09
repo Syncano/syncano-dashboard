@@ -1,5 +1,5 @@
 import {resolve} from 'path';
-import webpack from 'webpack';
+import webpack, { ContextReplacementPlugin } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ProgressBarPlugin from 'progress-bar-webpack-plugin';
 import ExtendedDefinePlugin from 'extended-define-webpack-plugin';
@@ -9,6 +9,9 @@ import {getIfUtils, removeEmpty} from 'webpack-config-utils';
 import S3Plugin from 'webpack-s3-plugin';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
+import VendorChunkPlugin from 'webpack-vendor-chunk-plugin';
 import packageJSON from './package.json';
 
 const getAppConfig = (env) => {
@@ -105,7 +108,7 @@ const getS3Config = (env) => {
 };
 
 const webpackConfig = (env = {development: true}) => {
-  const {ifProduction, ifNotProduction, ifDevelopment, ifNotDevelopment} = getIfUtils(env);
+  const {ifDevelopment, ifNotDevelopment} = getIfUtils(env);
   const config = {
     context: resolve('src'),
     entry: {
@@ -115,19 +118,23 @@ const webpackConfig = (env = {development: true}) => {
       ],
       vendor: [
         'react-hot-loader/patch',
-        ...Object.keys(packageJSON.dependencies)
+        ...Object.keys(packageJSON.dependencies).filter((packageName) => {
+          const excluded = ['lodash', 'd3', 'c3', 'brace', 'react-fittext'];
+
+          return excluded.indexOf(packageName) === -1;
+        })
       ]
     },
     output: {
-      filename: ifProduction('bundle.[name].[chunkhash].js', 'bundle.[name].js'),
+      filename: ifNotDevelopment('bundle.[name].[chunkhash].js', 'bundle.[name].js'),
       path: resolve('dist'),
-      pathinfo: ifNotProduction(),
+      pathinfo: ifDevelopment(),
     },
-    devtool: ifProduction('source-map', 'eval'),
+    devtool: ifNotDevelopment('source-map', 'eval'),
     module: {
       rules: [
         {enforce: 'pre', test: /\.js(|x)$/, loaders: ['eslint-loader'], exclude: /node_modules/},
-        {test: /\.js(|x)$/, loaders: ['babel-loader'], exclude: /node_modules/},
+        {test: /\.js(|x)$/, use: ['babel-loader'], options: { presets: [["es2015", { "modules": false }], "react", "stage-0"] }, exclude: /node_modules/},
         {test: /\.json$/, loaders: ['json-loader']},
         {
           test: /\.css$/,
@@ -159,7 +166,7 @@ const webpackConfig = (env = {development: true}) => {
     plugins: removeEmpty([
       ifDevelopment(new ProgressBarPlugin()),
       new webpack.NoErrorsPlugin(),
-      new ExtractTextPlugin(ifProduction('styles.[name].[chunkhash].css', 'styles.[name].css')),
+      new ExtractTextPlugin(ifNotDevelopment('styles.[name].[chunkhash].css', 'styles.[name].css')),
       new HtmlWebpackPlugin({
         template: './index.html'
       }),
@@ -175,6 +182,10 @@ const webpackConfig = (env = {development: true}) => {
           }
         }
       }),
+      ifNotDevelopment(new ContextReplacementPlugin(/brace[\\\/]mode$/, /^\.\/(javascript|html|python|ruby|golang|swift|php|django|json|css|text)$/)),
+      ifNotDevelopment(new ContextReplacementPlugin(/brace[\\\/]theme$/, /^\.\/(tomorrow)$/)),
+      ifNotDevelopment(new ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en-uk|en-us|en-au)$/)),
+      // new BundleAnalyzerPlugin(),
       ifNotDevelopment(new FaviconsWebpackPlugin('./assets/img/syncano-symbol.svg')),
       ifNotDevelopment(new CompressionPlugin({
         asset: "[path].gz[query]",
@@ -184,10 +195,12 @@ const webpackConfig = (env = {development: true}) => {
         minRatio: 0.8
       })),
       env.deploy && new S3Plugin(getS3Config(env)),
+      ifNotDevelopment(new LodashModuleReplacementPlugin),
       ifNotDevelopment(new InlineManifestWebpackPlugin()),
       ifNotDevelopment(new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendor', 'manifest'],
-      }))
+        names: ['vendor', 'manifest']
+      })),
+      ifNotDevelopment(new VendorChunkPlugin('vendor'))
     ]),
     resolve: {
       extensions: ['.js', '.jsx']
