@@ -32,8 +32,7 @@ const RoutesUtil = {
 
         redirectRoute && replace(redirectRoute);
         callback();
-      })
-      .catch(console.error);
+      });
   },
 
   checkInstanceActiveSubscription(nextState, replace, callback) {

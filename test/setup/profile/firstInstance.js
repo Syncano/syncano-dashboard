@@ -3,7 +3,7 @@ import connection from '../create/connection';
 import createInstance from '../create/instance';
 import createTestClasses from '../create/classes';
 import createTestScripts from '../create/scripts';
-// import createAPNSSocket from '../create/apnsSocket';
+import createAPNSSocket from '../create/apnsSocket';
 import createGCMSocket from '../create/gcmSocket';
 import createAPNSDevices from '../create/apnsDevices';
 import createGCMDevices from '../create/gcmDevices';
@@ -26,10 +26,10 @@ const firstInstance = () => {
     .then((scriptsNames) => {
       firstInstanceStructure.scriptsNames = scriptsNames;
 
-    //   return createAPNSSocket();
-    // })
-    // .then((apnsSocketState) => {
-    //   firstInstanceStructure.apnsSocketState = apnsSocketState;
+      return createAPNSSocket();
+    })
+    .then((apnsSocketState) => {
+      firstInstanceStructure.apnsSocketState = apnsSocketState;
 
       return createGCMSocket();
     })
