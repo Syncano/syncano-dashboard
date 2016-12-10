@@ -26,10 +26,9 @@ try {
   );
   if (module.hot) {
     module.hot.accept('./Root', () => {
-      const NextApp = require('./Root'); // eslint-disable-line
       render(
         <AppContainer>
-          <NextApp />
+          <Root />
         </AppContainer>,
         container
       );
