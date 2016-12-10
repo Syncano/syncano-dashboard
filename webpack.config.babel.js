@@ -36,14 +36,18 @@ const webpackConfig = (env = {development: true}) => {
     module: {
       rules: [
         { enforce: 'pre', test: /\.js(|x)$/, loaders: ['eslint-loader'], exclude: /node_modules/ },
-        { test: /\.js(|x)$/, use: ['babel-loader'], options: { presets: [["es2015", { "modules": false }], "react", "stage-0"] }, exclude: /node_modules/ },
         { test: /\.json$/, loaders: ['json-loader'] },
-        {
-          test: /\.css$/,
-          loader: extractCSS.extract(['css-loader'])
-        },
+        { test: /\.css$/, loader: extractCSS.extract(['css-loader']) },
         { test: /\.(eot|ttf|svg|woff|woff2)$/, loader: 'file-loader?name=./fonts/[name]-[hash].[ext]', include: /fonts/ },
         { test: /\.(jpe?g|png|gif|svg)$/, loader: 'url-loader' },
+        {
+          test: /\.js(|x)$/,
+          use: ['babel-loader'],
+          options: {
+            presets: [["es2015", { "modules": false }], "react", "stage-0"]
+          },
+          exclude: /node_modules/
+        },
         {
           test: /\.sass$/,
           loader: extractCSS.extract([
@@ -77,29 +81,31 @@ const webpackConfig = (env = {development: true}) => {
           }
         }
       }),
-      ifNotDevelopment(new ContextReplacementPlugin(/brace[\\\/]mode$/, /^\.\/(javascript|html|python|ruby|golang|swift|php|django|json|css|text)$/)),
-      ifNotDevelopment(new ContextReplacementPlugin(/brace[\\\/]theme$/, /^\.\/(tomorrow)$/)),
-      ifNotDevelopment(new ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en-uk|en-us|en-au)$/)),
-      ifNotDevelopment(new FaviconsWebpackPlugin('./assets/img/syncano-symbol.svg')),
-      ifNotDevelopment(new CompressionPlugin({
-        asset: "[path].gz[query]",
-        algorithm: "gzip",
-        test: /\.js$|\.css$/,
-        threshold: 10240,
-        minRatio: 0.8
-      })),
-      env.deploy && new S3Plugin(getS3Config(env)),
-      ifNotDevelopment(new InlineManifestWebpackPlugin()),
-      ifNotDevelopment(new WebpackMd5Hash()),
-      ifNotDevelopment(new webpack.optimize.CommonsChunkPlugin({
-        async: true,
-        children: true
-      })),
-      ifNotDevelopment(new webpack.optimize.CommonsChunkPlugin({
-        name: 'manifest',
-        filename: 'manifest.js',
-        minChunks: Infinity,
-      }))
+      ifNotDevelopment(...[
+        new InlineManifestWebpackPlugin(),
+        new WebpackMd5Hash(),
+        new webpack.optimize.CommonsChunkPlugin({
+          async: true,
+          children: true
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+          name: 'manifest',
+          filename: 'manifest.js',
+          minChunks: Infinity,
+        }),
+        new ContextReplacementPlugin(/brace[\\\/]mode$/, /^\.\/(javascript|html|python|ruby|golang|swift|php|django|json|css|text)$/),
+        new ContextReplacementPlugin(/brace[\\\/]theme$/, /^\.\/(tomorrow)$/),
+        new ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en-uk|en-us|en-au)$/),
+        new FaviconsWebpackPlugin('./assets/img/syncano-symbol.svg'),
+        new CompressionPlugin({
+          asset: "[path].gz[query]",
+          algorithm: "gzip",
+          test: /\.js$|\.css$/,
+          threshold: 10240,
+          minRatio: 0.8
+        })
+      ]),
+      env.deploy && new S3Plugin(getS3Config(env))
     ]),
     resolve: {
       extensions: ['.js', '.jsx']
@@ -107,11 +113,11 @@ const webpackConfig = (env = {development: true}) => {
     externals: {
       'analyticsjs': 'window.analytics',
       'stripejs': 'Stripe'
+    },
+    stats: 'errors-only',
+    devServer: {
+      stats: 'errors-only'
     }
-    // stats: 'errors-only',
-    // devServer: {
-    //   stats: 'errors-only'
-    // }
   };
 
   if (env.debug) {
