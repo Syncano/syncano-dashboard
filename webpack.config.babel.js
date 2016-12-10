@@ -10,11 +10,15 @@ import S3Plugin from 'webpack-s3-plugin';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import VendorChunkPlugin from 'webpack-vendor-chunk-plugin';
+import WebpackMd5Hash from 'webpack-md5-hash';
 import { getAppConfig, getS3Config } from './webpack-helpers';
 
 const webpackConfig = (env = {development: true}) => {
   const {ifDevelopment, ifNotDevelopment} = getIfUtils(env);
+  const extractCSS = new ExtractTextPlugin({
+    filename: ifNotDevelopment('styles.[chunkhash].css', 'styles.css'),
+    allChunks: true
+  });
   const config = {
     context: resolve('src'),
     entry: {
@@ -32,22 +36,18 @@ const webpackConfig = (env = {development: true}) => {
     devtool: ifNotDevelopment('source-map', 'eval'),
     module: {
       rules: [
-        {enforce: 'pre', test: /\.js(|x)$/, loaders: ['eslint-loader'], exclude: /node_modules/},
-        {test: /\.js(|x)$/, use: ['babel-loader'], options: { presets: [["es2015", { "modules": false }], "react", "stage-0"] }, exclude: /node_modules/},
-        {test: /\.json$/, loaders: ['json-loader']},
+        { enforce: 'pre', test: /\.js(|x)$/, loaders: ['eslint-loader'], exclude: /node_modules/ },
+        { test: /\.js(|x)$/, use: ['babel-loader'], options: { presets: [["es2015", { "modules": false }], "react", "stage-0"] }, exclude: /node_modules/ },
+        { test: /\.json$/, loaders: ['json-loader'] },
         {
           test: /\.css$/,
-          loader: ExtractTextPlugin.extract({
-            fallbackLoader: 'style-loader',
-            loader: 'css-loader',
-          })
+          loader: extractCSS.extract(['css-loader'])
         },
-        {test: /\.(jpe?g|png|gif|svg)$/, loaders: ['url-loader']},
-        {test: /\.(eot|ttf|woff|woff2)$/, loaders: ['file-loader']},
+        { test: /\.(eot|ttf|svg|woff|woff2)$/, loader: 'file-loader?name=./fonts/[name]-[hash].[ext]', include: /fonts/ },
+        { test: /\.(jpe?g|png|gif|svg)$/, loader: 'url-loader' },
         {
           test: /\.sass$/,
-          use: [
-            'style-loader',
+          loader: extractCSS.extract([
             'css-loader',
             {
               loader: 'sass-loader',
@@ -58,14 +58,14 @@ const webpackConfig = (env = {development: true}) => {
                 ]
               }
             }
-          ]
+          ])
         }
       ],
     },
     plugins: removeEmpty([
       ifDevelopment(new ProgressBarPlugin()),
       new webpack.NoErrorsPlugin(),
-      new ExtractTextPlugin(ifNotDevelopment('styles.[name].[chunkhash].css', 'styles.[name].css')),
+      extractCSS,
       new HtmlWebpackPlugin({
         template: './index.html'
       }),
@@ -85,7 +85,7 @@ const webpackConfig = (env = {development: true}) => {
       ifNotDevelopment(new ContextReplacementPlugin(/brace[\\\/]mode$/, /^\.\/(javascript|html|python|ruby|golang|swift|php|django|json|css|text)$/)),
       ifNotDevelopment(new ContextReplacementPlugin(/brace[\\\/]theme$/, /^\.\/(tomorrow)$/)),
       ifNotDevelopment(new ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en-uk|en-us|en-au)$/)),
-      // new BundleAnalyzerPlugin(),
+      new BundleAnalyzerPlugin(),
       ifNotDevelopment(new FaviconsWebpackPlugin('./assets/img/syncano-symbol.svg')),
       ifNotDevelopment(new CompressionPlugin({
         asset: "[path].gz[query]",
@@ -96,13 +96,16 @@ const webpackConfig = (env = {development: true}) => {
       })),
       env.deploy && new S3Plugin(getS3Config(env)),
       ifNotDevelopment(new InlineManifestWebpackPlugin()),
+      ifNotDevelopment(new WebpackMd5Hash()),
       ifNotDevelopment(new webpack.optimize.CommonsChunkPlugin({
-        // names: ['vendor', 'manifest'],
-        name: 'app',
         async: true,
         children: true
+      })),
+      ifNotDevelopment(new webpack.optimize.CommonsChunkPlugin({
+        name: 'manifest',
+        filename: 'manifest.js',
+        minChunks: Infinity,
       }))
-      // ifNotDevelopment(new VendorChunkPlugin('vendor'))
     ]),
     resolve: {
       extensions: ['.js', '.jsx']
@@ -110,11 +113,11 @@ const webpackConfig = (env = {development: true}) => {
     externals: {
       'analyticsjs': 'window.analytics',
       'stripejs': 'Stripe'
-    },
-    stats: 'errors-only',
-    devServer: {
-      stats: 'errors-only'
     }
+    // stats: 'errors-only',
+    // devServer: {
+    //   stats: 'errors-only'
+    // }
   };
 
   if (env.debug) {

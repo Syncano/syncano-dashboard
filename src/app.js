@@ -1,6 +1,6 @@
 import 'normalize.css';
-import './assets/css/avenir.css';
-import './assets/css/synicons.css';
+import './assets/fonts/avenir/avenir.css';
+import './assets/fonts/icons/Syncano-Icons.css';
 import './raven';
 import './stripe';
 import './segment';
