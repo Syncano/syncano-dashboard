@@ -13,8 +13,8 @@ export default Radium(React.createClass({
     return {
       root: {
         width: 256,
-        zIndex: 11,
-        paddingRight: 0
+        flex: '0 0 256px',
+        zIndex: 11
       },
       background: {
         background: '#fcfcfc',
@@ -31,12 +31,12 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const { children, style, ...other } = this.props;
+    const { children, ...other } = this.props;
 
     return (
       <div
-        className="col-flex-0 left-nav"
-        style={{ ...style, ...styles.root }}
+        className="left-nav"
+        style={styles.root}
         {...other}
       >
         <div style={styles.background} />

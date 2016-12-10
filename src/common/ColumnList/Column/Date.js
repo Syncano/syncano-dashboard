@@ -1,46 +1,40 @@
 import React from 'react';
-import Radium from 'radium';
 import Moment from 'moment';
+
 import ColumnListConstans from '../ColumnListConstans';
 
-export default Radium(React.createClass({
-  displayName: 'ColumnDate',
-
-  getDefaultProps() {
-    return {
-      color: 'rgba(0,0,0,.54)',
-      className: ColumnListConstans.DEFAULT_CLASSNAME.DATE
-    };
-  },
-
-  getStyles() {
-    return {
+const ColumnDate = ({
+  date,
+  invalidDateText = '',
+  className = ColumnListConstans.DEFAULT_CLASSNAME.DATE
+}) => {
+  const getStyles = () => ({
+    root: {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
-      fontSize: '12px',
-      lineHeight: '16px',
+      fontSize: 12,
+      lineHeight: 16,
       padding: ColumnListConstans.DEFAULT_CELL_PADDING,
-      color: this.props.color
-    };
-  },
+      color: 'rgba(0, 0, 0, .54)'
+    }
+  });
 
-  render() {
-    const styles = this.getStyles();
-    const ifInvalid = this.props.ifInvalid || '';
-    const date = Moment(this.props.date);
-    const isValid = date.isValid();
-    const format = isValid ? date.format('DD/MM/YYYY') : ifInvalid;
-    const lts = isValid ? date.format('LTS') : '';
+  const styles = getStyles();
+  const momentDate = Moment(date);
+  const isValid = momentDate.isValid();
+  const format = isValid ? momentDate.format('DD/MM/YYYY') : invalidDateText;
+  const lts = isValid ? momentDate.format('LTS') : '';
 
-    return (
-      <div
-        className={this.props.className}
-        style={styles}
-      >
-        <span>{format}</span>
-        <span>{lts}</span>
-      </div>
-    );
-  }
-}));
+  return (
+    <div
+      className={className}
+      style={styles.root}
+      title={`${format} ${lts}`}
+    >
+      {format}
+    </div>
+  );
+};
+
+export default ColumnDate;
