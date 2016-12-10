@@ -10,102 +10,8 @@ import S3Plugin from 'webpack-s3-plugin';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 import VendorChunkPlugin from 'webpack-vendor-chunk-plugin';
-import packageJSON from './package.json';
-
-const getAppConfig = (env) => {
-  const envVars = [
-    'ANALYTICS_WRITE_KEY',
-    'CIRCLE_BRANCH',
-    'CIRCLE_SHA1',
-    'FACEBOOK_ID',
-    'GITHUB_ID',
-    'GOOGLE_ID',
-    'SENTRY_DSN',
-    'STRIPE_PUBLISHABLE_KEY',
-    'SYNCANO_BASE_DOMAIN',
-    'SYNCANO_BILLING_EMAIL',
-    'SYNCANO_DEMO_APPS_ACCOUNT_KEY',
-    'SYNCANO_SUPPORT_EMAIL',
-    'SYNCANO_BASE_URL'
-  ];
-  const config = {
-    ENV: Object.keys(env)[0],
-    VERSION: packageJSON.version,
-    SYNCANO_BASE_URL: 'https://api.syncano.io'
-  };
-
-  envVars.forEach((key) => {
-    const envName = `${config.ENV.toUpperCase()}_${key}`;
-    const value = process.env[envName] || process.env[key];
-
-    if (value) {
-      config[key] = value;
-    }
-  });
-
-  return config;
-};
-
-const getS3Config = (env) => {
-  const { CIRCLE_BRANCH } = process.env;
-
-  if (!CIRCLE_BRANCH) {
-    throw new Error('"CIRCLE_BRANCH" env variable is required');
-  }
-
-  const branch = CIRCLE_BRANCH.toLowerCase();
-  const config = {
-    beta: {
-      s3Options: {
-        region: 'us-east-1',
-      },
-      s3UploadOptions: {
-        Bucket: process.env.BETA_AWS_BUCKET_NAME
-      }
-    },
-    devel: {
-      s3Options: {
-        region: 'us-west-2',
-      },
-      s3UploadOptions: {
-        Bucket: process.env.STAGING_AWS_BUCKET_NAME
-      },
-      cloudfrontInvalidateOptions: {
-        DistributionId: process.env.STAGING_AWS_DISTRIBUTION_ID,
-        Items: ["/*"]
-      }
-    },
-    master: {
-      s3Options: {
-        region: 'us-west-2',
-      },
-      s3UploadOptions: {
-        Bucket: process.env.PRODUCTION_AWS_BUCKET_NAME
-      },
-      cloudfrontInvalidateOptions: {
-        DistributionId: process.env.PRODUCTION_AWS_DISTRIBUTION_ID,
-        Items: ["/*"]
-      }
-    },
-    default: {
-      s3Options: {
-        region: 'us-west-2',
-      },
-      s3UploadOptions: {
-        Bucket: process.env.STAGING_AWS_BUCKET_NAME
-      },
-      basePath: branch
-    }
-  };
-
-  if (env.beta) {
-    return config.beta;
-  }
-
-  return config[branch] || config.default;
-};
+import { getAppConfig, getS3Config } from './webpack-helpers';
 
 const webpackConfig = (env = {development: true}) => {
   const {ifDevelopment, ifNotDevelopment} = getIfUtils(env);
@@ -113,16 +19,9 @@ const webpackConfig = (env = {development: true}) => {
     context: resolve('src'),
     entry: {
       app: [
+        'babel-polyfill',
         'react-hot-loader/patch',
         './app.js'
-      ],
-      vendor: [
-        'react-hot-loader/patch',
-        ...Object.keys(packageJSON.dependencies).filter((packageName) => {
-          const excluded = ['lodash', 'd3', 'c3', 'brace', 'react-fittext'];
-
-          return excluded.indexOf(packageName) === -1;
-        })
       ]
     },
     output: {
@@ -174,6 +73,7 @@ const webpackConfig = (env = {development: true}) => {
         APP_CONFIG: getAppConfig(env)
       }),
       new webpack.LoaderOptionsPlugin({
+        minimize: ifNotDevelopment(true),
         options: {
           eslint: {
             formatter: require('eslint-friendly-formatter'),
@@ -195,12 +95,14 @@ const webpackConfig = (env = {development: true}) => {
         minRatio: 0.8
       })),
       env.deploy && new S3Plugin(getS3Config(env)),
-      ifNotDevelopment(new LodashModuleReplacementPlugin),
       ifNotDevelopment(new InlineManifestWebpackPlugin()),
       ifNotDevelopment(new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendor', 'manifest']
-      })),
-      ifNotDevelopment(new VendorChunkPlugin('vendor'))
+        // names: ['vendor', 'manifest'],
+        name: 'app',
+        async: true,
+        children: true
+      }))
+      // ifNotDevelopment(new VendorChunkPlugin('vendor'))
     ]),
     resolve: {
       extensions: ['.js', '.jsx']
@@ -208,6 +110,10 @@ const webpackConfig = (env = {development: true}) => {
     externals: {
       'analyticsjs': 'window.analytics',
       'stripejs': 'Stripe'
+    },
+    stats: 'errors-only',
+    devServer: {
+      stats: 'errors-only'
     }
   };
 

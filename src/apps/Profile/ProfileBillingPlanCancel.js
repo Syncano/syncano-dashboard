@@ -52,7 +52,7 @@ const ProfileBillingPlanCancel = Radium(React.createClass({
           There was an error sending your request.
         </div>
         <div>
-          {'Sorry about that. Please write us at '}
+          {'Sorry about that. Please contact us at '}
           <a href={`mailto:${APP_CONFIG.SYNCANO_BILLING_EMAIL}`}>{APP_CONFIG.SYNCANO_BILLING_EMAIL}</a>
           .
         </div>

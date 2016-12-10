@@ -19,26 +19,26 @@ dependencies:
 
 test:
   override:
-    - npm test && npm run e2e:
+    - yarn test && yarn run e2e:
         timeout: 400
 
 deployment:
   production:
     branch: master
     commands:
-      - npm run git-config
-      - npm run deploy
+      - yarn run git-config
+      - yarn run deploy
 
   staging:
     branch: devel
     commands:
-      - npm run deploy
-      - npm run deploy:beta
+      - yarn run deploy
+      - yarn run deploy:beta
 
   sockets:
     branch: /.*/
     commands:
-      - npm run deploy
+      - yarn run deploy
 
 experimental:
   notify:

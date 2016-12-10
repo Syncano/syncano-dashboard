@@ -109,7 +109,7 @@ Recommended way to manage node versions is [n](https://github.com/tj/n).
 If you already have other version of node, just install `n`:
 
 ```sh
-$ sudo npm install -g n
+$ sudo yarn install -g n
 $ n 7.0.0
 ```
 
@@ -144,13 +144,13 @@ To install dependencies just do:
 
 ```sh
 $ cd syncano-dashboard/
-$ npm install
+$ yarn install
 ```
 
 and start local development server (available at https://localhost:8080/):
 
 ```sh
-$ npm start
+$ yarn start
 ```
 
 ## Configuration
@@ -191,7 +191,7 @@ We are using set of [Material Design Icons](http://materialdesignicons.com/).
 Icons are attached as font in static assets `src/assets` so if you want to rebuild whole font just use npm command:
 
 ```sh
-$ npm run iconfont
+$ yarn run iconfont
 ```
 
 and commit your changes.
@@ -219,13 +219,13 @@ Please be careful what you do.**
 E2E Test can be started by typing:
 
 ```sh
-$ npm run e2e
+$ yarn run e2e
 ```
 
 If you want only one test suite to run use:
 
 ```sh
-$ npm run e2e <tag>
+$ yarn run e2e <tag>
 ```
 
 Refer to the test files for the appropriate tag name.

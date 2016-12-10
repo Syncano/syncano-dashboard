@@ -18,14 +18,14 @@ function selenium_install {
       message "Installing selenium..."
       fi
 
-      npm run selenium-install
+      yarn run selenium-install
       mkdir -p reports/
     fi
 }
 
 function selenium_start {
     # Use defult config for selenium-standalone lib
-    nohup npm run selenium-start > ./reports/selenium.log 2>&1&
+    nohup yarn run selenium-start > ./reports/selenium.log 2>&1&
 }
 
 function http_server_start {
@@ -45,12 +45,12 @@ function ci_cleanup {
 function ci_setup {
     selenium_install
 
-    npm run build:test
+    yarn run build:test
     mv ./dist ./dist_e2e
 
     babel-node ./test/setup/createTestInstances.js
     touch simplefilename.testfile
-    npm run lint-tests
+    yarn run lint-tests
 
     selenium_start
     http_server_start
@@ -58,7 +58,7 @@ function ci_setup {
 
 function ci_tests {
     MESSAGE=$(git log --pretty=format:%s -n 1 "$CIRCLE_SHA1")
-    npm run lint
+    yarn run lint
 
     if [[ "$MESSAGE" == *\[e2e-skip\]* ]]; then
         message "[WARN] Skipping E2E tests !!!"
@@ -67,10 +67,10 @@ function ci_tests {
 
         if [ $CIRCLE_BRANCH = 'master' ] || [ $CIRCLE_BRANCH = 'devel' ]; then
             message "Starting master/devel test flow..."
-            npm run e2e-master-devel
+            yarn run e2e-master-devel
         else
             message "Starting branch test flow..."
-            npm run e2e-branch
+            yarn run e2e-branch
         fi
 
         ci_cleanup
@@ -103,18 +103,18 @@ function local_setup {
 function local_tests {
     local_setup
     message "Checking tests with lint..."
-    npm run lint-tests -- --fix
+    yarn run lint-tests -- --fix
 
     if [ -n "$1" ]; then
         message "Tag: ${1} local tests starts..."
-        npm run e2e-tag $1
+        yarn run e2e-tag $1
     else
         if [[ $CI == 'local' ]]; then
           message "[INFO] Running internal full tests, be sure to export all variables"
-          npm run e2e-branch
+          yarn run e2e-branch
         else
           message "Full local tests starts..."
-          npm run e2e-local
+          yarn run e2e-local
         fi
     fi
 }
