@@ -80,6 +80,7 @@ const App = React.createClass({
 
   render() {
     const styles = this.getStyles();
+    const { children } = this.props;
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(SyncanoTheme)}>
@@ -99,7 +100,7 @@ const App = React.createClass({
             widthMethod="pageWidth"
             style={styles.content}
           >
-            {this.props.children}
+            {children}
             <SnackbarNotification />
           </Breakpoint>
         </div>

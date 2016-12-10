@@ -35,6 +35,16 @@ const Dashboard = React.createClass({
     ProfileBillingPlanStore.clearData();
   },
 
+  getStyles() {
+    return {
+      root: {
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1
+      }
+    };
+  },
+
   renderUpgradeToolbar() {
     const plan = ProfileBillingPlanStore.getPlan();
     const endDate = ProfileBillingPlanStore.getActiveSubscriptionEndDate();
@@ -47,15 +57,11 @@ const Dashboard = React.createClass({
   },
 
   render() {
+    const styles = this.getStyles();
     const { children } = this.props;
-    const styles = {
-      display: 'flex',
-      flexDirection: 'column',
-      flex: 1
-    };
 
     return (
-      <div style={styles}>
+      <div style={styles.root}>
         <Header />
         {children}
         {this.renderUpgradeToolbar()}
