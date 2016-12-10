@@ -9,7 +9,6 @@ import {getIfUtils, removeEmpty} from 'webpack-config-utils';
 import S3Plugin from 'webpack-s3-plugin';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import WebpackMd5Hash from 'webpack-md5-hash';
 import { getAppConfig, getS3Config } from './webpack-helpers';
 
@@ -66,12 +65,8 @@ const webpackConfig = (env = {development: true}) => {
       ifDevelopment(new ProgressBarPlugin()),
       new webpack.NoErrorsPlugin(),
       extractCSS,
-      new HtmlWebpackPlugin({
-        template: './index.html'
-      }),
-      new ExtendedDefinePlugin({
-        APP_CONFIG: getAppConfig(env)
-      }),
+      new HtmlWebpackPlugin({ template: './index.html' }),
+      new ExtendedDefinePlugin({ APP_CONFIG: getAppConfig(env) }),
       new webpack.LoaderOptionsPlugin({
         minimize: ifNotDevelopment(true),
         options: {
@@ -85,7 +80,6 @@ const webpackConfig = (env = {development: true}) => {
       ifNotDevelopment(new ContextReplacementPlugin(/brace[\\\/]mode$/, /^\.\/(javascript|html|python|ruby|golang|swift|php|django|json|css|text)$/)),
       ifNotDevelopment(new ContextReplacementPlugin(/brace[\\\/]theme$/, /^\.\/(tomorrow)$/)),
       ifNotDevelopment(new ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en-uk|en-us|en-au)$/)),
-      new BundleAnalyzerPlugin(),
       ifNotDevelopment(new FaviconsWebpackPlugin('./assets/img/syncano-symbol.svg')),
       ifNotDevelopment(new CompressionPlugin({
         asset: "[path].gz[query]",

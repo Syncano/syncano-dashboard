@@ -115,7 +115,6 @@
     "url-loader": "0.5.7",
     "webfont": "7.0.0",
     "webpack": "2.1.0-beta.27",
-    "webpack-bundle-analyzer": "2.1.1",
     "webpack-config-utils": "2.3.0",
     "webpack-dev-middleware": "1.8.4",
     "webpack-dev-server": "2.1.0-beta.11",
