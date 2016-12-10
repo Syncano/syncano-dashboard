@@ -62,6 +62,7 @@
     "react-stickydiv": "3.4.19",
     "react-tap-event-plugin": "github:Syncano/react-tap-event-plugin",
     "reflux": "0.3.0",
+    "rimraf": "2.5.4",
     "shortid": "2.2.6",
     "sort-object": "3.0.2",
     "syncano": "1.0.28",
