@@ -41,10 +41,10 @@ const TemplateSummary = ({ createdTemplate }) => {
                   `    "content": "<div>Hello {{ some_var }}</div>",\n` +
                   `    "content_type": "${createdTemplate.content_type}",\n` +
                   `    "context": {"some_var": "world!"}}' \\\n` +
-                  `"${SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/snippets/templates/"\n\n` +
+                  `"${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/snippets/templates/"\n\n` +
                   '# To see details\n\n' +
                   `curl -X POST \\\n  -H "X-API-KEY: ${token}" \\\n` +
-                  `"${SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/` +
+                  `"${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/` +
                   `snippets/templates/${createdTemplate.name}/render/" `
                   }
                 />

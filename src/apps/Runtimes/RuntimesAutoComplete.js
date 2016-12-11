@@ -52,25 +52,25 @@ const RuntimesAutoComplete = ({
       text: item.name,
       payload: key,
       value:
-        <MenuItem
-          data-e2e={`${_.toLower(item.name)}-script-runtime-option`}
-          key={`select-${key}`}
-          value={key}
-          style={styles.autoCompleteItem}
-          leftIcon={(
-            <FontIcon
-              className={`synicon-${item.icon}`}
-              color={item.color}
-            />
+  <MenuItem
+    data-e2e={`${_.toLower(item.name)}-script-runtime-option`}
+    key={`select-${key}`}
+    value={key}
+    style={styles.autoCompleteItem}
+    leftIcon={(
+      <FontIcon
+        className={`synicon-${item.icon}`}
+        color={item.color}
+      />
           )}
-        >
-          <div style={styles.runtimeContainer}>
-            {item.name}
-            <div style={styles.runtimeOption}>
-              {`Syncano Library: ${libraryVersion}`}
-            </div>
-          </div>
-        </MenuItem>
+  >
+    <div style={styles.runtimeContainer}>
+      {item.name}
+      <div style={styles.runtimeOption}>
+        {`Syncano Library: ${libraryVersion}`}
+      </div>
+    </div>
+  </MenuItem>
     });
   };
 

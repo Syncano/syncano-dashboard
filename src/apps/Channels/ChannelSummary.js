@@ -35,12 +35,12 @@ export default ({ item, hasEditMode }) => {
                   title="cURL"
                   languageClassName="markup"
                   code={'# Polling for changes\n\n' +
-                  `curl -X GET \\\n-H "X-API-KEY: ${token}" \\\n"${SYNCANO_BASE_URL}/v1.1/instances/` +
+                  `curl -X GET \\\n-H "X-API-KEY: ${token}" \\\n"${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/` +
                   `${currentInstance.name}/channels/${item.name}/poll/"\n\n` +
                   '# Publishing custom messages (custom_publish flag must be set on true)\n\n' +
                   `curl -X POST \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-type: application/json" \\\n` +
                   `-d '{"payload":{"message":"Hello there!", "type":"welcome"}, "room":"${item.name}"}' \\\n` +
-                  `"${SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/channels/` +
+                  `"${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/channels/` +
                   `${item.name}/publish/"`}
                 />
                 <CodePreview.Item

@@ -60,7 +60,7 @@ const DataEndpointSummary = ({ item, hasEditMode }, { params }) => {
                     label="Open Endpoint in new tab"
                     target="_blank"
                     href={`
-                      ${SYNCANO_BASE_URL}${item.links.get}?api_key=${token}
+                      ${APP_CONFIG.SYNCANO_BASE_URL}${item.links.get}?api_key=${token}
                     `}
                   />
                 </div>
@@ -79,7 +79,7 @@ const DataEndpointSummary = ({ item, hasEditMode }, { params }) => {
                 <CodePreview.Item
                   title="cURL"
                   languageClassName="markup"
-                  code={`curl -X GET\n-H "X-API-KEY: ${token}"\n"${SYNCANO_BASE_URL}/v1.1/instances/` +
+                  code={`curl -X GET\n-H "X-API-KEY: ${token}"\n"${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/` +
                   `${currentInstance.name}/endpoints/data/${item.name}/get/"`}
                 />
                 <CodePreview.Item

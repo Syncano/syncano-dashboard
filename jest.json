@@ -1,11 +1,7 @@
 {
   "testEnvironment": "node",
   "globals": {
-    "SENTRY_DSN": "",
-    "SYNCANO_BASE_URL": "",
-    "FACEBOOK_ID": "",
-    "GOOGLE_ID": "",
-    "GITHUB_ID": ""
+    "APP_CONFIG": ""
   },
   "moduleDirectories": [
     "node_modules"

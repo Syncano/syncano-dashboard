@@ -388,7 +388,7 @@ const ProfileBillingPlanDialog = React.createClass({
               disabled={true}
               leftIcon={
                 <img
-                  src={'/img/check.svg'}
+                  src={require('../../assets/img/check.svg')}
                   alt="check icon"
                   style={styles.listItemIcon}
                 />

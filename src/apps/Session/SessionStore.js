@@ -110,7 +110,7 @@ export default Reflux.createStore({
   setLoggedInCookie() {
     // cookie to detect on website if user is logged in
     Cookies.set('logged_in', 'true', {
-      domain: SYNCANO_BASE_DOMAIN,
+      domain: APP_CONFIG.SYNCANO_BASE_DOMAIN,
       expires: 365
     });
   },
@@ -252,7 +252,7 @@ export default Reflux.createStore({
     localStorage.removeItem('lastPathname');
     localStorage.removeItem('token');
     localStorage.removeItem('invitationKey');
-    Cookies.remove('logged_in', { domain: SYNCANO_BASE_DOMAIN });
+    Cookies.remove('logged_in', { domain: APP_CONFIG.SYNCANO_BASE_DOMAIN });
 
     Raven.setUserContext();
     window.analytics.identify();

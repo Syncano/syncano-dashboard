@@ -1,12 +1,12 @@
 var Raven = require('raven-js');
 
-if (SENTRY_DSN !== undefined && SENTRY_DSN.length > 0) {
+if (APP_CONFIG.SENTRY_DSN) {
   require('raven-js/plugins/console');
 
   var ravenOptions = {
     tags: {
-      environment: ENV,
-      version: VERSION
+      environment: APP_CONFIG.ENV,
+      version: APP_CONFIG.VERSION
     },
     ignoreErrors: [
       // Random plugins/extensions
@@ -49,7 +49,7 @@ if (SENTRY_DSN !== undefined && SENTRY_DSN.length > 0) {
     ]
   };
 
-  Raven.config(SENTRY_DSN, ravenOptions).install();
+  Raven.config(APP_CONFIG.SENTRY_DSN, ravenOptions).install();
 }
 
 module.exports = Raven;

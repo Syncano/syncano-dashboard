@@ -42,7 +42,7 @@ const DataEndpointsListItem = React.createClass({
           secondaryText={
             <Clipboard
               text={item.links.self}
-              copyText={`${SYNCANO_BASE_URL}${item.links.get}`}
+              copyText={`${APP_CONFIG.SYNCANO_BASE_URL}${item.links.get}`}
               onCopy={() => this.setSnackbarNotification({
                 message: 'Data Endpoint url copied!'
               })}

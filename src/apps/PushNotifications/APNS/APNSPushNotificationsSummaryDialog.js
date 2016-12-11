@@ -87,7 +87,7 @@ export default React.createClass({
                       '-H "Content-Type: application/json" \\\n' +
                       '-d \'{"label": DEVICE_NAME, "user": USER_ID, ' +
                       '"registration_id": REGISTRATION_ID, "device_id": DEVICE_ID}\' \\\n' +
-                      `"${SYNCANO_BASE_URL}/v1.1/instances/` +
+                      `"${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/` +
                       `${currentInstance.name}/push_notifications/apns/devices/"`}
                     />
                     <CodePreview.Item
@@ -133,7 +133,7 @@ export default React.createClass({
                       '-H "Content-Type: application/json" \\\n' +
                       '-d \'{"content": {"environment": "development", "aps": {"alert": "hello"},' +
                       '"registration_ids": [ID, ID, ID]}\' \\\n' +
-                      `"${SYNCANO_BASE_URL}/v1.1/instances/` +
+                      `"${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/` +
                       `${currentInstance.name}/push_notifications/apns/messages/"`}
                     />
                     <CodePreview.Item

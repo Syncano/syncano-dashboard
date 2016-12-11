@@ -40,7 +40,7 @@ const APNSDeviceSummary = ({ item, hasEditMode }) => {
                     -H "X-API-KEY: ${token}"
                     -H "Content-Type: application/json"
                     -d '{"content": {"environment": "development","aps": {"alert": "hello"}}'
-                    "${SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/push_notifications/` +
+                    "${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/push_notifications/` +
                     `apns/devices/${item.registration_id}/send_message/"
                   `)}
                 />

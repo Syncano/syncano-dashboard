@@ -53,7 +53,7 @@ export default ({ message, isLoading }) => {
                     `-H "Content-type: application/json" \\\n-d '{\n\t\t"payload": {\n\t\t\t` +
                     `"message": "${message.payload.content}",\n\t\t\t"type": "${message.metadata.type}"\n\t\t}` +
                     `${message.room ? `,\n\t\t"room": "${message.room}"\n\t}' \\\n` : `\n\t}' \\\n`}` +
-                    `"${SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/channels/` +
+                    `"${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/channels/` +
                     `${message.name}/publish/"`}
                 />
                 <CodePreview.Item
