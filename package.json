@@ -17,7 +17,7 @@
     "bluebird": "3.4.6",
     "brace": "0.8.0",
     "c3": "0.4.11",
-    "card-validator": "3.0.0",
+    "card-validator": "3.0.1",
     "classnames": "2.2.5",
     "dedent": "0.6.0",
     "filesize": "3.3.0",
