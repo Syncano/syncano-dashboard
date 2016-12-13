@@ -158,10 +158,10 @@
     "selenium-start": "selenium-standalone start -- -Djava.security.egd=file:/dev/./urandom",
     "e2e": "./test.sh",
     "e2e-branch": "nightwatch -e chrome --suiteRetries 1 --skiptags socialLogins,demoApp,customSocket,apns",
-    "e2e-master-devel": "nightwatch -e chrome --suiteRetries 1 --skiptags demoApp,customSocket",
+    "e2e-master-devel": "nightwatch -e chrome --suiteRetries 1 --skiptags socialLogins,demoApp,customSocket",
     "e2e-local": "nightwatch -e chrome --suiteRetries 1 --skiptags apns,administrators,customSocket --skipgroup billing,signup_logins,settings",
     "e2e-tag": "nightwatch -e chrome --suiteRetries 1 --tag",
-    "iconfont": "webfont 'src/assets/icons/*.svg' -d 'src/assets/fonts/icons' -f 'Syncano-Icons' -t 'css' -c 'synicon'",
+    "iconfont": "webfont 'src/assets/icons/*.svg' -d 'src/assets/fonts/icons' -f 'Syncano-Icons' -c 'synicon' -t 'src/assets/fonts/icons/Syncano-Icons.css.njk' --normalize",
     "git-config": "git config --global user.email \"ci@syncano.com\" && git config --global user.name \"CI\"",
     "predeployment:master": "npm version patch -m \"Release v%s [ci skip]\"",
     "postversion": "git push origin master --follow-tags"
