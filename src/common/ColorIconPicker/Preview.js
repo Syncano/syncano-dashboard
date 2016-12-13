@@ -6,7 +6,7 @@ import { Color } from '../../common/';
 export default Radium(({ color, icon }) => {
   const getStyles = () => ({
     container: {
-      background: Color.getColorByName(color),
+      backgroundColor: Color.getColorByName(color),
       display: 'flex',
       justifyContent: 'center',
       margin: '0 auto 15px',
