@@ -111,7 +111,7 @@
     "react-snapshot-test-generator": "github:Syncano/react-snapshot-test-generator#build",
     "react-test-renderer": "15.4.1",
     "rimraf": "2.5.4",
-    "sass-loader": "4.0.2",
+    "sass-loader": "4.1.0",
     "selenium-standalone": "5.9.0",
     "url-loader": "0.5.7",
     "webfont": "7.0.0",
