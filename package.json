@@ -117,7 +117,7 @@
     "webfont": "7.0.0",
     "webpack": "2.1.0-beta.27",
     "webpack-config-utils": "2.3.0",
-    "webpack-dev-middleware": "1.8.4",
+    "webpack-dev-middleware": "1.9.0",
     "webpack-dev-server": "2.1.0-beta.11",
     "webpack-md5-hash": "0.0.5",
     "webpack-s3-plugin": "0.9.2",
