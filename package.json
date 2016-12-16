@@ -121,7 +121,7 @@
     "webpack-dev-server": "2.1.0-beta.11",
     "webpack-md5-hash": "0.0.5",
     "webpack-s3-plugin": "0.9.2",
-    "webpack-validator": "2.2.12",
+    "webpack-validator": "2.3.0",
     "webpack-vendor-chunk-plugin": "1.0.0"
   },
   "greenkeeper": {
