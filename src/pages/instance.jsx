@@ -36,12 +36,19 @@ const Instance = React.createClass({
                 subheader="API Builder"
               >
                 <Sidebar.LinkListItem
-                  key="Sockets"
+                  key="Sockets Explorer"
                   routeName="sockets"
-                  primaryText="Sockets"
+                  primaryText="Sockets Explorer"
                   iconClassName="synicon-hexagon-outline"
                   iconStyle={{ transform: 'rotate(30deg)' }}
                   data-e2e="left-sidebar-sockets"
+                />
+                <Sidebar.LinkListItem
+                  key="Installed Sockets"
+                  routeName="installed-sockets"
+                  primaryText="Installed Sockets"
+                  iconClassName="synicon-attachment"
+                  data-e2e="left-sidebar-installed-sockets"
                 />
               </Sidebar.List>
               <Sidebar.List

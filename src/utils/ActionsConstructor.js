@@ -3,12 +3,25 @@ import _ from 'lodash';
 import Promise from 'axios';
 
 import NewLibConnection from '../apps/Session/NewLibConnection';
+import SessionStore from '../apps/Session/SessionStore';
 import Syncano from '../apps/Syncano';
 
 const Libraries = { Syncano };
+const apiV2Request = () => {
+  const host = SYNCANO_BASE_URL;
+  const accountKey = SessionStore.getToken();
+  const instanceName = SessionStore.getInstance() && SessionStore.getInstance().instanceName;
+  const request = Promise.create({
+    baseURL: `${host}/v2/instances/${instanceName}`,
+    headers: { 'X-API-KEY': accountKey }
+  });
+
+  return request;
+};
 const Context = {
   NewLibConnection: NewLibConnection.get(),
-  Promise
+  Promise,
+  apiV2Request
 };
 
 export default (actions = {}, options = { withDialog: false, withCheck: false }) => {

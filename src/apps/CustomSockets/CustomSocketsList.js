@@ -1,70 +1,19 @@
 import React from 'react';
 
-import { DialogsMixin } from '../../mixins';
-
 import Actions from './CustomSocketsActions';
-import Store from './CustomSocketsStore';
 
 import ListItem from './CustomSocketsListItem';
 import { colors as Colors } from 'material-ui/styles';
-import { ColumnList, Dialog, Lists, EmptyView } from '../../common/';
+import { ColumnList, Lists, EmptyView } from '../../common/';
 
 const Column = ColumnList.Column;
 
 const CustomSocketsList = React.createClass({
-
-  mixins: [DialogsMixin],
-
-  getDefaultProps() {
-    return {
-      emptyItemContent: 'Add a Custom Socket',
-      getCheckedItems: Store.getCheckedItems
-    };
-  },
-
-  getInitialState() {
-    return {
-      deletedItem: {}
-    };
-  },
-
-  componentWillUpdate(nextProps) {
-    this.hideDialogs(nextProps.hideDialogs);
-  },
-
-  initDialogs() {
-    const { getCheckedItems, isLoading } = this.props;
-    const { deletedItem: { name } } = this.state;
-
-    return [{
-      dialog: Dialog.Delete,
-      params: {
-        key: 'removeCustomSocketsDialog',
-        ref: 'removeCustomSocketsDialog',
-        title: `Remove ${name}`,
-        handleConfirm: Actions.removeCustomSockets,
-        items: getCheckedItems(),
-        itemName: name,
-        description: "and all of it's endpoints.",
-        withConfirm: true,
-        groupName: 'sockets',
-        isLoading
-      }
-    }];
-  },
-
-
   renderItem(item) {
-    const showDeleteDialog = () => {
-      this.setState({ deletedItem: item });
-      this.showDialog('removeCustomSocketsDialog', item);
-    };
-
     return (
       <ListItem
         key={`custom-socket-list-item-${item.name}`}
         item={item}
-        showDeleteDialog={showDeleteDialog}
       />
     );
   },
@@ -77,11 +26,11 @@ const CustomSocketsList = React.createClass({
           primary={true}
           columnName="CHECK_ICON"
         >
-          Custom Sockets (BETA)
+          Socket Name
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
-          className="col-flex-2"
+          className="col-flex-3"
         >
           Description
         </Column.ColumnHeader>
@@ -114,9 +63,9 @@ const CustomSocketsList = React.createClass({
           iconClassName="synicon-socket-custom-socket"
           buttonLabel="Add a Custom Socket"
           iconColor={Colors.purple400}
-          title="Custom Sockets (BETA)"
-          urlLabel="Custom Socket"
-          description="Some random text about sockets, has to be replaced."
+          title="Syncano Sockets"
+          urlLabel="Syncano Sockets"
+          description="Use Syncano CLI to install a Socket from library"
           docsUrl="http://docs.syncano.io/docs"
           handleClick={Actions.showDialog}
         />
@@ -125,7 +74,6 @@ const CustomSocketsList = React.createClass({
 
     return (
       <Lists.Container style={style}>
-        {this.getDialogs()}
         {this.renderHeader()}
         <Lists.List
           {...other}
