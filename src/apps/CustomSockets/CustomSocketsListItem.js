@@ -20,6 +20,7 @@ const CustomSocketsListItem = ({ item, params }) => {
   return (
     <ColumnList.Item key={item.name} >
       <Column.CheckIcon.Socket
+        className="col-flex-1"
         checkable={false}
         iconClassName={metaIcon}
         iconColor={metaBackground}
@@ -29,12 +30,7 @@ const CustomSocketsListItem = ({ item, params }) => {
       <Column.Desc className="col-flex-3">
         {item.description}
       </Column.Desc>
-      <Column.Desc className="col-flex-1">
-        <Link to={{ pathname: 'documentation-link' }}>
-          Documentation
-        </Link>
-      </Column.Desc>
-      <Column.Desc className="col-flex-1">
+      <Column.Desc className="col-xs-4">
         <Link to={{ pathname: endpointsLink }}>
           Endpoints
         </Link>

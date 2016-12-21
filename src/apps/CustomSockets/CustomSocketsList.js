@@ -22,7 +22,7 @@ const CustomSocketsList = React.createClass({
     return (
       <ColumnList.Header>
         <Column.ColumnHeader
-          className="col-xs-12"
+          className="col-flex-1"
           primary={true}
           columnName="CHECK_ICON"
         >
@@ -35,13 +35,7 @@ const CustomSocketsList = React.createClass({
           Description
         </Column.ColumnHeader>
         <Column.ColumnHeader
-          columnName="DESC"
-          className="col-flex-1"
-        >
-          Documentation
-        </Column.ColumnHeader>
-        <Column.ColumnHeader
-          className="col-flex-1"
+          className="col-xs-4"
         >
           Endpoints
         </Column.ColumnHeader>
