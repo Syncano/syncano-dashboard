@@ -10,7 +10,6 @@ import Actions from './CustomSocketsActions';
 import Store from './CustomSocketsStore';
 
 // Components
-import { RaisedButton } from 'material-ui';
 import { Container, InnerToolbar } from '../../common/';
 
 // Local components
@@ -33,17 +32,9 @@ const CustomSockets = React.createClass({
 
     return (
       <div>
-        <Helmet title="Custom Sockets" />
+        <Helmet title="Installed Sockets" />
         <SocketsDialog />
-        <InnerToolbar>
-          <RaisedButton
-            data-e2e="custom-sockets-toolbar-add-button"
-            style={{ marginRight: 0 }}
-            label="Add"
-            primary={true}
-            onTouchTap={Actions.showDialog}
-          />
-        </InnerToolbar>
+        <InnerToolbar title="Installed Sockets" />
         <Container>
           <CustomSocketsList
             isLoading={isLoading}

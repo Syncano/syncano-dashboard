@@ -13,31 +13,11 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.CustomSockets.list'
     },
-    createCustomSocket: {
-      asyncResult: true,
-      loading: true,
-      asyncForm: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.CustomSockets.create'
-    },
-    updateCustomSocket: {
-      asyncResult: true,
-      loading: true,
-      asyncForm: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.CustomSockets.update'
-    },
-    removeCustomSockets: {
-      asyncResult: true,
-      loading: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.CustomSockets.remove'
-    },
     fetchScriptEndpoints: {
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.CustomSockets.listScriptEndpoints'
+      method: 'Syncano.Actions.CustomSockets.listSocketEndpoints'
     }
   },
   {

@@ -195,11 +195,11 @@ export default (
 
         {/* Custom Sockets */}
         <Route
-          name="custom-sockets"
-          path="custom-sockets"
+          name="installed-sockets"
+          path="installed-sockets"
         >
           <Route
-            name="custom-socket-detail"
+            name="installed-socket-endpoints"
             path=":socketName"
             component={CustomSockets.Endpoints}
           />

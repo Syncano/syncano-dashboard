@@ -4,19 +4,12 @@ export default CreateActions(
   {
     fetch: {},
     setCurrentCustomSocketName: {},
-    fetchCustomSocket: {
+    listSocketEndpoints: {
       asyncResult: true,
       loading: true,
       asyncForm: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.CustomSockets.get'
-    },
-    fetchScriptEndpoints: {
-      asyncResult: true,
-      loading: true,
-      asyncForm: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.CustomSockets.listScriptEndpoints'
+      method: 'Syncano.Actions.CustomSockets.listSocketEndpoints'
     }
   }
 );
