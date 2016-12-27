@@ -105,7 +105,7 @@ export default React.createClass({
     if (!_.isEmpty(this.props.class)) {
       return _.map(this.props.class.schema, (field) => {
         const isExpandChecked = this.isExpandChecked(field);
-        const isExpandDisabled = field.type !== 'relation' && field.type !== 'reference';
+        const isExpandDisabled = field.type !== 'reference';
 
         return (
           <TableRow
