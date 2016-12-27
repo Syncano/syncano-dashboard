@@ -188,7 +188,7 @@ const DataObjects = React.createClass({
             />
             <IconButton
               iconClassName="synicon-refresh"
-              tooltip="Rts"
+              tooltip="Reload Data Objects"
               onTouchTap={DataObjectsActions.fetch}
             />
           </div>
