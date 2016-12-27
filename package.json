@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "axios": "0.15.3",
-    "bluebird": "3.4.6",
+    "bluebird": "3.4.7",
     "brace": "0.8.0",
     "c3": "0.4.11",
     "card-validator": "3.0.1",
