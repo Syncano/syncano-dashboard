@@ -66,7 +66,7 @@ export default React.createClass({
 
     return (
       <Tooltip
-        label="Expand is available for relation and reference fields only"
+        label="Expand is available for relation field only"
         horizontalPosition="left"
         style={styles.tooltip}
       >
