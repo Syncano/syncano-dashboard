@@ -106,6 +106,7 @@ const CheckIcon = React.createClass({
         onMouseEnter={checkable && this.addHover}
         onMouseLeave={checkable && this.removeHover}
         onTouchTap={this.handleClick}
+        disableTouchRipple={checkable === false}
       />
     );
   }
