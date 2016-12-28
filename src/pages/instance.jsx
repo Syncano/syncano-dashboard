@@ -32,23 +32,15 @@ const Instance = React.createClass({
             <HeaderInstancesDropdown />
             <div style={{ paddingTop: 56 }}>
               <Sidebar.List
-                key="API Builder"
-                subheader="API Builder"
+                key="Sockets"
+                subheader="Sockets"
               >
                 <Sidebar.LinkListItem
-                  key="Sockets Explorer"
-                  routeName="sockets"
-                  primaryText="Sockets Explorer"
-                  iconClassName="synicon-hexagon-outline"
-                  iconStyle={{ transform: 'rotate(30deg)' }}
-                  data-e2e="left-sidebar-sockets"
-                />
-                <Sidebar.LinkListItem
-                  key="Installed Sockets"
-                  routeName="installed-sockets"
-                  primaryText="Installed Sockets"
-                  iconClassName="synicon-attachment"
-                  data-e2e="left-sidebar-installed-sockets"
+                  key="My Sockets"
+                  routeName="my-sockets"
+                  primaryText="My Sockets"
+                  iconClassName="synicon-custom-socket"
+                  data-e2e="left-sidebar-my-sockets"
                 />
               </Sidebar.List>
               <Sidebar.List
