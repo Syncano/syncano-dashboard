@@ -39,7 +39,8 @@ const EmptyViewDouble = ({
       marginTop: 40,
       fontSize: 26,
       fontWeight: 400,
-      lineHeight: '34px'
+      lineHeight: '34px',
+      hyphens: 'none'
     },
     description: {
       lineHeight: '26px',
