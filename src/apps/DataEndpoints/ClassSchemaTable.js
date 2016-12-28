@@ -66,7 +66,7 @@ export default React.createClass({
 
     return (
       <Tooltip
-        label="Expand is available for relation field only"
+        label="Expand is available for reference field only"
         horizontalPosition="left"
         style={styles.tooltip}
       >
@@ -198,7 +198,7 @@ export default React.createClass({
               <TableHeaderColumn
                 style={styles.tableRow}
                 colSpan={2}
-                tooltip="Target Data Class (reference and relation only)"
+                tooltip="Target Data Class (reference only)"
               >
                 Target Data Class
               </TableHeaderColumn>
