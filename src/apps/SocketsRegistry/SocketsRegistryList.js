@@ -2,8 +2,7 @@ import React from 'react';
 import pluralize from 'pluralize';
 import _ from 'lodash';
 
-import Actions from './SocketsRegistryActions';
-import Store from './SocketsRegistryStore';
+import SocketsRegistryActions from './SocketsRegistryActions';
 
 import { ColumnList, Lists, Container, RegistryEmptyView } from '../../common/';
 import ListItem from './SocketsRegistryListItem';
@@ -11,13 +10,10 @@ import ListItem from './SocketsRegistryListItem';
 const Column = ColumnList.Column;
 
 const SocketsRegistryList = React.createClass({
-
   getDefaultProps() {
     return {
-      emptyItemContent: 'Add a  Socket',
-      emptyItemHandleClick: Actions.showDialog,
-      getCheckedItems: Store.getCheckedItems,
-      checkItem: Actions.checkItem
+      emptyItemContent: 'Add a Socket',
+      emptyItemHandleClick: SocketsRegistryActions.showDialog
     };
   },
 
@@ -83,14 +79,12 @@ const SocketsRegistryList = React.createClass({
   },
 
   renderItem(item) {
-    const { checkItem } = this.props;
     const showDeleteDialog = () => this.showDialog('removeSocketsDialog', item);
 
     return (
       <ListItem
         key={`sockets-registry-list-item-${item.name}`}
         item={item}
-        onIconClick={checkItem}
         showDeleteDialog={showDeleteDialog}
       />
     );

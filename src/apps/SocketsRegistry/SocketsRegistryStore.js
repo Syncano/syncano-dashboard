@@ -2,15 +2,14 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 import YAML from 'js-yaml';
 
-import { CheckListStoreMixin, StoreLoadingMixin } from '../../mixins';
+import { StoreLoadingMixin } from '../../mixins';
 
-import Actions from './SocketsRegistryActions';
+import SocketsRegistryActions from './SocketsRegistryActions';
 
 export default Reflux.createStore({
-  listenables: Actions,
+  listenables: SocketsRegistryActions,
 
   mixins: [
-    CheckListStoreMixin,
     StoreLoadingMixin
   ],
 
@@ -61,7 +60,7 @@ export default Reflux.createStore({
 
     this.data.currentSocket = currentSocket;
 
-    Actions.fetchSocketsInfo(currentSocket.url);
+    SocketsRegistryActions.fetchSocketsInfo(currentSocket.url);
   },
 
   onFetchSocketsInfoCompleted({ data, license, ymlUrl }) {
