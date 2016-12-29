@@ -40,7 +40,10 @@ const EmptyViewDouble = ({
       fontSize: 26,
       fontWeight: 400,
       lineHeight: '34px',
-      hyphens: 'none'
+      hyphens: 'none',
+      '-webkit-hyphens': 'none', /* Saf 5.1+ */
+      '-moz-hyphens': 'none', /* Fx 6.0+ */
+      '-ms-hyphens': 'none' /* IE 10+ */
     },
     description: {
       lineHeight: '26px',
