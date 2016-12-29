@@ -15,7 +15,7 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
   const { checked, name, metadata, description, created_at } = item;
   const handleInstanceNameClick = () => {
     localStorage.setItem('lastInstanceName', name);
-    router.push(`/instances/${name}/sockets/`);
+    router.push(`/instances/${name}/`);
   };
   const showEditDialog = () => {
     InstanceDialogActions.showDialog(item);

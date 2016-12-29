@@ -109,7 +109,7 @@ const HeaderInstancesDropdown = Radium(React.createClass({
     this.refs.instancesDropdown.close();
     SessionActions.fetchInstance(instanceName);
     localStorage.setItem('lastInstanceName', instanceName);
-    router.push(`/instances/${instanceName}/sockets/`);
+    router.push(`/instances/${instanceName}`);
   },
 
   renderAddInstanceItem() {

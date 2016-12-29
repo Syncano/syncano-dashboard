@@ -351,7 +351,7 @@ export default (
           path="users"
         />
 
-        <IndexRedirect to="sockets" />
+        <IndexRedirect to="my-sockets" />
       </Route>
 
       {/* Profile Billing */}
