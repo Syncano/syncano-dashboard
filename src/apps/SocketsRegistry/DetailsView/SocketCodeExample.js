@@ -66,7 +66,9 @@ const SocketCodeExamples = ({ socketName, currentLanguage, endpointName, methodT
       padding: '8px 24px',
       maxHeight: '400px',
       overflow: 'scroll',
-      backgroundColor: '#383838',
+      backgroundColor: '#272822',
+      borderRadius: '0.3em',
+      color: '#f8f8f2',
       wordBreak: 'break-all',
       whiteSpace: 'normal'
     },
