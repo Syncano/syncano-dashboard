@@ -55,7 +55,7 @@ const CustomSocketsList = React.createClass({
       return (
         <EmptyView
           iconClassName="synicon-socket-custom-socket"
-          buttonLabel="Add a Custom Socket"
+          buttonLabel="Add a Socket"
           iconColor={Colors.purple400}
           title="Syncano Sockets"
           urlLabel="Syncano Sockets"

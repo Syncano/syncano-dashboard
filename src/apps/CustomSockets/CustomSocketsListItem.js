@@ -8,7 +8,7 @@ const Column = ColumnList.Column;
 
 const CustomSocketsListItem = ({ item, params }) => {
   const { metadata } = item;
-  const endpointsLink = `/instances/${params.instanceName}/installed-sockets/${item.name}/`;
+  const endpointsLink = `/instances/${params.instanceName}/my-sockets/${item.name}/`;
   const metaIcon = metadata && metadata.icon ? metadata.icon : 'socket-custom-socket';
   const metaBackground = metadata && metadata.color ? metadata.color : Colors.purple400;
   const styles = {
