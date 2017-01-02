@@ -23,7 +23,7 @@ const CustomSocketsEndpoints = React.createClass({
   handleBackClick() {
     const { router, params } = this.props;
 
-    router.push(`/instances/${params.instanceName}/custom-sockets/`);
+    router.push(`/instances/${params.instanceName}/my-sockets/`);
   },
 
   render() {
