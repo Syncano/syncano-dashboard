@@ -165,7 +165,7 @@ const RoutesUtil = {
 
     if (lastInstanceName) {
       this.isInstanceAvailable(lastInstanceName).then(() => replace({
-        pathname: `/instances/${lastInstanceName}/sockets/`
+        pathname: `/instances/${lastInstanceName}/my-sockets/`
       }));
     }
   },

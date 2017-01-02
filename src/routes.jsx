@@ -195,11 +195,11 @@ export default (
 
         {/* Custom Sockets */}
         <Route
-          name="installed-sockets"
-          path="installed-sockets"
+          name="my-sockets"
+          path="my-sockets"
         >
           <Route
-            name="installed-socket-endpoints"
+            name="my-socket-endpoints"
             path=":socketName"
             component={CustomSockets.Endpoints}
           />
@@ -351,7 +351,7 @@ export default (
           path="users"
         />
 
-        <IndexRedirect to="sockets" />
+        <IndexRedirect to="my-sockets" />
       </Route>
 
       {/* Profile Billing */}
