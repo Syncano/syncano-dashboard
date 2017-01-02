@@ -103,7 +103,7 @@ const SocketsRegistryContentSection = ({
       className="row col-flex-1"
       style={styles.titleContainer}
     >
-      <div className="col-sm-18">
+      <div className="col-sm-15">
         <div style={{ ...styles.nameContainer, ...styles.header }}>
           <FontIcon
             style={styles.socketIcon}
@@ -120,7 +120,7 @@ const SocketsRegistryContentSection = ({
       </div>
       <div
         style={styles.authorInfoContainer}
-        className="col-sm-17"
+        className="col-sm-20"
       >
         <div style={styles.runtimeButtonsContainer}>
           {renderLanguageButtons()}
@@ -136,7 +136,7 @@ const SocketsRegistryContentSection = ({
     const endpointsList = _.map(endpoints, (methods, endpointName) => (
       _.map(methods, (method) => (
         <div className="row col-flex-1">
-          <div className="col-sm-18">
+          <div className="col-sm-15">
             <div style={{ ...styles.nameContainer, ...styles.header }}>
               <ScrollHook name={`${endpointName}-${method.type}`} />
               <MethodLabel method={method.type} />
@@ -148,7 +148,7 @@ const SocketsRegistryContentSection = ({
               style={styles.header}
               headerLabel="Definition"
             >
-              {`${SYNCANO_BASE_URL}/v1.1/instances/your_instance/sockets/${socketName}/${endpointName}/`}
+              {`${SYNCANO_BASE_URL}/v2/instances/your_instance/${socketName}/${endpointName}/`}
             </MethodDescription>
             <Show if={method.info.description}>
               <MethodDescription
@@ -177,7 +177,7 @@ const SocketsRegistryContentSection = ({
           </div>
           <div
             style={styles.authorInfoContainer}
-            className="col-sm-17"
+            className="col-sm-20"
           >
             <CodeExample
               methodType={method.type.toUpperCase()}

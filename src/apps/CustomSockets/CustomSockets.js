@@ -14,7 +14,6 @@ import { Container, InnerToolbar } from '../../common/';
 
 // Local components
 import CustomSocketsList from './CustomSocketsList';
-import SocketsDialog from '../SocketsRegistry/SocketsRegistryDialog';
 
 const CustomSockets = React.createClass({
 
@@ -33,7 +32,6 @@ const CustomSockets = React.createClass({
     return (
       <div>
         <Helmet title="Installed Sockets" />
-        <SocketsDialog />
         <InnerToolbar title="Installed Sockets" />
         <Container>
           <CustomSocketsList
