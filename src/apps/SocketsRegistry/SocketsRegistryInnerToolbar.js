@@ -1,20 +1,16 @@
 import React from 'react';
-import { withRouter } from 'react-router';
 
-import Actions from './SocketsRegistryActions';
+import SocketsRegistryActions from './SocketsRegistryActions';
 
-import { InnerToolbar } from '../../common/';
-import { RaisedButton, FlatButton } from 'material-ui';
-
+import { FlatButton, RaisedButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
-import Sticky from 'react-stickydiv';
 
-const SocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
+const SocketsRegistryInnerToolbar = ({ filter, filterBySyncano }) => {
   const styles = {
-    toolbar: {
+    root: {
+      width: '100%',
       display: 'flex',
-      justifyContent: 'space-around',
-      minWidth: '100%',
+      justifyContent: 'space-between',
       alignItems: 'center'
     },
     button: {
@@ -29,41 +25,35 @@ const SocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
       height: '100%',
       lineHeight: '100%',
       minWidth: '60px'
-    },
-    innerToolbar: {
-      background: 'rgba(243, 243, 243, 1)'
     }
-  };
-  const handleBackClick = () => {
-    router.push('/sockets-registry');
   };
 
   const setFilterAll = () => {
-    Actions.setFilter('all');
+    SocketsRegistryActions.setFilter('all');
   };
 
   const setFilterTrue = () => {
-    Actions.setFilter(true);
+    SocketsRegistryActions.setFilter(true);
   };
 
   const setFilterFalse = () => {
-    Actions.setFilter(false);
+    SocketsRegistryActions.setFilter(false);
   };
 
   const setSearchFilterAll = () => {
-    Actions.setSearchFilter('all');
+    SocketsRegistryActions.setSearchFilter('all');
   };
 
   const setSearchFilterName = () => {
-    Actions.setSearchFilter('name');
+    SocketsRegistryActions.setSearchFilter('name');
   };
 
   const setSearchFilterAuthor = () => {
-    Actions.setSearchFilter('author');
+    SocketsRegistryActions.setSearchFilter('author');
   };
 
   const setSearchFilterDescription = () => {
-    Actions.setSearchFilter('description');
+    SocketsRegistryActions.setSearchFilter('description');
   };
 
   const activeButtonColor = '#244273';
@@ -87,92 +77,82 @@ const SocketsRegistryToolbar = ({ filter, filterBySyncano, router }) => {
 
     return isCurrentFilter ? activeColorConfigObj : inactiveColorConfigObj;
   };
-  const isRegistryListRouteActive = router.getCurrentLocation().pathname === '/sockets-registry';
 
   return (
-    <Sticky
-      offsetTop={50}
-      zIndex={99}
+    <div
+      className="vm-3-b"
+      style={styles.root}
     >
-      <InnerToolbar
-        style={styles.innerToolbar}
-        backButton={!isRegistryListRouteActive}
-        backFallback={handleBackClick}
-        backButtonTooltip="Go back to Sockets Registry List"
-      >
-        <div style={styles.toolbar}>
-          <div>
-            <FlatButton
-              label="Author:"
-              disabled={true}
-            />
-            <RaisedButton
-              backgroundColor={defaultAuthorColorConfig('all').button}
-              style={styles.border}
-              buttonStyle={styles.button}
-              labelColor={defaultAuthorColorConfig('all').label}
-              label="ALL"
-              onTouchTap={setFilterAll}
-            />
-            <RaisedButton
-              backgroundColor={defaultAuthorColorConfig(true).button}
-              style={styles.border}
-              buttonStyle={styles.button}
-              labelColor={defaultAuthorColorConfig(true).label}
-              label="SYNCANO"
-              onTouchTap={setFilterTrue}
-            />
-            <RaisedButton
-              backgroundColor={defaultAuthorColorConfig(false).button}
-              style={styles.border}
-              buttonStyle={styles.button}
-              labelColor={defaultAuthorColorConfig(false).label}
-              label="COMMUNITY"
-              onTouchTap={setFilterFalse}
-            />
-          </div>
-          <div>
-            <FlatButton
-              label="Filter by:"
-              disabled={true}
-            />
-            <RaisedButton
-              backgroundColor={defaultFilterByColorConfig('all').button}
-              style={styles.border}
-              buttonStyle={styles.button}
-              labelColor={defaultFilterByColorConfig('all').label}
-              label="ALL"
-              onTouchTap={setSearchFilterAll}
-            />
-            <RaisedButton
-              backgroundColor={defaultFilterByColorConfig('name').button}
-              style={styles.border}
-              buttonStyle={styles.button}
-              labelColor={defaultFilterByColorConfig('name').label}
-              label="NAME"
-              onTouchTap={setSearchFilterName}
-            />
-            <RaisedButton
-              backgroundColor={defaultFilterByColorConfig('author').button}
-              style={styles.border}
-              buttonStyle={styles.button}
-              labelColor={defaultFilterByColorConfig('author').label}
-              label="AUTHOR"
-              onTouchTap={setSearchFilterAuthor}
-            />
-            <RaisedButton
-              backgroundColor={defaultFilterByColorConfig('description').button}
-              style={styles.border}
-              buttonStyle={styles.button}
-              labelColor={defaultFilterByColorConfig('description').label}
-              label="DESCRIPTION"
-              onTouchTap={setSearchFilterDescription}
-            />
-          </div>
-        </div>
-      </InnerToolbar>
-    </Sticky>
+      <div>
+        <FlatButton
+          label="Author:"
+          disabled={true}
+        />
+        <RaisedButton
+          backgroundColor={defaultAuthorColorConfig('all').button}
+          style={styles.border}
+          buttonStyle={styles.button}
+          labelColor={defaultAuthorColorConfig('all').label}
+          label="All"
+          onTouchTap={setFilterAll}
+        />
+        <RaisedButton
+          backgroundColor={defaultAuthorColorConfig(true).button}
+          style={styles.border}
+          buttonStyle={styles.button}
+          labelColor={defaultAuthorColorConfig(true).label}
+          label="Syncano"
+          onTouchTap={setFilterTrue}
+        />
+        <RaisedButton
+          backgroundColor={defaultAuthorColorConfig(false).button}
+          style={styles.border}
+          buttonStyle={styles.button}
+          labelColor={defaultAuthorColorConfig(false).label}
+          label="Community"
+          onTouchTap={setFilterFalse}
+        />
+      </div>
+      <div>
+        <FlatButton
+          label="Filter by:"
+          disabled={true}
+        />
+        <RaisedButton
+          backgroundColor={defaultFilterByColorConfig('all').button}
+          style={styles.border}
+          buttonStyle={styles.button}
+          labelColor={defaultFilterByColorConfig('all').label}
+          label="All"
+          onTouchTap={setSearchFilterAll}
+        />
+        <RaisedButton
+          backgroundColor={defaultFilterByColorConfig('name').button}
+          style={styles.border}
+          buttonStyle={styles.button}
+          labelColor={defaultFilterByColorConfig('name').label}
+          label="Name"
+          onTouchTap={setSearchFilterName}
+        />
+        <RaisedButton
+          backgroundColor={defaultFilterByColorConfig('author').button}
+          style={styles.border}
+          buttonStyle={styles.button}
+          labelColor={defaultFilterByColorConfig('author').label}
+          label="Author"
+          onTouchTap={setSearchFilterAuthor}
+        />
+        <RaisedButton
+          backgroundColor={defaultFilterByColorConfig('description').button}
+          style={styles.border}
+          buttonStyle={styles.button}
+          labelColor={defaultFilterByColorConfig('description').label}
+          label="Description"
+          onTouchTap={setSearchFilterDescription}
+        />
+      </div>
+    </div>
   );
 };
 
-export default withRouter(SocketsRegistryToolbar);
+export default SocketsRegistryInnerToolbar;

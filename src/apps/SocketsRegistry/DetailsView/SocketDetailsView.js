@@ -3,16 +3,16 @@ import { withRouter } from 'react-router';
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import Store from '../SocketsRegistryStore';
-import Actions from '../SocketsRegistryActions';
+import SocketsRegistryStore from '../SocketsRegistryStore';
+import SocketsRegistryActions from '../SocketsRegistryActions';
 
-import { Loading, RegistryEmptyView } from '../../../common';
+import { Loading, RegistryEmptyView, InnerToolbar } from '../../../common';
 import InfoBar from './SocketDetailInfoBar';
 import ContentSection from './SocketDetailContentSection';
 import SocketInstallDialog from '../SocketsRegistryDialog';
 
 const SocketsRegistryDetailsView = React.createClass({
-  mixins: [Reflux.connect(Store)],
+  mixins: [Reflux.connect(SocketsRegistryStore)],
 
   getInitialState() {
     return {
@@ -23,7 +23,7 @@ const SocketsRegistryDetailsView = React.createClass({
   componentDidMount() {
     const { socketId } = this.props.params;
 
-    Actions.fetchSocketsInfo(socketId);
+    SocketsRegistryActions.fetchSocketsInfo(socketId);
   },
 
   getStyles() {
@@ -37,7 +37,7 @@ const SocketsRegistryDetailsView = React.createClass({
   getAuthorInfo() {
     const { socketId } = this.props.params;
     const { currentSocket } = this.state;
-    const currentSocketObject = Store.getSocketById(socketId);
+    const currentSocketObject = SocketsRegistryStore.getSocketById(socketId);
 
     if (currentSocketObject) {
       const githubSplitedLink = currentSocketObject.url.split('/');
@@ -129,11 +129,13 @@ const SocketsRegistryDetailsView = React.createClass({
   },
 
   render() {
-    const { isLoading } = this.props;
+    const { isLoading, router } = this.props;
     const { currentSocket, currentLanguage } = this.state;
     const styles = this.getStyles();
     const endpoints = this.getEndpointsObjects();
-    const socketImageDir = '/img/socket-assemble.svg';
+    const handleBackClick = () => {
+      router.push('/sockets-registry');
+    };
 
     if (!currentSocket) {
       return (
@@ -141,7 +143,7 @@ const SocketsRegistryDetailsView = React.createClass({
           title="This Socket is unavailable"
           description={`It looks like the Socket is not valid. Please use another Socket, or if this is your own Socket,
             try checking if YAML file is correct.`}
-          src={socketImageDir}
+          src={'/img/socket-assemble.svg'}
           altText="No  Socket"
         />
       );
@@ -153,10 +155,14 @@ const SocketsRegistryDetailsView = React.createClass({
           shouldRedirect={true}
           url={currentSocket && currentSocket.ymlUrl}
         />
+        <InnerToolbar
+          title={currentSocket && currentSocket.name}
+          backButton={true}
+          backFallback={handleBackClick}
+          backButtonTooltip="Go back to Sockets Registry List"
+        />
         <div style={styles.container}>
-          <InfoBar
-            endpoints={endpoints}
-          />
+          <InfoBar endpoints={endpoints} />
           <ContentSection
             handleChangeLanguage={this.setCurrentLanguage}
             currentLanguage={currentLanguage}

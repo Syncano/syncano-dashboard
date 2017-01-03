@@ -32,21 +32,15 @@ const SocketsRegistryListItem = ({ item, onIconClick, router }) => {
         primaryText={item.name}
         primaryTextTooltip={item.description}
       />
-      <Column.Desc
-        className="col-sm-5"
-      >
+      <Column.Desc className="col-sm-5">
         {item.author}
       </Column.Desc>
-      <Column.Desc
-        className="col-flex-2"
-      >
+      <Column.Desc className="col-flex-2">
         {item.description}
       </Column.Desc>
-      <Column.Desc
-        className="col-sm-7"
-      >
+      <Column.Desc className="col-sm-7">
         <FlatButton
-          label="SEE DETAILS"
+          label="See Details"
           onTouchTap={handleRedirectToDetailsView}
         />
       </Column.Desc>

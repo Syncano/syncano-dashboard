@@ -100,7 +100,7 @@ const SocketsRegistryContentSection = ({
   };
   const renderTitle = () => (
     <div
-      className="row col-flex-1"
+      className="row"
       style={styles.titleContainer}
     >
       <div className="col-sm-18">
@@ -135,7 +135,7 @@ const SocketsRegistryContentSection = ({
   const renderEndpoints = () => {
     const endpointsList = _.map(endpoints, (methods, endpointName) => (
       _.map(methods, (method) => (
-        <div className="row col-flex-1">
+        <div className="row">
           <div className="col-sm-18">
             <div style={{ ...styles.nameContainer, ...styles.header }}>
               <ScrollHook name={`${endpointName}-${method.type}`} />

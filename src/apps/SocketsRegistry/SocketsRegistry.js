@@ -1,37 +1,24 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Helmet from 'react-helmet';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
+import SocketsRegistryStore from './SocketsRegistryStore';
+import SocketsRegistryActions from './SocketsRegistryActions';
 import InstancesActions from '../Instances/InstancesActions';
-import Actions from './SocketsRegistryActions';
-import Store from './SocketsRegistryStore';
-
-import { Show } from '../../common/';
-
-import SocketsRegistryInnerToolbar from './SocketsRegistryInnerToolbar';
-import SocketsSearchBar from './SocketsSearchBar';
 
 const SocketsRegistry = React.createClass({
-  mixins: [
-    Reflux.connect(Store)
-  ],
+  mixins: [Reflux.connect(SocketsRegistryStore)],
 
   componentDidMount() {
+    SocketsRegistryActions.fetchSocketsRegistry();
     InstancesActions.fetch();
-    Actions.fetchSocketsRegistry();
   },
 
   handleChangeSearchTerm(term) {
-    this.setState({ term: term.target.value, changeListView: true });
-  },
+    const { value } = term.target;
 
-  handleStartFilter() {
-    const { searchClicked } = this.state;
-
-    if (!searchClicked) {
-      this.setState({ filter: 'all', searchClicked: true });
-    }
+    this.setState({ term: value });
   },
 
   filteredData() {
@@ -65,25 +52,19 @@ const SocketsRegistry = React.createClass({
 
   render() {
     const { children } = this.props;
-    const { term, items, isLoading, searchClicked, changeListView, filter, filterBySyncano } = this.state;
+    const { filter, filterBySyncano, isLoading, items, term } = this.state;
 
     return (
       <div>
         <Helmet title="Sockets Registry" />
-        <SocketsSearchBar
-          items={items}
-          onClick={this.handleStartFilter}
-          handleChangeSearchTerm={this.handleChangeSearchTerm}
-          value={term}
-        />
-        <Show if={searchClicked}>
-          <SocketsRegistryInnerToolbar
-            filter={filter}
-            filterBySyncano={filterBySyncano}
-          />
-        </Show>
-
-        {children && React.cloneElement(children, { changeListView, term, items, isLoading, filter, filterBySyncano })}
+        {children && React.cloneElement(children, {
+          filter,
+          filterBySyncano,
+          handleChangeSearchTerm: this.handleChangeSearchTerm,
+          isLoading,
+          items,
+          term
+        })}
       </div>
     );
   }

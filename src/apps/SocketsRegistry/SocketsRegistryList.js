@@ -1,52 +1,34 @@
 import React from 'react';
-import pluralize from 'pluralize';
 import _ from 'lodash';
+import pluralize from 'pluralize';
 
-import Actions from './SocketsRegistryActions';
-import Store from './SocketsRegistryStore';
+import SocketsRegistryStore from './SocketsRegistryStore';
+import SocketsRegistryActions from './SocketsRegistryActions';
 
-import { ColumnList, Lists, Container, RegistryEmptyView } from '../../common/';
+import { ColumnList, Container, Lists, Notification, RegistryEmptyView, Show } from '../../common/';
+
 import ListItem from './SocketsRegistryListItem';
+import SocketsRegistryInnerToolbar from './SocketsRegistryInnerToolbar';
+import SocketsSearchBar from './SocketsSearchBar';
 
 const Column = ColumnList.Column;
 
 const SocketsRegistryList = React.createClass({
-
   getDefaultProps() {
     return {
-      emptyItemContent: 'Add a  Socket',
-      emptyItemHandleClick: Actions.showDialog,
-      getCheckedItems: Store.getCheckedItems,
-      checkItem: Actions.checkItem
+      emptyItemContent: 'Add a Socket',
+      emptyItemHandleClick: SocketsRegistryActions.showDialog,
+      getCheckedItems: SocketsRegistryStore.getCheckedItems,
+      checkItem: SocketsRegistryActions.checkItem
     };
   },
 
   getStyles() {
     return {
       container: {
-        margin: '0 200px'
-      },
-      ammount: {
-        marginTop: 24,
-        textAlign: 'center',
-        fontSize: '1em'
-      },
-      noResultsState: {
-        fontSize: 28,
-        textAlign: 'center',
-        width: '100%'
-      },
-      noResultsTitle: {
-        fontSize: 40,
-        lineHeight: '30px',
-        marginTop: 20
-      },
-      noResultsText: {
-        marginTop: 30,
-        fontStyle: 'italic'
-      },
-      foundSocketsCount: {
-        fontWeight: 500
+        maxWidth: 1200,
+        marginLeft: 'auto',
+        marginRight: 'auto'
       },
       detailsColumnHeader: {
         padding: '0 32px'
@@ -96,9 +78,9 @@ const SocketsRegistryList = React.createClass({
     );
   },
 
-  renderHeader() {
-    const { handleTitleClick } = this.props;
+  renderListHeader() {
     const styles = this.getStyles();
+    const { handleTitleClick } = this.props;
 
     return (
       <ColumnList.Header>
@@ -136,58 +118,81 @@ const SocketsRegistryList = React.createClass({
     );
   },
 
-  render() {
-    const {
-      isLoading,
-      changeListView
-    } = this.props;
+  renderNotification() {
     const items = this.getFilteredData();
-    const styles = this.getStyles();
-    const socketImageDir = '/img/socket-assemble.svg';
-    const pluralizedResults = pluralize('result', items.length);
-    const containsItems = (!items || !items.length) && !isLoading;
+    const count = items.length;
 
-    if (containsItems && changeListView) {
+    if (!count) {
       return (
-        <div style={styles.noResultsState}>
-          <div style={styles.noResultsTitle}>
-            No Sockets found
-          </div>
-          <div style={styles.noResultsText}>
-            {`Sorry, but nothing matched your search criteria.
-            Please try again with some different keywords.`}
-          </div>
-        </div>
+        <Notification
+          hasCloseButtonVisible={false}
+          type="error"
+          className="vm-3-b"
+        >
+          No Sockets found. Sorry, please try again with some different keywords.
+        </Notification>
       );
     }
-    if (containsItems && !changeListView) {
+
+    const pluralizedResultText = pluralize('result', count);
+
+    return (
+      <Notification
+        hasCloseButtonVisible={false}
+        className="vm-3-b"
+      >
+        {`Found ${count} ${pluralizedResultText}.`}
+      </Notification>
+    );
+  },
+
+  renderContent() {
+    const items = this.getFilteredData();
+    const { isLoading, filter, filterBySyncano, term } = this.props;
+
+    if (!term || isLoading) {
       return (
         <RegistryEmptyView
           title="Supercharge your project with Sockets from the community"
-          description={`Think of Sockets Registry a package manager for Syncano Sockets. You can search for
-            Sockets created by community and add them to your projects.`}
-          src={socketImageDir}
+          description={`Think of Sockets Registry a package manager for Syncano Sockets. You can search for Sockets
+            created by community and add them to your projects.`}
+          src={'/img/socket-assemble.svg'}
           altText="No Socket"
         />
       );
     }
 
     return (
-      <Lists.Container>
-        <div style={styles.ammount}>
-          Found
-          <span style={styles.foundSocketsCount}>
-            {` ${items.length} `}
-          </span>
-          {pluralizedResults}
-        </div>
-        <Container style={styles.container}>
-          {this.renderHeader()}
+      <div>
+        {this.renderNotification()}
+        <SocketsRegistryInnerToolbar
+          filter={filter}
+          filterBySyncano={filterBySyncano}
+        />
+        <Show if={items.length}>
+          {this.renderListHeader()}
           <Lists.List
             isLoading={isLoading}
             items={items}
             renderItem={this.renderItem}
           />
+        </Show>
+      </div>
+    );
+  },
+
+  render() {
+    const styles = this.getStyles();
+    const { term, handleChangeSearchTerm } = this.props;
+
+    return (
+      <Lists.Container>
+        <SocketsSearchBar
+          value={term}
+          onInputChange={handleChangeSearchTerm}
+        />
+        <Container style={styles.container}>
+          {this.renderContent()}
         </Container>
       </Lists.Container>
     );

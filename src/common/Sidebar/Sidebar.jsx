@@ -35,7 +35,7 @@ export default Radium(React.createClass({
 
     return (
       <div
-        className="col-flex-0 left-nav"
+        className="left-nav"
         style={{ ...style, ...styles.root }}
         {...other}
       >
