@@ -6,7 +6,7 @@ import { ColumnList, Color } from '../../common/';
 
 const Column = ColumnList.Column;
 
-const SocketsRegistryListItem = ({ item, onIconClick, router }) => {
+const SocketsRegistryListItem = ({ item, router }) => {
   const handleRedirectToDetailsView = () => {
     router.push(`/sockets-registry/${item.id}/details/`);
   };
@@ -17,20 +17,16 @@ const SocketsRegistryListItem = ({ item, onIconClick, router }) => {
   const metaColor = metadata && metadata.color ? metadata.color : metaDefaultColor;
 
   return (
-    <ColumnList.Item
-      checked={item.checked}
-      key={item.name}
-    >
+    <ColumnList.Item key={item.name}>
       <Column.CheckIcon.Socket
         className="col-sm-10"
         id={item.name}
         iconClassName={metaIcon}
         iconColor={metaColor}
-        checked={item.checked}
         keyName="name"
-        handleIconClick={onIconClick}
         primaryText={item.name}
         primaryTextTooltip={item.description}
+        checkable={false}
       />
       <Column.Desc className="col-sm-5">
         {item.author}
@@ -46,10 +42,6 @@ const SocketsRegistryListItem = ({ item, onIconClick, router }) => {
       </Column.Desc>
     </ColumnList.Item>
   );
-};
-
-SocketsRegistryListItem.propTypes = {
-  onIconClick: React.PropTypes.func.isRequired
 };
 
 export default withRouter(SocketsRegistryListItem);

@@ -65,14 +65,12 @@ const SocketsRegistryList = React.createClass({
   },
 
   renderItem(item) {
-    const { checkItem } = this.props;
     const showDeleteDialog = () => this.showDialog('removeSocketsDialog', item);
 
     return (
       <ListItem
         key={`sockets-registry-list-item-${item.name}`}
         item={item}
-        onIconClick={checkItem}
         showDeleteDialog={showDeleteDialog}
       />
     );
