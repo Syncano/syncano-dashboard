@@ -2,14 +2,10 @@ import React from 'react';
 import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
-// Stores and Actions
 import Actions from './CustomSocketsActions';
 import Store from './CustomSocketsStore';
 
-// Components
 import { Container, InnerToolbar } from '../../common/';
-
-// Local components
 import CustomSocketsList from './CustomSocketsList';
 
 const CustomSockets = React.createClass({
