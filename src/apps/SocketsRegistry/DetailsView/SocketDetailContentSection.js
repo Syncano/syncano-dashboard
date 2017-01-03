@@ -61,7 +61,6 @@ const SocketsRegistryContentSection = ({
     runtimeButtonsContainer: {
       backgroundColor: Colors.blueGrey900,
       display: 'flex',
-      borderBottom: `2px solid ${Colors.grey900}`,
       padding: '8px 16px'
     },
     runtimeButton: {
@@ -100,10 +99,10 @@ const SocketsRegistryContentSection = ({
   };
   const renderTitle = () => (
     <div
-      className="row col-flex-1"
+      className="row flex-1"
       style={styles.titleContainer}
     >
-      <div className="col-sm-15">
+      <div className="col-sm-17">
         <div style={{ ...styles.nameContainer, ...styles.header }}>
           <FontIcon
             style={styles.socketIcon}
@@ -120,7 +119,7 @@ const SocketsRegistryContentSection = ({
       </div>
       <div
         style={styles.authorInfoContainer}
-        className="col-sm-20"
+        className="col-sm-18"
       >
         <div style={styles.runtimeButtonsContainer}>
           {renderLanguageButtons()}
@@ -135,8 +134,8 @@ const SocketsRegistryContentSection = ({
   const renderEndpoints = () => {
     const endpointsList = _.map(endpoints, (methods, endpointName) => (
       _.map(methods, (method) => (
-        <div className="row col-flex-1">
-          <div className="col-sm-15">
+        <div className="row flex-1">
+          <div className="col-sm-17">
             <div style={{ ...styles.nameContainer, ...styles.header }}>
               <ScrollHook name={`${endpointName}-${method.type}`} />
               <MethodLabel method={method.type} />
@@ -177,7 +176,7 @@ const SocketsRegistryContentSection = ({
           </div>
           <div
             style={styles.authorInfoContainer}
-            className="col-sm-20"
+            className="col-sm-18"
           >
             <CodeExample
               methodType={method.type.toUpperCase()}
