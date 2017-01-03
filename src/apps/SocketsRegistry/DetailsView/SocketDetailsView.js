@@ -9,7 +9,6 @@ import Actions from '../SocketsRegistryActions';
 import { Loading, RegistryEmptyView } from '../../../common';
 import InfoBar from './SocketDetailInfoBar';
 import ContentSection from './SocketDetailContentSection';
-import SocketInstallDialog from '../SocketsRegistryDialog';
 
 const SocketsRegistryDetailsView = React.createClass({
   mixins: [Reflux.connect(Store)],
@@ -149,10 +148,6 @@ const SocketsRegistryDetailsView = React.createClass({
 
     return (
       <Loading show={isLoading}>
-        <SocketInstallDialog
-          shouldRedirect={true}
-          url={currentSocket && currentSocket.ymlUrl}
-        />
         <div style={styles.container}>
           <InfoBar
             endpoints={endpoints}

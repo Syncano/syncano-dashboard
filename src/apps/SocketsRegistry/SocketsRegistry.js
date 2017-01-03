@@ -23,15 +23,17 @@ const SocketsRegistry = React.createClass({
   },
 
   handleChangeSearchTerm(term) {
-    this.setState({ term: term.target.value, changeListView: true });
+    this.setState({
+      term: term.target.value,
+      changeListView: true
+    });
   },
 
   handleStartFilter() {
-    const { searchClicked } = this.state;
-
-    if (!searchClicked) {
-      this.setState({ filter: 'all', searchClicked: true });
-    }
+    this.setState({
+      filter: 'all',
+      searchClicked: true
+    });
   },
 
   filteredData() {

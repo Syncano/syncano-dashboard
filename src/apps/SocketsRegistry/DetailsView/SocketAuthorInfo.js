@@ -5,7 +5,7 @@ import { colors as Colors } from 'material-ui/styles';
 const SocketAuthorInfo = ({ author, runtimes }) => {
   const styles = {
     container: {
-      padding: '32px 24px',
+      padding: '16px 24px 0',
       fontSize: 16,
       lineHeight: 1.8,
       color: Colors.grey300,
