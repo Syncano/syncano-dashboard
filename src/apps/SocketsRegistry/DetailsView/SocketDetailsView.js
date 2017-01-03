@@ -1,7 +1,8 @@
 import React from 'react';
-import { withRouter } from 'react-router';
 import Reflux from 'reflux';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
+import { withRouter } from 'react-router';
 
 import SocketsRegistryStore from '../SocketsRegistryStore';
 import SocketsRegistryActions from '../SocketsRegistryActions';
@@ -133,6 +134,7 @@ const SocketsRegistryDetailsView = React.createClass({
     const { currentSocket, currentLanguage } = this.state;
     const styles = this.getStyles();
     const endpoints = this.getEndpointsObjects();
+    const title = currentSocket && `Sockets Registry: ${currentSocket.name}`;
     const handleBackClick = () => {
       router.push('/sockets-registry');
     };
@@ -151,12 +153,13 @@ const SocketsRegistryDetailsView = React.createClass({
 
     return (
       <Loading show={isLoading}>
+        <Helmet title={title} />
         <SocketInstallDialog
           shouldRedirect={true}
           url={currentSocket && currentSocket.ymlUrl}
         />
         <InnerToolbar
-          title={currentSocket && currentSocket.name}
+          title={title}
           backButton={true}
           backFallback={handleBackClick}
           backButtonTooltip="Go back to Sockets Registry List"
