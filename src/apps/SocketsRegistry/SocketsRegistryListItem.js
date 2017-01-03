@@ -6,7 +6,7 @@ import { ColumnList, Color } from '../../common/';
 
 const Column = ColumnList.Column;
 
-const SocketsRegistryListItem = ({ item, onIconClick, router }) => {
+const SocketsRegistryListItem = ({ item, router }) => {
   const handleRedirectToDetailsView = () => {
     router.push(`/sockets-registry/${item.id}/details/`);
   };
@@ -17,45 +17,31 @@ const SocketsRegistryListItem = ({ item, onIconClick, router }) => {
   const metaColor = metadata && metadata.color ? metadata.color : metaDefaultColor;
 
   return (
-    <ColumnList.Item
-      checked={item.checked}
-      key={item.name}
-    >
+    <ColumnList.Item key={item.name}>
       <Column.CheckIcon.Socket
         className="col-sm-10"
         id={item.name}
         iconClassName={metaIcon}
         iconColor={metaColor}
-        checked={item.checked}
         keyName="name"
-        handleIconClick={onIconClick}
         primaryText={item.name}
         primaryTextTooltip={item.description}
+        checkable={false}
       />
-      <Column.Desc
-        className="col-sm-5"
-      >
+      <Column.Desc className="col-sm-5">
         {item.author}
       </Column.Desc>
-      <Column.Desc
-        className="col-flex-2"
-      >
+      <Column.Desc className="col-flex-2">
         {item.description}
       </Column.Desc>
-      <Column.Desc
-        className="col-sm-7"
-      >
+      <Column.Desc className="col-sm-7">
         <FlatButton
-          label="SEE DETAILS"
+          label="See Details"
           onTouchTap={handleRedirectToDetailsView}
         />
       </Column.Desc>
     </ColumnList.Item>
   );
-};
-
-SocketsRegistryListItem.propTypes = {
-  onIconClick: React.PropTypes.func.isRequired
 };
 
 export default withRouter(SocketsRegistryListItem);
