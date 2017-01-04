@@ -10,7 +10,6 @@ import SocketsRegistryActions from '../SocketsRegistryActions';
 import { Loading, RegistryEmptyView, InnerToolbar } from '../../../common';
 import InfoBar from './SocketDetailInfoBar';
 import ContentSection from './SocketDetailContentSection';
-import SocketInstallDialog from '../SocketsRegistryDialog';
 
 const SocketsRegistryDetailsView = React.createClass({
   mixins: [Reflux.connect(SocketsRegistryStore)],
@@ -154,10 +153,6 @@ const SocketsRegistryDetailsView = React.createClass({
     return (
       <Loading show={isLoading}>
         <Helmet title={title} />
-        <SocketInstallDialog
-          shouldRedirect={true}
-          url={currentSocket && currentSocket.ymlUrl}
-        />
         <InnerToolbar
           title={title}
           backButton={true}

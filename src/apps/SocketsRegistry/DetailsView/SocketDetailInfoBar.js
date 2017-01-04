@@ -3,10 +3,8 @@ import _ from 'lodash';
 import shortId from 'shortid';
 import { Events, scroller, animateScroll } from 'react-scroll';
 
-import DialogActions from '../../Sockets/SocketsActions';
-
 import { colors as Colors } from 'material-ui/styles';
-import { RaisedButton, ListItem } from 'material-ui';
+import { ListItem } from 'material-ui';
 import Sticky from 'react-stickydiv';
 
 import { Sidebar, MethodLabel } from '../../../common';
@@ -48,7 +46,7 @@ class SocketsRegistryInfoBar extends Component {
       sidebarContent: {
         left: 0,
         position: 'absolute',
-        top: 300
+        top: 188
       },
       sidebarBackground: {
         position: 'relative'
@@ -105,14 +103,7 @@ class SocketsRegistryInfoBar extends Component {
         backgroundStyle={styles.sidebarBackground}
         contentStyle={styles.sidebarContent}
       >
-        <Sticky offsetTop={130}>
-          <div className="hm-2-l">
-            <RaisedButton
-              label="install  Socket"
-              backgroundColor={Colors.amber400}
-              onTouchTap={DialogActions.showDialog}
-            />
-          </div>
+        <Sticky offsetTop={110}>
           <Sidebar.List
             key="General Info"
             subheader="General Info"

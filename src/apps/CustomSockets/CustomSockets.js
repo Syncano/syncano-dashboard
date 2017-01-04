@@ -2,25 +2,16 @@ import React from 'react';
 import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
-// Utils
-import { DialogsMixin } from '../../mixins';
-
-// Stores and Actions
 import Actions from './CustomSocketsActions';
 import Store from './CustomSocketsStore';
 
-// Components
 import { Container, InnerToolbar } from '../../common/';
-
-// Local components
 import CustomSocketsList from './CustomSocketsList';
-import SocketsDialog from '../SocketsRegistry/SocketsRegistryDialog';
 
 const CustomSockets = React.createClass({
 
   mixins: [
-    Reflux.connect(Store),
-    DialogsMixin
+    Reflux.connect(Store)
   ],
 
   componentDidMount() {
@@ -32,9 +23,8 @@ const CustomSockets = React.createClass({
 
     return (
       <div>
-        <Helmet title="My Sockets" />
-        <SocketsDialog />
-        <InnerToolbar title="My Sockets" />
+        <Helmet title="Installed Sockets" />
+        <InnerToolbar title="Installed Sockets" />
         <Container>
           <CustomSocketsList
             isLoading={isLoading}
