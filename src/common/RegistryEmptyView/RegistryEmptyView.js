@@ -23,7 +23,6 @@ const RegistryEmptyView = ({
       flexDirection: 'row',
       margin: '10px auto 0 auto'
     },
-
     title: {
       marginBottom: 20,
       fontSize: 26,

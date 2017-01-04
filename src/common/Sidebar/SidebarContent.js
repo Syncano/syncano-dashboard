@@ -20,7 +20,8 @@ export default React.createClass({
       paddingBottom: 56,
       maxHeight: 'calc(100% - 56px)',
       overflow: 'auto',
-      position: 'fixed'
+      position: 'fixed',
+      left: 0
     };
   },
 

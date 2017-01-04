@@ -416,16 +416,10 @@ export default (
         path="sockets-registry"
       >
         <Route
-          name="sockets-registry-list"
-          component={SocketsRegistry.List}
-          path="list"
-        />
-        <Route
           name="sockets-registry-details"
           component={SocketsRegistry.Details}
           path=":socketId/details"
         />
-
         <IndexRoute component={SocketsRegistry.List} />
       </Route>
 
