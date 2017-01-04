@@ -5,7 +5,7 @@ import pluralize from 'pluralize';
 import SocketsRegistryStore from './SocketsRegistryStore';
 import SocketsRegistryActions from './SocketsRegistryActions';
 
-import { ColumnList, Container, Lists, Notification, RegistryEmptyView, Show } from '../../common/';
+import { ColumnList, Container, Lists, RegistryEmptyView, SearchResultsCountBox, Show } from '../../common/';
 
 import ListItem from './SocketsRegistryListItem';
 import SocketsRegistryInnerToolbar from './SocketsRegistryInnerToolbar';
@@ -122,25 +122,18 @@ const SocketsRegistryList = React.createClass({
 
     if (!count) {
       return (
-        <Notification
-          hasCloseButtonVisible={false}
-          type="error"
-          className="vm-3-b"
-        >
+        <SearchResultsCountBox className="vm-3-b">
           No Sockets found. Sorry, please try again with some different keywords.
-        </Notification>
+        </SearchResultsCountBox>
       );
     }
 
     const pluralizedResultText = pluralize('result', count);
 
     return (
-      <Notification
-        hasCloseButtonVisible={false}
-        className="vm-3-b"
-      >
+      <SearchResultsCountBox className="vm-3-b">
         {`Found ${count} ${pluralizedResultText}.`}
-      </Notification>
+      </SearchResultsCountBox>
     );
   },
 
@@ -152,7 +145,7 @@ const SocketsRegistryList = React.createClass({
       return (
         <RegistryEmptyView
           title="Supercharge your project with Sockets from the community"
-          description={`Think of Sockets Registry a package manager for Syncano Sockets. You can search for Sockets
+          description={`Think of Sockets Registry as a package manager for Syncano Sockets. You can search for Sockets
             created by community and add them to your projects.`}
           src={'/img/socket-assemble.svg'}
           altText="No Socket"
@@ -162,11 +155,11 @@ const SocketsRegistryList = React.createClass({
 
     return (
       <div>
-        {this.renderNotification()}
         <SocketsRegistryInnerToolbar
           filter={filter}
           filterBySyncano={filterBySyncano}
         />
+        {this.renderNotification()}
         <Show if={items.length}>
           {this.renderListHeader()}
           <Lists.List

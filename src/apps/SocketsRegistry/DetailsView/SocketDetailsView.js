@@ -162,7 +162,7 @@ const SocketsRegistryDetailsView = React.createClass({
           title={title}
           backButton={true}
           backFallback={handleBackClick}
-          backButtonTooltip="Go back to Sockets Registry List"
+          backButtonTooltip="Go back to Sockets Registry"
         />
         <div style={styles.container}>
           <InfoBar endpoints={endpoints} />
