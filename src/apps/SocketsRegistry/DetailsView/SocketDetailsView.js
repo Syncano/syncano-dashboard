@@ -156,6 +156,7 @@ const SocketsRegistryDetailsView = React.createClass({
         <InnerToolbar
           title={title}
           backButton={true}
+          forceBackFallback={true}
           backFallback={handleBackClick}
           backButtonTooltip="Go back to Sockets Registry"
         />
