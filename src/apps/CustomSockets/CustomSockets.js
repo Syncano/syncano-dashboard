@@ -23,8 +23,8 @@ const CustomSockets = React.createClass({
 
     return (
       <div>
-        <Helmet title="Installed Sockets" />
-        <InnerToolbar title="Installed Sockets" />
+        <Helmet title="My Sockets" />
+        <InnerToolbar title="My Sockets" />
         <Container>
           <CustomSocketsList
             isLoading={isLoading}
