@@ -41,7 +41,7 @@
     "raven-js": "3.9.1",
     "react": "15.4.1",
     "react-ace": "4.1.0",
-    "react-addons-create-fragment": "15.4.1",
+    "react-addons-create-fragment": "15.4.2",
     "react-addons-linked-state-mixin": "15.4.1",
     "react-addons-pure-render-mixin": "15.4.1",
     "react-addons-test-utils": "15.4.1",
