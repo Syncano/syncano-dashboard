@@ -61,7 +61,7 @@
     "react-router": "3.0.0",
     "react-select": "0.9.1",
     "react-stickydiv": "3.4.19",
-    "react-tap-event-plugin": "github:Syncano/react-tap-event-plugin",
+    "react-tap-event-plugin": "2.0.1",
     "reflux": "0.3.0",
     "shortid": "2.2.6",
     "sort-object": "3.0.2",
