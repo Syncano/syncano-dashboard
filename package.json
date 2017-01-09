@@ -87,7 +87,7 @@
     "compass-mixins": "0.12.10",
     "compression-webpack-plugin": "0.3.2",
     "css-loader": "0.26.1",
-    "eslint": "3.12.2",
+    "eslint": "3.13.1",
     "eslint-config-airbnb": "13.0.0",
     "eslint-friendly-formatter": "2.0.6",
     "eslint-loader": "1.6.1",
