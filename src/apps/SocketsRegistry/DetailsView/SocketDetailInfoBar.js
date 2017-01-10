@@ -46,7 +46,7 @@ class SocketsRegistryInfoBar extends Component {
       sidebarContent: {
         left: 0,
         position: 'absolute',
-        top: 188
+        top: 106
       },
       sidebarBackground: {
         position: 'relative'
@@ -103,7 +103,7 @@ class SocketsRegistryInfoBar extends Component {
         backgroundStyle={styles.sidebarBackground}
         contentStyle={styles.sidebarContent}
       >
-        <Sticky offsetTop={110}>
+        <Sticky offsetTop={106}>
           <Sidebar.List
             key="General Info"
             subheader="General Info"
