@@ -101,7 +101,7 @@
     "html-webpack-plugin": "2.24.1",
     "http-server": "0.9.0",
     "inline-manifest-webpack-plugin": "3.0.1",
-    "jest-cli": "17.0.3",
+    "jest-cli": "18.1.0",
     "lodash-webpack-plugin": "0.10.6",
     "nightwatch": "0.9.11",
     "node-sass": "4.1.0",
