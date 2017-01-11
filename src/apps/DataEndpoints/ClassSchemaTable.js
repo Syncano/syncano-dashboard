@@ -66,7 +66,7 @@ export default React.createClass({
 
     return (
       <Tooltip
-        label="Expand is available for relation and reference fields only"
+        label="Expand is available for reference field only"
         horizontalPosition="left"
         style={styles.tooltip}
       >
@@ -105,7 +105,7 @@ export default React.createClass({
     if (!_.isEmpty(this.props.class)) {
       return _.map(this.props.class.schema, (field) => {
         const isExpandChecked = this.isExpandChecked(field);
-        const isExpandDisabled = field.type !== 'relation' && field.type !== 'reference';
+        const isExpandDisabled = field.type !== 'reference';
 
         return (
           <TableRow
@@ -198,7 +198,7 @@ export default React.createClass({
               <TableHeaderColumn
                 style={styles.tableRow}
                 colSpan={2}
-                tooltip="Target Data Class (reference and relation only)"
+                tooltip="Target Data Class (reference only)"
               >
                 Target Data Class
               </TableHeaderColumn>
