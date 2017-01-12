@@ -175,7 +175,7 @@ const DataObjects = React.createClass({
             <IconButton
               data-e2e="data-object-add-button"
               iconClassName="synicon-plus"
-              tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Add Data Objects'}
+              tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Add Data Object'}
               disabled={this.isClassProtected()}
               onClick={DataObjectsActions.showDialog}
             />

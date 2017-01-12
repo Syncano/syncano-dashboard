@@ -391,7 +391,7 @@ export default React.createClass({
         ref: 'deleteDataObjectDialog',
         title: 'Delete a Data Object',
         handleConfirm: this.handleDelete,
-        items: [this.state.id],
+        items: this.state.id,
         groupName: 'Data Object',
         isLoading
       }
@@ -729,6 +729,7 @@ export default React.createClass({
           labelStyle={{ color: Colors.red400 }}
           label="Delete a Data Object"
           onTouchTap={this.showDeleteDialog}
+          data-e2e="delete-data-object-dialog-button"
         />
       );
     }
