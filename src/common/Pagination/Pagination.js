@@ -3,20 +3,20 @@ import ReactPaginate from 'react-paginate';
 
 import './Pagination.sass';
 
-const Pagination = ({ pageNum, currentPage, onPageClick }) => {
+const Pagination = ({ pageCount, currentPage, onPageClick }) => {
   const handlePageClick = ({ selected }) => {
     onPageClick(selected + 1);
   };
 
-  if (!pageNum) {
+  if (!pageCount || pageCount < 2) {
     return null;
   }
 
   return (
     <nav className="pagination">
       <ReactPaginate
-        pageNum={pageNum}
-        forceSelected={currentPage - 1}
+        pageCount={pageCount}
+        forcePage={currentPage - 1}
         pageRangeDisplayed={5}
         marginPagesDisplayed={0}
         clickCallback={handlePageClick}

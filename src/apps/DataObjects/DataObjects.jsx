@@ -131,7 +131,7 @@ const DataObjects = React.createClass({
       selectedItemsIDs,
       classObj,
       currentSortingField,
-      pagesCount,
+      pageCount,
       currentPage
     } = this.state;
 
@@ -149,7 +149,7 @@ const DataObjects = React.createClass({
           onCellClick={this.handleTableCellClick}
         />
         <Pagination
-          pageNum={pagesCount}
+          pageCount={pageCount}
           currentPage={currentPage}
           onPageClick={DataObjectsActions.goToPage}
         />
