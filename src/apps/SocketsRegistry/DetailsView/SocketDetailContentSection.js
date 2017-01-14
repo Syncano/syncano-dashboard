@@ -136,8 +136,8 @@ const SocketsRegistryContentSection = ({
       _.map(methods, (method) => (
         <div className="row">
           <div className="col-sm-17">
+            <ScrollHook name={`${endpointName}-${method.type}`} />
             <div style={{ ...styles.nameContainer, ...styles.header }}>
-              <ScrollHook name={`${endpointName}-${method.type}`} />
               <MethodLabel method={method.type} />
               <div style={styles.methodLabel}>
                 {endpointName}
