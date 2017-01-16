@@ -34,7 +34,11 @@ export default addTestNamePrefixes({
       .fillInput('@cardMonthInput', '11')
       .fillInput('@cardYearInput', '22')
       .fillInput('@cardCVCInput', '777')
-      .click('@addPaymentButton')
+      .click('@addPaymentButton');
+
+    client.pause(3000);
+
+    paymentPage
       .waitForElementVisible('@filledOutCard')
       .assert.containsText('@visibleCardNumber', visibleEndNumber);
   },

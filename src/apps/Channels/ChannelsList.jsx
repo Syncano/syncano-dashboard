@@ -9,8 +9,7 @@ import Store from './ChannelsStore';
 
 // Components
 import ListItem from './ChannelsListItem';
-import { colors as Colors } from 'material-ui/styles';
-import { ColumnList, Dialog, Lists, EmptyView } from '../../common/';
+import { ColumnList, Dialog, Lists } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -77,24 +76,30 @@ export default React.createClass({
       ...other
     } = this.props;
 
-    if ((!items || !items.length) && !isLoading) {
-      return (
-        <EmptyView
-          data-e2e="real-time-channels-empty-item"
-          iconClassName="synicon-socket-channel"
-          iconColor={Colors.blue500}
-          title="Real-time Channel"
-          urlLabel="Real-time Channel"
-          description="Create Channel which is a way of providing realtime communication functionality."
-          docsUrl="http://docs.syncano.io/docs/realtime-communication"
-          handleClick={Actions.showDialog}
-          buttonLabel="Add Real-time Channel"
-        />
-      );
-    }
+    // Now there is always a default channel created at start
+    // https://github.com/Syncano/syncano-platform/pull/1407
+
+    // if ((!items || !items.length) && !isLoading) {
+    //   return (
+    //     <EmptyView
+    //       data-e2e="real-time-channels-empty-item"
+    //       iconClassName="synicon-socket-channel"
+    //       iconColor={Colors.blue500}
+    //       title="Real-time Channel"
+    //       urlLabel="Real-time Channel"
+    //       description="Create Channel which is a way of providing realtime communication functionality."
+    //       docsUrl="http://docs.syncano.io/docs/realtime-communication"
+    //       handleClick={Actions.showDialog}
+    //       buttonLabel="Add Real-time Channel"
+    //     />
+    //   );
+    // }
 
     return (
-      <Lists.Container style={style}>
+      <Lists.Container
+        style={style}
+        data-e2e="channels-list"
+      >
         {this.getDialogs()}
         <ColumnList.Header>
           <Column.ColumnHeader
