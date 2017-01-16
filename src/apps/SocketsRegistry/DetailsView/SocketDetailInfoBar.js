@@ -60,7 +60,7 @@ class SocketsRegistryInfoBar extends Component {
 
   scrollTo = (elementName) => {
     scroller.scrollTo(elementName, {
-      offset: -120,
+      offset: -106,
       duration: 1500,
       delay: 100,
       smooth: true
