@@ -26,7 +26,7 @@ export default Reflux.createStore({
       currentSortingField: Constants.DATA_OBJECTS_DEFAULT_SORTING_FIELD,
       isLoading: true,
       items: [],
-      pagesCount: null,
+      pageCount: null,
       selectedItemsIDs: [],
       users: []
     };
@@ -94,9 +94,9 @@ export default Reflux.createStore({
   },
 
   onGetDataObjectsCountCompleted({ objects_count }) {
-    const pagesCount = _.ceil(objects_count / Constants.DATA_OBJECTS_PAGE_SIZE);
+    const pageCount = _.ceil(objects_count / Constants.DATA_OBJECTS_PAGE_SIZE);
 
-    this.data.pagesCount = pagesCount;
+    this.data.pageCount = pageCount;
     this.trigger(this.data);
   },
 
