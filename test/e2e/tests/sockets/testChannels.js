@@ -17,7 +17,7 @@ export default addTestNamePrefixes({
 
     channelsPage
       .goToUrl(instanceName, 'channels')
-      .waitForElementVisible('@channelSocketsEmptyItem')
+      .waitForElementVisible('@channelSocketsListTitle')
       .clickElement('@addChannelButton')
       .waitForElementVisible('@channelModalTitle')
       .fillInput('@modalNameInput', utils.addSuffix('channel'))

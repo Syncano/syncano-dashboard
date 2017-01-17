@@ -51,7 +51,7 @@ const SocketsList = ({ router, params, sockets, handleTitleClick, visibleItems =
   };
 
   return (
-    <div>
+    <div data-e2e="sockets-list">
       {_.map(listsMap, (list, socketName) => {
         const itemsCount = sockets[socketName].length;
         const shouldApplyListStyle = itemsCount <= visibleItems;

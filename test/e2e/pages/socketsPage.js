@@ -24,9 +24,6 @@ export default {
     scriptUserOption: {
       selector: `[data-e2e=${instances.secondInstance.scriptsNames[0]}-user-option]`
     },
-    emptySocketsHeading: {
-      selector: '[data-e2e="empty-sockets-heading"]'
-    },
     addApnsSocket: {
       selector: '[data-e2e="apns-socket-popover"]'
     },
