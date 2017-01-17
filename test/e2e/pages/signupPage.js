@@ -22,8 +22,8 @@ export default {
       selector: '//div[@class="col-flex-1"]/div[@class="vm-3-b"]',
       locateStrategy: 'xpath'
     },
-    emptySocketsHeading: {
-      selector: '[data-e2e="empty-sockets-heading"]'
+    socketsList: {
+      selector: '[data-e2e="sockets-list"]'
     },
     termsOfUseLink: {
       selector: 'p.vm-0-b.text--center a'

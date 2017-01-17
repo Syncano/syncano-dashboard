@@ -82,12 +82,14 @@ const DataObjectSearchForm = React.createClass({
               underlineStyle={styles.textFieldUnderline}
               value={dataObjectID}
               onChange={this.handleTextFieldChange}
+              data-e2e="search-data-object-input"
             />
             <IconButton
               type="submit"
               tooltip="Search for a Data Object"
               iconClassName="synicon-magnify"
               style={styles.iconButton}
+              data-e2e="search-data-object-button"
             />
           </div>
         </form>
