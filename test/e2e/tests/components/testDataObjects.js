@@ -41,5 +41,25 @@ export default addTestNamePrefixes({
       .clickElement('@deleteDataObjectButton')
       .clickElement('@confirmDeleteDialog')
       .waitForElementNotPresent('@selectDataObjectTableRow');
+  },
+  'Administrator adds a second Data Object': (client) => {
+    const dataObjectsPage = client.page.dataObjectsPage();
+    const string = utils.addSuffix('string');
+
+    dataObjectsPage
+      .clickElement('@addDataObjectButton')
+      .fillInput('@stringField', string)
+      .clickElement('@confirm')
+      .waitForElementVisible('@stringFieldTableRow');
+  },
+  'Administrator deletes a Data Object from edit dialog': (client) => {
+    const dataObjectsPage = client.page.dataObjectsPage();
+
+    dataObjectsPage
+      .fillInput('@searchDataObjectInput', '2')
+      .clickElement('@searchDataObjectButton')
+      .clickElement('@deleteDataObjectDialogButton')
+      .clickElement('@confirmDeleteDialog')
+      .waitForElementNotPresent('@selectDataObjectTableRow');
   }
 });

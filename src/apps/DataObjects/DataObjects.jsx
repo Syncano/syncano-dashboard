@@ -131,7 +131,7 @@ const DataObjects = React.createClass({
       selectedItemsIDs,
       classObj,
       currentSortingField,
-      pagesCount,
+      pageCount,
       currentPage
     } = this.state;
 
@@ -149,7 +149,7 @@ const DataObjects = React.createClass({
           onCellClick={this.handleTableCellClick}
         />
         <Pagination
-          pageNum={pagesCount}
+          pageCount={pageCount}
           currentPage={currentPage}
           onPageClick={DataObjectsActions.goToPage}
         />
@@ -175,7 +175,7 @@ const DataObjects = React.createClass({
             <IconButton
               data-e2e="data-object-add-button"
               iconClassName="synicon-plus"
-              tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Add Data Objects'}
+              tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Add Data Object'}
               disabled={this.isClassProtected()}
               onClick={DataObjectsActions.showDialog}
             />

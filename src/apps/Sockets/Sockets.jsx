@@ -19,7 +19,6 @@ import Channels from '../Channels';
 import Schedules from '../Schedules';
 import Triggers from '../Triggers';
 import ScriptEndpoints from '../ScriptEndpoints';
-import EmptyView from './EmptyView';
 import SocketsDialog from './SocketsDialog';
 import SocketsLists from './SocketsList';
 import SocketsInnerToolbar from './SocketsInnerToolbar';
@@ -103,34 +102,37 @@ const Sockets = React.createClass({
     const { sockets } = this.state;
     const { isPageIntroVisible, hidePageIntro } = this.props;
 
-    if (!sockets.hasAnyItem && !sockets.isLoading) {
-      return (
-        <div data-e2e="empty-sockets-heading">
-          <PageIntro
-            headline="Welcome to Syncano"
-            text={
-              <div>
-                <p>
-                  Syncano is a platform for developing powerful apps. Piece together backend features as building blocks
-                  {' using Syncano Sockets. Check out our '}
-                  <a
-                    href="http://docs.syncano.io/docs/getting-started-with-syncano/"
-                    target="_blank"
-                  >
-                    Quick Start Guide
-                  </a>
-                  {' to learn more.'}
-                </p>
-                <p className="vp-1-t">Start building your app with the Sockets below!</p>
-              </div>
-            }
-            show={isPageIntroVisible}
-            onRequestClose={hidePageIntro}
-          />
-          <EmptyView />
-        </div>
-      );
-    }
+    // Now there is always a default channel created at start
+    // https://github.com/Syncano/syncano-platform/pull/1407
+
+    // if (!sockets.hasAnyItem && !sockets.isLoading) {
+    //   return (
+    //     <div>
+    //       <PageIntro
+    //         headline="Welcome to Syncano"
+    //         text={
+    //           <div>
+    //             <p>
+    //               Syncano is a platform for developing powerful apps. Piece together backend features as building
+    //               {' blocks using Syncano Sockets. Check out our '}
+    //               <a
+    //                 href="http://docs.syncano.io/docs/getting-started-with-syncano/"
+    //                 target="_blank"
+    //               >
+    //                 Quick Start Guide
+    //               </a>
+    //               {' to learn more.'}
+    //             </p>
+    //             <p className="vp-1-t">Start building your app with the Sockets below!</p>
+    //           </div>
+    //         }
+    //         show={isPageIntroVisible}
+    //         onRequestClose={hidePageIntro}
+    //       />
+    //       <EmptyView />
+    //     </div>
+    //   );
+    // }
 
     const user = SessionStore.getUser();
     const userFirstName = user && user.first_name;
