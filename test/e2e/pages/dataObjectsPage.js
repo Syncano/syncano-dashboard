@@ -10,30 +10,38 @@ export default {
       selector: '.synicon-cog'
     },
     dataObjectsTableBody: {
-      selector: 'div[data-e2e="data-objects-table"]'
+      selector: '[data-e2e="data-objects-table"]'
     },
     confirm: {
-      selector: '//button[@data-e2e="data-object-submit"]',
-      locateStrategy: 'xpath'
+      selector: '[data-e2e="data-object-submit"]'
     },
     confirmDeleteDialog: {
-      selector: 'button[data-e2e="data-object-delete-dialog-confirm"]'
+      selector: '[data-e2e="data-object-delete-dialog-confirm"]'
     },
     addDataObjectButton: {
-      selector: 'button[data-e2e="data-object-add-button"]'
+      selector: '[data-e2e="data-object-add-button"]'
     },
     deleteDataObjectButton: {
-      selector: 'button[data-e2e="data-object-delete-button"]'
+      selector: '[data-e2e="data-object-delete-button"]'
     },
     stringField: {
-      selector: `input[data-e2e="${instances.secondInstance.classNames[0]}-string"]`
+      selector: `[data-e2e="${instances.secondInstance.classNames[0]}-string"]`
     },
     stringFieldTableRow: {
-      selector: `td[data-e2e="${instances.secondInstance.classNames[0]}-data-object-column"]`
+      selector: `[data-e2e="${instances.secondInstance.classNames[0]}-data-object-column"]`
     },
     selectDataObjectTableRow: {
       selector: `//td[text()="${utils.addSuffix('edited')}"]/preceding-sibling::td//input[@type="checkbox"]`,
       locateStrategy: 'xpath'
+    },
+    searchDataObjectInput: {
+      selector: '[data-e2e="search-data-object-input"]'
+    },
+    searchDataObjectButton: {
+      selector: '[data-e2e="search-data-object-button"]'
+    },
+    deleteDataObjectDialogButton: {
+      selector: '[data-e2e="delete-data-object-dialog-button"]'
     }
   }
 };

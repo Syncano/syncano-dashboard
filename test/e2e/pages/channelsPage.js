@@ -10,10 +10,7 @@ export default {
       selector: 'button[data-e2e="channel-dialog-confirm-button"]'
     },
     channelSocketsListTitle: {
-      selector: 'div[data-e2e="real-time-channels-list-title"]'
-    },
-    channelSocketsEmptyItem: {
-      selector: 'div[data-e2e="real-time-channels-empty-item"]'
+      selector: '[data-e2e="real-time-channels-list-title"]'
     },
     addChannelButton: {
       selector: '//span[text()="Add"]',

@@ -10,6 +10,7 @@ import ChannelsActions from '../Channels/ChannelsActions';
 
 export default Reflux.createStore({
   listenables: DataObjectsActions,
+
   mixins: [
     StoreFormMixin,
     DialogStoreMixin
@@ -46,6 +47,10 @@ export default Reflux.createStore({
 
   onCreateDataObjectCompleted() {
     console.debug('DataObjectDialogStore::onCreateDataObjectCompleted');
+    this.dismissDialog();
+  },
+
+  onRemoveDataObjectsCompleted() {
     this.dismissDialog();
   },
 
