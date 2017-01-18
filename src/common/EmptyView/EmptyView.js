@@ -13,6 +13,7 @@ const EmptyView = ({
   docsUrl,
   description,
   urlLabel,
+  shouldBeHidden,
   actionButton = (
     <RaisedButton
       label={buttonLabel}
@@ -85,7 +86,7 @@ const EmptyView = ({
             to learn more.
           </div>
         </Show>
-        {actionButton}
+        {shouldBeHidden ? null : actionButton}
       </div>
     </div>
   );

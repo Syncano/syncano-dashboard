@@ -22,7 +22,7 @@ class HostingListItem extends Component {
   });
 
   render() {
-    const { item, onIconClick, params, showDeleteDialog, showPublishDialog, showEditDialog } = this.props;
+    const { item, onIconClick, params, showPublishDialog, showEditDialog } = this.props;
     const styles = this.getStyles();
 
     return (
@@ -80,11 +80,6 @@ class HostingListItem extends Component {
             primaryText="Set as default"
             disabled={item.is_default}
             data-e2e="dropdown-hosting-item-set-default"
-          />
-          <MenuItem
-            onTouchTap={showDeleteDialog}
-            primaryText="Delete"
-            data-e2e="dropdown-hosting-item-delete"
           />
         </Column.Menu>
       </ColumnList.Item>
