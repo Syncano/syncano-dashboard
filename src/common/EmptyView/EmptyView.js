@@ -13,8 +13,7 @@ const EmptyView = ({
   docsUrl,
   description,
   urlLabel,
-  shouldBeHidden,
-  actionButton = (
+  actionButton = buttonLabel && (
     <RaisedButton
       label={buttonLabel}
       data-e2e="zero-state-add-button"
@@ -86,7 +85,7 @@ const EmptyView = ({
             to learn more.
           </div>
         </Show>
-        {shouldBeHidden ? null : actionButton}
+        {actionButton}
       </div>
     </div>
   );

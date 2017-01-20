@@ -138,7 +138,6 @@ const HostingList = React.createClass({
           urlLabel="Hosting"
           description="Host, deploy and publish your websites using Syncano platform."
           docsUrl="http://docs.syncano.io/docs"
-          shouldBeHidden={true}
         />
       );
     }
