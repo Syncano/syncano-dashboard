@@ -115,7 +115,7 @@
     "selenium-standalone": "5.11.0",
     "url-loader": "0.5.7",
     "webfont": "7.0.1",
-    "webpack": "2.1.0-beta.27",
+    "webpack": "2.2.1",
     "webpack-config-utils": "2.3.0",
     "webpack-dev-middleware": "1.9.0",
     "webpack-dev-server": "2.1.0-beta.11",
