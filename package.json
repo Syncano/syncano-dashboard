@@ -59,7 +59,7 @@
     "react-paginate": "4.1.0",
     "react-responsive-grid": "0.3.4",
     "react-router": "3.0.0",
-    "react-select": "0.9.1",
+    "react-select": "1.0.0-rc.3",
     "react-stickydiv": "3.4.19",
     "react-tap-event-plugin": "2.0.1",
     "reflux": "0.3.0",
