@@ -6,7 +6,6 @@ import HostingStore from './HostingStore';
 import HostingActions from './HostingActions';
 
 import { Container, InnerToolbar, Loading } from '../../common';
-import { RaisedButton } from 'material-ui';
 import HostingList from './HostingList';
 import HostingDialog from './HostingDialog';
 
@@ -27,15 +26,7 @@ const Hosting = React.createClass({
         <Helmet title="Hosting" />
         <HostingDialog />
 
-        <InnerToolbar title="Hosting">
-          <RaisedButton
-            label="Add"
-            style={{ marginRight: 0 }}
-            primary={true}
-            onTouchTap={HostingActions.showDialog}
-            data-e2e="add-hosting-button"
-          />
-        </InnerToolbar>
+        <InnerToolbar title="Hosting" />
 
         <Container>
           <Loading show={isLoading}>

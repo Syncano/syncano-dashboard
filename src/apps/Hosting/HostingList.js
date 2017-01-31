@@ -115,9 +115,7 @@ const HostingList = React.createClass({
             handleSelectAll={handleSelectAll}
             handleUnselectAll={handleUnselectAll}
             itemsCount={items.length}
-          >
-            <Lists.MenuItem onTouchTap={() => this.showDialog('removeHostingDialog')} />
-          </Lists.Menu>
+          />
         </Column.ColumnHeader>
       </ColumnList.Header>
     );
@@ -140,8 +138,6 @@ const HostingList = React.createClass({
           urlLabel="Hosting"
           description="Host, deploy and publish your websites using Syncano platform."
           docsUrl="http://docs.syncano.io/docs"
-          handleClick={HostingActions.showDialog}
-          buttonLabel="Add Hosting"
         />
       );
     }

@@ -1,7 +1,7 @@
 import connection from './connection';
 import _ from 'lodash';
 
-const createTestClasses = (classAmount) => {
+const createTestClasses = (classAmount = 1) => {
   const classes = _.times(classAmount, (index) => {
     const name = `class_${Date.now()}${index}`;
 
