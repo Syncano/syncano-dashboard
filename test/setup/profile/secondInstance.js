@@ -6,6 +6,7 @@ import createAPNSSocket from '../create/apnsSocket';
 import createGCMSocket from '../create/gcmSocket';
 import createAPNSDevices from '../create/apnsDevices';
 import createGCMDevices from '../create/gcmDevices';
+import createHostingSocket from '../create/hostingSocket';
 
 const secondInstance = () => {
   const secondInstanceStructure = {};
@@ -39,6 +40,11 @@ const secondInstance = () => {
     })
     .then((gcmDevicesNames) => {
       secondInstanceStructure.gcmDevicesNames = gcmDevicesNames;
+
+      return createHostingSocket();
+    })
+    .then((hostingName) => {
+      secondInstanceStructure.hostingName = hostingName;
 
       return secondInstanceStructure;
     });

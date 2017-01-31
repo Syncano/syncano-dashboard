@@ -1,10 +1,8 @@
+import instances from '../tempInstances';
 import utils from '../utils';
 
 export default {
   elements: {
-    addHostingButton: {
-      selector: '[data-e2e="add-hosting-button"]'
-    },
     nameInput: {
       selector: '[data-e2e="hosting-dialog-name-input"]'
     },
@@ -26,11 +24,8 @@ export default {
     hostingListItemDescription: {
       selector: `[data-e2e="${utils.addSuffix('edited')}-hosting-list-item-description"]`
     },
-    deleteHostingConfirmButton: {
-      selector: '[data-e2e="hosting-delete-dialog-confirm"]'
-    },
     hostingDropdownIcon: {
-      selector: '[data-e2e="name-hosting-dropdown-icon"]'
+      selector: `[data-e2e="${instances.secondInstance.hostingName}-hosting-dropdown-icon"]`
     },
     editedHostingDropdownIcon: {
       selector: `[data-e2e="${utils.addSuffix('edited')}-hosting-dropdown-icon"]`
@@ -38,17 +33,8 @@ export default {
     hostingListItemDropdownEditOption: {
       selector: '[data-e2e="dropdown-hosting-item-edit"]'
     },
-    hostingListItemDropdownDeleteOption: {
-      selector: '[data-e2e="dropdown-hosting-item-delete"]'
-    },
     hostingListItemFilesLink: {
       selector: '[data-e2e="name-hosting-list-item-files"]'
-    },
-    hostingUploadFilesInput: {
-      selector: '[data-e2e="hosting-upload-files"]'
-    },
-    hostingSendFilesButton: {
-      selector: '[data-e2e="hosting-send-files"]'
     },
     hostingFilesListItem: {
       selector: '[data-e2e="simplefilename.testfile-list-item-name"]'
