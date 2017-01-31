@@ -13,17 +13,17 @@ const thirdInstance = () => {
       thirdInstanceStructure.instanceName = instanceName;
 
       connection.setInstance(instanceName);
-      return createTestUsers(1);
+      return createTestUsers();
     })
     .then((usersNames) => {
       thirdInstanceStructure.usersNames = usersNames;
 
-      return createTestApiKey(1);
+      return createTestApiKey();
     })
     .then((apiKeyNames) => {
       thirdInstanceStructure.apiKeyNames = apiKeyNames;
 
-      return createTestClasses(1);
+      return createTestClasses();
     })
     .then((classNames) => {
       thirdInstanceStructure.classNames = classNames;

@@ -31,12 +31,12 @@ const secondInstance = () => {
     .then((gcmSocketState) => {
       secondInstanceStructure.gcmSocketState = gcmSocketState;
 
-      return createAPNSDevices(1);
+      return createAPNSDevices();
     })
     .then((apnsDevicesNames) => {
       secondInstanceStructure.apnsDevicesNames = apnsDevicesNames;
 
-      return createGCMDevices(1);
+      return createGCMDevices();
     })
     .then((gcmDevicesNames) => {
       secondInstanceStructure.gcmDevicesNames = gcmDevicesNames;
