@@ -1,3 +1,3 @@
-import Editor from './Editor';
+import { asyncComponent } from 'react-async-loading';
 
-export default Editor;
+export default asyncComponent(() => System.import('./Editor.js'));

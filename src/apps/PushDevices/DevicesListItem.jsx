@@ -61,9 +61,7 @@ export default React.createClass({
         <Column.Desc>
           {item.is_active.toString()}
         </Column.Desc>
-        <Column.Date
-          date={item.created_at}
-        />
+        <Column.Date date={item.created_at} />
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"

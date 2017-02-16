@@ -46,7 +46,7 @@ export default React.createClass({
           secondaryText={
             <Clipboard
               text={item.links.poll}
-              copyText={`${SYNCANO_BASE_URL}${item.links.poll}`}
+              copyText={`${APP_CONFIG.SYNCANO_BASE_URL}${item.links.poll}`}
               onCopy={() => this.setSnackbarNotification({
                 message: 'Channel Socket url copied!'
               })}

@@ -1,9 +1,8 @@
 # Syncano Dashboard
 [![Slack](https://img.shields.io/badge/chat-on_slack-blue.svg)](https://www.syncano.io/slack-invite/)
-
 [![CircleCI](https://circleci.com/gh/Syncano/syncano-dashboard/tree/master.svg?style=shield&circle-token=f0100f84a8aad047680750a7a97c064e0c384766)](https://circleci.com/gh/Syncano/syncano-dashboard/tree/master) [![PRs](https://img.shields.io/badge/PRs-yes-orange.svg)](README.md#contribute) [![license](https://img.shields.io/github/license/syncano/syncano-dashboard.svg)](README.md#license)
 
-![Dashboard Screenshot](https://www.syncano.io/a-serverless-app-platform-to-design-publish-and-manage-your-api-small@2x-456c4b747b33eb161b0585a324a5065a.jpg)
+![Dashboard Screenshot](docs/open_dash.png)
 
 ## Introduction
 
@@ -109,7 +108,7 @@ Recommended way to manage node versions is [n](https://github.com/tj/n).
 If you already have other version of node, just install `n`:
 
 ```sh
-$ sudo npm install -g n
+$ sudo yarn install -g n
 $ n 7.0.0
 ```
 
@@ -144,13 +143,13 @@ To install dependencies just do:
 
 ```sh
 $ cd syncano-dashboard/
-$ npm install
+$ yarn install
 ```
 
 and start local development server (available at https://localhost:8080/):
 
 ```sh
-$ npm start
+$ yarn start
 ```
 
 ## Configuration
@@ -191,7 +190,7 @@ We are using set of [Material Design Icons](http://materialdesignicons.com/).
 Icons are attached as font in static assets `src/assets` so if you want to rebuild whole font just use npm command:
 
 ```sh
-$ npm run iconfont
+$ yarn run iconfont
 ```
 
 and commit your changes.
@@ -219,13 +218,13 @@ Please be careful what you do.**
 E2E Test can be started by typing:
 
 ```sh
-$ npm run e2e
+$ yarn run e2e
 ```
 
 If you want only one test suite to run use:
 
 ```sh
-$ npm run e2e <tag>
+$ yarn run e2e <tag>
 ```
 
 Refer to the test files for the appropriate tag name.

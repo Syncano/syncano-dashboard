@@ -41,7 +41,7 @@ const GCMDeviceSummary = ({ item, hasEditMode }) => {
                     -H "Content-Type: application/json"
                     -d '{"content": {"data": {"title": "App name", "body": "Your push notif text"},` +
                     `"environment": "development"}}'
-                    "${SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/push_notifications/` +
+                    "${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/push_notifications/` +
                     `gcm/devices/${item.registration_id}/send_message/"
                   `)}
                 />

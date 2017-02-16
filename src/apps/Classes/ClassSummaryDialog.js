@@ -47,7 +47,7 @@ const ClassSummaryDialog = ({ item, hasEditMode }) => {
                   languageClassName="markup"
                   code={`curl -X PATCH \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-Type: application/json" ` +
                   `\\\n-d '{"schema":${formatedSchemaFields.curl}}' \\\n` +
-                  `"${SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/classes/${item.name}"/`}
+                  `"${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/classes/${item.name}"/`}
                 />
                 <CodePreview.Item
                   title="Python"

@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import { Paper, RaisedButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
+import DemoAppsConfig from './DemoAppsConfig';
 
 class DemoAppListItem extends Component {
   getStyles = () => ({
@@ -44,12 +45,11 @@ class DemoAppListItem extends Component {
       position: 'absolute',
       justifySelf: 'flex-end'
     }
-  })
+  });
 
   render() {
     const { item, handleOpenDemoApp } = this.props;
     const styles = this.getStyles();
-    const appImageSrc = `/img/static/${item.name}.png`;
     const truncatedDesc = _.truncate(item.description, { length: 100 });
 
     return (
@@ -61,7 +61,7 @@ class DemoAppListItem extends Component {
           {item.metadata.appTitle}
         </div>
         <img
-          src={appImageSrc}
+          src={DemoAppsConfig.getAvatar(item.name)}
           alt="demo app"
           style={styles.demoAppImage}
         />

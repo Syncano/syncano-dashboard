@@ -33,6 +33,7 @@ import MobileOnboarding from './MobileOnboarding';
 import NoMobileInfo from './NoMobileInfo';
 import Notification from './Notification';
 import PageIntro from './PageIntro';
+import Pagination from './Pagination';
 import PaymentIcon from './PaymentIcon';
 import PaymentIcons from './PaymentIcons';
 import Popover from './Popover';
@@ -50,6 +51,7 @@ import Solutions from './Solutions';
 import Spacing from './Spacing';
 import Stepper from './Stepper';
 import SyncanoTheme from './SyncanoTheme';
+import TableHeaderSortableColumn from './TableHeaderSortableColumn';
 import Tags from './Tags';
 import TogglePanel from './TogglePanel';
 import Tooltip from './Tooltip';
@@ -94,6 +96,7 @@ export { MobileOnboarding };
 export { NoMobileInfo };
 export { Notification };
 export { PageIntro };
+export { Pagination };
 export { PaymentIcon };
 export { PaymentIcons };
 export { Popover };
@@ -111,6 +114,7 @@ export { Solutions };
 export { Spacing };
 export { Stepper };
 export { SyncanoTheme };
+export { TableHeaderSortableColumn };
 export { Tags };
 export { TogglePanel };
 export { Tooltip };
@@ -157,6 +161,7 @@ export default {
   NoMobileInfo,
   Notification,
   PageIntro,
+  Pagination,
   PaymentIcon,
   PaymentIcons,
   Popover,
@@ -174,6 +179,7 @@ export default {
   Spacing,
   Stepper,
   SyncanoTheme,
+  TableHeaderSortableColumn,
   Tags,
   TogglePanel,
   Tooltip,

@@ -21,7 +21,7 @@ const ProfileBillingInvoices = React.createClass({
   },
 
   handlePDFClick(invoice) {
-    let pdfUrl = SYNCANO_BASE_URL + invoice.links.pdf;
+    let pdfUrl = APP_CONFIG.SYNCANO_BASE_URL + invoice.links.pdf;
 
     pdfUrl += `?api_key=${SessionStore.getToken('')}`;
     location.href = pdfUrl;

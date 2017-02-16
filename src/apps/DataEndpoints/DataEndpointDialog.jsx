@@ -279,6 +279,14 @@ const DataEndpointDialog = React.createClass({
     this.setState({ query: value });
   },
 
+  handleQueryValue(value) {
+    if (typeof value === 'object') {
+      return JSON.stringify(value, null, '\t');
+    }
+
+    return value;
+  },
+
   handleOrderChange(event, key, value) {
     this.setSelectFieldValue('order_by', value);
   },
@@ -534,7 +542,7 @@ const DataEndpointDialog = React.createClass({
                 onChange={this.handleQueryChange}
                 onFocus={disableBindShortcuts}
                 onBlur={enableBindShortcuts}
-                value={JSON.stringify(query, null, '\t')}
+                value={this.handleQueryValue(query)}
               />
               <Show if={this.getValidationMessages('query').length}>
                 <div className="vm-2-t">

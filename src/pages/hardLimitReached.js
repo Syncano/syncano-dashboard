@@ -3,7 +3,7 @@ import AlertPageContent from '../common/AlertPageContent';
 
 export default () => (
   <AlertPageContent
-    imgSrc={'/img/illustrations/no-active-plan.svg'}
+    imgSrc={require('../assets/img/illustrations/no-active-plan.svg')}
     headline="Hard limits reached"
     message={`Oh no! You have reached you hard limit. Simply upgrade your account for access to all of
       Syncano’s features.`}

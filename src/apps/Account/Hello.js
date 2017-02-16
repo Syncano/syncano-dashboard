@@ -3,9 +3,9 @@ import hello from 'hellojs';
 const credentials = {};
 const options = {};
 
-credentials.facebook = FACEBOOK_ID;
-credentials.google = GOOGLE_ID;
-credentials.github = GITHUB_ID;
+credentials.facebook = APP_CONFIG.FACEBOOK_ID;
+credentials.google = APP_CONFIG.GOOGLE_ID;
+credentials.github = APP_CONFIG.GITHUB_ID;
 
 options.redirect_uri = `${location.protocol}//${location.host}`;
 options.scope = 'email';

@@ -108,8 +108,8 @@ export default Radium(React.createClass({
           <Column.Desc className="col-sm-4">{item.action}</Column.Desc>
           <Column.Desc className="col-sm-6">{this.renderMeta(item)}</Column.Desc>
           <Column.Date
-            className="col-flex-1"
             date={item.created_at}
+            className="col-flex-1"
           />
         </ColumnList.Item>
         <div style={styles.historyResult}>

@@ -82,7 +82,7 @@ const CustomSocketsEndpointsListItem = React.createClass({
           secondaryText={
             <Clipboard
               text={link}
-              copyText={`${SYNCANO_BASE_URL}${link}`}
+              copyText={`${APP_CONFIG.SYNCANO_BASE_URL}${link}`}
               onCopy={this.handleOpenSnackbar}
               tooltip="Copy Custom Socket Endpoint url"
               type="link"

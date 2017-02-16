@@ -31,7 +31,7 @@ class SetupPage extends Component {
 
   createFirstInstance() {
     const { router } = this.props;
-    const connection = new Syncano({ baseUrl: SYNCANO_BASE_URL, accountKey: SessionStore.getToken() });
+    const connection = new Syncano({ baseUrl: APP_CONFIG.SYNCANO_BASE_URL, accountKey: SessionStore.getToken() });
     const name = InstanceDialogStore.genUniqueName();
     const { location } = this.context;
     const queryNext = location.query.next || null;

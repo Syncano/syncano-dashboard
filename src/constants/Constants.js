@@ -1,7 +1,9 @@
 export default {
-  // Views constrains
-  DATAOBJECTS_PAGE_SIZE: 100,
+  DATA_OBJECTS_PAGE_SIZE: 50,
+  DATA_OBJECTS_DEFAULT_SORTING_FIELD: '-created_at',
+
   VIEW_MODES: ['cards', 'stream'],
+
   SORT_MODES: [
     'sortByName',
     'sortByDate',

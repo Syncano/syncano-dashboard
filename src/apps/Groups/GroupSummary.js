@@ -43,12 +43,13 @@ export default ({ group }) => {
                   code={'# Adding User to Group\n\n' +
                     `curl -X POST \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-type: application/json" \\\n` +
                     `-d '{"user": "<user_id>"}' \\\n` +
-                    `"${SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/groups/` +
+                    `"${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/groups/` +
                     `${group.id}/users/" \n\n` +
                     '# Creating Data Object with Group permissions\n\n' +
                     `curl -X POST \\\n-H "X-API-KEY: ${token}" \\\n-H "Content-type: application/json" \\\n` +
                     `-d '{"group": 1, "group_permissions": "full"}' \\\n` +
-                    `"${SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/classes/<class_name>/objects/`}
+                    `"${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/${currentInstance.name}/classes/<class_name>` +
+                    `/objects/`}
                 />
                 <CodePreview.Item
                   title="Python"

@@ -67,28 +67,39 @@ export default React.createClass({
     return items;
   },
 
+  getItemAssociation(item, associationFor) {
+    const hasTriggerAssociation = _.has(item, 'triggers') && (_.isArray(item.triggers) && item.triggers.length);
+    const hasScheduleAssociation = _.has(item, 'schedules') && (_.isArray(item.schedules) && item.schedules.length);
+    const isAssociated = hasTriggerAssociation || hasScheduleAssociation;
+
+    if (isAssociated && associationFor === 'triggers') {
+      return _.isArray(item.triggers) ? ` (${item.triggers.join(', ')})` : '';
+    }
+
+    if (isAssociated && associationFor === 'schedules') {
+      return _.isArray(item.schedules) ? ` (${item.schedules.join(', ')})` : '';
+    }
+
+    return '';
+  },
+
   getDialogList(items, paramName, associationFor) {
     const listItems = items.map((item) => {
-      const isAssociatedWithTriggers = _.isArray(item.triggers) && item.triggers.length;
-      const isAssociatedWithSchedules = _.isArray(item.schedules) && item.schedules.length;
-      const isAssociated = (isAssociatedWithTriggers) || (isAssociatedWithSchedules);
-      const triggersAssociation = _.isArray(item.triggers) ? ` (${item.triggers.join(', ')})` : '';
-      const schedulesAssociation = _.isArray(item.schedules) ? ` (${item.schedules.join(', ')})` : '';
-      let association = '';
+      const association = this.getItemAssociation(item, associationFor);
 
-      if (isAssociated && associationFor === 'triggers') {
-        association = triggersAssociation;
-      }
-
-      if (isAssociated && associationFor === 'schedules') {
-        association = schedulesAssociation;
+      if (_.isFinite(item)) {
+        return <li key={item}>ID: {item}</li>;
       }
 
       if (!_.isObject(item)) {
         return null;
       }
 
-      return <li key={item[paramName || 'name']}>{item[paramName || 'name'] + association}</li>;
+      return (
+        <li key={item[paramName || 'name']}>
+          {item[paramName || 'name'] + association}
+        </li>
+      );
     });
 
     return <ul>{listItems}</ul>;

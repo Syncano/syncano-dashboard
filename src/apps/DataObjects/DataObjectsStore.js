@@ -1,13 +1,9 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import {
-  CheckListStoreMixin,
-  SnackbarNotificationMixin,
-  StoreFormMixin,
-  StoreLoadingMixin,
-  WaitForStoreMixin
-} from '../../mixins';
+import Constants from '../../constants/Constants';
+
+import { SnackbarNotificationMixin, StoreFormMixin, StoreLoadingMixin, WaitForStoreMixin } from '../../mixins';
 
 import DataObjectsActions from './DataObjectsActions';
 import SessionStore from '../Session/SessionStore';
@@ -17,7 +13,6 @@ export default Reflux.createStore({
   listenables: DataObjectsActions,
 
   mixins: [
-    CheckListStoreMixin,
     SnackbarNotificationMixin,
     StoreFormMixin,
     StoreLoadingMixin,
@@ -26,10 +21,14 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items: [],
+      classObj: null,
+      currentPage: 1,
+      currentSortingField: Constants.DATA_OBJECTS_DEFAULT_SORTING_FIELD,
       isLoading: true,
-      selectedRows: [],
-      currentPage: 1
+      items: [],
+      pageCount: null,
+      selectedItemsIDs: [],
+      users: []
     };
   },
 
@@ -42,7 +41,6 @@ export default Reflux.createStore({
     );
     this.listenToForms();
     this.setLoadingStates();
-
     this.listenTo(DataObjectsActions.setCurrentClassObj, this.refreshDataObjects);
   },
 
@@ -51,25 +49,22 @@ export default Reflux.createStore({
   },
 
   refreshDataObjects() {
-    DataObjectsActions.fetchDataObjects(this.data.currentPage);
+    const { currentPage, currentSortingField } = this.data;
+
+    DataObjectsActions.getDataObjectsCount();
+    DataObjectsActions.fetchDataObjects(currentPage, currentSortingField);
   },
 
   getCurrentClassName() {
     if (this.data.classObj) {
       return this.data.classObj.name;
     }
+
     return null;
   },
 
   getCurrentClassObj() {
     return this.data.classObj;
-  },
-
-  getSelectedRowsLength() {
-    if (this.data.selectedRows) {
-      return this.data.selectedRows.length;
-    }
-    return null;
   },
 
   getSelectedRowObj(cellNumber) {
@@ -78,31 +73,14 @@ export default Reflux.createStore({
     DataObjectsActions.getDataObject({ id, className });
   },
 
-  getItems() {
-    return this.data.items;
-  },
-
-  setSelectedRows(selectedRows) {
-    this.data.selectedRows = selectedRows;
+  setSelectedItemsIDs(selectedItemsIDs) {
+    this.data.selectedItemsIDs = selectedItemsIDs;
     this.trigger(this.data);
   },
 
-  setDataObjects(items, rawData) {
-    this.data.hasNextPage = rawData.hasNext();
-
-    if (!this.data.items) {
-      this.data.items = [];
-    }
-
-    this.data.items = [...this.data.items, ...items];
-    this.data.nextParams = rawData;
-    this.data.isLoading = false;
+  setDataObjects(items) {
+    this.data.items = items;
     this.trigger(this.data);
-  },
-
-  // we know number of selected rows, now we need to get ID of the objects
-  getIDsFromTable() {
-    return this.data.selectedRows.map((rowNumber) => this.data.items[rowNumber].id);
   },
 
   onFetchCurrentClassObjCompleted(classObj) {
@@ -110,20 +88,16 @@ export default Reflux.createStore({
     DataObjectsActions.setCurrentClassObj(classObj);
   },
 
-  onFetchDataObjectsCompleted({ dataObjects, rawData, users }) {
-    this.data.items = [];
+  onFetchDataObjectsCompleted({ dataObjects, users }) {
     this.data.users = users;
-    DataObjectsActions.setDataObjects(dataObjects, rawData);
+    DataObjectsActions.setDataObjects(dataObjects);
   },
 
-  onSubFetchDataObjects() {
-    this.trigger({ isLoading: true });
-  },
+  onGetDataObjectsCountCompleted({ objects_count }) {
+    const pageCount = _.ceil(objects_count / Constants.DATA_OBJECTS_PAGE_SIZE);
 
-  onSubFetchDataObjectsCompleted({ dataObjects, users }) {
-    this.data.currentPage += 1;
-    this.data.users = users;
-    DataObjectsActions.setDataObjects(dataObjects, dataObjects);
+    this.data.pageCount = pageCount;
+    this.trigger(this.data);
   },
 
   onGetDataObjectCompleted(fetchedItem) {
@@ -145,7 +119,7 @@ export default Reflux.createStore({
   },
 
   onGetDataObjectFailure() {
-    this.setSnackbarNotification({ message: 'Data Object with this ID doesn\'t exist' });
+    this.setSnackbarNotification({ message: 'Data Object with this ID doesn\'t exist.' });
   },
 
   onCreateDataObjectCompleted() {
@@ -168,12 +142,37 @@ export default Reflux.createStore({
 
   onRemoveDataObjectsCompleted() {
     this.data.hideDialogs = true;
-    this.data.selectedRows = [];
+    this.data.selectedItemsIDs = [];
     this.trigger(this.data);
     this.refreshDataObjects();
   },
 
   clearStore() {
     this.data = this.getInitialState();
+  },
+
+  goToPage(nextPage) {
+    this.data.currentPage = nextPage;
+    this.refreshDataObjects();
+  },
+
+  getNextSortingField(field) {
+    const { currentSortingField } = this.data;
+
+    if (currentSortingField === field) {
+      return `-${field}`;
+    }
+
+    if (currentSortingField === `-${field}`) {
+      return Constants.DATA_OBJECTS_DEFAULT_SORTING_FIELD;
+    }
+
+    return field;
+  },
+
+  onSelectSortingField(field) {
+    this.data.currentSortingField = this.getNextSortingField(field);
+    this.data.currentPage = 1;
+    this.refreshDataObjects();
   }
 });

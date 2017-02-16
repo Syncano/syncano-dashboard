@@ -26,7 +26,8 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       stepIndex: 0,
-      isLoading: false
+      isLoading: false,
+      metadata: {}
     };
   },
 
