@@ -45,7 +45,7 @@ const getS3Config = (env) => {
   const config = {
     beta: {
       s3Options: {
-        region: 'us-east-1',
+        region: 'us-east-1'
       },
       s3UploadOptions: {
         Bucket: process.env.BETA_AWS_BUCKET_NAME
@@ -53,31 +53,31 @@ const getS3Config = (env) => {
     },
     devel: {
       s3Options: {
-        region: 'us-west-2',
+        region: 'us-west-2'
       },
       s3UploadOptions: {
         Bucket: process.env.STAGING_AWS_BUCKET_NAME
       },
       cloudfrontInvalidateOptions: {
         DistributionId: process.env.STAGING_AWS_DISTRIBUTION_ID,
-        Items: ["/*"]
+        Items: ['/*']
       }
     },
     master: {
       s3Options: {
-        region: 'us-west-2',
+        region: 'us-west-2'
       },
       s3UploadOptions: {
         Bucket: process.env.PRODUCTION_AWS_BUCKET_NAME
       },
       cloudfrontInvalidateOptions: {
         DistributionId: process.env.PRODUCTION_AWS_DISTRIBUTION_ID,
-        Items: ["/*"]
+        Items: ['/*']
       }
     },
     default: {
       s3Options: {
-        region: 'us-west-2',
+        region: 'us-west-2'
       },
       s3UploadOptions: {
         Bucket: process.env.STAGING_AWS_BUCKET_NAME
