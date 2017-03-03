@@ -45,7 +45,7 @@ const getS3Config = (env) => {
   const branch = CIRCLE_BRANCH.toLowerCase();
   const config = {
     beta: {
-      directory: resolve('dist', '*'),
+      directory: resolve('dist'),
       s3Options: {
         region: 'us-east-1'
       },
@@ -54,7 +54,7 @@ const getS3Config = (env) => {
       }
     },
     devel: {
-      directory: resolve('dist', '*'),
+      directory: resolve('dist'),
       s3Options: {
         region: 'us-west-2'
       },
@@ -67,7 +67,7 @@ const getS3Config = (env) => {
       }
     },
     master: {
-      directory: resolve('dist', '*'),
+      directory: resolve('dist'),
       s3Options: {
         region: 'us-west-2'
       },
@@ -80,7 +80,7 @@ const getS3Config = (env) => {
       }
     },
     default: {
-      directory: resolve('dist', '*'),
+      directory: resolve('dist'),
       s3Options: {
         region: 'us-west-2'
       },
