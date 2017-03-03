@@ -145,6 +145,7 @@
     "debug:prod": "yarn debug -- --env.production",
     "deploy": "yarn prebuild && webpack --env.production -p --env.deploy",
     "deploy:beta": "yarn prebuild && webpack --env.beta -p --env.deploy",
+    "deploy:staging": "yarn prebuild && webpack --env.staging -p --env.deploy",
     "start": "webpack-dev-server --env.development --hot --https",
     "server": "http-server ./dist --ssl --cert=./node_modules/webpack-dev-server/ssl/server.pem --key=./node_modules/webpack-dev-server/ssl/server.pem",
     "test": "jest --config jest.json",
