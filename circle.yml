@@ -48,7 +48,7 @@ deployment:
   staging:
     branch: devel
     commands:
-      - yarn deploy
+      - yarn deploy:staging
       - yarn deploy:beta
 
   sockets:
