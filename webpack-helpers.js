@@ -1,4 +1,5 @@
 import packageJSON from './package.json';
+import { resolve } from 'path';
 
 const getAppConfig = (env) => {
   const envVars = [
@@ -44,7 +45,7 @@ const getS3Config = (env) => {
   const branch = CIRCLE_BRANCH.toLowerCase();
   const config = {
     beta: {
-      directory: './dist/',
+      directory: resolve('dist', '*'),
       s3Options: {
         region: 'us-east-1'
       },
@@ -53,7 +54,7 @@ const getS3Config = (env) => {
       }
     },
     devel: {
-      directory: './dist/',
+      directory: resolve('dist', '*'),
       s3Options: {
         region: 'us-west-2'
       },
@@ -66,7 +67,7 @@ const getS3Config = (env) => {
       }
     },
     master: {
-      directory: './dist/',
+      directory: resolve('dist', '*'),
       s3Options: {
         region: 'us-west-2'
       },
@@ -79,7 +80,7 @@ const getS3Config = (env) => {
       }
     },
     default: {
-      directory: './dist/',
+      directory: resolve('dist', '*'),
       s3Options: {
         region: 'us-west-2'
       },
