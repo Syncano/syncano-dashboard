@@ -35,8 +35,6 @@ dependencies:
 
 test:
   override:
-    - yarn test && yarn run e2e:
-        timeout: 400
 
 deployment:
   production:
