@@ -19,7 +19,7 @@ const Pagination = ({ pageCount, currentPage, onPageClick }) => {
         forcePage={currentPage - 1}
         pageRangeDisplayed={5}
         marginPagesDisplayed={0}
-        clickCallback={handlePageClick}
+        onPageChange={handlePageClick}
       />
     </nav>
   );
