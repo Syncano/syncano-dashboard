@@ -1,4 +1,5 @@
 import packageJSON from './package.json';
+import { resolve } from 'path';
 
 const getAppConfig = (env) => {
   const envVars = [
@@ -44,40 +45,44 @@ const getS3Config = (env) => {
   const branch = CIRCLE_BRANCH.toLowerCase();
   const config = {
     beta: {
+      directory: resolve('dist'),
       s3Options: {
-        region: 'us-east-1',
+        region: 'us-east-1'
       },
       s3UploadOptions: {
         Bucket: process.env.BETA_AWS_BUCKET_NAME
       }
     },
     devel: {
+      directory: resolve('dist'),
       s3Options: {
-        region: 'us-west-2',
+        region: 'us-west-2'
       },
       s3UploadOptions: {
         Bucket: process.env.STAGING_AWS_BUCKET_NAME
       },
       cloudfrontInvalidateOptions: {
         DistributionId: process.env.STAGING_AWS_DISTRIBUTION_ID,
-        Items: ["/*"]
+        Items: ['/*']
       }
     },
     master: {
+      directory: resolve('dist'),
       s3Options: {
-        region: 'us-west-2',
+        region: 'us-west-2'
       },
       s3UploadOptions: {
         Bucket: process.env.PRODUCTION_AWS_BUCKET_NAME
       },
       cloudfrontInvalidateOptions: {
         DistributionId: process.env.PRODUCTION_AWS_DISTRIBUTION_ID,
-        Items: ["/*"]
+        Items: ['/*']
       }
     },
     default: {
+      directory: resolve('dist'),
       s3Options: {
-        region: 'us-west-2',
+        region: 'us-west-2'
       },
       s3UploadOptions: {
         Bucket: process.env.STAGING_AWS_BUCKET_NAME

@@ -35,26 +35,26 @@ dependencies:
 
 test:
   override:
-    - yarn test && yarn run e2e:
+    - yarn test && yarn e2e:
         timeout: 400
 
 deployment:
   production:
     branch: master
     commands:
-      - yarn run git-config
-      - yarn run deploy
+      - yarn git-config
+      - yarn deploy
 
   staging:
     branch: devel
     commands:
-      - yarn run deploy
-      - yarn run deploy:beta
+      - yarn deploy:staging
+      - yarn deploy:beta
 
   sockets:
     branch: /.*/
     commands:
-      - yarn run deploy
+      - yarn deploy
 
 experimental:
   notify:
