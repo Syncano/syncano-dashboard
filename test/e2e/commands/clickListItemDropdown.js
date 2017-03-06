@@ -8,6 +8,7 @@ exports.command = function clickListItemDropdown(listItem, dropdownChoice) {
   : `//div[text()="${listItem}"]/../../../following-sibling::div//span[@class="synicon-dots-vertical"]`;
   const choice = `//div[contains(text(), "${dropdownChoice}")]`;
 
+
   return this
     .useXpath()
     .waitForElementVisible(listItemDropdown)
