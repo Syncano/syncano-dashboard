@@ -1,18 +1,18 @@
-import {resolve} from 'path';
+import { resolve } from 'path';
 import webpack, { ContextReplacementPlugin } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ProgressBarPlugin from 'progress-bar-webpack-plugin';
 import ExtendedDefinePlugin from 'extended-define-webpack-plugin';
 import InlineManifestWebpackPlugin from 'inline-manifest-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import {getIfUtils, removeEmpty} from 'webpack-config-utils';
+import { getIfUtils, removeEmpty } from 'webpack-config-utils';
 import S3Plugin from 'webpack-s3-plugin';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import WebpackMd5Hash from 'webpack-md5-hash';
 import { getAppConfig, getS3Config } from './webpack-helpers';
 
-const webpackConfig = (env = {development: true}) => {
+const webpackConfig = (env = {}) => {
   const {ifDevelopment, ifNotDevelopment} = getIfUtils(env);
   const extractCSS = new ExtractTextPlugin({
     filename: ifNotDevelopment('styles.[chunkhash].css', 'styles.css'),
@@ -81,6 +81,7 @@ const webpackConfig = (env = {development: true}) => {
           }
         }
       }),
+      new FaviconsWebpackPlugin('./assets/img/syncano-symbol.svg'),
       ifNotDevelopment(...[
         new InlineManifestWebpackPlugin(),
         new WebpackMd5Hash(),
@@ -96,7 +97,6 @@ const webpackConfig = (env = {development: true}) => {
         new ContextReplacementPlugin(/brace[\\\/]mode$/, /^\.\/(javascript|html|python|ruby|golang|swift|php|django|json|css|text)$/),
         new ContextReplacementPlugin(/brace[\\\/]theme$/, /^\.\/(tomorrow)$/),
         new ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en-uk|en-us|en-au)$/),
-        new FaviconsWebpackPlugin('./assets/img/syncano-symbol.svg'),
         new CompressionPlugin({
           asset: "[path].gz[query]",
           algorithm: "gzip",
