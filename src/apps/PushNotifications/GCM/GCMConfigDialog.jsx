@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Isvg from 'react-inlinesvg';
 
 // Utils
 import { DialogMixin, FormMixin } from '../../../mixins';
@@ -115,7 +116,10 @@ export default React.createClass({
         }
       >
         <div className="row align-center hp-2-l hp-2-r vp-2-t">
-          <div dangerouslySetInnerHTML={{ __html: require('./phone-android.svg') }} />
+          <Isvg
+            wrapper={React.DOM.div}
+            src={require('./phone-android.svg')}
+          />
           <div className="col-flex-1 hm-3-l">
             <Loading show={isCertLoading}>
               <TextField
