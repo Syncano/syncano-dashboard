@@ -277,7 +277,6 @@ export default Radium(React.createClass({
       >
         <div className="row align-center hp-2-l hp-2-r vm-2-b vm-2-t">
           <Isvg
-            wrapper={React.DOM.div}
             src={require('./phone-apple.svg')}
             className="hm-2-r"
           />

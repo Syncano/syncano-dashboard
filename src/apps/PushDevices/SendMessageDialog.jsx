@@ -419,7 +419,6 @@ export default (store, props) => Radium(React.createClass({
           <div className="row hp-1-l hp-1-r vm-3-b">
             <div style={styles.phoneContainer}>
               <Isvg
-                wrapper={React.DOM.div}
                 src={props.phoneIcon}
               />
               <div style={styles.messagePreview}>

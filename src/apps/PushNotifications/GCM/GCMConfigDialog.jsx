@@ -117,7 +117,6 @@ export default React.createClass({
       >
         <div className="row align-center hp-2-l hp-2-r vp-2-t">
           <Isvg
-            wrapper={React.DOM.div}
             src={require('./phone-android.svg')}
           />
           <div className="col-flex-1 hm-3-l">
