@@ -62,10 +62,6 @@ import Tooltip from './Tooltip';
 import Truncate from './Truncate';
 import UpgradeButton from './UpgradeButton';
 import UpgradeNowToolbar from './UpgradeNowToolbar';
-<<<<<<< HEAD
-import StatusLabel from './StatusLabel';
-=======
->>>>>>> origin/sng
 
 export { AlertPageContent };
 export { AutoCompleteWrapper };
@@ -132,10 +128,6 @@ export { TraceResult };
 export { Truncate };
 export { UpgradeButton };
 export { UpgradeNowToolbar };
-<<<<<<< HEAD
-export { StatusLabel };
-=======
->>>>>>> origin/sng
 
 export default {
   AlertPageContent,

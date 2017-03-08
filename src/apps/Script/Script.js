@@ -746,24 +746,15 @@ const Script = React.createClass({
 
   renderContent() {
     const styles = this.getStyles();
-    const { currentScript, editorSource } = this.state;
+    const { currentScript } = this.state;
     const linkToPackages = currentScript && this.getLinkToPackages(currentScript);
-    const editorMode = currentScript ? RuntimeStore.getEditorMode(currentScript.runtime_name) : 'python';
+    let source = null;
+    let editorMode = 'python';
 
-<<<<<<< HEAD
-    const editorSourceValue = () => {
-      if (typeof editorSource === 'string') {
-        return editorSource;
-      }
-
-      return currentScript && currentScript.source;
-    };
-=======
     if (currentScript) {
       source = currentScript.source;
       editorMode = Store.getEditorMode(currentScript.runtime_name);
     }
->>>>>>> origin/sng
 
     return (
       <div
@@ -799,7 +790,7 @@ const Script = React.createClass({
               onChange={this.handleOnSourceChange}
               onLoad={this.clearAutosaveTimer}
               defaultValue={currentScript ? currentScript.source : null}
-              value={editorSourceValue()}
+              value={source}
               width="100%"
               height="100%"
               style={{ position: 'absolute' }}

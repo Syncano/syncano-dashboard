@@ -8,7 +8,7 @@ import Syncano from '../apps/Syncano';
 
 const Libraries = { Syncano };
 const apiV2Request = () => {
-  const host = SYNCANO_BASE_URL;
+  const host = APP_CONFIG.SYNCANO_BASE_URL;
   const accountKey = SessionStore.getToken();
   const instanceName = SessionStore.getInstance().instanceName;
   const request = Promise.create({
