@@ -1,8 +1,6 @@
 import connection from '../create/connection';
 
 import createInstance from '../create/instance';
-import createTestScripts from '../create/scripts';
-import createTestScriptEndpoints from '../create/scriptEndpoint';
 import createTestUsers from '../create/user';
 import createTestApiKey from '../create/apiKey';
 import createTestClasses from '../create/classes';
@@ -15,27 +13,17 @@ const thirdInstance = () => {
       thirdInstanceStructure.instanceName = instanceName;
 
       connection.setInstance(instanceName);
-      return createTestScripts(1);
-    })
-    .then((scriptsNames) => {
-      thirdInstanceStructure.scriptsNames = scriptsNames;
-
-      return createTestScriptEndpoints(2);
-    })
-    .then((scriptEndpointsNames) => {
-      thirdInstanceStructure.scriptEndpointsNames = scriptEndpointsNames;
-
-      return createTestUsers(1);
+      return createTestUsers();
     })
     .then((usersNames) => {
       thirdInstanceStructure.usersNames = usersNames;
 
-      return createTestApiKey(1);
+      return createTestApiKey();
     })
     .then((apiKeyNames) => {
       thirdInstanceStructure.apiKeyNames = apiKeyNames;
 
-      return createTestClasses(1);
+      return createTestClasses();
     })
     .then((classNames) => {
       thirdInstanceStructure.classNames = classNames;

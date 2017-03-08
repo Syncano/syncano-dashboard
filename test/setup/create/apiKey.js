@@ -1,7 +1,7 @@
 import connection from './connection';
 import _ from 'lodash';
 
-const createTestApiKey = (keyAmount) => {
+const createTestApiKey = (keyAmount = 1) => {
   const apiKey = _.times(keyAmount, (index) => {
     const description = `apiKey_${Date.now()}${index}`;
 

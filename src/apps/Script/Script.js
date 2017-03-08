@@ -10,7 +10,6 @@ import AutosaveMixin from './ScriptAutosaveMixin';
 
 import Store from './ScriptStore';
 import Actions from './ScriptActions';
-import RuntimeStore from '../Runtimes/RuntimesStore';
 
 import { Checkbox, FlatButton, FontIcon, IconButton, RaisedButton, TextField } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
@@ -257,7 +256,7 @@ const Script = React.createClass({
   },
 
   getLinkToPackages(currentScript) {
-    const runtimeName = currentScript && RuntimeStore.getRuntimeByName(currentScript.runtime_name);
+    const runtimeName = currentScript && Store.getRuntimeByName(currentScript.runtime_name);
 
     return runtimeName ? runtimeName.packages : '';
   },
@@ -751,6 +750,7 @@ const Script = React.createClass({
     const linkToPackages = currentScript && this.getLinkToPackages(currentScript);
     const editorMode = currentScript ? RuntimeStore.getEditorMode(currentScript.runtime_name) : 'python';
 
+<<<<<<< HEAD
     const editorSourceValue = () => {
       if (typeof editorSource === 'string') {
         return editorSource;
@@ -758,6 +758,12 @@ const Script = React.createClass({
 
       return currentScript && currentScript.source;
     };
+=======
+    if (currentScript) {
+      source = currentScript.source;
+      editorMode = Store.getEditorMode(currentScript.runtime_name);
+    }
+>>>>>>> origin/sng
 
     return (
       <div
