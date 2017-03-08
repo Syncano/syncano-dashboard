@@ -60,12 +60,12 @@ function ci_tests {
     MESSAGE=$(git log --pretty=format:%s -n 1 "$CIRCLE_SHA1")
     yarn run lint
 
-    if [[ "$MESSAGE" == *\[e2e-skip\]* ]]; then
+    if [[ "$MESSAGE" == *\[e2e-skip\]* ]] || [ $CIRCLE_BRANCH = 'master' ]; then
         message "[WARN] Skipping E2E tests !!!"
     else
         ci_setup
 
-        if [ $CIRCLE_BRANCH = 'master' ] || [ $CIRCLE_BRANCH = 'devel' ]; then
+        if [ $CIRCLE_BRANCH = 'devel' ]; then
             message "Starting master/devel test flow..."
             yarn run e2e-master-devel
         else
