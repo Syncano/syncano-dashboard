@@ -143,7 +143,7 @@ const CreateHostingDialog = React.createClass({
     const currentInstance = SessionStore.getInstance();
     const currentInstanceName = currentInstance && currentInstance.name;
     const defaultLink = `https://${currentInstanceName}.syncano.site`;
-    const nameLink = `https://${name}--${currentInstanceName}.syncano.site`;
+    const nameLink = `https://${!name ? '<hosting-name>' : name}--${currentInstanceName}.syncano.site`;
     const styles = this.getStyles();
 
     return (
@@ -168,7 +168,7 @@ const CreateHostingDialog = React.createClass({
               Hosting allows you to manage, deploy and publish websites using Syncano Platform.
             </Dialog.SidebarSection>
             <Dialog.SidebarSection title="Hosting name">
-              {"Hosting's name in Syncano Dashboard. It is also used to construct your hosting domain url."}
+              It is used to construct your hosting domain url. For example {nameLink}
             </Dialog.SidebarSection>
             <Show if={this.hasEditMode()}>
               <Dialog.SidebarSection title="Default hosting">
@@ -178,7 +178,7 @@ const CreateHostingDialog = React.createClass({
             </Show>
             <Dialog.SidebarSection title="CNAME">
               If your domain name is, for example, <em>my-domain.com</em> then type it in the CNAME field. Next,
-              go to your domain name provider website and set the CNAME to point at {nameLink}
+              go to your domain name provider website and set the CNAME to point at {defaultLink}
             </Dialog.SidebarSection>
             <Dialog.SidebarSection last={true}>
               <Dialog.SidebarLink to="http://docs.syncano.io/v1.1/docs/hosting/">
