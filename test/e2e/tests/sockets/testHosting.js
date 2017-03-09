@@ -15,12 +15,13 @@ export default addTestNamePrefixes({
     const hostingPage = client.page.hostingPage();
     const hosting = utils.addSuffix('hosting');
     const domain = `${utils.randomString(10)}domain.io`;
+    const name = utils.getHostingName();
     const { instanceName } = instances.secondInstance;
 
     hostingPage
       .goToUrl(instanceName, 'hosting')
       .clickElement('@addHostingButton')
-      .fillInput('@nameInput', 'name')
+      .fillInput('@nameInput', name)
       .fillInput('@descriptionInput', hosting)
       .fillInput('@cnameInput', domain)
       .clickElement('@addHostingConfirmButton')

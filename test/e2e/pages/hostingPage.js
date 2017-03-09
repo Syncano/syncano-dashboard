@@ -30,7 +30,7 @@ export default {
       selector: '[data-e2e="hosting-delete-dialog-confirm"]'
     },
     hostingDropdownIcon: {
-      selector: '[data-e2e="name-hosting-dropdown-icon"]'
+      selector: `[data-e2e="${utils.getHostingName()}-hosting-dropdown-icon"]`
     },
     editedHostingDropdownIcon: {
       selector: `[data-e2e="${utils.addSuffix('edited')}-hosting-dropdown-icon"]`
@@ -42,7 +42,7 @@ export default {
       selector: '[data-e2e="dropdown-hosting-item-delete"]'
     },
     hostingListItemFilesLink: {
-      selector: '[data-e2e="name-hosting-list-item-files"]'
+      selector: `[data-e2e="${utils.getHostingName()}-hosting-list-item-files"]`
     },
     hostingUploadFilesInput: {
       selector: '[data-e2e="hosting-upload-files"]'
