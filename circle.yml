@@ -54,7 +54,7 @@ deployment:
   sockets:
     branch: /.*/
     commands:
-      - yarn deploy
+      - yarn deploy:staging
 
 experimental:
   notify:
