@@ -7,7 +7,6 @@ export default CreateActions(
     fetchChannels: {
       asyncResult: true,
       loading: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Channels.list'
     }

@@ -49,9 +49,11 @@ class PricingPlans extends Component {
   }
 
   renderCurrentPlan = () => {
-    const currentApiPrice = ProfileBillingPlanStore.getCurrentPlanValue('api');
-    const currentCbxPrice = ProfileBillingPlanStore.getCurrentPlanValue('cbx');
-    const plans = PricingPlansUtil.getPlans(currentApiPrice, currentCbxPrice);
+    const currentPrices = {
+      api: ProfileBillingPlanStore.getCurrentPlanValue('api'),
+      cbx: ProfileBillingPlanStore.getCurrentPlanValue('cbx')
+    };
+    const plans = PricingPlansUtil.getPlans(currentPrices);
     const pricingPlanKey = ProfileBillingPlanStore.getPricingPlanKey();
     const price = ProfileBillingPlanStore.getPlanTotalValue();
 
@@ -64,8 +66,8 @@ class PricingPlans extends Component {
         {...plans[pricingPlanKey]}
         isCurrent={true}
         isHidden={false}
-        apiOptions={PricingPlansUtil.getOptions('api', currentApiPrice, currentApiPrice)}
-        cbxOptions={PricingPlansUtil.getOptions('cbx', currentCbxPrice, currentCbxPrice)}
+        apiOptions={PricingPlansUtil.getOptions('api', currentPrices.api, currentPrices.api)}
+        cbxOptions={PricingPlansUtil.getOptions('cbx', currentPrices.cbx, currentPrices.cbx)}
         price={price}
         disabled={true}
       />

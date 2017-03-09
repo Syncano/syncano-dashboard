@@ -27,7 +27,7 @@ const Instance = React.createClass({
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-        <div className="row" style={{ display: 'flex', flex: 1 }}>
+        <div style={{ display: 'flex', flex: 1 }}>
           <Sidebar>
             <HeaderInstancesDropdown />
             <div style={{ paddingTop: 56 }}>
@@ -126,10 +126,7 @@ const Instance = React.createClass({
               </Sidebar.List>
             </div>
           </Sidebar>
-          <div
-            className="col-flex-1"
-            style={{ maxWidth: 'calc(100% - 256px)', display: 'flex', flexDirection: 'column' }}
-          >
+          <div style={{ maxWidth: 'calc(100vw - 256px)', display: 'flex', flexDirection: 'column', flex: 1 }}>
             {children}
           </div>
         </div>

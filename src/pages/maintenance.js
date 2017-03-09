@@ -42,7 +42,7 @@ export default class extends Component {
 
     return (
       <AlertPageContent
-        imgSrc={'/img/illustrations/undergoing-maintenance.svg'}
+        imgSrc={require('../assets/img/illustrations/undergoing-maintenance.svg')}
         headline="Our platform is currently undergoing maintenance."
         message={<span>{'We\'ll be back as soon as we update a few things.'}<br />Thank you for your patience!</span>}
         buttonSet={

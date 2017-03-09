@@ -34,7 +34,7 @@ export default {
       selector: '[data-e2e="dropdown-hosting-item-edit"]'
     },
     hostingListItemFilesLink: {
-      selector: '[data-e2e="name-hosting-list-item-files"]'
+      selector: `[data-e2e="${utils.getHostingName()}-hosting-list-item-files"]`
     },
     hostingFilesListItem: {
       selector: '[data-e2e="simplefilename.testfile-list-item-name"]'

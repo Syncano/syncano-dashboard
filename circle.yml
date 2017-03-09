@@ -1,8 +1,11 @@
 machine:
   node:
-    version: 7.0.0
+    version: 7
   java:
     version: oraclejdk8
+  environment:
+    YARN_VERSION: 0.17.10
+    PATH: "${PATH}:${HOME}/.yarn/bin"
 
 general:
   artifacts:
@@ -10,32 +13,53 @@ general:
     - "reports/"
 
 dependencies:
+  pre:
+    - |
+      if [[ ! -e ~/.yarn/bin/yarn || $(yarn --version) != "${YARN_VERSION}" ]]; then
+        echo "Download and install Yarn."
+        curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
+      else
+        echo "The correct version of Yarn is already installed."
+      fi
+  override:
+    - yarn install
+  cache_directories:
+    - ~/.yarn
+    - ~/.yarn-cache
   post:
     - curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     - sudo dpkg -i google-chrome.deb
     - sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
+    - google-chrome --version
     - rm google-chrome.deb
 
 test:
   override:
-    - google-chrome --version
-    - npm test && npm run e2e:
-        timeout: 150
+    - yarn test && yarn e2e:
+        timeout: 400
 
 deployment:
   production:
     branch: master
     commands:
-      - npm run git-config
-      - NODE_ENV=production npm run deployment-master
+      - yarn git-config
+      - yarn deploy
 
   staging:
     branch: devel
     commands:
-      - NODE_ENV=staging npm run deployment-devel
-      - NODE_ENV=beta npm run deployment-beta
+      - yarn deploy:staging
+      - yarn deploy:beta
 
   sockets:
     branch: /.*/
     commands:
-      - NODE_ENV=staging npm run deployment-branch
+      - yarn deploy:staging
+
+experimental:
+  notify:
+    branches:
+      only:
+        - master
+        - devel
+        - sng

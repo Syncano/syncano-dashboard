@@ -6,7 +6,8 @@ import Filesize from 'filesize';
 import _ from 'lodash';
 
 // Utils
-import { DialogMixin, FormMixin } from '../../mixins';
+import { DialogMixin, DialogsMixin, FormMixin } from '../../mixins';
+import Constants from '../../constants/Constants';
 
 // Stores and Actions
 import Actions from './DataObjectsActions';
@@ -17,6 +18,7 @@ import { GroupsActions } from '../Groups';
 
 // Components
 import { TextField, FlatButton, IconButton, DatePicker, TimePicker } from 'material-ui';
+import { colors as Colors } from 'material-ui/styles/';
 import { Dialog, SelectFieldWrapper } from '../../common/';
 import { GroupsDropdown } from '../Groups';
 
@@ -188,14 +190,12 @@ export default React.createClass({
         } else if (item.type === 'datetime') {
           let dateInput = this.refs[`fielddate-${item.name}`].refs.input.getValue();
           let timeInput = this.refs[`fieldtime-${item.name}`].refs.input.getValue();
-          let date = null;
-          let time = null;
 
           params[item.name] = null;
 
           if (dateInput.length !== 0 && timeInput.length !== 0) {
-            date = this.refs[`fielddate-${item.name}`].getDate();
-            time = this.refs[`fieldtime-${item.name}`].getTime();
+            const date = this.refs[`fielddate-${item.name}`].state.date;
+            const time = this.refs[`fieldtime-${item.name}`].state.time;
 
             let dateTime = new Date(
               date.getFullYear(),
@@ -363,6 +363,39 @@ export default React.createClass({
 
   handleChangeOtherPermissions(event, index, value) {
     this.setSelectFieldValue('other_permissions', value)
+  },
+
+  isClassProtected() {
+    const { className } = this.state;
+
+    return _.includes(Constants.PROTECTED_FROM_DELETE_CLASS_NAMES, className);
+  },
+
+  showDeleteDialog() {
+    this.refs.deleteDataObjectDialog.show();
+  },
+
+  handleDelete() {
+    const { className, id } = this.state;
+
+    Actions.removeDataObjects(className, [id]);
+  },
+
+  initDialogs() {
+    const { isLoading } = this.props;
+
+    return [{
+      dialog: Dialog.Delete,
+      params: {
+        key: 'deleteDataObjectDialog',
+        ref: 'deleteDataObjectDialog',
+        title: 'Delete a Data Object',
+        handleConfirm: this.handleDelete,
+        items: this.state.id,
+        groupName: 'Data Object',
+        isLoading
+      }
+    }];
   },
 
   renderBuiltinFields() {
@@ -688,6 +721,37 @@ export default React.createClass({
     }
   },
 
+  renderDeleteButton() {
+    if (this.hasEditMode() && !this.isClassProtected()) {
+      return (
+        <FlatButton
+          style={{ float: 'left' }}
+          labelStyle={{ color: Colors.red400 }}
+          label="Delete a Data Object"
+          onTouchTap={this.showDeleteDialog}
+          data-e2e="delete-data-object-dialog-button"
+        />
+      );
+    }
+
+    return null;
+  },
+
+  renderDialogActions() {
+    return (
+      <div>
+        {this.renderDeleteButton()}
+        <Dialog.StandardButtons
+          data-e2e-submit="data-object-submit"
+          data-e2e-cancel="data-object-cancel"
+          disabled={!this.state.canSubmit}
+          handleCancel={this.handleCancel}
+          handleConfirm={this.handleFormValidation}
+        />
+      </div>
+    );
+  },
+
   render() {
     const styles = this.getStyles();
     const editTitle = `Edit a Data Object #${this.state.id} (${DataObjectsStore.getCurrentClassName()})`;
@@ -702,14 +766,9 @@ export default React.createClass({
         onRequestClose={this.handleCancel}
         open={this.state.open}
         isLoading={this.state.isLoading}
-        actions={
-          <Dialog.StandardButtons
-            data-e2e-submit="data-object-submit"
-            data-e2e-cancel="data-object-cancel"
-            disabled={!this.state.canSubmit}
-            handleCancel={this.handleCancel}
-            handleConfirm={this.handleFormValidation}/>
-        }>
+        actions={this.renderDialogActions()}
+      >
+        {DialogsMixin.getDialogs(this.initDialogs())}
         <div className="vm-2-b">
           {this.renderFormNotifications()}
         </div>

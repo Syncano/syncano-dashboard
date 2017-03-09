@@ -50,7 +50,6 @@ class HostingListItem extends Component {
           <div style={styles.websiteUrlContainer}>
             <HostingListItemLinks
               items={item.domains}
-              hostingLabel={item.name}
               isDefault={item.is_default}
             />
           </div>

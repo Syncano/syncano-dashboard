@@ -5,7 +5,7 @@ import { Color } from '../../common/';
 const PreviewCircle = ({ color, icon }) => {
   const styles = {
     container: {
-      background: Color.getColorByName(color),
+      backgroundColor: Color.getColorByName(color),
       display: 'flex',
       justifyContent: 'center',
       margin: '0 auto 15px',

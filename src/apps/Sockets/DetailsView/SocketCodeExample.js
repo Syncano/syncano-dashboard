@@ -12,7 +12,7 @@ const SocketCodeExamples = ({ socketName, currentLanguage, endpointName, methodT
   const getCurrentLanguageExample = (language) => {
     const isGetMethod = methodType === 'GET';
     const accountKey = SessionStore.getToken();
-    const baseUrl = `${SYNCANO_BASE_URL}/v1.1/`;
+    const baseUrl = `${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/`;
     const examplesLang = {
       curl: `curl -X ${methodType} \\\n` +
         `-H "X-API-KEY: ${accountKey}" \\\n` +

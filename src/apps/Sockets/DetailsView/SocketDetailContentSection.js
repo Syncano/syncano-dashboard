@@ -148,7 +148,7 @@ const SocketsRegistryContentSection = ({
               style={styles.header}
               headerLabel="Definition"
             >
-              {`${SYNCANO_BASE_URL}/v1.1/instances/your_instance/sockets/${socketName}/${endpointName}/`}
+              {`${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/your_instance/sockets/${socketName}/${endpointName}/`}
             </MethodDescription>
             <Show if={method.info.description}>
               <MethodDescription

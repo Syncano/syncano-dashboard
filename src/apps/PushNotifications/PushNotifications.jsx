@@ -3,6 +3,8 @@ import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
 import PushDevices from '../PushDevices';
+import APNSDevicesStore from '../PushDevices/APNSDevices/APNSDevicesStore';
+import GCMDevicesStore from '../PushDevices/GCMDevices/GCMDevicesStore';
 import APNSPushNotificationsActions from './APNS/APNSPushNotificationsActions';
 import APNSPushNotificationsStore from './APNS/APNSPushNotificationsStore';
 import GCMPushNotificationsActions from './GCM/GCMPushNotificationsActions';
@@ -22,7 +24,9 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(APNSPushNotificationsStore, 'APNSPushNotifications'),
-    Reflux.connect(GCMPushNotificationsStore, 'GCMPushNotifications')
+    Reflux.connect(GCMPushNotificationsStore, 'GCMPushNotifications'),
+    Reflux.connect(APNSDevicesStore, 'APNSDevices'),
+    Reflux.connect(GCMDevicesStore, 'GCMDevices')
   ],
 
   componentDidMount() {
@@ -33,11 +37,13 @@ export default React.createClass({
   },
 
   renderContent() {
-    const { APNSPushNotifications, GCMPushNotifications } = this.state;
+    const { APNSPushNotifications, GCMPushNotifications, APNSDevices, GCMDevices } = this.state;
     const items = APNSPushNotifications.items.concat(GCMPushNotifications.items);
     const APNSConfig = APNSPushNotifications.items[0];
     const GCMConfig = GCMPushNotifications.items[0];
-    const isLoading = APNSPushNotifications.isLoading || GCMPushNotifications.isLoading;
+    const areNotificationsLoading = APNSPushNotifications.isLoading || GCMPushNotifications.isLoading;
+    const areDevicesLoading = APNSDevices.isLoading || GCMDevices.isLoading;
+    const isLoading = areNotificationsLoading || areDevicesLoading;
 
     if (!APNSPushNotifications || !GCMPushNotifications) {
       return <div />;

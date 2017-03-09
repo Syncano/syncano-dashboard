@@ -3,17 +3,17 @@ import _ from 'lodash';
 import PromiseSeries from 'promise-series';
 
 export default {
-  list(pageNumber = 1) {
+  list(pageNumber = 1, sortingField) {
     const series = new PromiseSeries();
-    let allItems = { users: [], dataObjects: [] };
+    const allItems = { users: [], dataObjects: [] };
 
     series.add(() => (
       this.NewLibConnection
         .DataObject
         .please()
         .list()
-        .orderBy('-created_at')
-        .pageSize(Constants.DATAOBJECTS_PAGE_SIZE)
+        .orderBy(sortingField)
+        .pageSize(Constants.DATA_OBJECTS_PAGE_SIZE)
         .then((items) => {
           allItems.dataObjects = [...allItems, ...items];
 
@@ -24,7 +24,7 @@ export default {
     _.times((pageNumber - 1), () => {
       series.add((nextParams) => (
         nextParams.next().then((items) => {
-          allItems = [...allItems, ...items];
+          allItems.dataObjects = [...allItems, ...items];
 
           return items;
         })
@@ -41,27 +41,21 @@ export default {
       .catch(this.failure);
   },
 
-  subList(nextParams, users) {
-    const allItems = { dataObjects: [], users: [] };
-
-    nextParams.next()
-      .then((nextDataObjects) => {
-        allItems.dataObjects = nextDataObjects;
-        users.next()
-          .then((nextUsers) => {
-            allItems.users = [...users, ...nextUsers];
-            allItems.users.next = nextUsers.next;
-            return this.completed(allItems);
-          });
-      })
-      .catch(this.failure);
-  },
-
   get(payload) {
     this.NewLibConnection
       .DataObject
       .please()
       .get(payload)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
+  getCount() {
+    this.NewLibConnection
+      .DataObject
+      .please()
+      .list()
+      .count()
       .then(this.completed)
       .catch(this.failure);
   },

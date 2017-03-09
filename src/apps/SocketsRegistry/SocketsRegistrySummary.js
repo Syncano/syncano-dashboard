@@ -61,7 +61,7 @@ const SocketsRegistrySummary = ({ item }) => {
       >
         <MethodLabel method={method} />
         <div style={styles.callUrl}>
-          {`${SYNCANO_BASE_URL}/v1.1/instances/${item.instanceName}/endpoints/sockets/${call.name}/`}
+          {`${APP_CONFIG.SYNCANO_BASE_URL}/v1.1/instances/${item.instanceName}/endpoints/sockets/${call.name}/`}
         </div>
       </div>
     ));

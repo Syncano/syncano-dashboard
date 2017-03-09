@@ -164,6 +164,10 @@ const Script = React.createClass({
       dialogRefreshButtonIcon: {
         fontSize: 36
       },
+      buttonsWrapper: {
+        display: 'flex',
+        alignItems: 'center'
+      },
       codeContainer: {
         display: 'flex',
         borderRight: '1px solid rgba(224, 224, 224, .5)'
@@ -272,30 +276,29 @@ const Script = React.createClass({
   },
 
   isSaved() {
-    const { currentScript } = this.state;
+    const { currentScript, editorSource } = this.state;
 
-    if (!currentScript || !this.refs.editorSource) {
+    if (!currentScript || !editorSource) {
       return true;
     }
 
     const initialSource = currentScript.source;
-    const currentSource = this.refs.editorSource.editor.getValue();
+    const currentSource = editorSource;
 
     return _.isEqual(initialSource, currentSource) && _.isEqual(currentScript.config, this.getConfigObject());
   },
 
-  handleOnSourceChange() {
-    this.resetForm();
+  handleOnSourceChange(editorSource) {
     this.runAutoSave();
+    this.setState({ editorSource });
   },
 
   handleRunScript() {
-    const { currentScript, payload } = this.state;
+    const { currentScript, editorSource, payload } = this.state;
     const config = this.getConfigObject();
-    const source = this.refs.editorSource.editor.getValue();
     const updateParams = {
       config,
-      source
+      source: editorSource
     };
     const runParams = {
       id: currentScript.id,
@@ -334,11 +337,12 @@ const Script = React.createClass({
 
   handleUpdate() {
     if (this.areEditorsLoaded()) {
+      const { editorSource } = this.state;
       const { id } = this.state.currentScript;
 
       this.handleAddFieldOnSave();
       const config = this.getConfigObject();
-      const source = this.refs.editorSource.editor.getValue();
+      const source = editorSource;
 
       this.clearAutosaveTimer();
       Actions.updateScript(id, { config, source });
@@ -682,16 +686,22 @@ const Script = React.createClass({
 
   renderToolbar() {
     const styles = this.getStyles();
-    const { isLoading, isSidebarHidden } = this.state;
+    const { currentScript, isSidebarHidden } = this.state;
+    const scriptLabel = currentScript && currentScript.label;
+    const scriptId = currentScript && currentScript.id;
 
     return (
       <InnerToolbar
-        title={this.getToolbarTitle()}
+        backButton={true}
         backFallback={this.handleBackClick}
         forceBackFallback={true}
         backButtonTooltip="Go back to Scripts list"
+        title={{
+          title: `Script: ${scriptLabel}`,
+          id: scriptId
+        }}
       >
-        <Show if={!isLoading}>
+        <div style={styles.buttonsWrapper}>
           <div style={styles.toolbarCheckbox}>
             <Checkbox
               label="Show Sidebar"
@@ -729,7 +739,7 @@ const Script = React.createClass({
             onTouchTap={this.handleRunTouchTap}
             data-e2e="script-run-button"
           />
-        </Show>
+        </div>
       </InnerToolbar>
     );
   },
@@ -775,10 +785,11 @@ const Script = React.createClass({
           <div style={styles.codeEditorContainer}>
             <Editor
               ref="editorSource"
-              name="editorSource"
+              editorName="editorSource"
               mode={editorMode}
               onChange={this.handleOnSourceChange}
               onLoad={this.clearAutosaveTimer}
+              defaultValue={currentScript ? currentScript.source : null}
               value={source}
               width="100%"
               height="100%"
@@ -811,19 +822,20 @@ const Script = React.createClass({
   },
 
   renderSidebarPayloadSection() {
+    const { payload } = this.state;
     const styles = this.getStyles();
 
     return (
       <div>
         <TogglePanel title="Payload">
           <Editor
-            name="payload-editor"
+            editorName="payloadSource"
             ref="payloadSource"
             mode="json"
             height="120px"
             onChange={this.handlePayloadChange}
-            onLoad={this.clearAutosaveTimer}
-            value={this.handlePayloadValue()}
+            defaultValue={this.handlePayloadValue()}
+            value={payload || this.handlePayloadValue()}
           />
         </TogglePanel>
         <Show if={this.getValidationMessages('payload').length}>

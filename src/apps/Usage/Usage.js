@@ -11,7 +11,7 @@ import InstancesStore from '../../apps/Instances/InstancesStore';
 
 import { SelectField, MenuItem } from 'material-ui';
 import { Container, InnerToolbar, Billing, Loading } from '../../common/';
-import Chart from '../Profile/ProfileBillingChart';
+import UsageChart from './UsageChart';
 
 export default React.createClass({
   displayName: 'ProfileBillingPlan',
@@ -93,7 +93,7 @@ export default React.createClass({
               </div>
               <div className="col-flex-1" />
             </div>
-            <Chart charts={chart.charts} />
+            <UsageChart charts={chart.charts} />
           </Loading>
         </Container>
       </div>

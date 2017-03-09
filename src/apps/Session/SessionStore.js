@@ -110,7 +110,7 @@ export default Reflux.createStore({
   setLoggedInCookie() {
     // cookie to detect on website if user is logged in
     Cookies.set('logged_in', 'true', {
-      domain: SYNCANO_BASE_DOMAIN,
+      domain: APP_CONFIG.SYNCANO_BASE_DOMAIN,
       expires: 365
     });
   },
@@ -203,10 +203,6 @@ export default Reflux.createStore({
     Actions.setInstance(payload);
   },
 
-  onFetchInstanceFailure() {
-    Actions.handleInvalidURL();
-  },
-
   onFetchUserCompleted(payload) {
     Actions.setUser(payload.data);
   },
@@ -256,7 +252,7 @@ export default Reflux.createStore({
     localStorage.removeItem('lastPathname');
     localStorage.removeItem('token');
     localStorage.removeItem('invitationKey');
-    Cookies.remove('logged_in', { domain: SYNCANO_BASE_DOMAIN });
+    Cookies.remove('logged_in', { domain: APP_CONFIG.SYNCANO_BASE_DOMAIN });
 
     Raven.setUserContext();
     window.analytics.identify();
@@ -265,10 +261,6 @@ export default Reflux.createStore({
     if (this.router) {
       this.router.push({ pathname: '/login', query: _.merge(this.location.query, { next: this.location.pathname }) });
     }
-  },
-
-  onHandleInvalidURL() {
-    this.getRouter().push('instances');
   },
 
   isAuthenticated() {

@@ -130,6 +130,14 @@ export default (type, Store, Actions, sidebar) => {
       return this.setState({ metadata: value });
     },
 
+    handleMetadataValue(value) {
+      if (typeof value === 'object') {
+        return JSON.stringify(value, null, '\t');
+      }
+
+      return value;
+    },
+
     removeEmptyKeys(params) {
       return _.omit(params, _.isEmpty);
     },
@@ -210,7 +218,8 @@ export default (type, Store, Actions, sidebar) => {
                   onChange={this.handleMetadataChange}
                   onFocus={disableBindShortcuts}
                   onBlur={enableBindShortcuts}
-                  value={JSON.stringify(metadata, null, '\t')}
+                  value={this.handleMetadataValue(metadata)}
+                  defaultValue={this.handleMetadataValue(metadata)}
                 />
                 <Show if={this.getValidationMessages('metadata').length}>
                   <div className="vm-2-t">

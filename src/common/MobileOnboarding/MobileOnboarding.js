@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import Logo from '../Logo';
 
 class MobileOnboarding extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       currentSlideIndex: 0
@@ -22,7 +22,7 @@ class MobileOnboarding extends Component {
       background: '#244273',
       display: 'flex',
       alignItems: 'center',
-      padding: '0 15px'
+      padding: '0 24px'
     },
     headerLogo: {
       height: 20
@@ -67,7 +67,9 @@ class MobileOnboarding extends Component {
     const { currentSlideIndex } = this.state;
 
     if (currentSlideIndex + 1 < children.length) {
-      this.setState({ currentSlideIndex: currentSlideIndex + 1 });
+      this.setState((prevState) => ({
+        currentSlideIndex: prevState.currentSlideIndex + 1
+      }));
     }
   }
 
@@ -75,7 +77,9 @@ class MobileOnboarding extends Component {
     const { currentSlideIndex } = this.state;
 
     if (currentSlideIndex > 0) {
-      this.setState({ currentSlideIndex: currentSlideIndex - 1 });
+      this.setState((prevState) => ({
+        currentSlideIndex: prevState.currentSlideIndex - 1
+      }));
     }
   }
 
@@ -116,7 +120,7 @@ class MobileOnboarding extends Component {
       <span
         className="synicon-arrow-left"
         style={styles.footerIcon}
-        onTouchTap={this.showPrevSlide}
+        onClick={this.showPrevSlide}
       />
     );
   }
@@ -134,7 +138,7 @@ class MobileOnboarding extends Component {
       <span
         className="synicon-arrow-right"
         style={styles.footerIcon}
-        onTouchTap={this.showNextSlide}
+        onClick={this.showNextSlide}
       />
     );
   }

@@ -26,6 +26,11 @@ const utils = {
     return text.toString() + this.suffix;
   },
 
+  // Separate funcition for hosting names as we cannot use '_' in naming
+  getHostingName() {
+    return `hosting${this.suffix.substring(1)}`;
+  },
+
   // Method to determine wether to use COMMAND or CONTROL key
   // Based on the operating system. The unicode values are taken from the W3 Webdriver spec:
   // https://www.w3.org/TR/webdriver/#character-types

@@ -149,6 +149,10 @@ class PricingPlansPlan extends Component {
   getPlanHeaderContent() {
     const { price } = this.props;
 
+    if (ProfileBillingPlanStore.getProfileStatus() === 'no_active_subscription') {
+      return '(plan expired)';
+    }
+
     if (price === 'Free') {
       const subscriptionEndDate = ProfileBillingPlanStore.getActiveSubscriptionEndDate();
 
@@ -315,7 +319,7 @@ class PricingPlansPlan extends Component {
             disabled={true}
             leftIcon={
               <img
-                src={'/img/check.svg'}
+                src={require('../../assets/img/check.svg')}
                 alt="check icon"
                 style={styles.listItemIcon}
               />

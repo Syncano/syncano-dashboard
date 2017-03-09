@@ -13,6 +13,7 @@ import ColumnList from './ColumnList';
 import Container from './Container';
 import CreditCard from './CreditCard';
 import CreditCardForm from './CreditCardForm';
+import CustomTitle from './CustomTitle';
 import DataObjectsAmount from './DataObjectsAmount';
 import Dialog from './Dialog';
 import DialogRefreshButton from './DialogRefreshButton';
@@ -34,6 +35,7 @@ import MobileOnboarding from './MobileOnboarding';
 import NoMobileInfo from './NoMobileInfo';
 import Notification from './Notification';
 import PageIntro from './PageIntro';
+import Pagination from './Pagination';
 import PaymentIcon from './PaymentIcon';
 import PaymentIcons from './PaymentIcons';
 import Popover from './Popover';
@@ -53,6 +55,7 @@ import Spacing from './Spacing';
 import StatusLabel from './StatusLabel';
 import Stepper from './Stepper';
 import SyncanoTheme from './SyncanoTheme';
+import TableHeaderSortableColumn from './TableHeaderSortableColumn';
 import Tags from './Tags';
 import TogglePanel from './TogglePanel';
 import Tooltip from './Tooltip';
@@ -74,6 +77,7 @@ export { ColumnList };
 export { Container };
 export { CreditCard };
 export { CreditCardForm };
+export { CustomTitle };
 export { DataObjectsAmount };
 export { Dialog };
 export { DialogRefreshButton };
@@ -95,6 +99,7 @@ export { MobileOnboarding };
 export { NoMobileInfo };
 export { Notification };
 export { PageIntro };
+export { Pagination };
 export { PaymentIcon };
 export { PaymentIcons };
 export { Popover };
@@ -114,6 +119,7 @@ export { Spacing };
 export { StatusLabel };
 export { Stepper };
 export { SyncanoTheme };
+export { TableHeaderSortableColumn };
 export { Tags };
 export { TogglePanel };
 export { Tooltip };
@@ -138,6 +144,7 @@ export default {
   Container,
   CreditCard,
   CreditCardForm,
+  CustomTitle,
   DataObjectsAmount,
   Dialog,
   DialogRefreshButton,
@@ -159,6 +166,7 @@ export default {
   NoMobileInfo,
   Notification,
   PageIntro,
+  Pagination,
   PaymentIcon,
   PaymentIcons,
   Popover,
@@ -178,6 +186,7 @@ export default {
   StatusLabel,
   Stepper,
   SyncanoTheme,
+  TableHeaderSortableColumn,
   Tags,
   TogglePanel,
   Tooltip,

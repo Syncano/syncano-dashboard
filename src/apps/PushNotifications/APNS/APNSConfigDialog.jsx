@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
 import _ from 'lodash';
-import Syncano from 'syncano';
+import Isvg from 'react-inlinesvg';
 
 // Utils
 import { DialogMixin, FormMixin } from '../../../mixins';
@@ -95,130 +95,118 @@ export default Radium(React.createClass({
     };
   },
 
-  onDrop(file, type) {
-    let certificate = file;
+  getParams() {
+    const { certificateTypes } = this.state;
+    const params = { certificateTypes };
+    const typeParams = ['certificate', 'certificate_name', 'bundle_identifier'];
 
-    if (_.isArray(file)) {
-      certificate = file[0];
-    }
+    _.forEach(certificateTypes, (type) => {
+      _.forEach(typeParams, (param) => {
+        params[`${type}_${param}`] = this.state[`${type}_${param}`];
+      });
+    });
 
-    const state = {
-      development: {
-        development_certificate_name: certificate.name,
-        development_certificate: Syncano.file(certificate)
-      },
-      production: {
-        production_certificate_name: certificate.name,
-        production_certificate: Syncano.file(certificate)
-      }
-    };
-
-    this.setState(state[type]);
+    return params;
   },
 
   handleAddSubmit() {
-    Actions.configAPNSPushNotification(this.removeEmptyParams(this.state));
-  },
-
-  removeEmptyParams(params) {
-    return _.omitBy(params, _.isEmpty);
-  },
-
-  clearCertificate(type) {
-    const params = {
-      [`${type}_certificate`]: false,
-      [`${type}_certificate_name`]: null,
-      [`${type}_bundle_identifier`]: null
-    };
-
-    Actions.removeCertificate(params);
+    Actions.configAPNSPushNotification(this.getParams());
   },
 
   renderDropzoneDescription(type) {
     const styles = this.getStyles();
+    const handleRemoveCertificate = () => Actions.removeCertificate(type);
+    const setCertificateName = (event, value) => this.setState({ [`${type}_certificate_name`]: value });
+    const setCertificateBundleIdentfier = (event, value) => this.setState({ [`${type}_bundle_identifier`]: value });
 
-    if (this.state[`${type}_certificate`]) {
-      return (
-        <div
-          className="row"
-          style={styles.dropzoneWithFileContainer}
-        >
-          <IconButton
-            data-e2e="apns-notification-remove-certificate"
-            onTouchTap={() => this.clearCertificate(type)}
-            style={styles.closeIcon}
-            iconStyle={styles.closeIconColor}
-            tooltip="Remove cerificate"
-            iconClassName="synicon-close"
-          />
-          <div className="col-flex-1">
-            <div style={styles.dropzoneWithFileTitle}>{_.capitalize(type)} certificate</div>
-            <div className="row align-middle">
-              <div className="col-xs-24">
-                <TextField
-                  data-e2e={`${type}-certificate-name-input`}
-                  fullWidth={true}
-                  value={this.state[`${type}_certificate_name`]}
-                  onChange={(event, value) => this.setState({ [`${type}_certificate_name`]: value })}
-                  errorText={this.getValidationMessages(`${type}_certificate_name`).join(' ')}
-                  floatingLabelText="Apple Push Notification Certificate Name"
-                />
-              </div>
-              <div className="col-xs-11">
-                <TextField
-                  underlineShow={false}
-                  disabled={true}
-                  autoWidth={true}
-                  fullWidth={true}
-                  value={_.capitalize(type)}
-                  floatingLabelText="Type"
-                />
-              </div>
+    if (!this.state[`${type}_certificate`]) {
+      return null;
+    }
+
+    return (
+      <div
+        className="row"
+        style={styles.dropzoneWithFileContainer}
+      >
+        <IconButton
+          data-e2e="apns-notification-remove-certificate"
+          onTouchTap={handleRemoveCertificate}
+          style={styles.closeIcon}
+          iconStyle={styles.closeIconColor}
+          tooltip="Remove cerificate"
+          iconClassName="synicon-close"
+        />
+        <div className="col-flex-1">
+          <div style={styles.dropzoneWithFileTitle}>{_.capitalize(type)} certificate</div>
+          <div className="row align-middle">
+            <div className="col-xs-24">
+              <TextField
+                data-e2e={`${type}-certificate-name-input`}
+                fullWidth={true}
+                value={this.state[`${type}_certificate_name`]}
+                onChange={setCertificateName}
+                errorText={this.getValidationMessages(`${type}_certificate_name`).join(' ')}
+                floatingLabelText="Apple Push Notification Certificate Name"
+              />
             </div>
-            <div className="row align-middle">
-              <div className="col-xs-23">
-                <TextField
-                  fullWidth={true}
-                  value={this.state[`${type}_bundle_identifier`]}
-                  onChange={(event, value) => this.setState({ [`${type}_bundle_identifier`]: value })}
-                  errorText={this.getValidationMessages(`${type}_bundle_identifier`).join(' ')}
-                  floatingLabelText="Bundle Identifier"
-                />
-              </div>
-              <div className="col-xs-12">
-                <div style={styles.certificateType}>Expiration Date</div>
-                {this.state[`${type}_expiration_date`]}
-              </div>
+            <div className="col-xs-11">
+              <TextField
+                underlineShow={false}
+                disabled={true}
+                autoWidth={true}
+                fullWidth={true}
+                value={_.capitalize(type)}
+                floatingLabelText="Type"
+              />
+            </div>
+          </div>
+          <div className="row align-middle">
+            <div className="col-xs-23">
+              <TextField
+                fullWidth={true}
+                disabled={!_.isObject(this.state[`${type}_certificate`])}
+                value={this.state[`${type}_bundle_identifier`]}
+                onChange={setCertificateBundleIdentfier}
+                errorText={this.getValidationMessages(`${type}_bundle_identifier`).join(' ')}
+                floatingLabelText="Bundle Identifier"
+              />
+            </div>
+            <div className="col-xs-12">
+              <div style={styles.certificateType}>Expiration Date</div>
+              {this.state[`${type}_expiration_date`]}
             </div>
           </div>
         </div>
-      );
-    }
-
-    return null;
+      </div>
+    );
   },
 
   renderDropZones() {
     const { certificateTypes, isCertLoading } = this.state;
 
-    return _.map(certificateTypes, (type) => (
-      <div
-        key={`dropzone${type}`}
-        style={[type === 'production' && { marginTop: 16 }]}
-      >
-        <DropZone
-          certificateType={type}
-          isLoading={isCertLoading}
-          handleButtonClick={(file) => this.onDrop(file, type)}
-          onDrop={(file) => this.onDrop(file, type)}
-          disableClick={true}
-          withButton={true}
-          uploadButtonLabel="UPLOAD .p12 CERTIFICATE"
+    return _.map(certificateTypes, (type) => {
+      const handleOnDrop = (file) => Actions.setCertificate(type, file);
+
+      return (
+        <div
+          key={`dropzone${type}`}
+          style={[type === 'production' && { marginTop: 16 }]}
         >
-          {this.renderDropzoneDescription(type)}
-        </DropZone>
-      </div>
-    ));
+          <DropZone
+            certificateType={type}
+            accept="application/x-pkcs12"
+            isLoading={isCertLoading}
+            handleButtonClick={handleOnDrop}
+            onDrop={handleOnDrop}
+            disableClick={true}
+            withButton={true}
+            uploadButtonLabel="UPLOAD .p12 CERTIFICATE"
+          >
+            {this.renderDropzoneDescription(type)}
+          </DropZone>
+        </div>
+      );
+    });
   },
 
   renderCertificateErrors() {
@@ -288,9 +276,9 @@ export default Radium(React.createClass({
         }
       >
         <div className="row align-center hp-2-l hp-2-r vm-2-b vm-2-t">
-          <div
+          <Isvg
+            src={require('./phone-apple.svg')}
             className="hm-2-r"
-            dangerouslySetInnerHTML={{ __html: require('./phone-apple.svg') }}
           />
           <div className="col-flex-1">
             {this.renderDropZones()}

@@ -14,13 +14,11 @@ export default CreateActions({
   },
   fetchCurrentScript: {
     asyncResult: true,
-    redirectOnFailure: true,
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Scripts.get'
   },
   fetchCurrentScriptEndpoint: {
     asyncResult: true,
-    redirectOnFailure: true,
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.ScriptEndpoints.get'
   }

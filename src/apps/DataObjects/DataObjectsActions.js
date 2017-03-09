@@ -3,51 +3,51 @@ import CreateActions from '../../utils/ActionsConstructor';
 export default CreateActions(
   {
     checkToggleColumn: {},
-    fetch: {},
-    setDataObjects: {},
-    setCurrentClassObj: {},
-    setSelectedRows: {},
-    getIDsFromTable: {},
     clearStore: {},
-    fetchCurrentClassObj: {
-      asyncResult: true,
-      redirectOnFailure: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataObjects.getClass'
-    },
-    fetchDataObjects: {
-      asyncResult: true,
-      loading: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataObjects.list'
-    },
-    subFetchDataObjects: {
-      asyncResult: true,
-      loading: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataObjects.subList'
-    },
-    getDataObject: {
-      asyncResult: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataObjects.get'
-    },
+    fetch: {},
+    getIDsFromTable: {},
+    goToPage: {},
+    selectSortingField: {},
+    setCurrentClassObj: {},
+    setDataObjects: {},
+    setSelectedItemsIDs: {},
     createDataObject: {
       asyncForm: true,
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.create'
     },
-    updateDataObject: {
-      asyncForm: true,
+    fetchCurrentClassObj: {
       asyncResult: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.DataObjects.update'
+      method: 'Syncano.Actions.DataObjects.getClass'
+    },
+    fetchDataObjects: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      loading: true,
+      method: 'Syncano.Actions.DataObjects.list'
+    },
+    getDataObject: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.DataObjects.get'
+    },
+    getDataObjectsCount: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.DataObjects.getCount'
     },
     removeDataObjects: {
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.remove'
+    },
+    updateDataObject: {
+      asyncForm: true,
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.DataObjects.update'
     }
   },
   {

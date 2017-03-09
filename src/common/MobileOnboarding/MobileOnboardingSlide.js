@@ -38,16 +38,20 @@ const MobileOnboardingSlide = ({ children, headline, imageSrc, text }) => {
       <div style={styles.text}>
         {text}
       </div>
-      {imageSrc && <div>
-        <img
-          src={imageSrc}
-          alt={headline}
-          style={styles.image}
-        />
-      </div>}
-      {children && <div>
-        {children}
-      </div>}
+      {imageSrc && (
+        <div>
+          <img
+            src={imageSrc}
+            alt={headline}
+            style={styles.image}
+          />
+        </div>
+      )}
+      {children && (
+        <div>
+          {children}
+        </div>
+      )}
     </div>
   );
 };

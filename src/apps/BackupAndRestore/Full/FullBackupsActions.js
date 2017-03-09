@@ -6,7 +6,6 @@ export default CreateActions(
     fetchFullBackups: {
       asyncResult: true,
       loading: true,
-      redirectOnFailure: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.BackupAndRestore.listFullBackups'
     },

@@ -74,6 +74,14 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
+  getProfileStatus() {
+    if (!this.data.profile) {
+      return null;
+    }
+
+    return this.data.profile.status;
+  },
+
   getActiveSubscriptionEndDate() {
     const activeSubscription = _.last(this.data.subscriptions);
 

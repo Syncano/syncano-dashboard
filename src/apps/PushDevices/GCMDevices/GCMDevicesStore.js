@@ -41,9 +41,7 @@ export default Reflux.createStore({
     return this.data.items;
   },
 
-  setDevices(response) {
-    const { config, devices } = response;
-
+  setDevices({ config, devices }) {
     this.data.items = devices;
     this.data.hasItems = devices.length > 0;
     this.data.hasConfig = !_.isEmpty(config.development_api_key) || !_.isEmpty(config.production_api_key);

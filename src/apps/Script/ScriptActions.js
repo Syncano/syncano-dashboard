@@ -8,7 +8,6 @@ export default CreateActions({
   fetchScript: {
     asyncResult: true,
     loading: true,
-    redirectOnFailure: true,
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Scripts.get'
   },

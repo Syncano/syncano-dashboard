@@ -123,7 +123,7 @@ export default class DropZone extends Component {
   }
 
   render() {
-    const { className, isLoading, disableClick, onDrop, containerStyle, styles, certificateType } = this.props;
+    const { accept, className, isLoading, disableClick, onDrop, containerStyle, styles, certificateType } = this.props;
     const dropZoneStyles = this.getStyles();
 
     return (
@@ -137,6 +137,7 @@ export default class DropZone extends Component {
             multiple={false}
             disableClick={disableClick}
             onDrop={onDrop}
+            accept={accept}
             style={{ ...dropZoneStyles.dropZone, ...styles }}
           >
             {this.renderDescription()}

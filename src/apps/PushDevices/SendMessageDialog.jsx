@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
 import _ from 'lodash';
+import Isvg from 'react-inlinesvg';
 
 import { DialogMixin, FormMixin } from '../../mixins';
 
@@ -417,7 +418,9 @@ export default (store, props) => Radium(React.createClass({
         <div style={{ textAlign: 'left' }}>
           <div className="row hp-1-l hp-1-r vm-3-b">
             <div style={styles.phoneContainer}>
-              {props.phoneIcon}
+              <Isvg
+                src={props.phoneIcon}
+              />
               <div style={styles.messagePreview}>
                 <div style={[styles.messageGCMCircle, isAPNS && styles.messageAPNSCircle]} />
                 <div

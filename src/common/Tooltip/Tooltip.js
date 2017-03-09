@@ -108,10 +108,10 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const { children, label } = this.props;
+    const { children, label, rootStyle } = this.props;
 
     return (
-      <div style={styles.root}>
+      <div style={{ ...styles.root, ...rootStyle }}>
         {children ? this.renderChildren() : this.renderDefaultIcon()}
         {label && this.renderTooltip()}
       </div>
