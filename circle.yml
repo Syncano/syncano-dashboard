@@ -35,18 +35,18 @@ dependencies:
 
 test:
   override:
-    - yarn test && yarn e2e:
+    - yarn e2e:
         timeout: 400
 
 deployment:
   production:
-    branch: master
+    branch: syn4-master
     commands:
       - yarn git-config
       - yarn deploy
 
   staging:
-    branch: devel
+    branch: syn4-devel
     commands:
       - yarn deploy:staging
       - yarn deploy:beta
@@ -63,3 +63,5 @@ experimental:
         - master
         - devel
         - sng
+        - syn4-master
+        - syn4-devel
