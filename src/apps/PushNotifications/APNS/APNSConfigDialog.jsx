@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
 import _ from 'lodash';
+import Isvg from 'react-inlinesvg';
 
 // Utils
 import { DialogMixin, FormMixin } from '../../../mixins';
@@ -275,9 +276,9 @@ export default Radium(React.createClass({
         }
       >
         <div className="row align-center hp-2-l hp-2-r vm-2-b vm-2-t">
-          <div
+          <Isvg
+            src={require('./phone-apple.svg')}
             className="hm-2-r"
-            dangerouslySetInnerHTML={{ __html: require('./phone-apple.svg') }}
           />
           <div className="col-flex-1">
             {this.renderDropZones()}
