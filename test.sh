@@ -66,7 +66,7 @@ function ci_tests {
         ci_setup
 
         if [ $CIRCLE_BRANCH = 'devel' ]; then
-            message "Starting master/devel test flow..."
+            message "Starting devel test flow..."
             yarn run e2e-master-devel
         else
             message "Starting branch test flow..."

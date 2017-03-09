@@ -2,6 +2,8 @@
 [![Slack](https://img.shields.io/badge/chat-on_slack-blue.svg)](https://www.syncano.io/slack-invite/)
 [![CircleCI](https://circleci.com/gh/Syncano/syncano-dashboard/tree/master.svg?style=shield&circle-token=f0100f84a8aad047680750a7a97c064e0c384766)](https://circleci.com/gh/Syncano/syncano-dashboard/tree/master) [![PRs](https://img.shields.io/badge/PRs-yes-orange.svg)](README.md#contribute) [![license](https://img.shields.io/github/license/syncano/syncano-dashboard.svg)](README.md#license)
 
+> Old version of Syncano Dashboard (v4) went into maintenance mode, you can find it at [syn4-devel](https://github.com/Syncano/syncano-dashboard/tree/syn4-devel) branch
+
 ![Dashboard Screenshot](docs/open_dash.png)
 
 ## Introduction
