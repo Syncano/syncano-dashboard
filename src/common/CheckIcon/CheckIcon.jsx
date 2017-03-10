@@ -3,14 +3,6 @@ import { IconButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 
 const CheckIcon = React.createClass({
-  propTypes: {
-    circleColor: React.PropTypes.string,
-    checked: React.PropTypes.bool,
-    checkable: React.PropTypes.bool,
-    id: React.PropTypes.string,
-    handleClick: React.PropTypes.func
-  },
-
   getDefaultProps() {
     return {
       checkedIcon: {
@@ -114,6 +106,7 @@ const CheckIcon = React.createClass({
         onMouseEnter={checkable && this.addHover}
         onMouseLeave={checkable && this.removeHover}
         onTouchTap={this.handleClick}
+        disableTouchRipple={checkable === false}
       />
     );
   }

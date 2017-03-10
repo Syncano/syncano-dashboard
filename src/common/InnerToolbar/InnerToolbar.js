@@ -116,12 +116,12 @@ const InnerToolbar = Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const { children, menu, title, backButton, backFallback } = this.props;
+    const { children, menu, title, backButton, backFallback, style } = this.props;
 
     return (
       <Sticky offsetTop={50} zIndex={12}>
         <Toolbar
-          style={styles.toolbar}
+          style={{ ...styles.toolbar, ...style }}
           data-e2e="inner-toolbar"
         >
           {backFallback && backButton ? this.renderBackButton() : null}

@@ -509,26 +509,10 @@ const ClassDialogContent = React.createClass({
       hasEditMode,
       handleIconChange,
       handleColorChange,
-      group_permissions,
-      other_permissions,
       handleSampleSchema
     } = this.props;
 
     const styles = this.getStyles();
-    const permissions = [
-      {
-        text: 'none',
-        payload: 'none'
-      },
-      {
-        text: 'read',
-        payload: 'read'
-      },
-      {
-        text: 'create objects',
-        payload: 'create_objects'
-      }
-    ];
 
     return (
       <div>
@@ -569,31 +553,11 @@ const ClassDialogContent = React.createClass({
               title="Permissions"
               style={styles.permissionsContentSection}
             >
-              <div className="col-flex-1">
+              <div className="col-flex-3">
                 <GroupsDropdown
                   value={group}
                   onChange={this.handleChangeFieldGroup}
                   errorText={this.getErrors('group').join(' ')}
-                />
-              </div>
-              <div className="col-flex-1">
-                <SelectFieldWrapper
-                  name="class"
-                  options={permissions}
-                  floatingLabelText="Group Permissions"
-                  value={group_permissions}
-                  onChange={this.handleChangeFieldGroupPermissions}
-                  errorText={this.getErrors('group_permissions').join(' ')}
-                />
-              </div>
-              <div className="col-flex-1">
-                <SelectFieldWrapper
-                  name="class"
-                  options={permissions}
-                  floatingLabelText="Other Permissions"
-                  value={other_permissions}
-                  onChange={this.handleChangeFieldOtherPermissions}
-                  errorText={this.getErrors('other_permissions').join(' ')}
                 />
               </div>
             </Dialog.ContentSection>
@@ -681,7 +645,7 @@ const ClassDialogContent = React.createClass({
           >
             <div className="row align-middle vp-4-t vp-4-b">
               <div className="col-sm-11">
-                <ColorIconPicker.Preview
+                <ColorIconPicker.PreviewCircle
                   color={metadata.color}
                   icon={metadata.icon}
                 />

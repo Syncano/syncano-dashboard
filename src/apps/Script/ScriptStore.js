@@ -64,6 +64,7 @@ export default Reflux.createStore({
   refreshData() {
     const { scriptId } = SessionStore.getParams();
 
+    Actions.fetchScriptRuntimes();
     if (scriptId) {
       Actions.fetchScript(scriptId);
       Actions.fetchScriptTraces(scriptId);
@@ -84,16 +85,28 @@ export default Reflux.createStore({
     this.data.currentScript = null;
   },
 
+  getEditorMode(runtimeKey) {
+    const name = runtimeKey && runtimeKey.toLowerCase().split('_')[0];
+
+    const editorMode = name === 'nodejs' ? 'javascript' : name;
+
+    return editorMode;
+  },
+
+  getRuntimeByName(runtimeName) {
+    const isRuntimeMatched = (runtime, key) => key.toLowerCase() === runtimeName.toLowerCase();
+
+    if (!runtimeName) {
+      return null;
+    }
+
+    return _.find(this.data.runtimes, (runtime, key) => isRuntimeMatched(runtime, key) && !runtime.deprecated);
+  },
+
   onFetchScriptCompleted(script) {
     this.data.scriptConfig = this.mapConfig(script.config);
     this.data.currentScript = script;
     this.trigger(this.data);
-  },
-
-  getEditorMode() {
-    const { currentScript } = this.data;
-
-    return currentScript ? this.langMap[currentScript.runtime_name] : 'python';
   },
 
   fetchTraces() {
@@ -167,22 +180,23 @@ export default Reflux.createStore({
     return this.scriptConfigValueTypes;
   },
 
-  onUpdateScriptCompleted(script) {
-    this.data.currentScript = script;
-    this.dismissSnackbarNotification();
-    this.refreshData();
-    this.sendScriptAnalytics('edit', this.data.currentScript);
-  },
-
-  onUpdateScriptFailure() {
-    this.dismissSnackbarNotification();
-    this.sendScriptAnalytics('edit_failure', this.data.currentScript);
-  },
-
   onFetchScriptTraceCompleted(trace) {
     const traceIndex = _.findIndex(this.data.traces, { id: trace.id });
 
     this.data.traces[traceIndex] = trace;
     this.trigger(this.data);
+  },
+
+  onFetchScriptRuntimes() {
+    this.trigger({ isLoading: true });
+  },
+
+  onFetchScriptRuntimesCompleted(runtimes) {
+    this.data.runtimes = runtimes;
+    this.trigger({ runtimes, isLoading: false });
+  },
+
+  onFetchScriptRuntimesFailure() {
+    this.trigger({ isLoading: false });
   }
 });

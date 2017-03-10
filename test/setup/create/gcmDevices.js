@@ -2,7 +2,7 @@ import connection from '../create/connection';
 import utils from '../../e2e/utils';
 import _ from 'lodash';
 
-const createTestGCMDevices = (gcmAmount) => {
+const createTestGCMDevices = (gcmAmount = 1) => {
   const gcmDevices = _.times(gcmAmount, (index) => {
     const label = `android_${Date.now()}${index}`;
 

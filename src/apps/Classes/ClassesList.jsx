@@ -105,7 +105,7 @@ export default React.createClass({
     return (
       <ListItem
         key={`classes-list-item-${item.name}`}
-        onIconClick={Actions.checkItem}
+        // onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={() => this.showDialog('deleteClassDialog', item)}
       />
@@ -113,16 +113,12 @@ export default React.createClass({
   },
 
   render() {
-    const { items } = this.props;
-    const checkedItems = Store.getCheckedItems();
-    const checkedItemsCount = Store.getNumberOfChecked();
-    const someClassIsProtectedFromDelete = checkedItems.some(this.isProtectedFromDelete);
-
     return (
       <Lists.Container className="classes-list">
         {this.getDialogs()}
         <ColumnList.Header>
           <Column.ColumnHeader
+            className="col-flex-3"
             primary={true}
             columnName="CHECK_ICON"
           >
@@ -139,26 +135,6 @@ export default React.createClass({
             className="col-flex-1"
           >
             Group ID
-          </Column.ColumnHeader>
-          <Column.ColumnHeader
-            columnName="DESC"
-            className="col-flex-1"
-          >
-            Permissions
-          </Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU">
-            <Lists.Menu
-              checkedItemsCount={checkedItemsCount}
-              handleSelectAll={Actions.selectAll}
-              handleUnselectAll={Actions.uncheckAll}
-              itemsCount={items.length}
-            >
-              <Lists.MenuItem
-                disabled={someClassIsProtectedFromDelete}
-                onTouchTap={() => this.showDialog('deleteClassDialog')}
-              />
-            </Lists.Menu>
           </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List

@@ -15,36 +15,35 @@ const CustomSocketsEndpoints = React.createClass({
   ],
 
   componentDidMount() {
-    const { customSocketName } = this.props.params;
+    const { socketName } = this.props.params;
 
-    Actions.setCurrentCustomSocketName(customSocketName);
-    Actions.fetch();
+    Actions.listSocketEndpoints(socketName);
   },
 
   handleBackClick() {
     const { router, params } = this.props;
 
-    router.push(`/instances/${params.instanceName}/custom-sockets/`);
+    router.push(`/instances/${params.instanceName}/my-sockets/`);
   },
 
   render() {
     const { isLoading, items } = this.state;
-    const { customSocketName } = this.props.params;
+    const { socketName } = this.props.params;
 
     return (
       <div>
-        <Helmet title={`Custom Socket Endpoints: ${customSocketName}`} />
+        <Helmet title={`Socket Endpoints for ${socketName}`} />
         <InnerToolbar
-          title={`Sockets: ${customSocketName}`}
+          title={`Endpoints for: ${socketName}`}
           backButton={true}
           backFallback={this.handleBackClick}
-          backButtonTooltip="Go back to Custom Sockets List"
+          backButtonTooltip="Go back to installed Sockets List"
         />
         <Container>
           <CustomSocketsEndpointsList
             isLoading={isLoading}
             items={items}
-            socketName={customSocketName}
+            socketName={socketName}
           />
         </Container>
       </div>

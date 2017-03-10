@@ -8,6 +8,7 @@ import Billing from './Billing';
 import Channels from './Channels';
 import Classes from './Classes';
 import CustomSockets from './CustomSockets';
+import SocketsRegistry from './SocketsRegistry';
 import Scripts from './Scripts';
 import DataEndpoints from './DataEndpoints';
 import ScriptEndpoints from './ScriptEndpoints';
@@ -18,9 +19,6 @@ import PushDevices from './PushDevices';
 import PushNotifications from './PushNotifications';
 import Sockets from './Sockets';
 import Solutions from './Solutions';
-import Schedules from './Schedules';
-import Templates from './Templates';
-import Triggers from './Triggers';
 import Groups from './Groups';
 import Users from './Users';
 import Usage from './Usage';
@@ -39,6 +37,7 @@ export default {
   Channels,
   Classes,
   CustomSockets,
+  SocketsRegistry,
   Scripts,
   DataEndpoints,
   ScriptEndpoints,
@@ -49,12 +48,9 @@ export default {
   PushNotifications,
   Sockets,
   Solutions,
-  Schedules,
-  Triggers,
   Groups,
   Users,
   Usage,
-  Templates,
   GlobalConfig,
   DemoApps,
   Hosting

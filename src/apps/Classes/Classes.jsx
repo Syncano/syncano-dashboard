@@ -10,7 +10,6 @@ import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 // Components
-import { RaisedButton } from 'material-ui';
 import { Container, Loading, InnerToolbar } from '../../common/';
 
 // Local components
@@ -52,15 +51,7 @@ export default React.createClass({
         <Helmet title={title} />
         <ClassDialog />
 
-        <InnerToolbar title={title}>
-          <RaisedButton
-            label="Add"
-            primary={true}
-            style={{ marginRight: 0 }}
-            onTouchTap={Actions.showDialog}
-            data-e2e="classes-add-button"
-          />
-        </InnerToolbar>
+        <InnerToolbar title={title} />
 
         <Container>
           <Loading show={isLoading}>

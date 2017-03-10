@@ -11,20 +11,14 @@ export default addTestNamePrefixes({
       .loginUsingLocalStorage(accountKey)
       .setResolution(client);
   },
-  'Test Select/Delete multiple Classes': (client) => {
+  'Test Classes on the list': (client) => {
     const classesPage = client.page.classesPage();
     const classTableRows = classesPage.elements.classTableRows.selector;
-    const userProfileClassName = classesPage.elements.userProfileClassName.selector;
     const { instanceName } = instances.firstInstance;
 
     classesPage
       .goToUrl(instanceName, 'classes')
-      .clickListItemDropdown('@classesListMenu', 'Select')
-      .clickElement('@selectUserClass')
-      .clickListItemDropdown('@classesListMenu', 'Delete')
-      .clickElement('@confirmDeleteButton')
       .waitForElementVisible('@classTableRows')
-      .assertSelectedCount('xpath', classTableRows, 1, 'There is one class left')
-      .assertSelectedCount('css selector', userProfileClassName, 1, 'user_profile class was not deleted');
+      .assertSelectedCount('xpath', classTableRows, 4, 'There are 4 classes');
   }
 });
