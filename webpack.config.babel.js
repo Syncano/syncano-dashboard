@@ -1,74 +1,99 @@
 import { resolve } from 'path';
+import { getIfUtils, removeEmpty } from 'webpack-config-utils';
 import webpack, { ContextReplacementPlugin } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ProgressBarPlugin from 'progress-bar-webpack-plugin';
 import ExtendedDefinePlugin from 'extended-define-webpack-plugin';
-import InlineManifestWebpackPlugin from 'inline-manifest-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import { getIfUtils, removeEmpty } from 'webpack-config-utils';
 import S3Plugin from 'webpack-s3-plugin';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
-import WebpackMd5Hash from 'webpack-md5-hash';
 import { getAppConfig, getS3Config } from './webpack-helpers';
 
 const webpackConfig = (env = {}) => {
-  const {ifDevelopment, ifNotDevelopment} = getIfUtils(env);
-  const extractCSS = new ExtractTextPlugin({
-    filename: ifNotDevelopment('styles.[chunkhash].css', 'styles.css'),
-    allChunks: true
-  });
+  const { ifDevelopment, ifNotDevelopment } = getIfUtils(env);
   const config = {
     context: resolve('src'),
     entry: {
       app: [
         'babel-polyfill',
         'react-hot-loader/patch',
+        'webpack-dev-server/client?http://localhost:8080',
+        'webpack/hot/only-dev-server',
         './app.js'
       ]
     },
     output: {
       filename: ifNotDevelopment('bundle.[name].[chunkhash].js', 'bundle.[name].js'),
-      path: resolve('dist'),
-      pathinfo: ifDevelopment(),
+      path: resolve(__dirname, 'dist'),
+      pathinfo: ifDevelopment(true),
     },
     devtool: ifNotDevelopment('source-map', 'eval'),
     module: {
       rules: [
-        { enforce: 'pre', test: /\.js(|x)$/, loaders: ['eslint-loader'], exclude: /node_modules/ },
-        { test: /\.json$/, loaders: ['json-loader'] },
-        { test: /\.css$/, loader: extractCSS.extract(['css-loader']) },
-        { test: /\.(eot|ttf|svg|woff|woff2)$/, loader: 'file-loader?name=./fonts/[name]-[hash].[ext]', include: /fonts/ },
-        { test: /\.(jpe?g|png|gif|svg)$/, loader: 'url-loader' },
+        {
+          enforce: 'pre',
+          test: /\.js(|x)$/,
+          exclude: /node_modules/,
+          use: 'eslint-loader'
+        },
         {
           test: /\.js(|x)$/,
-          use: ['babel-loader'],
-          options: {
-            presets: [["es2015", { "modules": false }], "react", "stage-0"]
-          },
-          exclude: /node_modules/
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [['es2015', { modules: false }], 'react', 'stage-0']
+            }
+          }
+        },
+        {
+          test: /\.(eot|ttf|svg|woff|woff2)$/,
+          include: /fonts/,
+          use: 'file-loader?name=./fonts/[name]-[hash].[ext]'
+        },
+        {
+          test: /\.(jpe?g|png|gif|svg)$/,
+          exclude: /node_modules/,
+          use: 'url-loader'
+        },
+        {
+          test: /\.css$/,
+          loader: ExtractTextPlugin.extract({
+            use: 'css-loader'
+          })
         },
         {
           test: /\.sass$/,
-          loader: extractCSS.extract([
-            'css-loader',
-            {
-              loader: 'sass-loader',
-              query: {
-                includePaths: [
-                  resolve(__dirname, "./node_modules/compass-mixins/lib"),
-                  resolve(__dirname, "./src/assets/sass")
-                ]
+          use: ExtractTextPlugin.extract({
+            use: [
+              'css-loader',
+              {
+                loader: 'sass-loader',
+                options: {
+                  sourceMap: true,
+                  includePaths: [
+                    resolve(__dirname, './node_modules/compass-mixins/lib'),
+                    resolve(__dirname, './src/assets/sass')
+                  ]
+                }
               }
-            }
-          ])
+            ]
+          })
         }
-      ],
+      ]
     },
     plugins: removeEmpty([
-      ifDevelopment(new ProgressBarPlugin()),
-      new webpack.NoErrorsPlugin(),
-      extractCSS,
+      ifDevelopment(...[
+        new ProgressBarPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin()
+      ]),
+      new webpack.NoEmitOnErrorsPlugin(),
+      new ExtractTextPlugin({
+        filename: ifNotDevelopment('styles.[chunkhash].css', 'styles.css'),
+        allChunks: true
+      }),
       new HtmlWebpackPlugin({ template: './index.html' }),
       new ExtendedDefinePlugin({ APP_CONFIG: getAppConfig(env) }),
       new webpack.LoaderOptionsPlugin({
@@ -83,8 +108,6 @@ const webpackConfig = (env = {}) => {
       }),
       new FaviconsWebpackPlugin('./assets/img/syncano-symbol.svg'),
       ifNotDevelopment(...[
-        new InlineManifestWebpackPlugin(),
-        new WebpackMd5Hash(),
         new webpack.optimize.CommonsChunkPlugin({
           async: true,
           children: true
@@ -92,14 +115,14 @@ const webpackConfig = (env = {}) => {
         new webpack.optimize.CommonsChunkPlugin({
           name: 'manifest',
           filename: 'manifest.js',
-          minChunks: Infinity,
+          minChunks: Infinity
         }),
         new ContextReplacementPlugin(/brace[\\\/]mode$/, /^\.\/(javascript|html|python|ruby|golang|swift|php|django|json|css|text)$/),
         new ContextReplacementPlugin(/brace[\\\/]theme$/, /^\.\/(tomorrow)$/),
         new ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en-uk|en-us|en-au)$/),
         new CompressionPlugin({
-          asset: "[path].gz[query]",
-          algorithm: "gzip",
+          asset: '[path].gz[query]',
+          algorithm: 'gzip',
           test: /\.js$|\.css$/,
           threshold: 10240,
           minRatio: 0.8
@@ -108,11 +131,14 @@ const webpackConfig = (env = {}) => {
       env.deploy && new S3Plugin(getS3Config(env))
     ]),
     resolve: {
-      extensions: ['.js', '.jsx']
+      extensions: ['.js', '.jsx'],
+      modules: [
+        'node_modules'
+      ]
     },
     externals: {
-      'analyticsjs': 'window.analytics',
-      'stripejs': 'Stripe'
+      analyticsjs: 'window.analytics',
+      stripejs: 'Stripe'
     },
     stats: 'errors-only',
     devServer: {
@@ -125,7 +151,7 @@ const webpackConfig = (env = {}) => {
     debugger; // eslint-disable-line
   }
 
-  return config
+  return config;
 };
 
 export default webpackConfig;
