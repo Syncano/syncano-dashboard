@@ -18,15 +18,13 @@ const webpackConfig = (env = {}) => {
       app: [
         'babel-polyfill',
         'react-hot-loader/patch',
-        'webpack-dev-server/client?http://localhost:8080',
-        'webpack/hot/only-dev-server',
         './app.js'
       ]
     },
     output: {
-      filename: ifNotDevelopment('bundle.[name].[chunkhash].js', 'bundle.[name].js'),
+      filename: ifNotDevelopment('bundle.[name].[hash].js', 'bundle.[name].js'),
       path: resolve(__dirname, 'dist'),
-      pathinfo: ifDevelopment(true),
+      pathinfo: ifDevelopment(true)
     },
     devtool: ifNotDevelopment('source-map', 'eval'),
     module: {
@@ -84,14 +82,10 @@ const webpackConfig = (env = {}) => {
       ]
     },
     plugins: removeEmpty([
-      ifDevelopment(...[
-        new ProgressBarPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NamedModulesPlugin()
-      ]),
+      ifDevelopment(new ProgressBarPlugin()),
       new webpack.NoEmitOnErrorsPlugin(),
       new ExtractTextPlugin({
-        filename: ifNotDevelopment('styles.[chunkhash].css', 'styles.css'),
+        filename: ifNotDevelopment('styles.[hash].css', 'styles.css'),
         allChunks: true
       }),
       new HtmlWebpackPlugin({ template: './index.html' }),
