@@ -41,6 +41,7 @@ const webpackConfig = (env = {}) => {
           use: {
             loader: 'babel-loader',
             options: {
+              cacheDirectory: true,
               presets: [['es2015', { modules: false }], 'react', 'stage-0']
             }
           }
