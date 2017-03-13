@@ -53,8 +53,13 @@ const webpackConfig = (env = {}) => {
         },
         {
           test: /\.(jpe?g|png|gif|svg)$/,
-          exclude: /node_modules/,
-          use: 'url-loader'
+          use: [
+            {
+              loader: 'url-loader',
+              options: { limit: 40000 }
+            },
+            'image-webpack-loader'
+          ]
         },
         {
           test: /\.css$/,
