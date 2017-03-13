@@ -159,12 +159,8 @@ export default Reflux.createStore({
   getNextSortingField(field) {
     const { currentSortingField } = this.data;
 
-    if (currentSortingField === field) {
+    if (currentSortingField !== field && currentSortingField[0] !== '-') {
       return `-${field}`;
-    }
-
-    if (currentSortingField === `-${field}`) {
-      return Constants.DATA_OBJECTS_DEFAULT_SORTING_FIELD;
     }
 
     return field;
