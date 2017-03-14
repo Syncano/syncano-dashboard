@@ -159,7 +159,11 @@ export default Reflux.createStore({
   getNextSortingField(field) {
     const { currentSortingField } = this.data;
 
-    if (currentSortingField !== field && currentSortingField[0] !== '-') {
+    const currentField = currentSortingField.replace('-', '');
+    const isNewField = currentField !== field;
+    const isSortedAscending = currentSortingField === field;
+
+    if (isSortedAscending || isNewField) {
       return `-${field}`;
     }
 
