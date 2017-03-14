@@ -44,7 +44,7 @@ const PaymentIcons = ({ number, cardNiceType }) => {
     >
       {renderPaymentIcons()}
       <img
-        src={'/img/stripe-badge@3x.png'}
+        src={require('../../assets/img/stripe-badge@3x.png')}
         alt="Powered by Stripe"
         style={{ display: 'block', height: 78 / 3, marginLeft: 'auto' }}
       />
