@@ -117,9 +117,6 @@ const webpackConfig = (env = {}) => {
           filename: 'manifest.js',
           minChunks: Infinity
         }),
-        new ContextReplacementPlugin(/brace[\\\/]mode$/, /^\.\/(javascript|html|python|ruby|golang|swift|php|django|json|css|text)$/),
-        new ContextReplacementPlugin(/brace[\\\/]theme$/, /^\.\/(tomorrow)$/),
-        new ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en-uk|en-us|en-au)$/),
         new CompressionPlugin({
           asset: '[path].gz[query]',
           algorithm: 'gzip',
