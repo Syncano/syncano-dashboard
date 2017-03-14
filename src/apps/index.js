@@ -17,7 +17,6 @@ import PushNotifications from './PushNotifications';
 import PushMessages from './PushMessages';
 import Session from './Session';
 import SnackbarNotification from './SnackbarNotification';
-import Solutions from './Solutions';
 import Users from './Users';
 
 export default {
@@ -40,6 +39,5 @@ export default {
   PushMessages,
   Session,
   SnackbarNotification,
-  Solutions,
   Users
 };

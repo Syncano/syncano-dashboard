@@ -25,7 +25,6 @@ import Profile from './apps/Profile';
 // Apps for authenticated users
 import Instances from './apps/Instances/Instances';
 import InstanceEdit from './apps/Instances/InstanceEdit';
-import Solutions from './apps/Solutions';
 
 // Instance Apps
 import Admins from './apps/Admins/Admins';
@@ -34,8 +33,6 @@ import BackupAndRestore from './apps/BackupAndRestore';
 import Classes from './apps/Classes';
 import CustomSockets from './apps/CustomSockets';
 import SocketsRegistry from './apps/SocketsRegistry';
-import ScriptEndpointTraces from './apps/ScriptEndpoints';
-import Script from './apps/Script';
 import DataObjects from './apps/DataObjects/DataObjects';
 import Users from './apps/Users/Users';
 import Sockets from './apps/Sockets';
@@ -43,7 +40,6 @@ import PushNotifications from './apps/PushNotifications';
 import PushDevices from './apps/PushDevices';
 import Usage from './apps/Usage';
 import PushMessages from './apps/PushMessages';
-import DemoApps from './apps/DemoApps';
 import Hosting from './apps/Hosting';
 
 const handleAppEnter = (nextState, replace) => RoutesUtil.onAppEnter(nextState, replace);
@@ -318,25 +314,6 @@ export default (
           <IndexRoute component={BackupAndRestore.Full} />
         </Route>
 
-        {/* ScriptEndpoints Traces */}
-        <Route
-          name="scriptEndpoint-traces"
-          component={ScriptEndpointTraces}
-          path="script-endpoints/:scriptEndpointName/traces"
-        />
-
-        {/* Scripts */}
-        <Route
-          name="scripts"
-          path="scripts"
-        >
-          <Route
-            name="script"
-            component={Script}
-            path=":scriptId"
-          />
-        </Route>
-
         {/* Data Objects */}
         <Route
           name="data-objects"
@@ -421,53 +398,6 @@ export default (
           path=":socketId/details"
         />
         <IndexRoute component={SocketsRegistry.List} />
-      </Route>
-
-      {/* Solutions */}
-      <Route
-        name="solutions"
-        path="/solutions"
-        onEnter={RoutesUtil.checkActiveSubscriptions}
-      >
-        <Route
-          name="solutions-list"
-          component={Solutions.ListView}
-          path="list"
-        />
-        <Route
-          name="solutions-install"
-          component={Solutions.EditView}
-          path="/solutions/:solutionId/:action"
-        />
-        <Route
-          name="solutions-edit"
-          component={Solutions.EditView}
-          path="/solutions/:solutionId/edit"
-        />
-        <Route
-          name="solutions-add-version"
-          component={Solutions.AddVersionView}
-          path="/solutions/:solutionId/versions/add"
-        />
-        <Redirect
-          from="/solutions"
-          to="solutions-list"
-        />
-        <IndexRoute component={Solutions.ListView} />
-      </Route>
-
-      {/* Demo Apps */}
-      <Route
-        name="demo-apps"
-        path="/demo-apps"
-        onEnter={RoutesUtil.checkActiveSubscriptions}
-      >
-        <Route
-          name="demo-app"
-          component={DemoApps.DemoApp}
-          path=":appName"
-        />
-        <IndexRoute component={DemoApps} />
       </Route>
 
       <IndexRoute
