@@ -54,7 +54,7 @@ const SocketsSearchBar = ({ value, onInputChange }) => {
             Sockets<br />Registry
           </div>
           <img
-            src={'/img/socket-logo.svg'}
+            src={require('../../assets/img/socket-logo.svg')}
             alt="Sockets Registry logo"
             style={styles.logoImg}
           />

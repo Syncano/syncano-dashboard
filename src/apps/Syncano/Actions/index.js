@@ -9,16 +9,13 @@ import Channels from './Channels';
 import Classes from './Classes';
 import CustomSockets from './CustomSockets';
 import SocketsRegistry from './SocketsRegistry';
-import Scripts from './Scripts';
 import DataEndpoints from './DataEndpoints';
-import ScriptEndpoints from './ScriptEndpoints';
 import DataObjects from './DataObjects';
 import Instances from './Instances';
 import Profile from './Profile';
 import PushDevices from './PushDevices';
 import PushNotifications from './PushNotifications';
 import Sockets from './Sockets';
-import Solutions from './Solutions';
 import Groups from './Groups';
 import Users from './Users';
 import Usage from './Usage';
@@ -38,16 +35,13 @@ export default {
   Classes,
   CustomSockets,
   SocketsRegistry,
-  Scripts,
   DataEndpoints,
-  ScriptEndpoints,
   DataObjects,
   Instances,
   Profile,
   PushDevices,
   PushNotifications,
   Sockets,
-  Solutions,
   Groups,
   Users,
   Usage,

@@ -130,7 +130,7 @@ const SocketsDetailsView = React.createClass({
     const { currentSocket, currentLanguage, isLoading } = this.state;
     const styles = this.getStyles();
     const endpoints = this.getEndpointsObjects();
-    const SocketImageDir = '/img/custom-socket-assemble.svg';
+    const SocketImageDir = require('../../../assets/icons/custom-socket.svg');
 
     if (!currentSocket) {
       return (

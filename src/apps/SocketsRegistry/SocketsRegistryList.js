@@ -147,7 +147,7 @@ const SocketsRegistryList = React.createClass({
           title="Supercharge your project with Sockets from the community"
           description={`Think of Sockets Registry as a package manager for Syncano Sockets. You can search for Sockets
             created by community and add them to your projects.`}
-          src={'/img/socket-assemble.svg'}
+          src={require('../../assets/img/socket-assemble.svg')}
           altText="No Socket"
         />
       );
