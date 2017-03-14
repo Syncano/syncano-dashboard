@@ -50,7 +50,6 @@ import Sidebar from './Sidebar';
 import Slider from './Slider';
 import SocialAuthButtonsList from './SocialAuthButtonsList';
 import Socket from './Socket';
-import Solutions from './Solutions';
 import Spacing from './Spacing';
 import StatusLabel from './StatusLabel';
 import Stepper from './Stepper';
@@ -114,7 +113,6 @@ export { Sidebar };
 export { Slider };
 export { SocialAuthButtonsList };
 export { Socket };
-export { Solutions };
 export { Spacing };
 export { StatusLabel };
 export { Stepper };
@@ -181,7 +179,6 @@ export default {
   Slider,
   SocialAuthButtonsList,
   Socket,
-  Solutions,
   Spacing,
   StatusLabel,
   Stepper,
