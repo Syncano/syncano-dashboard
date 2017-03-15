@@ -17,7 +17,6 @@ import Profile from './Profile';
 import PushDevices from './PushDevices';
 import PushNotifications from './PushNotifications';
 import Sockets from './Sockets';
-import Solutions from './Solutions';
 import Schedules from './Schedules';
 import Templates from './Templates';
 import Triggers from './Triggers';
@@ -25,7 +24,6 @@ import Groups from './Groups';
 import Users from './Users';
 import Usage from './Usage';
 import GlobalConfig from './GlobalConfig';
-import DemoApps from './DemoApps';
 import Hosting from './Hosting';
 
 export default {
@@ -48,7 +46,6 @@ export default {
   PushDevices,
   PushNotifications,
   Sockets,
-  Solutions,
   Schedules,
   Triggers,
   Groups,
@@ -56,6 +53,5 @@ export default {
   Usage,
   Templates,
   GlobalConfig,
-  DemoApps,
   Hosting
 };

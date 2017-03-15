@@ -47,7 +47,6 @@ import Sidebar from './Sidebar';
 import Slider from './Slider';
 import SocialAuthButtonsList from './SocialAuthButtonsList';
 import Socket from './Socket';
-import Solutions from './Solutions';
 import Spacing from './Spacing';
 import Stepper from './Stepper';
 import SyncanoTheme from './SyncanoTheme';
@@ -110,7 +109,6 @@ export { Sidebar };
 export { Slider };
 export { SocialAuthButtonsList };
 export { Socket };
-export { Solutions };
 export { Spacing };
 export { Stepper };
 export { SyncanoTheme };
@@ -175,7 +173,6 @@ export default {
   Slider,
   SocialAuthButtonsList,
   Socket,
-  Solutions,
   Spacing,
   Stepper,
   SyncanoTheme,
