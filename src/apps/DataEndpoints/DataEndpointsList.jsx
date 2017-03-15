@@ -12,7 +12,7 @@ import ListItem from './DataEndpointsListItem';
 import { colors as Colors } from 'material-ui/styles';
 import { ColumnList, Dialog, Lists, EmptyView } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'DataEndpointsList',

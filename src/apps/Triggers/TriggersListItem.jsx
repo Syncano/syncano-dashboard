@@ -11,7 +11,7 @@ import { MenuItem } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 import { ColumnList, DataObjectsAmount } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'TriggersListItem',

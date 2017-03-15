@@ -11,7 +11,7 @@ import SessionStore from '../Session/SessionStore';
 import ListItem from './InstancesListItem';
 import { Loading, ColumnList, Dialog, Lists } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'SharedInstancesList',

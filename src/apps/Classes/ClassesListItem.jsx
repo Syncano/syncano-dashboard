@@ -9,7 +9,7 @@ import Actions from './ClassesActions';
 import { MenuItem } from 'material-ui';
 import { ColumnList, Color, DataObjectsAmount } from '../../common';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const ClassesListItem = Radium(React.createClass({
   displayName: 'ClassesListItem',

@@ -13,7 +13,7 @@ import ListItem from './TemplatesListItem';
 import TemplatesEmptyView from './TemplatesEmptyView';
 import { ColumnList, Dialog, Lists, Loading } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const TemplatesList = React.createClass({
   displayName: 'TemplatesList',

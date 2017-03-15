@@ -5,7 +5,7 @@ import APNSListItem from './APNS/APNSPushNotificationsListItem';
 import GCMListItem from './GCM/GCMPushNotificationsListItem';
 import APNSPushNotificationsSummaryDialog from './APNS/APNSPushNotificationsSummaryDialog';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default (props) => {
   const renderItem = (item) => {

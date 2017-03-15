@@ -10,7 +10,7 @@ import Store from './InstancesStore';
 import ListItem from './InstancesListItem';
 import { Loading, ColumnList, Dialog, Lists } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'InstancesList',

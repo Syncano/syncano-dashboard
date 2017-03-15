@@ -14,7 +14,7 @@ import ListItem from './FullBackupsListItem';
 import FullBackupsEmptyView from './FullBackupsEmptyView';
 import { ColumnList, Lists, Dialog } from '../../../common';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'FullBackupsList',

@@ -11,7 +11,7 @@ import { colors as Colors } from 'material-ui/styles';
 import ListItem from './HostingListItem';
 import HostingPublishDialog from './HostingPublishDialog';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const HostingList = React.createClass({
   mixins: [
