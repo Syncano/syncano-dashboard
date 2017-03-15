@@ -6,17 +6,15 @@ import Gravatar from 'gravatar';
 
 import { SnackbarNotificationMixin } from '../../mixins';
 
-// Stores & Actions
 import SessionActions from '../../apps/Session/SessionActions';
 import SessionStore from '../../apps/Session/SessionStore';
 import InstancesStore from '../../apps/Instances/InstancesStore';
 import ProfileBillingPlanStore from '../../apps/Profile/ProfileBillingPlanStore';
 import ProfileBillingPlanActions from '../../apps/Profile/ProfileBillingPlanActions';
 
-// Components
 import Sticky from 'react-stickydiv';
 import { FontIcon, Divider, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu } from 'material-ui';
-import { Logo, Clipboard, UpgradeButton } from '../';
+import { BetaSignUp, Logo, Clipboard, UpgradeButton } from '../';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 import HeaderGettingStartedDropdown from './HeaderGettingStartedDropdown';
 
@@ -33,6 +31,13 @@ const Header = Radium(React.createClass({
     Reflux.connect(InstancesStore),
     SnackbarNotificationMixin
   ],
+
+  getInitialState() {
+    return {
+      closeBetaBanner: localStorage.getItem('closeBetaBanner'),
+      user: SessionStore.getUser({ metadata: {} })
+    };
+  },
 
   componentDidMount() {
     ProfileBillingPlanActions.fetchBillingProfile();
@@ -98,7 +103,7 @@ const Header = Radium(React.createClass({
 
   getDropdownItems() {
     const styles = this.getStyles();
-    const user = SessionStore.getUser() || '';
+    const { user } = this.state;
     const billingIcon = <FontIcon className="synicon-credit-card" />;
     const instancesListIcon = <FontIcon className="synicon-view-list" />;
     const accountKeyIcon = <FontIcon className="synicon-key-variant" style={styles.accountKeyIcon} />;
@@ -154,8 +159,8 @@ const Header = Radium(React.createClass({
   },
 
   getGravatarUrl() {
-    const { gravatarUrl } = this.state;
-    const userEmail = SessionStore.getUser() ? SessionStore.getUser().email : null;
+    const { gravatarUrl, user } = this.state;
+    const userEmail = user ? user.email : null;
 
     if (gravatarUrl) {
       return gravatarUrl;
@@ -180,6 +185,13 @@ const Header = Radium(React.createClass({
     const { router } = this.props;
 
     router.push('/account/plan/');
+  },
+
+  closeBetaBanner() {
+    localStorage.setItem('closeBetaBanner', true);
+    this.setState({
+      closeBetaBanner: true
+    });
   },
 
   showSnackbarNotification() {
@@ -230,9 +242,13 @@ const Header = Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
+    const { user } = this.state;
+    const isSignedToBeta = user && !!user.metadata.betaSignUp;
+    const showBetaBanner = !isSignedToBeta && !this.state.closeBetaBanner;
 
     return (
-      <Sticky zIndex={12}>
+      <Sticky zIndex={13}>
+        {showBetaBanner && <BetaSignUp closeBanner={this.closeBetaBanner} />}
         <Toolbar style={styles.topToolbar}>
           <ToolbarGroup style={styles.logotypeContainer}>
             <Link to="app">
