@@ -57,7 +57,7 @@ const Dashboard = React.createClass({
   },
 
   onApplyBeta() {
-    window.analytics.track('Used Dashboard Class API');
+    window.analytics.track('Beta user subscription');
     ProfileActions.updateSettings({
       metadata: {
         betaSignUp: new Date().getTime()
