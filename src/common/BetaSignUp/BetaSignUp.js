@@ -64,6 +64,7 @@ const BetaSignUp = React.createClass({
         <CloseButton
           style={{ top: 5 }}
           onTouchTap={this.props.closeBanner}
+          data-e2e="close-beta-banner"
         />
         <ToolbarGroup style={styles.toolbarList}>
           Get ready for

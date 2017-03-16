@@ -37,8 +37,7 @@ export default {
       locateStrategy: 'xpath'
     },
     summaryDialogCloseButton: {
-      selector: '//span[@class="synicon-close"]',
-      locateStrategy: 'xpath'
+      selector: 'button[data-e2e="trigger-summary-dialog-close-button"]'
     },
     scriptSampleOption: {
       selector: `[data-e2e="${utils.getRandomSampleScriptName()}-sample-option"]`
