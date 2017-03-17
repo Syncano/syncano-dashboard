@@ -11,7 +11,7 @@ import Store from './ProfileInvitationsStore';
 import { ColumnList, Dialog, Lists } from '../../common/';
 import ListItem from './ProfileInvitationsListItem';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ProfileInvitationsList',

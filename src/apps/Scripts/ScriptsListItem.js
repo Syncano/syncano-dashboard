@@ -6,7 +6,7 @@ import RuntimesStore from '../Runtimes/RuntimesStore';
 import { MenuItem } from 'material-ui';
 import { ColumnList, Truncate, LinkWrapper } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const ScriptsListItem = ({ item, onIconClick, showDeleteDialog }, { params }) => {
   const runtime = RuntimesStore.getRuntimeByKey(item.runtime_name) || {};

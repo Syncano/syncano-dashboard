@@ -11,7 +11,7 @@ import Store from './ApiKeysStore';
 import ListItem from './ApiKeysListItem';
 import { ColumnList, Dialog, Lists } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ApiKeysList',

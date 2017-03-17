@@ -5,7 +5,7 @@ import ListItem from './ChannelHistoryListItem';
 import { FontIcon } from 'material-ui';
 import { ColumnList, Loading, Lists } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default Radium(React.createClass({
   displayName: 'ChannelHistoryList',

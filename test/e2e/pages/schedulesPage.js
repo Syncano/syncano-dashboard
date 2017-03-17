@@ -54,8 +54,7 @@ export default {
       selector: '[data-e2e="schedule-delete-dialog-confirm"]'
     },
     summaryDialogCloseButton: {
-      selector: '//span[@class="synicon-close"]',
-      locateStrategy: 'xpath'
+      selector: 'button[data-e2e="schedule-summary-dialog-close-button"]'
     }
   }
 };

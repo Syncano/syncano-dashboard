@@ -9,7 +9,7 @@ import { MenuItem } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
 import { ColumnList, Clipboard } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const DataEndpointsListItem = React.createClass({
   displayName: 'DataEndpointsListItem',

@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 import { withRouter } from 'react-router';
 
 import SessionStore from '../apps/Session/SessionStore';
+import ProfileActions from '../apps/Profile/ProfileActions';
 import ProfileBillingPlanStore from '../apps/Profile/ProfileBillingPlanStore';
 import RuntimeActions from '../apps/Runtimes/RuntimesActions';
 
@@ -14,7 +15,17 @@ const Dashboard = React.createClass({
     location: PropTypes.object
   },
 
+  childContextTypes: {
+    onApplyBeta: React.PropTypes.function
+  },
+
   mixins: [Reflux.connect(ProfileBillingPlanStore, 'billing')],
+
+  getChildContext() {
+    return {
+      onApplyBeta: this.onApplyBeta
+    };
+  },
 
   componentDidMount() {
     const { router } = this.props;
@@ -43,6 +54,15 @@ const Dashboard = React.createClass({
         flex: 1
       }
     };
+  },
+
+  onApplyBeta() {
+    window.analytics.track('Beta user subscription');
+    ProfileActions.updateSettings({
+      metadata: {
+        betaSignUp: new Date().getTime()
+      }
+    });
   },
 
   renderUpgradeToolbar() {

@@ -16,7 +16,7 @@ import ListItem from './ScriptsListItem';
 import ScriptsEmptyView from './ScriptsEmptyView';
 import { ColumnList, Loading, Dialog, Lists } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const ScriptsList = React.createClass({
   displayName: 'ScriptsList',

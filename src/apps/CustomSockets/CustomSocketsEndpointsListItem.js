@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { SnackbarNotificationMixin } from '../../mixins';
 import { Clipboard, Color, ColumnList, MethodLabel } from '../../common';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 const styles = {
   icon: {
     cursor: 'default'

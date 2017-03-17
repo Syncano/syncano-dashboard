@@ -14,7 +14,7 @@ import { IconButton } from 'material-ui';
 import { ColumnList, Loading, Lists, Dialog, ShowMore } from '../../common/';
 import ListItem from './DevicesListItem';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const DevicesList = Radium(React.createClass({
   displayName: 'DevicesList',

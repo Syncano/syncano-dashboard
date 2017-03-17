@@ -4,7 +4,7 @@ import { Paper } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
 import { ColumnList, TraceResult, TraceBigResult } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const TracesListItem = ({ item, onToggle, onLoadMore, visible = true }) => {
   const styles = {

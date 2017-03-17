@@ -3,7 +3,7 @@ import { MenuItem } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 import { ColumnList } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const ProfileInvitationsListItem = ({ item, onIconClick, showAcceptDialog, showDeclineDialog }) => (
   <ColumnList.Item

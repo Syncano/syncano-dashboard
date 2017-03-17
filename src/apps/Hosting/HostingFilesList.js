@@ -15,7 +15,7 @@ import HostingUploadDialog from './HostingUploadDialog';
 import ListItem from './HostingFilesListItem';
 import DotsListItem from './DotsListItem';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const HostingFilesList = React.createClass({
   mixins: [

@@ -6,7 +6,7 @@ import { colors as Colors } from 'material-ui/styles';
 import { ColumnList, StatusLabel } from '../../common/';
 import HostingListItemLinks from './HostingListItemLinks';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 class HostingListItem extends Component {
   getStyles = () => ({
