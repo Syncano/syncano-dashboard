@@ -1,0 +1,197 @@
+import React from 'react';
+// import _ from 'lodash';
+
+import { DialogMixin, MousetrapMixin } from '../../mixins/';
+
+import { Dialog } from 'material-ui';
+import { CloseButton, Loading, Show } from '../';
+import DialogSidebar from './DialogSidebar';
+
+const FullPageDialog = React.createClass({
+  mixins: [
+    DialogMixin,
+    MousetrapMixin
+  ],
+
+  getDefaultProps() {
+    return {
+      actions: [],
+      contentSize: 'large',
+      showCloseButton: true,
+      bindShortcuts: true
+    };
+  },
+
+  componentDidUpdate(prevProps) {
+    const { open, bindShortcuts } = this.props;
+
+    const isOpened = !prevProps.open && open;
+    const isClosed = prevProps.open && !open;
+    const hasBindShortcutsEnabled = !prevProps.bindShortcuts && bindShortcuts;
+    const hasBindShortcutsDisabled = prevProps.bindShortcuts && !bindShortcuts;
+
+    if ((bindShortcuts && isOpened) || hasBindShortcutsEnabled) {
+      this.bindShortcuts();
+    }
+
+    if ((bindShortcuts && isClosed) || hasBindShortcutsDisabled) {
+      this.unbindShortcuts();
+    }
+  },
+
+  getStyles() {
+    const { sidebar } = this.props;
+
+    return {
+      cornerButtons: {
+        position: 'absolute',
+        top: 0,
+        right: 5,
+        width: 32,
+        height: 32
+      },
+      closeButtonIcon: {
+        fontSize: 24
+      },
+      overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+        zIndex: -1
+      },
+      content: {
+        transform: 'none',
+        width: '100%',
+        maxWidth: 1200,
+        overflow: 'hidden'
+      },
+      title: {
+        paddingTop: 0
+      },
+      body: {
+        padding: '0'
+      },
+      actionsContainer: {
+        padding: '0 24px',
+        margin: 0
+      },
+      actionsContainerWhenSidebar: {
+        paddingLeft: 238 * React.Children.count(sidebar) + 24
+      },
+      loading: {
+        position: 'fixed'
+      }
+    };
+  },
+
+  bindShortcuts() {
+    const { onRequestClose, onConfirm, actions } = this.props;
+    const handleConfirm = onConfirm || actions.props && actions.props.handleConfirm;
+
+    this.bindShortcut('esc', () => {
+      onRequestClose();
+
+      return false;
+    });
+
+    if (handleConfirm) {
+      this.bindShortcut('enter', () => {
+        handleConfirm();
+
+        return false;
+      });
+    }
+  },
+
+  unbindShortcuts() {
+    this.unbindShortcut('esc');
+    this.unbindShortcut('enter');
+  },
+
+  renderCornerButtons() {
+    const styles = this.getStyles();
+    const { onRequestClose, cornerButtons, showCloseButton } = this.props;
+
+    return (
+      <div
+        className="row align-middle"
+        style={styles.cornerButtons}
+      >
+        <Show if={showCloseButton}>
+          <CloseButton
+            iconStyle={styles.closeButtonIcon}
+            onTouchTap={onRequestClose}
+            data-e2e={this.props['data-e2e-close-button']}
+          />
+        </Show>
+        {cornerButtons}
+      </div>
+    );
+  },
+
+  renderDialogSidebar() {
+    const { sidebar } = this.props;
+
+    if (sidebar) {
+      return <DialogSidebar>{sidebar}</DialogSidebar>;
+    }
+
+    return null;
+  },
+
+  render() {
+    const styles = this.getStyles();
+    const {
+      titleStyle,
+      contentStyle,
+      children,
+      // open,
+      isLoading,
+      onRequestClose,
+      sidebar,
+      actionsContainerStyle,
+      bodyStyle,
+      style,
+      ...other
+    } = this.props;
+    const actionsStyles = {
+      ...styles.actionsContainer,
+      ...(sidebar && styles.actionsContainerWhenSidebar),
+      ...actionsContainerStyle
+    };
+
+    return (
+      <Dialog
+        {...other}
+        data-e2e="blur-page-dialog"
+        // open={_.isBoolean(open) ? open : this.state.open}
+        open={true}
+        style={style}
+        overlayStyle={styles.overlay}
+        contentClassName="blur-page-dialog__content"
+        contentStyle={{ ...styles.content, ...contentStyle }}
+        modal={true}
+        autoDetectWindowHeight={false}
+        titleStyle={{ ...styles.title, ...titleStyle }}
+        bodyStyle={{ ...styles.body, ...bodyStyle }}
+        actionsContainerStyle={actionsStyles}
+        onRequestClose={onRequestClose}
+      >
+
+        <div className="row">
+          <div className="col-flex-1">
+            {this.renderCornerButtons()}
+            {children}
+          </div>
+        </div>
+
+        <Loading
+          show={isLoading}
+          type="linear"
+          position="top"
+          style={styles.loading}
+        />
+      </Dialog>
+    );
+  }
+});
+
+export default FullPageDialog;

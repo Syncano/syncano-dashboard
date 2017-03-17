@@ -9,6 +9,8 @@ import RuntimeActions from '../apps/Runtimes/RuntimesActions';
 
 import { Header, UpgradeNowToolbar } from '../common/';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
+import BlurPageDialog from '../common/Dialog/BlurPageDialog';
+import BetaDialogContent from '../common/BetaDialogContent/BetaDialogContent';
 
 const Dashboard = React.createClass({
   contextTypes: {
@@ -63,6 +65,15 @@ const Dashboard = React.createClass({
         betaSignUp: new Date().getTime()
       }
     });
+    this.setState({
+      showBetaDialog: true
+    });
+  },
+
+  closeBetaDialog() {
+    this.setState({
+      showBetaDialog: false
+    });
   },
 
   renderUpgradeToolbar() {
@@ -85,6 +96,12 @@ const Dashboard = React.createClass({
         <Header />
         {children}
         {this.renderUpgradeToolbar()}
+        <BlurPageDialog
+          open={this.state.showBetaDialog}
+          onRequestClose={this.closeBetaDialog}
+        >
+          <BetaDialogContent />
+        </BlurPageDialog>
         <InstanceDialog />
       </div>
     );
