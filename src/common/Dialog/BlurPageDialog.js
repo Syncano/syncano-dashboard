@@ -163,7 +163,7 @@ const FullPageDialog = React.createClass({
         {...other}
         data-e2e="blur-page-dialog"
         // open={_.isBoolean(open) ? open : this.state.open}
-        open={true}
+        open={false}
         style={style}
         overlayStyle={styles.overlay}
         contentClassName="blur-page-dialog__content"
