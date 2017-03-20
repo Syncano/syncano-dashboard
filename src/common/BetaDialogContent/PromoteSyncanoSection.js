@@ -124,6 +124,9 @@ class PromoteSyncanoSection extends Component {
     };
 
     window.open(url[socialType], 'pop', 'width=600, height=400');
+    window.analytics.track('Beta referral sent', {
+      social: socialType
+    });
   }
 
   renderBetaRibbon() {
