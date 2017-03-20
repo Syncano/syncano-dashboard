@@ -1,10 +1,10 @@
 import React from 'react';
-// import _ from 'lodash';
+import _ from 'lodash';
 
 import { DialogMixin, MousetrapMixin } from '../../mixins/';
 
 import { Dialog } from 'material-ui';
-import { CloseButton, Loading, Show } from '../';
+import { CloseButton } from '../';
 import DialogSidebar from './DialogSidebar';
 
 const FullPageDialog = React.createClass({
@@ -12,32 +12,6 @@ const FullPageDialog = React.createClass({
     DialogMixin,
     MousetrapMixin
   ],
-
-  getDefaultProps() {
-    return {
-      actions: [],
-      contentSize: 'large',
-      showCloseButton: true,
-      bindShortcuts: true
-    };
-  },
-
-  componentDidUpdate(prevProps) {
-    const { open, bindShortcuts } = this.props;
-
-    const isOpened = !prevProps.open && open;
-    const isClosed = prevProps.open && !open;
-    const hasBindShortcutsEnabled = !prevProps.bindShortcuts && bindShortcuts;
-    const hasBindShortcutsDisabled = prevProps.bindShortcuts && !bindShortcuts;
-
-    if ((bindShortcuts && isOpened) || hasBindShortcutsEnabled) {
-      this.bindShortcuts();
-    }
-
-    if ((bindShortcuts && isClosed) || hasBindShortcutsDisabled) {
-      this.unbindShortcuts();
-    }
-  },
 
   getStyles() {
     const { sidebar } = this.props;
@@ -82,47 +56,20 @@ const FullPageDialog = React.createClass({
     };
   },
 
-  bindShortcuts() {
-    const { onRequestClose, onConfirm, actions } = this.props;
-    const handleConfirm = onConfirm || actions.props && actions.props.handleConfirm;
-
-    this.bindShortcut('esc', () => {
-      onRequestClose();
-
-      return false;
-    });
-
-    if (handleConfirm) {
-      this.bindShortcut('enter', () => {
-        handleConfirm();
-
-        return false;
-      });
-    }
-  },
-
-  unbindShortcuts() {
-    this.unbindShortcut('esc');
-    this.unbindShortcut('enter');
-  },
-
   renderCornerButtons() {
     const styles = this.getStyles();
-    const { onRequestClose, cornerButtons, showCloseButton } = this.props;
+    const { onRequestClose } = this.props;
 
     return (
       <div
         className="row align-middle"
         style={styles.cornerButtons}
       >
-        <Show if={showCloseButton}>
-          <CloseButton
-            iconStyle={styles.closeButtonIcon}
-            onTouchTap={onRequestClose}
-            data-e2e={this.props['data-e2e-close-button']}
-          />
-        </Show>
-        {cornerButtons}
+        <CloseButton
+          iconStyle={styles.closeButtonIcon}
+          onTouchTap={onRequestClose}
+          data-e2e={this.props['data-e2e-close-button']}
+        />
       </div>
     );
   },
@@ -143,8 +90,7 @@ const FullPageDialog = React.createClass({
       titleStyle,
       contentStyle,
       children,
-      // open,
-      isLoading,
+      open,
       onRequestClose,
       sidebar,
       actionsContainerStyle,
@@ -162,8 +108,7 @@ const FullPageDialog = React.createClass({
       <Dialog
         {...other}
         data-e2e="blur-page-dialog"
-        // open={_.isBoolean(open) ? open : this.state.open}
-        open={true}
+        open={_.isBoolean(open) ? open : this.state.open}
         style={style}
         overlayStyle={styles.overlay}
         contentClassName="blur-page-dialog__content"
@@ -175,20 +120,8 @@ const FullPageDialog = React.createClass({
         actionsContainerStyle={actionsStyles}
         onRequestClose={onRequestClose}
       >
-
-        <div className="row">
-          <div className="col-flex-1">
-            {this.renderCornerButtons()}
-            {children}
-          </div>
-        </div>
-
-        <Loading
-          show={isLoading}
-          type="linear"
-          position="top"
-          style={styles.loading}
-        />
+        {this.renderCornerButtons()}
+        {children}
       </Dialog>
     );
   }
