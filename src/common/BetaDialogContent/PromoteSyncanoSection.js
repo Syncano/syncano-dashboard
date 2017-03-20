@@ -148,7 +148,14 @@ const PromoteSyncanoSection = React.createClass({
   },
 
   handleEmailsChange(event) {
-    this.setState({ emails: event.target.value });
+    const { errors } = this.state;
+
+    delete errors.emails;
+
+    this.setState({
+      emails: event.target.value,
+      errors
+    });
   },
 
   handleSuccessfullValidation() {
