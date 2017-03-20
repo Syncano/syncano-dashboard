@@ -49,11 +49,16 @@ const Dashboard = React.createClass({
   },
 
   getStyles() {
+    const { showBetaDialog } = this.state;
+
     return {
       root: {
         display: 'flex',
         flexDirection: 'column',
         flex: 1
+      },
+      content: {
+        filter: showBetaDialog && 'blur(5px)'
       }
     };
   },
@@ -93,8 +98,10 @@ const Dashboard = React.createClass({
 
     return (
       <div style={styles.root}>
-        <Header />
-        {children}
+        <div style={styles.content}>
+          <Header />
+          {children}
+        </div>
         {this.renderUpgradeToolbar()}
         <BlurPageDialog
           open={this.state.showBetaDialog}

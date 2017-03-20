@@ -41,7 +41,7 @@ const FullPageDialog = React.createClass({
         paddingTop: 0
       },
       body: {
-        padding: '0'
+        padding: 0
       },
       actionsContainer: {
         padding: '0 24px',
@@ -115,6 +115,7 @@ const FullPageDialog = React.createClass({
         contentStyle={{ ...styles.content, ...contentStyle }}
         modal={true}
         autoDetectWindowHeight={false}
+        autoScrollBodyContent={true}
         titleStyle={{ ...styles.title, ...titleStyle }}
         bodyStyle={{ ...styles.body, ...bodyStyle }}
         actionsContainerStyle={actionsStyles}

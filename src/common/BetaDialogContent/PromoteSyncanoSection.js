@@ -43,6 +43,7 @@ const PromoteSyncanoSection = React.createClass({
 
     return {
       ribbonBackground: {
+        zIndex: 1,
         width: 125,
         height: 30,
         backgroundColor: 'red',
@@ -219,7 +220,7 @@ const PromoteSyncanoSection = React.createClass({
 
   renderPromoteSection() {
     const styles = this.getStyles();
-    const { emails } = this.state;
+    const { emails, errors } = this.state;
 
     return (
       <div>
@@ -252,7 +253,7 @@ const PromoteSyncanoSection = React.createClass({
             label="Send"
             onClick={this.handleFormValidation}
             primary={true}
-            disabled={!emails}
+            disabled={!emails || errors.emails}
           />
         </form>
         <div style={styles.errors}>{this.getValidationMessages('emails').join(' ')}</div>
