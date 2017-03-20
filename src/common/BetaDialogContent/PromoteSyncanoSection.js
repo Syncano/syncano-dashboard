@@ -113,6 +113,19 @@ class PromoteSyncanoSection extends Component {
     }
   })
 
+  static handleShareButtonClick(socialType) {
+    const homeUrl = 'https://syncano.io';
+    const message = 'I just signed up to get early access to the next version of Syncano! ' +
+      'Check it out on www.syncano.io';
+    const url = {
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${homeUrl}&quote=${message}`,
+      twitter: `https://twitter.com/intent/tweet?text=${message}&via=syncano`,
+      linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${homeUrl}&text=${message}`
+    };
+
+    window.open(url[socialType], 'pop', 'width=600, height=400');
+  }
+
   renderBetaRibbon() {
     const styles = this.getStyles();
 
@@ -134,7 +147,7 @@ class PromoteSyncanoSection extends Component {
           overlayStyle={styles.buttonOverlay}
           labelStyle={{ ...styles.buttonLabel, color: '#3B5998' }}
           label="Share on Facebook"
-          onClick={this.handleButtonClick}
+          onClick={() => PromoteSyncanoSection.handleShareButtonClick('facebook')}
         />
         <RaisedButton
           style={styles.buttonContainer}
@@ -142,7 +155,7 @@ class PromoteSyncanoSection extends Component {
           overlayStyle={styles.buttonOverlay}
           labelStyle={{ ...styles.buttonLabel, color: '#1DA1F2' }}
           label="Tweet the link"
-          onClick={this.handleButtonClick}
+          onClick={() => PromoteSyncanoSection.handleShareButtonClick('twitter')}
         />
         <RaisedButton
           style={styles.buttonContainer}
@@ -150,7 +163,7 @@ class PromoteSyncanoSection extends Component {
           overlayStyle={styles.buttonOverlay}
           labelStyle={{ ...styles.buttonLabel, color: '#0077B5' }}
           label="Share on LinkedIn"
-          onClick={this.handleButtonClick}
+          onClick={() => PromoteSyncanoSection.handleShareButtonClick('linkedin')}
         />
       </div>
     );

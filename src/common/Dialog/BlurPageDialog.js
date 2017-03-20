@@ -1,10 +1,10 @@
 import React from 'react';
-// import _ from 'lodash';
+import _ from 'lodash';
 
 import { DialogMixin, MousetrapMixin } from '../../mixins/';
 
 import { Dialog } from 'material-ui';
-import { CloseButton, Loading, Show } from '../';
+import { CloseButton, Show } from '../';
 import DialogSidebar from './DialogSidebar';
 
 const FullPageDialog = React.createClass({
@@ -143,8 +143,7 @@ const FullPageDialog = React.createClass({
       titleStyle,
       contentStyle,
       children,
-      // open,
-      isLoading,
+      open,
       onRequestClose,
       sidebar,
       actionsContainerStyle,
@@ -162,8 +161,7 @@ const FullPageDialog = React.createClass({
       <Dialog
         {...other}
         data-e2e="blur-page-dialog"
-        // open={_.isBoolean(open) ? open : this.state.open}
-        open={false}
+        open={_.isBoolean(open) ? open : this.state.open}
         style={style}
         overlayStyle={styles.overlay}
         contentClassName="blur-page-dialog__content"
@@ -175,20 +173,8 @@ const FullPageDialog = React.createClass({
         actionsContainerStyle={actionsStyles}
         onRequestClose={onRequestClose}
       >
-
-        <div className="row">
-          <div className="col-flex-1">
-            {this.renderCornerButtons()}
-            {children}
-          </div>
-        </div>
-
-        <Loading
-          show={isLoading}
-          type="linear"
-          position="top"
-          style={styles.loading}
-        />
+        {this.renderCornerButtons()}
+        {children}
       </Dialog>
     );
   }
