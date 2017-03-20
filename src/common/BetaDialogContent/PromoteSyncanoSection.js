@@ -155,13 +155,11 @@ const PromoteSyncanoSection = React.createClass({
     const { emails } = this.state;
     const emailsArray = emails.match(/([^, ]+)/g);
 
-    console.log(emailsArray);
-
-    // emailsArray.forEach((email) => {
-    //   window.analytics.track('Beta referral sent', {
-    //     beta_email_invited: email
-    //   });
-    // });
+    emailsArray.forEach((email) => {
+      window.analytics.track('Beta referral sent', {
+        beta_email_invited: email
+      });
+    });
 
     this.setState({
       renderThanksSection: true,
