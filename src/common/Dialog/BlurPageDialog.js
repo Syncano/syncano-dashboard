@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { DialogMixin, MousetrapMixin } from '../../mixins/';
 
 import { Dialog } from 'material-ui';
-import { CloseButton, Show } from '../';
+import { CloseButton } from '../';
 import DialogSidebar from './DialogSidebar';
 
 const FullPageDialog = React.createClass({
@@ -12,32 +12,6 @@ const FullPageDialog = React.createClass({
     DialogMixin,
     MousetrapMixin
   ],
-
-  getDefaultProps() {
-    return {
-      actions: [],
-      contentSize: 'large',
-      showCloseButton: true,
-      bindShortcuts: true
-    };
-  },
-
-  componentDidUpdate(prevProps) {
-    const { open, bindShortcuts } = this.props;
-
-    const isOpened = !prevProps.open && open;
-    const isClosed = prevProps.open && !open;
-    const hasBindShortcutsEnabled = !prevProps.bindShortcuts && bindShortcuts;
-    const hasBindShortcutsDisabled = prevProps.bindShortcuts && !bindShortcuts;
-
-    if ((bindShortcuts && isOpened) || hasBindShortcutsEnabled) {
-      this.bindShortcuts();
-    }
-
-    if ((bindShortcuts && isClosed) || hasBindShortcutsDisabled) {
-      this.unbindShortcuts();
-    }
-  },
 
   getStyles() {
     const { sidebar } = this.props;
@@ -67,7 +41,7 @@ const FullPageDialog = React.createClass({
         paddingTop: 0
       },
       body: {
-        padding: '0'
+        padding: 0
       },
       actionsContainer: {
         padding: '0 24px',
@@ -82,47 +56,20 @@ const FullPageDialog = React.createClass({
     };
   },
 
-  bindShortcuts() {
-    const { onRequestClose, onConfirm, actions } = this.props;
-    const handleConfirm = onConfirm || actions.props && actions.props.handleConfirm;
-
-    this.bindShortcut('esc', () => {
-      onRequestClose();
-
-      return false;
-    });
-
-    if (handleConfirm) {
-      this.bindShortcut('enter', () => {
-        handleConfirm();
-
-        return false;
-      });
-    }
-  },
-
-  unbindShortcuts() {
-    this.unbindShortcut('esc');
-    this.unbindShortcut('enter');
-  },
-
   renderCornerButtons() {
     const styles = this.getStyles();
-    const { onRequestClose, cornerButtons, showCloseButton } = this.props;
+    const { onRequestClose } = this.props;
 
     return (
       <div
         className="row align-middle"
         style={styles.cornerButtons}
       >
-        <Show if={showCloseButton}>
-          <CloseButton
-            iconStyle={styles.closeButtonIcon}
-            onTouchTap={onRequestClose}
-            data-e2e={this.props['data-e2e-close-button']}
-          />
-        </Show>
-        {cornerButtons}
+        <CloseButton
+          iconStyle={styles.closeButtonIcon}
+          onTouchTap={onRequestClose}
+          data-e2e={this.props['data-e2e-close-button']}
+        />
       </div>
     );
   },
@@ -168,6 +115,7 @@ const FullPageDialog = React.createClass({
         contentStyle={{ ...styles.content, ...contentStyle }}
         modal={true}
         autoDetectWindowHeight={false}
+        autoScrollBodyContent={true}
         titleStyle={{ ...styles.title, ...titleStyle }}
         bodyStyle={{ ...styles.body, ...bodyStyle }}
         actionsContainerStyle={actionsStyles}

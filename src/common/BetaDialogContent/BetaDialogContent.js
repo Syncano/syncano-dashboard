@@ -1,16 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import SyncanoOverviewSection from './SyncanoOverviewSection';
 import PromoteSyncanoSection from './PromoteSyncanoSection';
 
-class BetaDialogContent extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
-  getStyles = () => ({
+const BetaDialogContent = () => {
+  const styles = {
     root: {
       display: 'flex'
     },
@@ -20,25 +14,21 @@ class BetaDialogContent extends Component {
     },
     syncanoOverviewSection: {
       width: '60%',
-      padding: '0 30px',
+      padding: '40px 30px',
       backgroundColor: '#0B0F16'
     }
-  })
+  };
 
-  render() {
-    const styles = this.getStyles();
-
-    return (
-      <div style={styles.root}>
-        <div style={styles.promoteSyncanoSection}>
-          <PromoteSyncanoSection />
-        </div>
-        <div style={styles.syncanoOverviewSection}>
-          <SyncanoOverviewSection />
-        </div>
+  return (
+    <div style={styles.root}>
+      <div style={styles.promoteSyncanoSection}>
+        <PromoteSyncanoSection />
       </div>
-    );
-  }
-}
+      <div style={styles.syncanoOverviewSection}>
+        <SyncanoOverviewSection />
+      </div>
+    </div>
+  );
+};
 
 export default BetaDialogContent;
