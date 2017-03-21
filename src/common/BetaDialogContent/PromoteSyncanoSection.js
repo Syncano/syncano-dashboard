@@ -175,7 +175,7 @@ const PromoteSyncanoSection = React.createClass({
     });
   },
 
-  static handleShareButtonClick(socialType) {
+  handleShareButtonClick(socialType) {
     const homeUrl = 'https://syncano.io';
     const message = 'I just signed up to get early access to the next version of Syncano! ' +
       'Check it out on www.syncano.io';
@@ -189,7 +189,7 @@ const PromoteSyncanoSection = React.createClass({
     window.analytics.track('Beta referral sent', {
       social: socialType
     });
-  }
+  },
 
   renderBetaRibbon() {
     const styles = this.getStyles();
@@ -212,7 +212,7 @@ const PromoteSyncanoSection = React.createClass({
           overlayStyle={styles.buttonOverlay}
           labelStyle={{ ...styles.buttonLabel, color: '#3B5998' }}
           label="Share on Facebook"
-          onClick={() => PromoteSyncanoSection.handleShareButtonClick('facebook')}
+          onClick={() => this.handleShareButtonClick('facebook')}
         />
         <RaisedButton
           style={styles.buttonContainer}
@@ -220,7 +220,7 @@ const PromoteSyncanoSection = React.createClass({
           overlayStyle={styles.buttonOverlay}
           labelStyle={{ ...styles.buttonLabel, color: '#1DA1F2' }}
           label="Tweet the link"
-          onClick={() => PromoteSyncanoSection.handleShareButtonClick('twitter')}
+          onClick={() => this.handleShareButtonClick('twitter')}
         />
         <RaisedButton
           style={styles.buttonContainer}
@@ -228,7 +228,7 @@ const PromoteSyncanoSection = React.createClass({
           overlayStyle={styles.buttonOverlay}
           labelStyle={{ ...styles.buttonLabel, color: '#0077B5' }}
           label="Share on LinkedIn"
-          onClick={() => PromoteSyncanoSection.handleShareButtonClick('linkedin')}
+          onClick={() => this.handleShareButtonClick('linkedin')}
         />
       </div>
     );
