@@ -166,6 +166,7 @@ const PromoteSyncanoSection = React.createClass({
 
     emailsArray.forEach((email) => {
       axios.post('https://intercom-socket.syncano.link/intercom/add_lead/', {
+        environment: APP_CONFIG.ENV === 'production' ? 'prod' : '',
         email
       });
     });
