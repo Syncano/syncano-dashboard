@@ -66,6 +66,7 @@ export default Reflux.createStore({
   },
 
   getRuntimeIconInfo(runtime) {
+    if (runtime.name === 'Node.js') runtime.name = 'NodeJS';
     const runtimeName = runtime.name.toLowerCase().split(' ')[0];
 
     runtime.icon = `language-${runtimeName}`;
