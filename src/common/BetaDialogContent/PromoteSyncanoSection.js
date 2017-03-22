@@ -166,7 +166,7 @@ const PromoteSyncanoSection = React.createClass({
 
     emailsArray.forEach((email) => {
       axios.request({
-        url: 'https://api.intercom.io/contacts/',
+        url: 'https://api.intercom.io/contacts',
         method: 'post',
         headers: {
           Authorization: 'Basic ZEc5ck9tRTROMk14WkRnelgyUTVaR05mTkRreU5WOWlaR014WDJZMFl6VmhORGM1WXpobE1Ub3hPakE9Og==',
