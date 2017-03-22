@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 import { FormMixin } from '../../mixins';
 
@@ -164,8 +165,17 @@ const PromoteSyncanoSection = React.createClass({
     const emailsArray = emails.match(/([^, ]+)/g);
 
     emailsArray.forEach((email) => {
-      window.analytics.track('Beta referral sent', {
-        beta_email_invited: email
+      axios.request({
+        url: 'https://api.intercom.io/contacts/',
+        method: 'post',
+        headers: {
+          Authorization: 'Basic ZEc5ck9tRTROMk14WkRnelgyUTVaR05mTkRreU5WOWlaR014WDJZMFl6VmhORGM1WXpobE1Ub3hPakE9Og==',
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        data: {
+          email
+        }
       });
     });
 
