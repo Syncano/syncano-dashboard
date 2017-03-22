@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+// import _ from 'lodash';
 
 import { DialogMixin, MousetrapMixin } from '../../mixins/';
 
@@ -90,7 +90,7 @@ const FullPageDialog = React.createClass({
       titleStyle,
       contentStyle,
       children,
-      open,
+      // open,
       onRequestClose,
       sidebar,
       actionsContainerStyle,
@@ -108,7 +108,7 @@ const FullPageDialog = React.createClass({
       <Dialog
         {...other}
         data-e2e="blur-page-dialog"
-        open={_.isBoolean(open) ? open : this.state.open}
+        open={true}
         style={style}
         overlayStyle={styles.overlay}
         contentClassName="blur-page-dialog__content"
