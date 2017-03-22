@@ -57,7 +57,7 @@ export default Reflux.createStore({
   },
 
   getEditorMode(runtimeKey) {
-    const runtimeDict = this.getRuntimeByKey(runtimeKey);
+    const runtimeDict = this.getRuntimeByKey(runtimeKey) || {};
     const runtimeDictName = runtimeDict.name;
     const name = runtimeDictName.toLowerCase().split(' ')[0];
     const editorMode = name === 'nodejs' ? 'javascript' : name;
