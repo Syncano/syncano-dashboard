@@ -53,19 +53,19 @@ const getS3Config = (env) => {
         Bucket: process.env.BETA_AWS_BUCKET_NAME
       }
     },
-    // devel: {
-    //   directory: resolve('dist'),
-    //   s3Options: {
-    //     region: 'us-west-2'
-    //   },
-    //   s3UploadOptions: {
-    //     Bucket: process.env.SYN5_STAGING_AWS_BUCKET_NAME
-    //   },
-    //   cloudfrontInvalidateOptions: {
-    //     DistributionId: process.env.SYN5_STAGING_AWS_DISTRIBUTION_ID,
-    //     Items: ['/*']
-    //   }
-    // },
+    devel: {
+      directory: resolve('dist'),
+      s3Options: {
+        region: 'us-west-2'
+      },
+      s3UploadOptions: {
+        Bucket: process.env.SYN5_STAGING_AWS_BUCKET_NAME
+      },
+      cloudfrontInvalidateOptions: {
+        DistributionId: process.env.SYN5_STAGING_AWS_DISTRIBUTION_ID,
+        Items: ['/*']
+      }
+    },
     // master: {
     //   directory: resolve('dist'),
     //   s3Options: {
