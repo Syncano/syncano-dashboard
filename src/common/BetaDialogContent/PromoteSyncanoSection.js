@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import { FormMixin } from '../../mixins';
+import SessionStore from '../../apps/Session/SessionStore';
 
 import { RaisedButton, FlatButton } from 'material-ui';
 import { Logo } from '../';
@@ -163,11 +164,15 @@ const PromoteSyncanoSection = React.createClass({
   handleSuccessfullValidation() {
     const { emails } = this.state;
     const emailsArray = emails.match(/([^, ]+)/g);
+    const userEmail = SessionStore.getUser() && SessionStore.getUser().email;
 
     emailsArray.forEach((email) => {
-      axios.post('https://intercom-socket.syncano.link/intercom/add_lead/', {
+      axios.post('https://intercom-socket.syncano.space/intercom/add_lead/', {
         environment: APP_CONFIG.ENV === 'production' ? 'prod' : '',
-        email
+        email,
+        custom_attributes: {
+          beta_inviter_email: userEmail
+        }
       });
     });
 
