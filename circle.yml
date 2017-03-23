@@ -49,7 +49,6 @@ deployment:
     branch: syn4-devel
     commands:
       - yarn deploy:staging
-      - yarn deploy:beta
 
   sockets:
     branch: /.*/
