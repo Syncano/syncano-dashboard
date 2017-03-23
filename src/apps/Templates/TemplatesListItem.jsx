@@ -3,7 +3,7 @@ import Actions from './TemplatesActions';
 import { MenuItem } from 'material-ui';
 import { Color, ColumnList, Truncate, LinkWrapper } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const TemplateListItem = ({ item, onIconClick, showDeleteDialog }, { params }) => (
   <ColumnList.Item

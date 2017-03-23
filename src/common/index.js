@@ -1,6 +1,7 @@
 import AlertPageContent from './AlertPageContent';
 import AutoCompleteWrapper from './AutoCompleteWrapper';
 import BashSnippet from './BashSnippet';
+import BetaSignUp from './BetaSignUp';
 import Billing from './Billing';
 import CheckIcon from './CheckIcon';
 import Clipboard from './Clipboard';
@@ -47,7 +48,6 @@ import Sidebar from './Sidebar';
 import Slider from './Slider';
 import SocialAuthButtonsList from './SocialAuthButtonsList';
 import Socket from './Socket';
-import Solutions from './Solutions';
 import Spacing from './Spacing';
 import Stepper from './Stepper';
 import SyncanoTheme from './SyncanoTheme';
@@ -64,6 +64,7 @@ import StatusLabel from './StatusLabel';
 export { AlertPageContent };
 export { AutoCompleteWrapper };
 export { BashSnippet };
+export { BetaSignUp };
 export { Billing };
 export { CheckIcon };
 export { Clipboard };
@@ -110,7 +111,6 @@ export { Sidebar };
 export { Slider };
 export { SocialAuthButtonsList };
 export { Socket };
-export { Solutions };
 export { Spacing };
 export { Stepper };
 export { SyncanoTheme };
@@ -129,6 +129,7 @@ export default {
   AlertPageContent,
   AutoCompleteWrapper,
   BashSnippet,
+  BetaSignUp,
   Billing,
   CheckIcon,
   Clipboard,
@@ -175,7 +176,6 @@ export default {
   Slider,
   SocialAuthButtonsList,
   Socket,
-  Solutions,
   Spacing,
   Stepper,
   SyncanoTheme,

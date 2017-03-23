@@ -9,7 +9,7 @@ import SessionStore from '../Session/SessionStore';
 import { RaisedButton } from 'material-ui';
 import { ColumnList, Container, Loading, Show, InnerToolbar, Lists } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const ProfileBillingInvoices = React.createClass({
   mixins: [

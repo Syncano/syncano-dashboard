@@ -4,7 +4,7 @@ import { ColumnList, Lists } from '../../common/';
 import ListItem from './CustomSocketsEndpointsListItem';
 
 const CustomSocketsEndpointsList = ({ isLoading, items, socketName }) => {
-  const Column = ColumnList.Column;
+  const Column = ColumnList && ColumnList.Column;
   const tableHeaderStyle = {
     display: 'flex',
     justifyContent: 'center'

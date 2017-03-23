@@ -7,7 +7,7 @@ import Actions from './ApiKeysActions';
 import { MenuItem } from 'material-ui';
 import { Clipboard, ColumnList, Color } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ApiKeysListItem',

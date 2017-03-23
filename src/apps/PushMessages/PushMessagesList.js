@@ -6,7 +6,7 @@ import { ColumnList, Loading, Container, Lists, ShowMore } from '../../common/';
 import APNSMessageListItem from './APNS/APNSMessageListItem';
 import GCMMessageListItem from './GCM/GCMMessageListItem';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const PushMessagesList = React.createClass({
   displayName: 'PushMessagesList',

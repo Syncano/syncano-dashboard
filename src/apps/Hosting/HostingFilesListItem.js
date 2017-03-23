@@ -7,7 +7,7 @@ import { MenuItem } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
 import { ColumnList, Truncate } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDeleteDialog }) => {
   const lastSlashIndex = item.path.lastIndexOf('/');

@@ -6,7 +6,7 @@ import UserInfo from './UserInfo';
 import { MenuItem } from 'material-ui';
 import { ColumnList, Color } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'UsersListItem',

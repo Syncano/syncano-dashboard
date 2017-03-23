@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { Paper } from 'material-ui';
 import { ColumnList, Color } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default Radium(React.createClass({
   displayName: 'ChannelHistoryListItem',

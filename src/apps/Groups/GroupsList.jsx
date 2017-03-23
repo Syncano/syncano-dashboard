@@ -11,7 +11,7 @@ import { DialogsMixin } from '../../mixins';
 import ListItem from './GroupsListItem';
 import { ColumnList, Dialog, Lists } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default Radium(React.createClass({
   displayName: 'GroupsList',

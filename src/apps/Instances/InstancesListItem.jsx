@@ -9,7 +9,7 @@ import InstanceDialogActions from './InstanceDialogActions';
 import { MenuItem } from 'material-ui';
 import { Color, ColumnList, Truncate } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checkable }) => {
   const { checked, name, metadata, description, created_at } = item;

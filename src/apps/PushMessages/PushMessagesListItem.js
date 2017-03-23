@@ -5,7 +5,7 @@ import { FontIcon } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
 import { ColumnList, Truncate } from '../../common';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'MessageListItem',

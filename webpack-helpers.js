@@ -44,16 +44,7 @@ const getS3Config = (env) => {
 
   const branch = CIRCLE_BRANCH.toLowerCase();
   const config = {
-    beta: {
-      directory: resolve('dist'),
-      s3Options: {
-        region: 'us-east-1'
-      },
-      s3UploadOptions: {
-        Bucket: process.env.BETA_AWS_BUCKET_NAME
-      }
-    },
-    devel: {
+    'syn4-devel': {
       directory: resolve('dist'),
       s3Options: {
         region: 'us-west-2'
@@ -66,7 +57,7 @@ const getS3Config = (env) => {
         Items: ['/*']
       }
     },
-    master: {
+    'syn4-master': {
       directory: resolve('dist'),
       s3Options: {
         region: 'us-west-2'
@@ -90,10 +81,6 @@ const getS3Config = (env) => {
       basePath: branch
     }
   };
-
-  if (env.beta) {
-    return config.beta;
-  }
 
   return config[branch] || config.default;
 };

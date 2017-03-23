@@ -14,7 +14,7 @@ import ListItem from './TriggersListItem';
 import { colors as Colors } from 'material-ui/styles';
 import { ColumnList, Dialog, Lists, EmptyView } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'TriggersList',

@@ -8,7 +8,7 @@ import Actions from './ScriptEndpointsActions';
 import { MenuItem } from 'material-ui';
 import { Color, ColumnList, Clipboard } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ScriptEndpointsListItem',

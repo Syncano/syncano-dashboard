@@ -14,7 +14,7 @@ import ListItem from './SchedulesListItem';
 import { ColumnList, Dialog, Lists, EmptyView } from '../../common/';
 import { colors as Colors } from 'material-ui/styles';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'SchedulesList',

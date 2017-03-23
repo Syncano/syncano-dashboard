@@ -26,7 +26,6 @@ import Profile from './apps/Profile';
 // Apps for authenticated users
 import Instances from './apps/Instances/Instances';
 import InstanceEdit from './apps/Instances/InstanceEdit';
-import Solutions from './apps/Solutions';
 
 // Instance Apps
 import Admins from './apps/Admins/Admins';
@@ -52,7 +51,6 @@ import PushNotifications from './apps/PushNotifications';
 import PushDevices from './apps/PushDevices';
 import Usage from './apps/Usage';
 import PushMessages from './apps/PushMessages';
-import DemoApps from './apps/DemoApps';
 import Hosting from './apps/Hosting';
 
 const handleAppEnter = (nextState, replace) => RoutesUtil.onAppEnter(nextState, replace);
@@ -506,53 +504,6 @@ export default (
         />
 
         <IndexRoute component={Profile.Settings} />
-      </Route>
-
-      {/* Solutions */}
-      <Route
-        name="solutions"
-        path="/solutions"
-        onEnter={RoutesUtil.checkActiveSubscriptions}
-      >
-        <Route
-          name="solutions-list"
-          component={Solutions.ListView}
-          path="list"
-        />
-        <Route
-          name="solutions-install"
-          component={Solutions.EditView}
-          path="/solutions/:solutionId/:action"
-        />
-        <Route
-          name="solutions-edit"
-          component={Solutions.EditView}
-          path="/solutions/:solutionId/edit"
-        />
-        <Route
-          name="solutions-add-version"
-          component={Solutions.AddVersionView}
-          path="/solutions/:solutionId/versions/add"
-        />
-        <Redirect
-          from="/solutions"
-          to="solutions-list"
-        />
-        <IndexRoute component={Solutions.ListView} />
-      </Route>
-
-      {/* Demo Apps */}
-      <Route
-        name="demo-apps"
-        path="/demo-apps"
-        onEnter={RoutesUtil.checkActiveSubscriptions}
-      >
-        <Route
-          name="demo-app"
-          component={DemoApps.DemoApp}
-          path=":appName"
-        />
-        <IndexRoute component={DemoApps} />
       </Route>
 
       <IndexRoute
