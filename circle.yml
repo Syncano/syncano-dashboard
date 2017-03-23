@@ -39,16 +39,17 @@ test:
         timeout: 400
 
 deployment:
-  production:
-    branch: syn4-master
-    commands:
-      - yarn git-config
-      - yarn deploy
+  # production:
+  #   branch: master
+  #   commands:
+  #     - yarn git-config
+  #     - yarn deploy
 
-  staging:
-    branch: syn4-devel
-    commands:
-      - yarn deploy:staging
+  # staging:
+  #   branch: devel
+  #   commands:
+  #     - yarn deploy:staging
+  #     - yarn deploy:beta
 
   sockets:
     branch: /.*/
@@ -61,6 +62,3 @@ experimental:
       only:
         - master
         - devel
-        - sng
-        - syn4-master
-        - syn4-devel
