@@ -165,17 +165,9 @@ const PromoteSyncanoSection = React.createClass({
     const emailsArray = emails.match(/([^, ]+)/g);
 
     emailsArray.forEach((email) => {
-      axios.request({
-        url: 'https://api.intercom.io/contacts',
-        method: 'post',
-        headers: {
-          Authorization: 'Basic ZEc5ck9tRTROMk14WkRnelgyUTVaR05mTkRreU5WOWlaR014WDJZMFl6VmhORGM1WXpobE1Ub3hPakE9Og==',
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        data: {
-          email
-        }
+      axios.post('https://intercom-socket.syncano.link/intercom/add_lead/', {
+        environment: APP_CONFIG.ENV === 'production' ? 'prod' : '',
+        email
       });
     });
 
