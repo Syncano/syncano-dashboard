@@ -6,7 +6,7 @@ import RestoreDialogActions from '../RestoreDialogActions';
 import { MenuItem } from 'material-ui';
 import { ColumnList, Color, Truncate } from '../../../common';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const FullBackupsListItem = ({ item, onIconClick, showDetailsDialog, showDeleteDialog, showRestoreDialog }) =>
   <ColumnList.Item

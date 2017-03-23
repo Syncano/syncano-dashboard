@@ -10,7 +10,7 @@ import { DialogsMixin } from '../../mixins';
 import ListItem from './UsersListItem';
 import { ColumnList, Dialog, Lists } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'UsersList',

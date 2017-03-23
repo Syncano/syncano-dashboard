@@ -83,8 +83,7 @@ export default {
       locateStrategy: 'xpath'
     },
     summaryDialogCloseButton: {
-      selector: '//span[@class="synicon-close"]',
-      locateStrategy: 'xpath'
+      selector: 'button[data-e2e="gcm-summary-dialog-close-button"]'
     },
     scriptRubyCheckIcon: {
       selector: '[data-e2e="language-ruby-check-icon"]'

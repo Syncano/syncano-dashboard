@@ -5,7 +5,7 @@ import { SnackbarNotificationMixin } from '../../mixins';
 import { MenuItem } from 'material-ui';
 import { Color, ColumnList, Clipboard, Truncate } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'DeviceListItem',

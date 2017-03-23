@@ -21,7 +21,6 @@ import Session from './Session';
 import SnackbarNotification from './SnackbarNotification';
 import Script from './Script';
 import Scripts from './Scripts';
-import Solutions from './Solutions';
 import Template from './Template';
 import Templates from './Templates';
 import Traces from './Traces';
@@ -52,7 +51,6 @@ export default {
   SnackbarNotification,
   Script,
   Scripts,
-  Solutions,
   Template,
   Templates,
   Traces,

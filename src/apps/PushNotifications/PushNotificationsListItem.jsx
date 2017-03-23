@@ -8,7 +8,7 @@ import { MenuItem, IconButton } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles/';
 import { Color, ColumnList, Dialog, Tooltip } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const DeviceListItem = React.createClass({
   displayName: 'DeviceListItem',

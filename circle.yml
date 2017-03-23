@@ -49,7 +49,6 @@ deployment:
     branch: syn4-devel
     commands:
       - yarn deploy:staging
-      - yarn deploy:beta
 
   sockets:
     branch: /.*/
@@ -60,8 +59,5 @@ experimental:
   notify:
     branches:
       only:
-        - master
-        - devel
-        - sng
         - syn4-master
         - syn4-devel

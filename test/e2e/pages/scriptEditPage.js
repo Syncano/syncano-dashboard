@@ -31,7 +31,7 @@ export default {
       selector: '[data-e2e="script-traces-refresh-button"]'
     },
     tracesClose: {
-      selector: '(//span[@class="synicon-close"])[1]',
+      selector: '(//span[@class="synicon-close"])[2]',
       locateStrategy: 'xpath'
     },
     scriptSuccess: {

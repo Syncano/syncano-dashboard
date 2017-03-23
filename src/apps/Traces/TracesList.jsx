@@ -4,7 +4,7 @@ import { ColumnList, Loading, Lists } from '../../common/';
 import TracesListItem from './TracesListItem';
 import TracesEmptyView from './TracesEmptyView';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 class TracesList extends Component {
   constructor(props) {

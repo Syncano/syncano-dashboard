@@ -15,7 +15,7 @@ const AppMobileOnboarding = () => (
           <p>For now, we’d like to show you some of the things you’ll be able to do here!</p>
         </div>
       }
-      imageSrc={'/img/illustrations/build-powerful-apps-in-half-the-time.svg'}
+      imageSrc={require('../../assets/img/illustrations/build-powerful-apps-in-half-the-time.svg')}
     />
     <MobileOnboarding.Slide
       headline="What is Syncano?"
@@ -27,7 +27,7 @@ const AppMobileOnboarding = () => (
       }
     >
       <img
-        src={'/img/illustrations/what-is-syncano.png'}
+        src={require('../../assets/img/illustrations/what-is-syncano.png')}
         alt="What is Syncano?"
         style={{ display: 'block', width: '100vw', margin: '0 -30px' }}
       />
@@ -40,11 +40,11 @@ const AppMobileOnboarding = () => (
           Syncano Sockets as a data hub and easily connect disparate backend systems.
         </p>
       }
-      imageSrc={'/img/illustrations/assemble-your-backend-with-building-blocks.svg'}
+      imageSrc={require('../../assets/img/illustrations/assemble-your-backend-with-building-blocks.svg')}
     />
     <MobileOnboarding.Slide headline="Join the Community">
       <img
-        src={'/img/illustrations/syncano-slack.svg'}
+        src={require('../../assets/img/illustrations/syncano-slack.svg')}
         alt="Join the Community"
         style={{ display: 'block', margin: '0 auto' }}
       />

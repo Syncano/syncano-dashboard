@@ -11,7 +11,7 @@ import Store from './ChannelsStore';
 import ListItem from './ChannelsListItem';
 import { ColumnList, Dialog, Lists } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ChannelsList',

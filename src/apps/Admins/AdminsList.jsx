@@ -10,7 +10,7 @@ import { DialogsMixin } from '../../mixins';
 import ListItem from './AdminsListItem';
 import { ColumnList, Dialog, Lists } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 const AdminsList = React.createClass({
   mixins: [DialogsMixin],

@@ -11,7 +11,7 @@ import Store from './ClassesStore';
 import ListItem from './ClassesListItem';
 import { ColumnList, Loading, Dialog, Lists } from '../../common/';
 
-const Column = ColumnList.Column;
+const Column = ColumnList && ColumnList.Column;
 
 export default React.createClass({
   displayName: 'ClassesList',
