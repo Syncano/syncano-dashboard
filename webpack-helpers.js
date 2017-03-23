@@ -53,7 +53,7 @@ const getS3Config = (env) => {
         Bucket: process.env.BETA_AWS_BUCKET_NAME
       }
     },
-    devel: {
+    'syn4-devel': {
       directory: resolve('dist'),
       s3Options: {
         region: 'us-west-2'
@@ -66,7 +66,7 @@ const getS3Config = (env) => {
         Items: ['/*']
       }
     },
-    master: {
+    'syn4-master': {
       directory: resolve('dist'),
       s3Options: {
         region: 'us-west-2'

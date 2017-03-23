@@ -60,8 +60,5 @@ experimental:
   notify:
     branches:
       only:
-        - master
-        - devel
-        - sng
         - syn4-master
         - syn4-devel
