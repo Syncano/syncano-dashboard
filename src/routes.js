@@ -47,6 +47,7 @@ const handleDashboardEnter = (nextState, replace) => RoutesUtil.onDashboardEnter
 const handleDashboardChange = (prevState, nextState, replace) => (
   RoutesUtil.onDashboardChange(prevState, nextState, replace)
 );
+const handleInstanceEnter = (nextState, replace, cb) => RoutesUtil.onInstanceEnter(nextState, replace, cb);
 
 export default (
   <Route
@@ -144,7 +145,7 @@ export default (
 
       <Route
         name="instance"
-        onEnter={RoutesUtil.checkInstanceActiveSubscription}
+        onEnter={handleInstanceEnter}
         component={InstancePage}
         path="instances/:instanceName"
       >

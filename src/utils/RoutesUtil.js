@@ -194,6 +194,22 @@ const RoutesUtil = {
     Cookies.remove('logged_in', { domain: APP_CONFIG.SYNCANO_BASE_DOMAIN });
 
     return replace({ name: 'login', query: _.merge({ next: nextState.location.pathname }, query) });
+  },
+
+  onInstanceEnter(nextState, replace, cb) {
+    this.checkInstanceActiveSubscription(nextState, replace, cb);
+    const lastInstanceName = localStorage.getItem('lastInstanceName');
+
+    return this.isInstanceAvailable(lastInstanceName)
+      .then((instance = {}) => {
+        const oldDashboardUrl = `https://dashboard-old.syncano${APP_CONFIG.ENV === 'production' ? '.io' : '.rocks'}`;
+        const instanceCreatedAt = Date.parse(instance.created_at);
+        const releaseDate = 1491004800000;
+
+        if (instanceCreatedAt < releaseDate) {
+          window.location = `${oldDashboardUrl}/instances/${instance.name}`;
+        }
+      });
   }
 };
 
