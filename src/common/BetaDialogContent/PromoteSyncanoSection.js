@@ -21,7 +21,7 @@ const PromoteSyncanoSection = React.createClass({
 
       emails.forEach((email, index, arr) => {
         // eslint-disable-next-line
-        const emailRegex = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])+", 'g');
+        const emailRegex = new RegExp("^[a-z][a-zA-Z0-9_.]*(\.[a-zA-Z][a-zA-Z0-9_.]*)?@[a-z][a-zA-Z-0-9]*\.[a-z]+(\.[a-z]+)?$", 'g');
         const isValidEmail = emailRegex.test(email);
 
         if (!isValidEmail) {
@@ -146,8 +146,7 @@ const PromoteSyncanoSection = React.createClass({
       },
       errors: {
         fontSize: 14,
-        color: 'red',
-        position: 'absolute'
+        color: 'red'
       }
     };
   },
