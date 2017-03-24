@@ -33,16 +33,17 @@ const SyncanoOverviewSection = () => {
       <div style={styles.rowContainer}>
         <div style={styles.box}>
           <img src={require('../../assets/img/features/socket.svg')} alt="socket icon" />
-          <h2 style={styles.title}>Custom Sockets</h2>
+          <h2 style={styles.title}>Socket Registry</h2>
           <p style={styles.description}>
-            Reusable building blocks for a backend development
+            150 publicly ready to use Sockets containing backend functions and integrations created by the community.
           </p>
         </div>
         <div style={styles.box}>
           <img src={require('../../assets/img/features/sockets.svg')} alt="sockets icon" />
-          <h2 style={styles.title}>Private Sockets registry</h2>
+          <h2 style={styles.title}>Custom Sockets</h2>
           <p style={styles.description}>
-            Store with thounsends of backend solutions
+            Create your own Syncano Sockets and store them in your private Socket Registry or contribute to the Public
+            Socket Registry.
           </p>
         </div>
       </div>
@@ -51,30 +52,33 @@ const SyncanoOverviewSection = () => {
           <img src={require('../../assets/img/features/terminal.svg')} alt="terminal icon" />
           <h2 style={styles.title}>Powerful CLI</h2>
           <p style={styles.description}>
-            Tight interation with developer enviroment to control whole process of building server-side like front-end
+            Forget about the deployment process; Build, deploy, tweak, redeploy.. in seconds. The CLI is your gateway to
+            be 100% serverless.
           </p>
         </div>
         <div style={styles.box}>
           <img src={require('../../assets/img/features/hosting.svg')} alt="hosting icon" />
-          <h2 style={styles.title}>Hosting</h2>
+          <h2 style={styles.title}>Web Hosting</h2>
           <p style={styles.description}>
-            Fast and secure static hosting for your web app (free SSL certificate included!)
+              Deploy SSL secured web pages a in a single command from the CLI.
           </p>
         </div>
       </div>
       <div style={styles.rowContainer}>
         <div style={styles.box}>
           <img src={require('../../assets/img/features/database.svg')} alt="database icon" />
-          <h2 style={styles.title}>NoSQL realtime database</h2>
+          <h2 style={styles.title}>Realtime storage</h2>
           <p style={styles.description}>
-            Store and sync data with NoSQL highly scalable database
+            Store any object in the built-in NoSQL DB. No schema migrations and instant notification on changes to the
+            stored data.
           </p>
         </div>
         <div style={styles.box}>
           <img src={require('../../assets/img/features/users.svg')} alt="users icon" />
-          <h2 style={styles.title}>User Management</h2>
+          <h2 style={styles.title}>Developer Hub</h2>
           <p style={styles.description}>
-            Store users, identity authenticate user with password or using identity providers like Facebook or Twitter
+            With the Syncano Developer Hub, you can increase your development capacity with the muscle of thousands of
+            software developers.
           </p>
         </div>
       </div>
