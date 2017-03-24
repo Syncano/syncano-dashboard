@@ -20,7 +20,9 @@ const PromoteSyncanoSection = React.createClass({
       let validatorObj = {};
 
       emails.forEach((email, index, arr) => {
-        const isValidEmail = new RegExp('\\S+@\\S+\\.\\S+', 'g').test(email);
+        // eslint-disable-next-line
+        const emailRegex = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])+", 'g');
+        const isValidEmail = emailRegex.test(email);
 
         if (!isValidEmail) {
           arr.length = 0;
