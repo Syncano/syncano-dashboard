@@ -76,7 +76,7 @@ const getS3Config = () => {
         region: 'us-west-2'
       },
       s3UploadOptions: {
-        Bucket: process.env.SYN4_STAGING_AWS_BUCKET_NAME
+        Bucket: process.env.STAGING_AWS_BUCKET_NAME
       },
       basePath: branch
     }
