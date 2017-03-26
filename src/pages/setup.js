@@ -1,10 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
-import Syncano from 'syncano';
-import _ from 'lodash';
-
-import SessionStore from '../apps/Session/SessionStore';
-import InstanceDialogStore from '../apps/Instances/InstanceDialogStore';
 
 import { Dialog, Loading } from '../common/';
 
@@ -16,11 +11,7 @@ class SetupPage extends Component {
   componentDidMount() {
     const { router } = this.props;
 
-    if (SessionStore.getSignUpMode()) {
-      this.createFirstInstance();
-    } else {
-      router.push('/instances/');
-    }
+    router.push('/instances/');
   }
 
   getStyles = () => ({
@@ -28,31 +19,6 @@ class SetupPage extends Component {
       textAlign: 'center'
     }
   });
-
-  createFirstInstance() {
-    const { router } = this.props;
-    const connection = new Syncano({ baseUrl: APP_CONFIG.SYNCANO_BASE_URL, accountKey: SessionStore.getToken() });
-    const name = InstanceDialogStore.genUniqueName();
-    const { location } = this.context;
-    const queryNext = location.query.next || null;
-
-    connection.Instance.please().create({ name })
-      .then((instance) => {
-        if (queryNext) {
-          router.push({
-            pathname: queryNext,
-            query: _.omit(location.query, 'next')
-          });
-        } else {
-          router.push(`/instances/${instance.name}/sockets/`);
-        }
-      })
-      .catch(() => {
-        router.push('/instances/');
-      });
-
-    SessionStore.removeSignUpMode();
-  }
 
   render() {
     const styles = this.getStyles();
