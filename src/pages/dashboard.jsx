@@ -4,16 +4,22 @@ import { withRouter } from 'react-router';
 
 import SessionStore from '../apps/Session/SessionStore';
 import ProfileBillingPlanStore from '../apps/Profile/ProfileBillingPlanStore';
+import InstancesStore from '../apps/Instances/InstancesStore';
 
 import { Header, UpgradeNowToolbar } from '../common/';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
+import BlurPageDialog from '../common/Dialog/BlurPageDialog';
+import OnboardingDialogContent from '../common/OnboardingDialogContent/OnboardingDialogContent';
 
 const Dashboard = React.createClass({
   contextTypes: {
     location: PropTypes.object
   },
 
-  mixins: [Reflux.connect(ProfileBillingPlanStore, 'billing')],
+  mixins: [
+    Reflux.connect(ProfileBillingPlanStore, 'billing'),
+    Reflux.connect(InstancesStore, 'instances')
+  ],
 
   componentDidMount() {
     const { router } = this.props;
@@ -27,10 +33,12 @@ const Dashboard = React.createClass({
     }
 
     ProfileBillingPlanStore.init();
+    InstancesStore.init();
   },
 
   componentWillUnmount() {
     ProfileBillingPlanStore.clearData();
+    InstancesStore.clearData();
   },
 
   getStyles() {
@@ -39,6 +47,9 @@ const Dashboard = React.createClass({
         display: 'flex',
         flexDirection: 'column',
         flex: 1
+      },
+      blurPageDialog: {
+        top: '5%'
       }
     };
   },
@@ -54,6 +65,23 @@ const Dashboard = React.createClass({
     return <UpgradeNowToolbar subscriptionEndDate={endDate} />;
   },
 
+  renderOnboardingDialog() {
+    const { myInstances, sharedInstances } = this.state.instances;
+    const instances = [...myInstances, ...sharedInstances];
+    const styles = this.getStyles();
+
+    if (instances.length > 0) return null;
+
+    return (
+      <BlurPageDialog
+        style={styles.blurPageDialog}
+        open={true}
+      >
+        <OnboardingDialogContent />
+      </BlurPageDialog>
+    );
+  },
+
   render() {
     const styles = this.getStyles();
     const { children } = this.props;
@@ -63,6 +91,7 @@ const Dashboard = React.createClass({
         <Header />
         {children}
         {this.renderUpgradeToolbar()}
+        {this.renderOnboardingDialog()}
         <InstanceDialog />
       </div>
     );
