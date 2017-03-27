@@ -32,7 +32,6 @@ import ApiKeys from './apps/ApiKeys/ApiKeys';
 import BackupAndRestore from './apps/BackupAndRestore';
 import Classes from './apps/Classes';
 import CustomSockets from './apps/CustomSockets';
-import SocketsRegistry from './apps/SocketsRegistry';
 import DataObjects from './apps/DataObjects/DataObjects';
 import Users from './apps/Users/Users';
 import Sockets from './apps/Sockets';
@@ -384,20 +383,6 @@ export default (
         />
 
         <IndexRoute component={Profile.Settings} />
-      </Route>
-
-      {/* Custom Sockets Registry */}
-      <Route
-        name="sockets-registry"
-        component={SocketsRegistry}
-        path="sockets-registry"
-      >
-        <Route
-          name="sockets-registry-details"
-          component={SocketsRegistry.Details}
-          path=":socketId/details"
-        />
-        <IndexRoute component={SocketsRegistry.List} />
       </Route>
 
       <IndexRoute
