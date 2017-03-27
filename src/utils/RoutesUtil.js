@@ -198,6 +198,7 @@ const RoutesUtil = {
 
   onInstanceEnter(nextState, replace, cb) {
     this.checkInstanceActiveSubscription(nextState, replace, cb);
+    const user = SessionStore.getUser();
     const lastInstanceName = localStorage.getItem('lastInstanceName');
 
     return this.isInstanceAvailable(lastInstanceName)
@@ -205,7 +206,7 @@ const RoutesUtil = {
         const instanceCreatedAt = Date.parse(instance.created_at);
         const releaseDate = 1491004800000;
 
-        if (instanceCreatedAt < releaseDate) {
+        if (instanceCreatedAt < releaseDate && !user.metadata.testInstance) {
           window.location = `${APP_CONFIG.SYNCANO_OLD_DASHBOARD}/instances/${instance.name}`;
         }
       });
