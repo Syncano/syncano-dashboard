@@ -109,14 +109,7 @@ const Instances = React.createClass({
             title,
             [`data-e2e`]: 'instances-page-title'
           }}
-        >
-          <RaisedButton
-            primary={true}
-            label="Add"
-            style={{ marginRight: 0 }}
-            onTouchTap={InstanceDialogActions.showDialog}
-          />
-        </InnerToolbar>
+        />
 
         <Container id="instances">
           <PageIntro
