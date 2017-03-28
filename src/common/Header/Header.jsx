@@ -224,12 +224,6 @@ const Header = Radium(React.createClass({
               <li style={styles.toolbarDropdownListItem}>
                 <HeaderGettingStartedDropdown />
               </li>
-              <li
-                id="sockets-registry"
-                style={styles.toolbarListItem}
-              >
-                <Link to="sockets-registry">Sockets Registry</Link>
-              </li>
             </ul>
           </ToolbarGroup>
           <ToolbarGroup style={styles.toolbarGroup}>

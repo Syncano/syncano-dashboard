@@ -1,11 +1,10 @@
 import Account from './Account';
 import AccountInvitations from './AccountInvitations';
 import Admins from './Admins';
+import Channels from './Channels';
 import Invitations from './Invitations';
 import ApiKeys from './ApiKeys';
-import BackupAndRestore from './BackupAndRestore';
 import Billing from './Billing';
-import Channels from './Channels';
 import Classes from './Classes';
 import CustomSockets from './CustomSockets';
 import SocketsRegistry from './SocketsRegistry';
@@ -20,18 +19,16 @@ import Groups from './Groups';
 import Users from './Users';
 import Usage from './Usage';
 import GlobalConfig from './GlobalConfig';
-import DemoApps from './DemoApps';
 import Hosting from './Hosting';
 
 export default {
   Account,
   AccountInvitations,
   Admins,
+  Channels,
   Invitations,
   ApiKeys,
-  BackupAndRestore,
   Billing,
-  Channels,
   Classes,
   CustomSockets,
   SocketsRegistry,
@@ -46,6 +43,5 @@ export default {
   Users,
   Usage,
   GlobalConfig,
-  DemoApps,
   Hosting
 };
