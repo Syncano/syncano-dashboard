@@ -28,7 +28,6 @@ import InstanceEdit from './apps/Instances/InstanceEdit';
 // Instance Apps
 import Admins from './apps/Admins/Admins';
 import ApiKeys from './apps/ApiKeys/ApiKeys';
-import BackupAndRestore from './apps/BackupAndRestore';
 import Classes from './apps/Classes';
 import CustomSockets from './apps/CustomSockets';
 import SocketsRegistry from './apps/SocketsRegistry';
@@ -225,21 +224,6 @@ export default (
           />
 
           <IndexRoute component={Classes} />
-        </Route>
-
-        {/* Backup & Restore */}
-        <Route
-          name="backup-and-restore"
-          path="backup-and-restore"
-          component={BackupAndRestore}
-        >
-          <Route
-            name="full-backups"
-            path="full"
-            component={BackupAndRestore.Full}
-          />
-
-          <IndexRoute component={BackupAndRestore.Full} />
         </Route>
 
         {/* Data Objects */}

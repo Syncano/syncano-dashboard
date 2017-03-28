@@ -1,7 +1,6 @@
 import Account from './Account';
 import Admins from './Admins';
 import ApiKeys from './ApiKeys';
-import BackupAndRestore from './BackupAndRestore';
 import Classes from './Classes';
 import CustomSockets from './CustomSockets';
 import SocketsRegistry from './SocketsRegistry';
@@ -20,7 +19,6 @@ export default {
   Account,
   Admins,
   ApiKeys,
-  BackupAndRestore,
   Classes,
   CustomSockets,
   SocketsRegistry,

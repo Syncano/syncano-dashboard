@@ -82,13 +82,6 @@ const Instance = React.createClass({
                   onTouchTap={() => InstanceDialogActions.showDialog(SessionStore.getInstance())}
                 />
                 <Sidebar.LinkListItem
-                  key="backupAndRestore"
-                  routeName="full-backups"
-                  data-e2e="left-sidebar-full-backups"
-                  iconClassName="synicon-backup-restore"
-                  primaryText="Backup & Restore"
-                />
-                <Sidebar.LinkListItem
                   key="Administrators"
                   routeName="admins"
                   data-e2e="left-sidebar-admins"
