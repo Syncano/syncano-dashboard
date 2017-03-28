@@ -37,19 +37,6 @@ export default CreateActions(
       loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Instances.remove'
-    },
-    fetchAllFullBackups: {
-      asyncResult: true,
-      loading: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.BackupAndRestore.listAllFullBackups'
-    },
-    createInstanceFromBackup: {
-      asyncResult: true,
-      loading: true,
-      asyncForm: true,
-      children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Instances.createFromBackup'
     }
   },
   {
