@@ -1,9 +1,9 @@
 import Account from './Account';
 import AccountInvitations from './AccountInvitations';
 import Admins from './Admins';
+import Channels from './Channels';
 import Invitations from './Invitations';
 import ApiKeys from './ApiKeys';
-import BackupAndRestore from './BackupAndRestore';
 import Billing from './Billing';
 import Classes from './Classes';
 import CustomSockets from './CustomSockets';
@@ -25,9 +25,9 @@ export default {
   Account,
   AccountInvitations,
   Admins,
+  Channels,
   Invitations,
   ApiKeys,
-  BackupAndRestore,
   Billing,
   Classes,
   CustomSockets,

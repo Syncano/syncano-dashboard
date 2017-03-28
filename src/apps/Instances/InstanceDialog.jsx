@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 import _ from 'lodash';
-import moment from 'moment';
 
 import { DialogMixin, DialogsMixin, FormMixin } from '../../mixins';
 
@@ -17,9 +16,7 @@ import {
   Icon,
   Notification,
   ColorIconPicker,
-  Show,
-  Loading,
-  SelectFieldWrapper
+  Show
   } from '../../common/';
 
 const InstanceDialog = React.createClass({
@@ -46,7 +43,6 @@ const InstanceDialog = React.createClass({
 
   componentWillUpdate(nextProps, nextState) {
     if (!this.state._dialogVisible && nextState._dialogVisible && nextState._dialogMode !== 'edit') {
-      Actions.fetchAllFullBackups();
       this.setState({
         name: Store.genUniqueName(),
         metadata: {
@@ -65,12 +61,6 @@ const InstanceDialog = React.createClass({
         borderBottom: '1px solid #DDD',
         borderTop: '1px solid #DDD'
       },
-      backupListItem: {
-        fontSize: 11,
-        color: '#AAA',
-        fontWeight: 800,
-        height: 15
-      },
       restoreFromFileListItem: {
         paddingTop: 8,
         paddingBottom: 8
@@ -79,14 +69,10 @@ const InstanceDialog = React.createClass({
   },
 
   handleAddSubmit() {
-    const { name, description, metadata, selectedBackup } = this.state;
+    const { name, description, metadata } = this.state;
 
     if (this.props.handleSubmit) {
       this.listenTo(Actions.createInstance.completed, this.extendSubmit);
-    }
-
-    if (selectedBackup !== 'null') {
-      return Actions.createInstanceFromBackup({ name, description, metadata }, selectedBackup);
     }
 
     return Actions.createInstance({ name, description, metadata });
@@ -135,10 +121,6 @@ const InstanceDialog = React.createClass({
     });
   },
 
-  handleChangeBackup(event, index, value) {
-    this.setState({ selectedBackup: value });
-  },
-
   initDialogs() {
     const { isLoading } = this.props;
 
@@ -170,43 +152,11 @@ const InstanceDialog = React.createClass({
     );
   },
 
-  renderDropDownItems() {
-    const { fullBackups } = this.state;
-    let dropdownItems = [];
-    const emptyItem = {
-      value: 'None',
-      text: 'None',
-      payload: 'null'
-    };
-
-    if (!fullBackups.length) {
-      return [emptyItem];
-    }
-
-    if (fullBackups.length) {
-      dropdownItems = _.filter(_.sortBy(fullBackups, 'instance'), { status: 'success' })
-        .map((backup) => {
-          const createdAt = moment().format('Do MM YYYY, HH:mm', backup.created_at);
-
-          return {
-            payload: backup.id,
-            desc: `Created at: ${createdAt}`,
-            text: backup.label
-          };
-        });
-    }
-
-    dropdownItems.unshift(emptyItem);
-
-    return dropdownItems;
-  },
-
   renderContent() {
     const {
       name,
       notificationShowed,
-      description,
-      selectedBackup
+      description
     } = this.state;
 
     return (
@@ -247,33 +197,6 @@ const InstanceDialog = React.createClass({
             />
           </div>
         </Dialog.ContentSection>
-        <Show if={!this.hasEditMode()}>
-          <Dialog.ContentSection className="vm-6-t">
-            <div className="col-flex-1">
-              <SelectFieldWrapper
-                name="backup"
-                floatingLabelText="Restore Instance from backup"
-                value={selectedBackup}
-                options={this.renderDropDownItems()}
-                onChange={this.handleChangeBackup}
-              />
-            </div>
-          </Dialog.ContentSection>
-        </Show>
-      </div>
-    );
-  },
-
-  renderLoading() {
-    return (
-      <div>
-        <div
-          className="vm-3-b"
-          style={{ textAlign: 'center' }}
-        >
-          {'We\'re restoring your backup, please wait...'}
-        </div>
-        <Loading show={true} />
       </div>
     );
   },
@@ -298,8 +221,7 @@ const InstanceDialog = React.createClass({
       open,
       metadata,
       isLoading,
-      canSubmit,
-      isRestoring
+      canSubmit
     } = this.state;
     const title = this.hasEditMode() ? 'Update' : 'Add';
 
@@ -307,13 +229,13 @@ const InstanceDialog = React.createClass({
       <Dialog.FullPage
         key="dialog"
         ref="dialog"
-        title={!isRestoring && `${title} an Instance`}
+        title={`${title} an Instance`}
         open={open}
         isLoading={isLoading}
         onRequestClose={this.handleCancel}
         onConfirm={this.handleFormValidation}
-        showCloseButton={!isRestoring}
-        actions={!isRestoring &&
+        showCloseButton={true}
+        actions={
           <div>
             {this.renderDeleteInstanceButton()}
             <Dialog.StandardButtons
@@ -323,23 +245,12 @@ const InstanceDialog = React.createClass({
             />
           </div>
         }
-        sidebar={!isRestoring && [
+        sidebar={[
           <Dialog.SidebarBox key="sidebarbox">
             <Dialog.SidebarSection>
               Instance gathers all the data associated with a project into a&nbsp;shared space. It can be an equivalent
               of an app or a&nbsp;piece of functionality.
             </Dialog.SidebarSection>
-            <Show if={!this.hasEditMode()}>
-              <Dialog.SidebarSection title="Restore from Backup">
-                When adding a new instance, you can restore it from an existing backup. Use the dropdown menu to do
-                a&nbsp;restore from a backup that is available within your account.
-              </Dialog.SidebarSection>
-              <Dialog.SidebarSection last={true}>
-                <Dialog.SidebarLink to="http://docs.syncano.io/docs/restore-from-full-backup/">
-                  Learn more
-                </Dialog.SidebarLink>
-              </Dialog.SidebarSection>
-            </Show>
           </Dialog.SidebarBox>,
           <ColorIconPicker
             key="coloriconpicker"
@@ -350,7 +261,7 @@ const InstanceDialog = React.createClass({
           />
         ]}
       >
-        {!isRestoring ? this.renderContent() : this.renderLoading()}
+        {this.renderContent()}
       </Dialog.FullPage>
     );
   }
