@@ -3,13 +3,14 @@ import _ from 'lodash';
 
 // Utils
 import { DialogsMixin } from '../../mixins';
+import { colors as Colors } from 'material-ui/styles';
 
 // Stores and Actions
 import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 import ListItem from './ClassesListItem';
-import { ColumnList, Loading, Dialog, Lists } from '../../common/';
+import { ColumnList, Loading, Dialog, Lists, EmptyView } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -105,14 +106,25 @@ export default React.createClass({
     return (
       <ListItem
         key={`classes-list-item-${item.name}`}
-        // onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('deleteClassDialog', item)}
       />
     );
   },
 
   render() {
+    if (this.props.items.length === 0) {
+      return (
+        <EmptyView
+          title="Data Classes"
+          description={`Data Classes are templates for data objects you will store in Syncano.
+            In order to be able to add Data Objects, you have to define a Data Class for that type of data object`}
+          iconClassName="synicon-cloud"
+          iconColor={Colors.blue600}
+          showDocsUrl={false}
+        />
+      );
+    }
+
     return (
       <Lists.Container className="classes-list">
         {this.getDialogs()}
@@ -139,8 +151,6 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
-          emptyItemContent="Add a Data Class"
-          emptyItemHandleClick={Actions.showDialog}
           key="classes-list"
           renderItem={this.renderItem}
         />
