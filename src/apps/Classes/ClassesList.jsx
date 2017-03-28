@@ -118,7 +118,7 @@ export default React.createClass({
           title="Data Classes"
           description={`Data Classes are templates for data objects you will store in Syncano.
             In order to be able to add Data Objects, you have to define a Data Class for that type of data object`}
-          iconClassName="synicon-cloud"
+          iconClassName="synicon-socket-data"
           iconColor={Colors.blue600}
           showDocsUrl={false}
         />
