@@ -3,7 +3,6 @@ import Reflux from 'reflux';
 import { withRouter } from 'react-router';
 
 import SessionStore from '../apps/Session/SessionStore';
-import ProfileActions from '../apps/Profile/ProfileActions';
 import ProfileBillingPlanStore from '../apps/Profile/ProfileBillingPlanStore';
 import RuntimeActions from '../apps/Runtimes/RuntimesActions';
 
@@ -65,11 +64,6 @@ const Dashboard = React.createClass({
 
   onApplyBeta() {
     window.analytics.track('Beta user subscription');
-    ProfileActions.updateSettings({
-      metadata: {
-        betaSignUp: new Date().getTime()
-      }
-    });
     this.setState({
       showBetaDialog: true
     });

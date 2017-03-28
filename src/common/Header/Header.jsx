@@ -242,13 +242,10 @@ const Header = Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const { user } = this.state;
-    const isSignedToBeta = user && !!user.metadata.betaSignUp;
-    const showBetaBanner = !isSignedToBeta && !this.state.closeBetaBanner;
 
     return (
       <Sticky zIndex={13}>
-        {showBetaBanner && <BetaSignUp closeBanner={this.closeBetaBanner} />}
+        {!this.state.closeBetaBanner && <BetaSignUp closeBanner={this.closeBetaBanner} />}
         <Toolbar style={styles.topToolbar}>
           <ToolbarGroup style={styles.logotypeContainer}>
             <Link to="app">

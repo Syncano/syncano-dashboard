@@ -27,7 +27,8 @@ const BetaSignUp = React.createClass({
         padding: 0,
         justifyContent: 'center',
         fontSize: 18,
-        color: '#9b9b9b'
+        color: '#9b9b9b',
+        cursor: 'pointer'
       },
       logo: {
         height: 20
@@ -37,15 +38,9 @@ const BetaSignUp = React.createClass({
       },
       applyBeta: {
         color: '#fff',
-        borderBottom: '1px solid #fff',
-        cursor: 'pointer'
+        borderBottom: '1px solid #fff'
       }
     };
-  },
-
-  onApplyBeta() {
-    this.context.onApplyBeta();
-    this.props.closeBanner();
   },
 
   renderBetaBadge() {
@@ -60,39 +55,41 @@ const BetaSignUp = React.createClass({
     const styles = this.getStyles();
 
     return (
-      <Toolbar style={styles.topToolbar}>
+      <div>
         <CloseButton
           style={{ top: 5 }}
           onTouchTap={this.props.closeBanner}
           data-e2e="close-beta-banner"
         />
-        <ToolbarGroup style={styles.toolbarList}>
-          Get ready for
-        </ToolbarGroup>
-        <ToolbarGroup style={styles.toolbarList}>
-          <Logo
-            className="logo-white"
-            style={styles.logo}
-          />
-        </ToolbarGroup>
-        <ToolbarGroup style={{ ...styles.toolbarList, color: '#fff', letterSpacing: 2 }}>
-          ASCEND
-        </ToolbarGroup>
-        <ToolbarGroup style={styles.toolbarList}>
-          {this.renderBetaBadge()}
-        </ToolbarGroup>
-        <ToolbarGroup style={styles.toolbarList}>
-          Get a sneak peek before anyone else:
-        </ToolbarGroup>
-        <ToolbarGroup style={styles.toolbarList}>
-          <div
-            style={styles.applyBeta}
-            onClick={this.onApplyBeta}
-          >
-            Apply for beta access
-          </div>
-        </ToolbarGroup>
-      </Toolbar>
+        <Toolbar
+          style={styles.topToolbar}
+          onClick={this.context.onApplyBeta}
+        >
+          <ToolbarGroup style={styles.toolbarList}>
+            Get ready for
+          </ToolbarGroup>
+          <ToolbarGroup style={styles.toolbarList}>
+            <Logo
+              className="logo-white"
+              style={styles.logo}
+            />
+          </ToolbarGroup>
+          <ToolbarGroup style={{ ...styles.toolbarList, color: '#fff', letterSpacing: 2 }}>
+            ASCEND
+          </ToolbarGroup>
+          <ToolbarGroup style={styles.toolbarList}>
+            {this.renderBetaBadge()}
+          </ToolbarGroup>
+          <ToolbarGroup style={styles.toolbarList}>
+            Get a sneak peek before anyone else:
+          </ToolbarGroup>
+          <ToolbarGroup style={styles.toolbarList}>
+            <div style={styles.applyBeta}>
+              Apply for beta access
+            </div>
+          </ToolbarGroup>
+        </Toolbar>
+      </div>
     );
   }
 });
