@@ -69,26 +69,6 @@ const Instance = React.createClass({
                   primaryText="Hosting"
                 />
 
-                <Sidebar.LinkListItem
-                  key="pushDevices"
-                  routeName="all-push-notification-devices"
-                  data-e2e="left-sidebar-all-push-notification-devices"
-                  primaryText="Push Devices"
-                  iconClassName="synicon-cellphone-iphone"
-                  initiallyOpen={true}
-                  autoGenerateNestedIndicator={false}
-                />
-
-                <Sidebar.LinkListItem
-                  key="pushMessages"
-                  routeName="all-push-notification-messages"
-                  data-e2e="left-sidebar-all-push-notification-messages"
-                  primaryText="Push Messages"
-                  iconClassName="synicon-cellphone-iphone"
-                  initiallyOpen={true}
-                  autoGenerateNestedIndicator={false}
-                />
-
               </Sidebar.List>
               <Sidebar.List
                 key="Instance Settings"

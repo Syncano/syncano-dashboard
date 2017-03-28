@@ -12,9 +12,6 @@ import Hosting from './Hosting';
 import Instances from './Instances';
 import Profile from './Profile';
 import ProfileInvitations from './ProfileInvitations';
-import PushDevices from './PushDevices';
-import PushNotifications from './PushNotifications';
-import PushMessages from './PushMessages';
 import Session from './Session';
 import SnackbarNotification from './SnackbarNotification';
 import Users from './Users';
@@ -34,9 +31,6 @@ export default {
   Instances,
   Profile,
   ProfileInvitations,
-  PushDevices,
-  PushNotifications,
-  PushMessages,
   Session,
   SnackbarNotification,
   Users
