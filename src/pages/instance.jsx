@@ -69,26 +69,6 @@ const Instance = React.createClass({
                   primaryText="Hosting"
                 />
 
-                <Sidebar.LinkListItem
-                  key="pushDevices"
-                  routeName="all-push-notification-devices"
-                  data-e2e="left-sidebar-all-push-notification-devices"
-                  primaryText="Push Devices"
-                  iconClassName="synicon-cellphone-iphone"
-                  initiallyOpen={true}
-                  autoGenerateNestedIndicator={false}
-                />
-
-                <Sidebar.LinkListItem
-                  key="pushMessages"
-                  routeName="all-push-notification-messages"
-                  data-e2e="left-sidebar-all-push-notification-messages"
-                  primaryText="Push Messages"
-                  iconClassName="synicon-cellphone-iphone"
-                  initiallyOpen={true}
-                  autoGenerateNestedIndicator={false}
-                />
-
               </Sidebar.List>
               <Sidebar.List
                 key="Instance Settings"
@@ -100,13 +80,6 @@ const Instance = React.createClass({
                   data-e2e="left-sidebar-synicon-settings"
                   primaryText="General Settings"
                   onTouchTap={() => InstanceDialogActions.showDialog(SessionStore.getInstance())}
-                />
-                <Sidebar.LinkListItem
-                  key="backupAndRestore"
-                  routeName="full-backups"
-                  data-e2e="left-sidebar-full-backups"
-                  iconClassName="synicon-backup-restore"
-                  primaryText="Backup & Restore"
                 />
                 <Sidebar.LinkListItem
                   key="Administrators"

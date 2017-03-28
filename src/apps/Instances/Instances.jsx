@@ -12,7 +12,7 @@ import InstanceDialogActions from './InstanceDialogActions';
 import { DialogsMixin } from '../../mixins';
 
 import { RaisedButton } from 'material-ui';
-import { Container, Show, InnerToolbar, Dialog, PageIntro } from '../../common/';
+import { Container, Show, InnerToolbar, Dialog } from '../../common/';
 
 import InstancesList from './InstancesList';
 import SharedInstancesList from './SharedInstancesList';
@@ -84,7 +84,6 @@ const Instances = React.createClass({
 
   render() {
     const { blocked, isLoading, hideDialogs, myInstances, sharedInstances } = this.state;
-    const { isPageIntroVisible, hidePageIntro } = this.props;
     const title = 'Instances';
 
     if (blocked) {
@@ -109,35 +108,9 @@ const Instances = React.createClass({
             title,
             [`data-e2e`]: 'instances-page-title'
           }}
-        >
-          <RaisedButton
-            primary={true}
-            label="Add"
-            style={{ marginRight: 0 }}
-            onTouchTap={InstanceDialogActions.showDialog}
-          />
-        </InnerToolbar>
+        />
 
         <Container id="instances">
-          <PageIntro
-            headline="Your Instances"
-            text={
-              <p>
-                Instances are projects that you can create, manage, and share with other users.<br />It can be your
-                next big app, multi-platform game, or a simple hackathon project.
-              </p>
-            }
-            actions={
-              <RaisedButton
-                primary={true}
-                label="Add new Instance"
-                onTouchTap={InstanceDialogActions.showDialog}
-              />
-            }
-            show={isPageIntroVisible}
-            onRequestClose={hidePageIntro}
-          />
-
           <InstancesList
             ref="myInstancesList"
             name="Instances"
@@ -162,4 +135,4 @@ const Instances = React.createClass({
   }
 });
 
-export default withRouter(PageIntro.HOC(Instances, 'instancesPageIntro'));
+export default withRouter(Instances, 'instancesPageIntro');

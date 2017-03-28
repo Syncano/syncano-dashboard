@@ -19,6 +19,6 @@ export default addTestNamePrefixes({
     classesPage
       .goToUrl(instanceName, 'classes')
       .waitForElementVisible('@classTableRows')
-      .assertSelectedCount('xpath', classTableRows, 4, 'There are 4 classes');
+      .assertSelectedCount('xpath', classTableRows, 3, 'There are 3 classes');
   }
 });
