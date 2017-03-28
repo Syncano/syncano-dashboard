@@ -16,7 +16,8 @@ const getAppConfig = (env) => {
     'SYNCANO_DEMO_APPS_ACCOUNT_KEY',
     'SYNCANO_SUPPORT_EMAIL',
     'SYNCANO_BASE_URL',
-    'SYNCANO_OLD_DASHBOARD'
+    'SYNCANO_OLD_DASHBOARD',
+    'SYNCANO5_RELEASE_DATE'
   ];
   const config = {
     ENV: Object.keys(env)[0],
