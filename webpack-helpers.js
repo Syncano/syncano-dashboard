@@ -15,7 +15,9 @@ const getAppConfig = (env) => {
     'SYNCANO_BILLING_EMAIL',
     'SYNCANO_DEMO_APPS_ACCOUNT_KEY',
     'SYNCANO_SUPPORT_EMAIL',
-    'SYNCANO_BASE_URL'
+    'SYNCANO_BASE_URL',
+    'SYNCANO_NEW_DASHBOARD',
+    'SYNCANO5_RELEASE_DATE'
   ];
   const config = {
     ENV: Object.keys(env)[0],
@@ -35,7 +37,7 @@ const getAppConfig = (env) => {
   return config;
 };
 
-const getS3Config = () => {
+const getS3Config = (env) => {
   const { CIRCLE_BRANCH } = process.env;
 
   if (!CIRCLE_BRANCH) {
@@ -44,32 +46,41 @@ const getS3Config = () => {
 
   const branch = CIRCLE_BRANCH.toLowerCase();
   const config = {
-    'syn4-devel': {
+    beta: {
+      directory: resolve('dist'),
+      s3Options: {
+        region: 'us-east-1'
+      },
+      s3UploadOptions: {
+        Bucket: process.env.BETA_AWS_BUCKET_NAME
+      }
+    },
+    devel: {
       directory: resolve('dist'),
       s3Options: {
         region: 'us-west-2'
       },
       s3UploadOptions: {
-        Bucket: process.env.SYN4_STAGING_AWS_BUCKET_NAME
+        Bucket: process.env.SYN5_STAGING_AWS_BUCKET_NAME
       },
       cloudfrontInvalidateOptions: {
-        DistributionId: process.env.SYN4_STAGING_AWS_DISTRIBUTION_ID,
+        DistributionId: process.env.SYN5_STAGING_AWS_DISTRIBUTION_ID,
         Items: ['/*']
       }
     },
-    'syn4-master': {
-      directory: resolve('dist'),
-      s3Options: {
-        region: 'us-west-2'
-      },
-      s3UploadOptions: {
-        Bucket: process.env.PRODUCTION_AWS_BUCKET_NAME
-      },
-      cloudfrontInvalidateOptions: {
-        DistributionId: process.env.PRODUCTION_AWS_DISTRIBUTION_ID,
-        Items: ['/*']
-      }
-    },
+    // master: {
+    //   directory: resolve('dist'),
+    //   s3Options: {
+    //     region: 'us-west-2'
+    //   },
+    //   s3UploadOptions: {
+    //     Bucket: process.env.PRODUCTION_AWS_BUCKET_NAME
+    //   },
+    //   cloudfrontInvalidateOptions: {
+    //     DistributionId: process.env.PRODUCTION_AWS_DISTRIBUTION_ID,
+    //     Items: ['/*']
+    //   }
+    // },
     default: {
       directory: resolve('dist'),
       s3Options: {
@@ -81,6 +92,10 @@ const getS3Config = () => {
       basePath: branch
     }
   };
+
+  if (env.beta) {
+    return config.beta;
+  }
 
   return config[branch] || config.default;
 };

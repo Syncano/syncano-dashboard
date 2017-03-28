@@ -202,12 +202,11 @@ const RoutesUtil = {
 
     return this.isInstanceAvailable(lastInstanceName)
       .then((instance = {}) => {
-        const dashboardUrl = `https://dashboard.syncano${APP_CONFIG.ENV === 'production' ? '.io' : '.rocks'}`;
         const instanceCreatedAt = Date.parse(instance.created_at);
-        const releaseDate = 1491004800000;
+        const releaseDate = Number(APP_CONFIG.SYNCANO5_RELEASE_DATE);
 
         if (instanceCreatedAt > releaseDate) {
-          window.location = `${dashboardUrl}/instances/${instance.name}`;
+          window.location = `${APP_CONFIG.SYNCANO_NEW_DASHBOARD}/#/instances/${instance.name}`;
         }
       });
   }
