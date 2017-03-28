@@ -5,7 +5,11 @@ export default {
       .please()
       .list()
       .ordering('desc')
-      .then(this.completed)
+      .then((classes) => {
+        const classesList = classes.filter((item) => item.name !== 'user_profile');
+
+        this.completed(classesList);
+      })
       .catch(this.failure);
   },
 
