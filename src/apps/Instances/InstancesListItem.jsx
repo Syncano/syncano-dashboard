@@ -13,6 +13,21 @@ const Column = ColumnList.Column;
 
 const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checkable }) => {
   const { checked, name, metadata, description, created_at } = item;
+  const styles = {
+    tooltipRoot: {
+      display: 'flex',
+      color: '#FF0000',
+      fontWeight: 100,
+      flexGrow: 1,
+      height: 19
+    },
+    tooltipContent: {
+      fontSize: 14,
+      lineHeight: '18px',
+      padding: 5,
+      top: -5
+    }
+  };
   const handleInstanceNameClick = () => {
     localStorage.setItem('lastInstanceName', name);
     router.push(`/instances/${name}/`);
@@ -26,28 +41,30 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
 
   const maintenanceInfo = () => {
     const tooltipContent = () => (
-      <div style={{ whiteSpace: 'pre-wrap' }}>
+      <div
+        style={{ whiteSpace: 'pre-wrap' }}
+        onClick={() => window._elev.openModule('intercom')}
+      >
         This instance will not receive the upcoming features of Syncano<br />
-        as it was built on a previous version. Contact us for more information.
+        as it was built on a previous version.
+        Contact us for more information.
       </div>
     );
 
     return (
-      <div style={{ display: 'flex' }}>
+      <Tooltip
+        label={tooltipContent()}
+        style={styles.tooltipContent}
+        rootStyle={styles.tooltipRoot}
+        touch={true}
+      >
         <FontIcon
           color="#FF0000"
           style={{ fontSize: 16, marginRight: 5 }}
           className="synicon-alert"
         />
-        <Tooltip
-          label={tooltipContent()}
-          style={{ fontSize: 14, lineHeight: '18px', padding: 5, top: -5 }}
-          rootStyle={{ color: '#FF0000', fontWeight: 100, flexGrow: 1, height: 20 }}
-          touch={true}
-        >
-          maintenance
-        </Tooltip>
-      </div>
+        maintenance
+      </Tooltip>
     );
   };
 
