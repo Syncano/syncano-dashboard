@@ -6,8 +6,8 @@ import InstancesStore from './InstancesStore';
 import InstancesActions from './InstancesActions';
 import InstanceDialogActions from './InstanceDialogActions';
 
-import { MenuItem } from 'material-ui';
-import { Color, ColumnList, Truncate } from '../../common/';
+import { MenuItem, FontIcon } from 'material-ui';
+import { Color, ColumnList, Truncate, Tooltip } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -22,6 +22,33 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
   };
   const setClickedInstance = () => {
     InstancesActions.setClickedInstance(item);
+  };
+
+  const maintenanceInfo = () => {
+    const tooltipContent = () => (
+      <div style={{ whiteSpace: 'pre-wrap' }}>
+        This instance will not receive the upcoming features of Syncano<br />
+        as it was built on a previous version. Contact us for more information.
+      </div>
+    );
+
+    return (
+      <div style={{ display: 'flex' }}>
+        <FontIcon
+          color="#FF0000"
+          style={{ fontSize: 16, marginRight: 5 }}
+          className="synicon-alert"
+        />
+        <Tooltip
+          label={tooltipContent()}
+          style={{ fontSize: 14, lineHeight: '18px', padding: 5, top: -5 }}
+          rootStyle={{ color: '#FF0000', fontWeight: 100, flexGrow: 1, height: 20 }}
+          touch={true}
+        >
+          maintenance
+        </Tooltip>
+      </div>
+    );
   };
 
   return (
@@ -45,6 +72,7 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
             onClick={handleInstanceNameClick}
           />
         }
+        secondaryText={maintenanceInfo()}
       />
       <Column.Desc>{description}</Column.Desc>
       <Column.Date date={created_at} />
