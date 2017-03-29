@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Actions from './CustomSocketsActions';
-
 import ListItem from './CustomSocketsListItem';
 import { colors as Colors } from 'material-ui/styles';
 import { ColumnList, Lists, EmptyView } from '../../common/';
@@ -55,13 +53,11 @@ const CustomSocketsList = React.createClass({
       return (
         <EmptyView
           iconClassName="synicon-socket-custom-socket"
-          buttonLabel="Add a Socket"
           iconColor={Colors.purple400}
           title="Syncano Sockets"
           urlLabel="Syncano Sockets"
           description="Use Syncano CLI to install a Socket from library"
           docsUrl="http://docs.syncano.io/docs"
-          handleClick={Actions.showDialog}
         />
       );
     }
