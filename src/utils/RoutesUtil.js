@@ -87,7 +87,9 @@ const RoutesUtil = {
     let pathname = decodeURIComponent(nextState.location.pathname).replace('//', '/');
     const query = _.extend({}, uri.search(true), nextState.location.query);
 
-    localStorage.setItem('token', Cookies.get('token'));
+    if (!localStorage.getItem('token')) {
+      localStorage.setItem('token', Cookies.get('token'));
+    }
     SessionStore.setUTMData(nextState.location.query);
 
     // remove trailing slash
