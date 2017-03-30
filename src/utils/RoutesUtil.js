@@ -87,7 +87,14 @@ const RoutesUtil = {
     let pathname = decodeURIComponent(nextState.location.pathname).replace('//', '/');
     const query = _.extend({}, uri.search(true), nextState.location.query);
 
-    localStorage.setItem('token', Cookies.get('token'));
+    if (!localStorage.getItem('token')) {
+      localStorage.setItem('token', Cookies.get('token'));
+    }
+    if (Cookies.get('redirectMode')) {
+      localStorage.removeItem('lastPathname');
+      localStorage.removeItem('lastInstanceName');
+    }
+
     SessionStore.setUTMData(nextState.location.query);
 
     // remove trailing slash
@@ -208,6 +215,7 @@ const RoutesUtil = {
 
         if (instanceCreatedAt > releaseDate) {
           Cookies.set('token', localStorage.getItem('token'));
+          Cookies.set('redirectMode', true);
           window.location = `${APP_CONFIG.SYNCANO_NEW_DASHBOARD}/#/instances/${instance.name}`;
         }
       });
