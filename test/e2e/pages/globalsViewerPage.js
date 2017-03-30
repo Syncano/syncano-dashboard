@@ -1,7 +1,7 @@
 export default {
   elements: {
-    globalConfigEditor: {
-      selector: '[data-e2e="global-config-editor"]'
+    globalConfigViewer: {
+      selector: '[data-e2e="global-config-viewer"]'
     },
     globalConfigCloseButton: {
       selector: '[data-e2e="global-config-close"]'

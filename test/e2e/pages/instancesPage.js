@@ -59,7 +59,7 @@ export default {
       locateStrategy: 'xpath'
     },
     selectInstance: {
-      selector: '//div[@class="instances-list"]/div[2]/div[1]/div[1]//span',
+      selector: '//div[@class="instances-list"]/div[2]/div[1]/div[1]//button',
       locateStrategy: 'xpath'
     },
     editDropdownItem: {

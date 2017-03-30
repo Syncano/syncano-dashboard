@@ -1,8 +1,7 @@
 import React from 'react';
-import Tooltip from '../Tooltip';
 import Truncate from '../Truncate';
 
-const CustomTitle = ({ title, id, style, ...other }) => {
+const CustomTitle = ({ title, id, ...other }) => {
   const styles = {
     id: {
       padding: '0 5px'
@@ -17,13 +16,6 @@ const CustomTitle = ({ title, id, style, ...other }) => {
       color: 'rgba(0, 0, 0, .4)',
       lineHeight: '56px',
       width: '100%'
-    },
-    toolbarTooltip: {
-      top: 26
-    },
-    tooltipRootStyle: {
-      flex: 1,
-      minWidth: 0
     }
   };
 
@@ -40,20 +32,13 @@ const CustomTitle = ({ title, id, style, ...other }) => {
   }
 
   return (
-    <Tooltip
-      label={title}
-      style={styles.toolbarTooltip}
-      rootStyle={{ ...styles.tooltipRootStyle, ...style }}
-      touch={true}
-    >
-      <div style={styles.titleWrapper}>
-        <Truncate
-          data-e2e={other[`data-e2e`]}
-          text={title}
-        />
-        {renderId()}
-      </div>
-    </Tooltip>
+    <div style={styles.titleWrapper}>
+      <Truncate
+        data-e2e={other[`data-e2e`]}
+        text={title}
+      />
+      {renderId()}
+    </div>
   );
 };
 

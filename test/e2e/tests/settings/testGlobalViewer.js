@@ -2,7 +2,7 @@ import instances from '../../tempInstances';
 import { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['globalConfig'],
+  tags: ['globalViewer'],
   before: (client) => {
     const { account_key: accountKey } = instances.account;
 
@@ -11,18 +11,18 @@ export default addTestNamePrefixes({
       .setResolution(client);
   },
   after: (client) => client.end(),
-  'Administrator reads global Variables': (client) => {
+  'Administrator views global config': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
-    const globalConfigPage = client.page.globalConfigPage();
+    const globalsViewerPage = client.page.globalsViewerPage();
     const { instanceName } = instances.firstInstance;
 
     leftMenuPage
       .goToUrl(instanceName, 'sockets')
       .clickElement('@globalConfig');
 
-    globalConfigPage
-      .waitForElementPresent('@globalConfigEditor')
+    globalsViewerPage
+      .waitForElementPresent('@globalConfigViewer')
       .clickElement('@globalConfigCloseButton')
-      .waitForElementNotPresent('@globalConfigEditor');
+      .waitForElementNotPresent('@globalConfigViewer');
   }
 });

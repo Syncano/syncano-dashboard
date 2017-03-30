@@ -7,7 +7,7 @@ import Actions from './GlobalConfigDialogActions';
 import Store from './GlobalConfigDialogStore';
 
 import { RaisedButton } from 'material-ui';
-import { Dialog, Editor, Loading } from '../../common';
+import { Dialog, Loading } from '../../common';
 import { DialogBindShortcutsHOC } from '../../common/Dialog';
 
 const GlobalConfigDialog = React.createClass({
@@ -25,6 +25,18 @@ const GlobalConfigDialog = React.createClass({
   render() {
     const { hasBindShortcutsEnabled } = this.context;
     const { open, isLoading, isConfigLoading, globalConfig } = this.state;
+    const styles = {
+      config: {
+        backgroundColor: '#000',
+        color: '#fff',
+        padding: 10,
+        borderRadius: 5,
+        fontSize: 14,
+        height: 350,
+        cursor: 'default',
+        margin: 0
+      }
+    };
 
     return (
       <Dialog.FullPage
@@ -63,15 +75,12 @@ const GlobalConfigDialog = React.createClass({
       >
         <div className="vm-2-t">
           <Loading show={isConfigLoading}>
-            <Editor
-              name="globalConfigEditor"
-              ref="globalConfigEditor"
-              mode="json"
-              readOnly={true}
-              height="400px"
-              value={globalConfig}
-              data-e2e="global-config-editor"
-            />
+            <pre
+              style={styles.config}
+              data-e2e="global-config-viewer"
+            >
+              {globalConfig}
+            </pre>
           </Loading>
         </div>
       </Dialog.FullPage>
