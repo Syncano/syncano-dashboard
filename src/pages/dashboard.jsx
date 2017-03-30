@@ -91,7 +91,6 @@ const Dashboard = React.createClass({
         <Header />
         {children}
         {this.renderUpgradeToolbar()}
-        {this.renderOnboardingDialog()}
         <InstanceDialog />
       </div>
     );

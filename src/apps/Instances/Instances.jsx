@@ -9,6 +9,9 @@ import Store from './InstancesStore';
 import Actions from './InstancesActions';
 import InstanceDialogActions from './InstanceDialogActions';
 
+import BlurPageDialog from '../../common/Dialog/BlurPageDialog';
+import OnboardingDialogContent from '../../common/OnboardingDialogContent/OnboardingDialogContent';
+
 import { DialogsMixin } from '../../mixins';
 
 import { RaisedButton } from 'material-ui';
@@ -38,6 +41,14 @@ const Instances = React.createClass({
 
   componentWillUnmount() {
     Store.clearStore();
+  },
+
+  getStyles() {
+    return {
+      blurPageDialog: {
+        top: '5%'
+      }
+    };
   },
 
   showInstanceDialog() {
@@ -82,6 +93,23 @@ const Instances = React.createClass({
     }];
   },
 
+  renderOnboardingDialog() {
+    const { myInstances, sharedInstances } = this.state;
+    const instances = [...myInstances, ...sharedInstances];
+    const styles = this.getStyles();
+
+    if (instances.length > 0) return null;
+
+    return (
+      <BlurPageDialog
+        style={styles.blurPageDialog}
+        open={true}
+      >
+        <OnboardingDialogContent />
+      </BlurPageDialog>
+    );
+  },
+
   render() {
     const { blocked, isLoading, hideDialogs, myInstances, sharedInstances } = this.state;
     const { isPageIntroVisible, hidePageIntro } = this.props;
@@ -103,7 +131,7 @@ const Instances = React.createClass({
       <div>
         <Helmet title={title} />
         {this.getDialogs()}
-
+        {this.renderOnboardingDialog()}
         <InnerToolbar
           title={{
             title,
