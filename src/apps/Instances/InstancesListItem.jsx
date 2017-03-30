@@ -20,14 +20,14 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
       display: 'flex',
       color: '#FF0000',
       fontWeight: 100,
-      flexGrow: 1,
-      height: 19
+      flexGrow: 1
     },
     tooltipContent: {
       fontSize: 14,
-      lineHeight: '18px',
+      lineHeight: '16px',
       padding: 5,
-      top: -5
+      top: 0,
+      letterSpacing: '0.4px'
     }
   };
   const handleInstanceNameClick = () => {
@@ -44,8 +44,7 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
   const maintenanceInfo = () => {
     const tooltipContent = () => (
       <div style={{ whiteSpace: 'pre-wrap' }}>
-        This instance will not receive the upcoming features of Syncano<br />
-        as it was built on a previous version.
+        This instance will not receive the upcoming features of Syncano as it was built on a previous version.
         <span style={{ fontWeight: 700 }}> Click on the tooltip</span> to contact us for more information.
       </div>
     );
@@ -55,7 +54,6 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
         label={tooltipContent()}
         style={styles.tooltipContent}
         rootStyle={styles.tooltipRoot}
-        touch={true}
         onClick={() => window._elev.openModule('intercom')}
       >
         <FontIcon
