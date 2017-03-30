@@ -77,7 +77,7 @@ const GlobalConfigDialog = React.createClass({
           <Loading show={isConfigLoading}>
             <pre
               style={styles.config}
-              data-e2e="global-config-editor"
+              data-e2e="global-config-viewer"
             >
               {globalConfig}
             </pre>
