@@ -90,6 +90,10 @@ const RoutesUtil = {
     if (!localStorage.getItem('token')) {
       localStorage.setItem('token', Cookies.get('token'));
     }
+    if (Cookies.get('redirectMode')) {
+      localStorage.removeItem('lastPathname');
+      localStorage.removeItem('lastInstanceName');
+    }
     SessionStore.setUTMData(nextState.location.query);
 
     // remove trailing slash
@@ -210,6 +214,7 @@ const RoutesUtil = {
 
         if (instanceCreatedAt < releaseDate && !instance.metadata.testInstance) {
           Cookies.set('token', localStorage.getItem('token'));
+          Cookies.set('redirectMode', true);
           window.location = `${APP_CONFIG.SYNCANO_OLD_DASHBOARD}/#/instances/${instance.name}`;
         }
       });
