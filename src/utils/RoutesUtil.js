@@ -87,6 +87,7 @@ const RoutesUtil = {
     let pathname = decodeURIComponent(nextState.location.pathname).replace('//', '/');
     const query = _.extend({}, uri.search(true), nextState.location.query);
 
+    localStorage.setItem('token', Cookies.get('token'));
     SessionStore.setUTMData(nextState.location.query);
 
     // remove trailing slash
@@ -206,6 +207,7 @@ const RoutesUtil = {
         const releaseDate = Number(APP_CONFIG.SYNCANO5_RELEASE_DATE);
 
         if (instanceCreatedAt > releaseDate) {
+          Cookies.set('token', localStorage.getItem('token'));
           window.location = `${APP_CONFIG.SYNCANO_NEW_DASHBOARD}/#/instances/${instance.name}`;
         }
       });
