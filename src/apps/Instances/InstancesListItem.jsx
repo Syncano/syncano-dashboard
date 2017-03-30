@@ -13,6 +13,8 @@ const Column = ColumnList.Column;
 
 const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checkable }) => {
   const { checked, name, metadata, description, created_at } = item;
+  const instanceCreatedAt = Date.parse(created_at);
+  const releaseDate = Number(APP_CONFIG.SYNCANO5_RELEASE_DATE);
   const styles = {
     tooltipRoot: {
       display: 'flex',
@@ -87,7 +89,7 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
             onClick={handleInstanceNameClick}
           />
         }
-        secondaryText={maintenanceInfo()}
+        secondaryText={instanceCreatedAt < releaseDate && maintenanceInfo()}
       />
       <Column.Desc>{description}</Column.Desc>
       <Column.Date date={created_at} />
