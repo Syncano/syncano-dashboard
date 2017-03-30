@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Actions from './CustomSocketsActions';
-
 import ListItem from './CustomSocketsListItem';
 import { colors as Colors } from 'material-ui/styles';
 import { ColumnList, Lists, EmptyView } from '../../common/';
@@ -50,18 +48,18 @@ const CustomSocketsList = React.createClass({
       style,
       ...other
     } = this.props;
+    // eslint-disable-next-line
+    const docsUrl = 'https://github.com/Syncano/syncano-node-cli/blob/devel/docs/QUICKSTART.md#install-and-configure-a-socket';
 
     if ((!items || !items.length) && !isLoading) {
       return (
         <EmptyView
           iconClassName="synicon-socket-custom-socket"
-          buttonLabel="Add a Socket"
           iconColor={Colors.purple400}
           title="Syncano Sockets"
           urlLabel="Syncano Sockets"
           description="Use Syncano CLI to install a Socket from library"
-          docsUrl="http://docs.syncano.io/docs"
-          handleClick={Actions.showDialog}
+          docsUrl={docsUrl}
         />
       );
     }
