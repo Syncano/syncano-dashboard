@@ -55,32 +55,32 @@ const getS3Config = (env) => {
         Bucket: process.env.BETA_AWS_BUCKET_NAME
       }
     },
-    devel: {
+    'syn4-devel': {
       directory: resolve('dist'),
       s3Options: {
         region: 'us-west-2'
       },
       s3UploadOptions: {
-        Bucket: process.env.SYN5_STAGING_AWS_BUCKET_NAME
+        Bucket: process.env.SYN4_STAGING_AWS_BUCKET_NAME
       },
       cloudfrontInvalidateOptions: {
-        DistributionId: process.env.SYN5_STAGING_AWS_DISTRIBUTION_ID,
+        DistributionId: process.env.SYN4_STAGING_AWS_DISTRIBUTION_ID,
         Items: ['/*']
       }
     },
-    // master: {
-    //   directory: resolve('dist'),
-    //   s3Options: {
-    //     region: 'us-west-2'
-    //   },
-    //   s3UploadOptions: {
-    //     Bucket: process.env.PRODUCTION_AWS_BUCKET_NAME
-    //   },
-    //   cloudfrontInvalidateOptions: {
-    //     DistributionId: process.env.PRODUCTION_AWS_DISTRIBUTION_ID,
-    //     Items: ['/*']
-    //   }
-    // },
+    'syn4-master': {
+      directory: resolve('dist'),
+      s3Options: {
+        region: 'us-west-2'
+      },
+      s3UploadOptions: {
+        Bucket: process.env.PRODUCTION_AWS_BUCKET_NAME
+      },
+      cloudfrontInvalidateOptions: {
+        DistributionId: process.env.PRODUCTION_AWS_DISTRIBUTION_ID,
+        Items: ['/*']
+      }
+    },
     default: {
       directory: resolve('dist'),
       s3Options: {
@@ -92,10 +92,6 @@ const getS3Config = (env) => {
       basePath: branch
     }
   };
-
-  if (env.beta) {
-    return config.beta;
-  }
 
   return config[branch] || config.default;
 };
