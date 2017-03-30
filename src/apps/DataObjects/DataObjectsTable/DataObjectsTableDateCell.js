@@ -2,8 +2,8 @@ import React from 'react';
 import Moment from 'moment';
 
 const DataObjectsTableDateCell = ({ content }) => {
-  const date = Moment(content).format('DD/MM/YYYY');
-  const time = Moment(content).format('LTS');
+  const date = Moment(content.value).format('DD/MM/YYYY');
+  const time = Moment(content.value).format('LTS');
   const title = `${date} ${time}`;
 
   return (

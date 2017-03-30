@@ -17,7 +17,7 @@ const DataObjectsTableCell = ({ item, columnId, users }) => {
     };
 
     if (_.includes(['created_at', 'updated_at'], columnId)) {
-      return <DataObjectsTableDateCell content={content} />;
+      return <DataObjectsTableDateCell content={{ value: content }} />;
     }
 
     if (_.isObject(content)) {
