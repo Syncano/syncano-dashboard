@@ -41,13 +41,10 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
 
   const maintenanceInfo = () => {
     const tooltipContent = () => (
-      <div
-        style={{ whiteSpace: 'pre-wrap' }}
-        onClick={() => window._elev.openModule('intercom')}
-      >
+      <div style={{ whiteSpace: 'pre-wrap' }}>
         This instance will not receive the upcoming features of Syncano<br />
         as it was built on a previous version.
-        Contact us for more information.
+        <span style={{ fontWeight: 700 }}> Click on the tooltip</span> to contact us for more information.
       </div>
     );
 
@@ -57,6 +54,7 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
         style={styles.tooltipContent}
         rootStyle={styles.tooltipRoot}
         touch={true}
+        onClick={() => window._elev.openModule('intercom')}
       >
         <FontIcon
           color="#FF0000"
