@@ -75,7 +75,12 @@ const GlobalConfigDialog = React.createClass({
       >
         <div className="vm-2-t">
           <Loading show={isConfigLoading}>
-            <pre style={styles.config}>{globalConfig}</pre>
+            <pre
+              style={styles.config}
+              data-e2e="global-config-editor"
+            >
+              {globalConfig}
+            </pre>
           </Loading>
         </div>
       </Dialog.FullPage>
