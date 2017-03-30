@@ -6,13 +6,28 @@ import InstancesStore from './InstancesStore';
 import InstancesActions from './InstancesActions';
 import InstanceDialogActions from './InstanceDialogActions';
 
-import { MenuItem } from 'material-ui';
-import { Color, ColumnList, Truncate } from '../../common/';
+import { MenuItem, FontIcon } from 'material-ui';
+import { Color, ColumnList, Truncate, Tooltip } from '../../common/';
 
 const Column = ColumnList.Column;
 
 const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checkable }) => {
   const { checked, name, metadata, description, created_at } = item;
+  const styles = {
+    tooltipRoot: {
+      display: 'flex',
+      color: '#FF0000',
+      fontWeight: 100,
+      flexGrow: 1,
+      height: 19
+    },
+    tooltipContent: {
+      fontSize: 14,
+      lineHeight: '18px',
+      padding: 5,
+      top: -5
+    }
+  };
   const handleInstanceNameClick = () => {
     localStorage.setItem('lastInstanceName', name);
     router.push(`/instances/${name}/`);
@@ -22,6 +37,33 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
   };
   const setClickedInstance = () => {
     InstancesActions.setClickedInstance(item);
+  };
+
+  const maintenanceInfo = () => {
+    const tooltipContent = () => (
+      <div style={{ whiteSpace: 'pre-wrap' }}>
+        This instance will not receive the upcoming features of Syncano<br />
+        as it was built on a previous version.
+        <span style={{ fontWeight: 700 }}> Click on the tooltip</span> to contact us for more information.
+      </div>
+    );
+
+    return (
+      <Tooltip
+        label={tooltipContent()}
+        style={styles.tooltipContent}
+        rootStyle={styles.tooltipRoot}
+        touch={true}
+        onClick={() => window._elev.openModule('intercom')}
+      >
+        <FontIcon
+          color="#FF0000"
+          style={{ fontSize: 16, marginRight: 5 }}
+          className="synicon-alert"
+        />
+        maintenance
+      </Tooltip>
+    );
   };
 
   return (
@@ -45,6 +87,7 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
             onClick={handleInstanceNameClick}
           />
         }
+        secondaryText={maintenanceInfo()}
       />
       <Column.Desc>{description}</Column.Desc>
       <Column.Date date={created_at} />
