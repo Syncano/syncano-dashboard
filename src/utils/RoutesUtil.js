@@ -7,6 +7,7 @@ import auth from '../apps/Account/auth';
 import NewLibConnection from '../apps/Session/NewLibConnection';
 
 import SessionStore from '../apps/Session/SessionStore';
+import SessionAction from '../apps/Session/SessionAction';
 import AuthStore from '../apps/Account/AuthStore';
 
 const RoutesUtil = {
@@ -87,10 +88,8 @@ const RoutesUtil = {
     let pathname = decodeURIComponent(nextState.location.pathname).replace('//', '/');
     const query = _.extend({}, uri.search(true), nextState.location.query);
 
-    if (!localStorage.getItem('token')) {
-      localStorage.setItem('token', Cookies.get('token'));
-    }
     if (Cookies.get('redirectMode')) {
+      SessionAction.login({ account_key: Cookies.get('token') });
       localStorage.removeItem('lastPathname');
       localStorage.removeItem('lastInstanceName');
     }
