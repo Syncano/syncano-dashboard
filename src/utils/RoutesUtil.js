@@ -88,10 +88,11 @@ const RoutesUtil = {
     let pathname = decodeURIComponent(nextState.location.pathname).replace('//', '/');
     const query = _.extend({}, uri.search(true), nextState.location.query);
 
-    if (!localStorage.getItem('token')) {
-      localStorage.setItem('token', Cookies.get('token'));
-    }
     if (Cookies.get('redirectMode')) {
+      if (!localStorage.getItem('token')) {
+        localStorage.setItem('token', Cookies.get('token'));
+      }
+
       localStorage.removeItem('lastPathname');
       localStorage.removeItem('lastInstanceName');
 
@@ -161,7 +162,9 @@ const RoutesUtil = {
   onDashboardEnter(nextState, replace) {
     const { signUpMode } = nextState.location.query;
 
-    this.redirectToSyn5Instance(nextState);
+    if (!signUpMode) {
+      this.redirectToSyn5Instance(nextState);
+    }
 
     if (!auth.loggedIn() && !signUpMode) {
       return this.redirectToLogin(nextState, replace);
