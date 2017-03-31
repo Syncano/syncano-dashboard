@@ -217,7 +217,7 @@ const RoutesUtil = {
         const instanceCreatedAt = Date.parse(instance.created_at);
         const releaseDate = Number(APP_CONFIG.SYNCANO5_RELEASE_DATE);
 
-        if (instanceCreatedAt > releaseDate) {
+        if (instanceCreatedAt > releaseDate && !instance.metadata.testInstance) {
           Cookies.set('token', localStorage.getItem('token'));
           Cookies.set('redirectMode', true);
           window.location = `${APP_CONFIG.SYNCANO_NEW_DASHBOARD}/#/instances/${instance.name}`;
