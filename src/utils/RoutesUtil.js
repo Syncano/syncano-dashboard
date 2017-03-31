@@ -88,10 +88,12 @@ const RoutesUtil = {
     let pathname = decodeURIComponent(nextState.location.pathname).replace('//', '/');
     const query = _.extend({}, uri.search(true), nextState.location.query);
 
-    if (Cookies.get('redirectMode')) {
-      SessionActions.login({ account_key: Cookies.get('token') });
+    if (Cookies.get('redirectMode') && Cookies.get('token')) {
+      !auth.loggedIn() && SessionActions.login({ account_key: Cookies.get('token') });
       localStorage.removeItem('lastPathname');
       localStorage.removeItem('lastInstanceName');
+
+      replace({ pathname: `/instances/${Cookies.get('redirectedInstance')}` });
     }
 
     SessionStore.setUTMData(nextState.location.query);
@@ -214,8 +216,9 @@ const RoutesUtil = {
 
         if (instanceCreatedAt > releaseDate) {
           Cookies.set('token', localStorage.getItem('token'));
+          Cookies.set('redirectedInstance', instance.name);
           Cookies.set('redirectMode', true);
-          window.location = `${APP_CONFIG.SYNCANO_NEW_DASHBOARD}/#/instances/${instance.name}`;
+          window.location = `${APP_CONFIG.SYNCANO_NEW_DASHBOARD}/#/instances`;
         }
       });
   }
