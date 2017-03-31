@@ -88,13 +88,16 @@ const RoutesUtil = {
     let pathname = decodeURIComponent(nextState.location.pathname).replace('//', '/');
     const query = _.extend({}, uri.search(true), nextState.location.query);
 
-    if (Cookies.get('redirectMode') && Cookies.get('token')) {
-      !auth.loggedIn() && SessionActions.login({ account_key: Cookies.get('token') });
+    if (!localStorage.getItem('token')) {
+      localStorage.setItem('token', Cookies.get('token'));
+    }
+    if (Cookies.get('redirectMode')) {
       localStorage.removeItem('lastPathname');
       localStorage.removeItem('lastInstanceName');
 
-      replace({ pathname: `/instances/${Cookies.get('redirectedInstance')}` });
+      SessionActions.fetchUser();
     }
+
     SessionStore.setUTMData(nextState.location.query);
 
     // remove trailing slash
@@ -155,6 +158,8 @@ const RoutesUtil = {
   onDashboardEnter(nextState, replace) {
     const { signUpMode } = nextState.location.query;
 
+    this.redirectToSyn5Instance(nextState);
+
     if (!auth.loggedIn() && !signUpMode) {
       return this.redirectToLogin(nextState, replace);
     }
@@ -204,22 +209,25 @@ const RoutesUtil = {
     return replace({ name: 'login', query: _.merge({ next: nextState.location.pathname }, query) });
   },
 
-  onInstanceEnter(nextState, replace, cb) {
-    this.checkInstanceActiveSubscription(nextState, replace, cb);
-    const lastInstanceName = localStorage.getItem('lastInstanceName');
+  redirectToSyn5Instance(nextState) {
+    const lastInstanceName = nextState.params.instanceName;
 
     return this.isInstanceAvailable(lastInstanceName)
       .then((instance = {}) => {
         const instanceCreatedAt = Date.parse(instance.created_at);
         const releaseDate = Number(APP_CONFIG.SYNCANO5_RELEASE_DATE);
 
-        if (instanceCreatedAt < releaseDate && !instance.metadata.testInstance) {
+        if (instanceCreatedAt > releaseDate) {
           Cookies.set('token', localStorage.getItem('token'));
-          Cookies.set('redirectedInstance', instance.name);
           Cookies.set('redirectMode', true);
-          window.location = `${APP_CONFIG.SYNCANO_OLD_DASHBOARD}/#/instances`;
+          window.location = `${APP_CONFIG.SYNCANO_OLD_DASHBOARD}/#/instances/${instance.name}`;
         }
       });
+  },
+
+  onInstanceEnter(nextState, replace, cb) {
+    this.checkInstanceActiveSubscription(nextState, replace, cb);
+    this.redirectToSyn5Instance(nextState);
   }
 };
 
