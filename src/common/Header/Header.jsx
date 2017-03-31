@@ -29,6 +29,7 @@ const Header = Radium(React.createClass({
 
   mixins: [
     Reflux.connect(InstancesStore),
+    Reflux.connect(SessionStore),
     SnackbarNotificationMixin
   ],
 
@@ -42,6 +43,7 @@ const Header = Radium(React.createClass({
   componentDidMount() {
     ProfileBillingPlanActions.fetchBillingProfile();
     SessionStore.getInstance();
+    SessionStore.getUser();
   },
 
   getStyles() {
