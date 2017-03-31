@@ -88,10 +88,11 @@ const RoutesUtil = {
     let pathname = decodeURIComponent(nextState.location.pathname).replace('//', '/');
     const query = _.extend({}, uri.search(true), nextState.location.query);
 
-    if (!localStorage.getItem('token')) {
-      localStorage.setItem('token', Cookies.get('token'));
-    }
     if (Cookies.get('redirectMode')) {
+      if (!localStorage.getItem('token')) {
+        localStorage.setItem('token', Cookies.get('token'));
+      }
+
       localStorage.removeItem('lastPathname');
       localStorage.removeItem('lastInstanceName');
 
@@ -161,7 +162,9 @@ const RoutesUtil = {
   onDashboardEnter(nextState, replace) {
     const { signUpMode } = nextState.location.query;
 
-    this.redirectToSyn5Instance(nextState);
+    if (!signUpMode) {
+      this.redirectToSyn4Instance(nextState);
+    }
 
     if (!auth.loggedIn() && !signUpMode) {
       return this.redirectToLogin(nextState, replace);
@@ -212,7 +215,7 @@ const RoutesUtil = {
     return replace({ name: 'login', query: _.merge({ next: nextState.location.pathname }, query) });
   },
 
-  redirectToSyn5Instance(nextState) {
+  redirectToSyn4Instance(nextState) {
     const lastInstanceName = nextState.params.instanceName;
 
     return this.isInstanceAvailable(lastInstanceName)
@@ -220,7 +223,7 @@ const RoutesUtil = {
         const instanceCreatedAt = Date.parse(instance.created_at);
         const releaseDate = Number(APP_CONFIG.SYNCANO5_RELEASE_DATE);
 
-        if (instanceCreatedAt > releaseDate) {
+        if (instanceCreatedAt < releaseDate && !instance.metadata.testInstance) {
           Cookies.set('token', localStorage.getItem('token'));
           Cookies.set('redirectMode', true);
           window.location = `${APP_CONFIG.SYNCANO_OLD_DASHBOARD}/#/instances/${instance.name}`;
@@ -230,7 +233,7 @@ const RoutesUtil = {
 
   onInstanceEnter(nextState, replace, cb) {
     this.checkInstanceActiveSubscription(nextState, replace, cb);
-    this.redirectToSyn5Instance(nextState);
+    this.redirectToSyn4Instance(nextState);
   }
 };
 
