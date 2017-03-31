@@ -95,6 +95,9 @@ const RoutesUtil = {
       localStorage.removeItem('lastPathname');
       localStorage.removeItem('lastInstanceName');
 
+      Cookies.remove('redirectMode');
+      Cookies.remove('token');
+
       SessionActions.fetchUser();
     }
 
