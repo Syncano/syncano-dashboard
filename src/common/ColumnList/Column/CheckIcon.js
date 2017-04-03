@@ -39,7 +39,7 @@ export default Radium(React.createClass({
         wordBreak: 'break-all',
         flex: 1,
         color: this.state.color,
-        cursor: this.props.clickable && 'pointer'
+        cursor: 'pointer'
       },
       secondaryText: {
         color: '#9b9b9b'
