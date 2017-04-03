@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 
-import { MenuItem } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
-import { ColumnList, StatusLabel } from '../../common/';
+import { ColumnList } from '../../common/';
 import HostingListItemLinks from './HostingListItemLinks';
 
 const Column = ColumnList.Column;
@@ -28,7 +27,7 @@ class HostingListItem extends Component {
   }
 
   render() {
-    const { item, onIconClick, showPublishDialog } = this.props;
+    const { item, onIconClick } = this.props;
     const styles = this.getStyles();
 
     return (
@@ -60,20 +59,6 @@ class HostingListItem extends Component {
             />
           </div>
         </Column.Desc>
-        <Column.Desc className="col-sm-3 row align-center">
-          <StatusLabel
-            isActive={item.is_default}
-            withInactive={false}
-          />
-        </Column.Desc>
-        <Column.Menu data-e2e={`${item.name}-hosting-dropdown-icon`}>
-          <MenuItem
-            onTouchTap={showPublishDialog}
-            primaryText="Set as default"
-            disabled={item.is_default}
-            data-e2e="dropdown-hosting-item-set-default"
-          />
-        </Column.Menu>
       </ColumnList.Item>
     );
   }
