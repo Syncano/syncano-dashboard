@@ -13,9 +13,5 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Classes.list'
     }
-  },
-  {
-    withDialog: true,
-    withCheck: true
   }
 );
