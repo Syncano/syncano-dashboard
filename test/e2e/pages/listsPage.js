@@ -82,8 +82,11 @@ export default {
       selector: '(//span[@class="synicon-apple"])[1]',
       locateStrategy: 'xpath'
     },
-    summaryDialogCloseButton: {
+    gcmSummaryDialogCloseButton: {
       selector: 'button[data-e2e="gcm-summary-dialog-close-button"]'
+    },
+    apnsSummaryDialogCloseButton: {
+      selector: 'button[data-e2e="apns-summary-dialog-close-button"]'
     },
     scriptRubyCheckIcon: {
       selector: '[data-e2e="language-ruby-check-icon"]'
