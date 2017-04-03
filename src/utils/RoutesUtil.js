@@ -96,8 +96,8 @@ const RoutesUtil = {
       localStorage.removeItem('lastPathname');
       localStorage.removeItem('lastInstanceName');
 
-      Cookies.remove('redirectMode');
-      Cookies.remove('token');
+      Cookies.remove('redirectMode', { domain: APP_CONFIG.SYNCANO_BASE_DOMAIN });
+      Cookies.remove('token', { domain: APP_CONFIG.SYNCANO_BASE_DOMAIN });
 
       SessionActions.fetchUser();
     }
@@ -224,8 +224,14 @@ const RoutesUtil = {
         const releaseDate = Number(APP_CONFIG.SYNCANO5_RELEASE_DATE);
 
         if (instanceCreatedAt < releaseDate && !instance.metadata.testInstance) {
-          Cookies.set('token', localStorage.getItem('token'));
-          Cookies.set('redirectMode', true);
+          Cookies.set('token', localStorage.getItem('token'), {
+            domain: APP_CONFIG.SYNCANO_BASE_DOMAIN,
+            expires: 365
+          });
+          Cookies.set('redirectMode', true, {
+            domain: APP_CONFIG.SYNCANO_BASE_DOMAIN,
+            expires: 365
+          });
           window.location = `${APP_CONFIG.SYNCANO_OLD_DASHBOARD}/#/instances/${instance.name}`;
         }
       });
