@@ -16,6 +16,6 @@ export default addTestNamePrefixes({
       .fillInput('@passInput', tempPass)
       .clickElement('@submitButton')
       .waitForElementNotPresent('@setupScreen')
-      .waitForElementVisible('@socketsList');
+      .assert.urlContains('https://dashboard-old.syncano.rocks/#/');
   }
 });

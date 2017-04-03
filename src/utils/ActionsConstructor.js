@@ -10,7 +10,7 @@ const Libraries = { Syncano };
 const apiV2Request = () => {
   const host = APP_CONFIG.SYNCANO_BASE_URL;
   const accountKey = SessionStore.getToken();
-  const instanceName = SessionStore.getInstance().instanceName;
+  const instanceName = SessionStore.getInstance({}).instanceName;
   const request = Promise.create({
     baseURL: `${host}/v2/instances/${instanceName}`,
     headers: { 'X-API-KEY': accountKey }
