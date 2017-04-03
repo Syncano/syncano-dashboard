@@ -1,12 +1,11 @@
 import React from 'react';
 
-import { DialogsMixin } from '../../mixins';
 
 import HostingPublishDialogActions from './HostingPublishDialogActions';
 import HostingActions from './HostingActions';
 import HostingStore from './HostingStore';
 
-import { ColumnList, Lists, Dialog, EmptyView } from '../../common/';
+import { ColumnList, Lists, EmptyView } from '../../common/';
 import { colors as Colors } from 'material-ui/styles';
 import ListItem from './HostingListItem';
 import HostingPublishDialog from './HostingPublishDialog';
@@ -14,10 +13,6 @@ import HostingPublishDialog from './HostingPublishDialog';
 const Column = ColumnList.Column;
 
 const HostingList = React.createClass({
-  mixins: [
-    DialogsMixin
-  ],
-
   getDefaultProps() {
     return {
       getCheckedItems: HostingStore.getCheckedItems,
@@ -25,23 +20,6 @@ const HostingList = React.createClass({
       handleSelectAll: HostingActions.selectAll,
       handleUnselectAll: HostingActions.uncheckAll
     };
-  },
-
-  initDialogs() {
-    const { isLoading, getCheckedItems } = this.props;
-
-    return [{
-      dialog: Dialog.Delete,
-      params: {
-        key: 'removeHostingDialog',
-        ref: 'removeHostingDialog',
-        title: 'Delete a Hosting',
-        handleConfirm: HostingActions.removeHostings,
-        items: getCheckedItems(),
-        groupName: 'Hosting',
-        isLoading
-      }
-    }];
   },
 
   renderItem(item) {
@@ -99,12 +77,6 @@ const HostingList = React.createClass({
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
-          className="col-sm-3"
-        >
-          Files
-        </Column.ColumnHeader>
-        <Column.ColumnHeader
-          columnName="DESC"
           className="col-sm-3 align-center row"
         >
           Default
@@ -147,7 +119,6 @@ const HostingList = React.createClass({
         style={style}
         data-e2e="hosting-list-container"
       >
-        {this.getDialogs()}
         {this.renderHeader()}
         <HostingPublishDialog />
         <Lists.List
