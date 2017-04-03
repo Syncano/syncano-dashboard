@@ -7,7 +7,6 @@ import HostingActions from './HostingActions';
 
 import { Container, InnerToolbar, Loading } from '../../common';
 import HostingList from './HostingList';
-import HostingDialog from './HostingDialog';
 
 const Hosting = React.createClass({
   mixins: [
@@ -24,8 +23,6 @@ const Hosting = React.createClass({
     return (
       <div>
         <Helmet title="Hosting" />
-        <HostingDialog />
-
         <InnerToolbar title="Hosting" />
 
         <Container>

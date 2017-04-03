@@ -30,9 +30,5 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Hosting.remove'
     }
-  },
-  {
-    withCheck: true,
-    withDialog: true
   }
 );
