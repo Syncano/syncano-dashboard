@@ -89,10 +89,19 @@ const RoutesUtil = {
     const query = _.extend({}, uri.search(true), nextState.location.query);
 
     if (Cookies.get('redirectMode')) {
-      SessionActions.login({ account_key: Cookies.get('token') });
+      if (!localStorage.getItem('token')) {
+        localStorage.setItem('token', Cookies.get('token'));
+      }
+
       localStorage.removeItem('lastPathname');
       localStorage.removeItem('lastInstanceName');
+
+      Cookies.remove('redirectMode');
+      Cookies.remove('token');
+
+      SessionActions.fetchUser();
     }
+
     SessionStore.setUTMData(nextState.location.query);
 
     // remove trailing slash
@@ -153,6 +162,10 @@ const RoutesUtil = {
   onDashboardEnter(nextState, replace) {
     const { signUpMode } = nextState.location.query;
 
+    if (!signUpMode) {
+      this.redirectToSyn4Instance(nextState);
+    }
+
     if (!auth.loggedIn() && !signUpMode) {
       return this.redirectToLogin(nextState, replace);
     }
@@ -202,9 +215,8 @@ const RoutesUtil = {
     return replace({ name: 'login', query: _.merge({ next: nextState.location.pathname }, query) });
   },
 
-  onInstanceEnter(nextState, replace, cb) {
-    this.checkInstanceActiveSubscription(nextState, replace, cb);
-    const lastInstanceName = localStorage.getItem('lastInstanceName');
+  redirectToSyn4Instance(nextState) {
+    const lastInstanceName = nextState.params.instanceName;
 
     return this.isInstanceAvailable(lastInstanceName)
       .then((instance = {}) => {
@@ -217,6 +229,11 @@ const RoutesUtil = {
           window.location = `${APP_CONFIG.SYNCANO_OLD_DASHBOARD}/#/instances/${instance.name}`;
         }
       });
+  },
+
+  onInstanceEnter(nextState, replace, cb) {
+    this.checkInstanceActiveSubscription(nextState, replace, cb);
+    this.redirectToSyn4Instance(nextState);
   }
 };
 

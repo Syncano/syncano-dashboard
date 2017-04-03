@@ -1,7 +1,7 @@
 import utils, { addTestNamePrefixes } from '../../utils';
 
 export default addTestNamePrefixes({
-  tags: ['signup'],
+  tags: ['login'],
   after: (client) => client.end(),
   'Test Login using email address': (client) => {
     const signupPage = client.page.signupPage();
@@ -16,6 +16,6 @@ export default addTestNamePrefixes({
       .fillInput('@passInput', tempPass)
       .clickElement('@submitButton')
       .waitForElementNotPresent('@setupScreen')
-      .waitForElementVisible('@socketsList');
+      .assert.urlContains('https://dashboard-old.syncano.rocks/#/');
   }
 });
