@@ -20,8 +20,7 @@ const ClassesListItem = Radium(React.createClass({
     return {
       checkIcon: {
         fileName: {
-          width: '35vw',
-          color: '#1976d2'
+          width: '35vw'
         },
         fileDescription: {
           width: '35vw'
