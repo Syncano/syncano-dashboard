@@ -4,15 +4,12 @@ import Helmet from 'react-helmet';
 
 import Actions from './UsersActions';
 import Store from './UsersStore';
-import { GroupsActions, GroupsStore, GroupsList, GroupDialog } from './../Groups';
+import { GroupsActions, GroupsStore, GroupsList } from './../Groups';
 
-// Components
 import { RaisedButton } from 'material-ui';
 import { Container, InnerToolbar, Lists, Show } from '../../common/';
 
-// Local components
 import UsersList from './UsersList';
-import UserDialog from './UserDialog';
 
 export default React.createClass({
   displayName: 'Users',
@@ -23,7 +20,6 @@ export default React.createClass({
   ],
 
   componentDidMount() {
-    console.info('Users::componentDidMount');
     Actions.fetch();
     GroupsActions.fetch();
   },
@@ -34,42 +30,13 @@ export default React.createClass({
     Actions.subFetchUsers(nextParams);
   },
 
-  showUserDialog(group) {
-    /* eslint-disable */
-    Actions.showDialog(undefined, group);
-    /* eslint-enable */
-  },
-
-  showGroupDialog() {
-    GroupsActions.showDialog();
-  },
-
   render() {
     const { groups, users } = this.state;
 
     return (
       <div>
         <Helmet title="Users & Groups" />
-        <UserDialog />
-        <GroupDialog />
-
-        <InnerToolbar title="Users & Groups">
-          <RaisedButton
-            data-e2e="add-group-button"
-            label="Add a Group"
-            primary={true}
-            style={{ marginRight: 0 }}
-            onTouchTap={GroupsActions.showDialog}
-          />
-          <RaisedButton
-            data-e2e="add-user-button"
-            label="Add a User"
-            primary={true}
-            style={{ marginRight: 0 }}
-            onTouchTap={() => this.showUserDialog(null)}
-          />
-        </InnerToolbar>
-
+        <InnerToolbar title="Users & Groups" />
         <Container>
           <Lists.Container className="row">
             <div className="col-md-8">

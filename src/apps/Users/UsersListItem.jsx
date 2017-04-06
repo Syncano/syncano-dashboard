@@ -1,20 +1,12 @@
 import React from 'react';
 
-import Actions from './UsersActions';
-
 import UserInfo from './UserInfo';
-import { MenuItem } from 'material-ui';
 import { ColumnList, Color } from '../../common/';
 
 const Column = ColumnList.Column;
 
 export default React.createClass({
   displayName: 'UsersListItem',
-
-  propTypes: {
-    onIconClick: React.PropTypes.func.isRequired,
-    showDeleteDialog: React.PropTypes.func.isRequired
-  },
 
   getInitialState() {
     return {
@@ -39,9 +31,6 @@ export default React.createClass({
         padding: '0 4px',
         margin: 4,
         background: '#fff'
-      },
-      showInfoItem: {
-        cursor: 'pointer'
       }
     };
   },
@@ -72,7 +61,7 @@ export default React.createClass({
   },
 
   render() {
-    const { item, onIconClick, showDeleteDialog } = this.props;
+    const { item } = this.props;
     const { userInfoVisible } = this.state;
 
     return (
@@ -84,39 +73,20 @@ export default React.createClass({
           <Column.CheckIcon
             id={item.id.toString()}
             iconClassName="account"
+            checkable={false}
             background={Color.getColorByName('blue', 'xlight')}
-            checked={item.checked}
-            handleIconClick={onIconClick}
             primaryText={item.username}
             secondaryText={`ID: ${item.id}`}
+            handleClick={this.toggleUserInfo}
           />
           <Column.Desc>{this.renderItemGroups(item.groups)}</Column.Desc>
-          <Column.Desc className="col-xs-4">
-            <a href="" onClick={this.toggleUserInfo}>
-              {!userInfoVisible ? 'Show' : 'Hide'}
-            </a>
-          </Column.Desc>
           <Column.Date date={item.profile.updated_at} />
           <Column.Date date={item.profile.created_at} />
-          <Column.Menu>
-            <MenuItem
-              className="dropdown-item-edit-user"
-              onTouchTap={() => Actions.showDialog(item)}
-              primaryText="Edit"
-            />
-            <MenuItem
-              className="dropdown-item-delete-user"
-              onTouchTap={showDeleteDialog}
-              primaryText="Delete"
-            />
-          </Column.Menu>
         </ColumnList.Item>
-        <div>
-          <UserInfo
-            visible={userInfoVisible}
-            user={item}
-          />
-        </div>
+        <UserInfo
+          visible={userInfoVisible}
+          user={item}
+        />
       </div>
     );
   }

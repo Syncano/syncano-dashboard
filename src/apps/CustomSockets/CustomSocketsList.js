@@ -32,10 +32,8 @@ const CustomSocketsList = React.createClass({
         >
           Description
         </Column.ColumnHeader>
-        <Column.ColumnHeader
-          className="col-xs-4"
-        >
-          Endpoints
+        <Column.ColumnHeader className="col-flex-3">
+          Version
         </Column.ColumnHeader>
       </ColumnList.Header>
     );

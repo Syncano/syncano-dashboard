@@ -21,8 +21,7 @@ export default Radium(React.createClass({
         marginBottom: 0,
         justifyContent: 'center',
         height: ColumnListConstans.DEFAULT_ITEM_HEIGHT,
-        background: '#fff',
-        cursor: 'pointer'
+        background: '#fff'
       },
       noBackground: {
         background: 'none',
