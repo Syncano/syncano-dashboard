@@ -16,7 +16,6 @@ import HostingFilesFolderForm from './HostingFilesFolderForm';
 import { FontIcon, RaisedButton } from 'material-ui';
 import { InnerToolbar, Container, Show } from '../../common';
 import HostingFilesList from './HostingFilesList';
-import HostingDialog from './HostingDialog';
 import HostingPublishDialog from './HostingPublishDialog';
 
 const HostingFilesView = React.createClass({
@@ -233,7 +232,6 @@ const HostingFilesView = React.createClass({
     return (
       <div>
         <Helmet title={hostingDetails.name} />
-        <HostingDialog />
         <HostingPublishDialog />
 
         <InnerToolbar
