@@ -6,15 +6,12 @@ const Terminal = () => {
       display: 'flex',
       flexFlow: 'row wrap',
       justifyContent: 'space-around',
-      position: 'relative',
-      paddingBottom: '0px !important'
+      position: 'relative'
+      // paddingBottom: '0px !important'
     },
     terminal: {
       width: '100%',
-      marginTop: '10px',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      marginBottom: '40px',
+      margin: '20px auto',
       minWidth: '600px',
       background: '#fff',
       borderRadius: '5px',
@@ -113,12 +110,12 @@ const Terminal = () => {
             <div style={styles.terminalTextP}>
               ⬢
               <span style={styles.terminalTextPath}> &#126;&#47;awesome-project </ span>
-              npm install -g syncano-cli <br />
+              npm install -g yarn <br />
             </div>
             <div style={styles.terminalTextP}>
               ⬢
               <span style={styles.terminalTextPath}> &#126;&#47;awesome-project </span>
-              syncano-cli login <br />
+              npm install -g syncano-cli <br />
             </div>
             <div style={styles.terminalTextP}>
               ⬢

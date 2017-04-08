@@ -9,7 +9,6 @@ import Store from './InstancesStore';
 import Actions from './InstancesActions';
 import InstanceDialogActions from './InstanceDialogActions';
 
-import BlurPageDialog from '../../common/Dialog/BlurPageDialog';
 import OnboardingDialogContent from '../../common/OnboardingDialogContent/OnboardingDialogContent';
 
 import { DialogsMixin } from '../../mixins';
@@ -93,26 +92,8 @@ const Instances = React.createClass({
     }];
   },
 
-  renderOnboardingDialog() {
-    const { myInstances, sharedInstances } = this.state;
-    const instances = [...myInstances, ...sharedInstances];
-    const styles = this.getStyles();
-
-    if (instances.length > 0) return null;
-
-    return (
-      <BlurPageDialog
-        style={styles.blurPageDialog}
-        open={true}
-      >
-        <OnboardingDialogContent />
-      </BlurPageDialog>
-    );
-  },
-
   render() {
     const { blocked, isLoading, hideDialogs, myInstances, sharedInstances } = this.state;
-    const { isPageIntroVisible, hidePageIntro } = this.props;
     const title = 'Instances';
 
     if (blocked) {
@@ -131,41 +112,22 @@ const Instances = React.createClass({
       <div>
         <Helmet title={title} />
         {this.getDialogs()}
-        {this.renderOnboardingDialog()}
-        <InnerToolbar
-          title={{
-            title,
-            [`data-e2e`]: 'instances-page-title'
-          }}
-        >
-          <RaisedButton
-            primary={true}
-            label="Add"
-            style={{ marginRight: 0 }}
-            onTouchTap={InstanceDialogActions.showDialog}
-          />
-        </InnerToolbar>
-
-        <Container id="instances">
-          <PageIntro
-            headline="Your Instances"
-            text={
-              <p>
-                Instances are projects that you can create, manage, and share with other users.<br />It can be your
-                next big app, multi-platform game, or a simple hackathon project.
-              </p>
-            }
-            actions={
-              <RaisedButton
-                primary={true}
-                label="Add new Instance"
-                onTouchTap={InstanceDialogActions.showDialog}
-              />
-            }
-            show={isPageIntroVisible}
-            onRequestClose={hidePageIntro}
-          />
-
+        <Show if={sharedInstances.length > 0 && myInstances.length > 0}>
+          <InnerToolbar
+            title={{
+              title,
+              [`data-e2e`]: 'instances-page-title'
+            }}
+          >
+            <RaisedButton
+              primary={true}
+              label="Add"
+              style={{ marginRight: 0 }}
+              onTouchTap={InstanceDialogActions.showDialog}
+            />
+          </InnerToolbar>
+        </Show>
+        <Show if={myInstances.length}>
           <InstancesList
             ref="myInstancesList"
             name="Instances"
@@ -175,16 +137,20 @@ const Instances = React.createClass({
             emptyItemHandleClick={this.showInstanceDialog}
             emptyItemContent="Create an instance"
           />
+        </Show>
 
-          <Show if={sharedInstances.length && !isLoading}>
-            <SharedInstancesList
-              ref="otherInstancesList"
-              items={sharedInstances}
-              hideDialogs={hideDialogs}
-              isLoading={isLoading}
-            />
-          </Show>
-        </Container>
+        <Show if={sharedInstances.length === 0 && myInstances.length === 0}>
+          <OnboardingDialogContent />
+        </Show>
+
+        <Show if={sharedInstances.length && !isLoading}>
+          <SharedInstancesList
+            ref="otherInstancesList"
+            items={sharedInstances}
+            hideDialogs={hideDialogs}
+            isLoading={isLoading}
+          />
+        </Show>
       </div>
     );
   }
