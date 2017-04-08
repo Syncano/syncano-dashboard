@@ -1,23 +1,17 @@
 import React from 'react';
 
-import { DialogsMixin } from '../../mixins';
 
 import HostingPublishDialogActions from './HostingPublishDialogActions';
 import HostingActions from './HostingActions';
 import HostingStore from './HostingStore';
 
-import { ColumnList, Lists, Dialog, EmptyView } from '../../common/';
+import { ColumnList, Lists, EmptyView } from '../../common/';
 import { colors as Colors } from 'material-ui/styles';
 import ListItem from './HostingListItem';
-import HostingPublishDialog from './HostingPublishDialog';
 
 const Column = ColumnList.Column;
 
 const HostingList = React.createClass({
-  mixins: [
-    DialogsMixin
-  ],
-
   getDefaultProps() {
     return {
       getCheckedItems: HostingStore.getCheckedItems,
@@ -25,23 +19,6 @@ const HostingList = React.createClass({
       handleSelectAll: HostingActions.selectAll,
       handleUnselectAll: HostingActions.uncheckAll
     };
-  },
-
-  initDialogs() {
-    const { isLoading, getCheckedItems } = this.props;
-
-    return [{
-      dialog: Dialog.Delete,
-      params: {
-        key: 'removeHostingDialog',
-        ref: 'removeHostingDialog',
-        title: 'Delete a Hosting',
-        handleConfirm: HostingActions.removeHostings,
-        items: getCheckedItems(),
-        groupName: 'Hosting',
-        isLoading
-      }
-    }];
   },
 
   renderItem(item) {
@@ -72,7 +49,7 @@ const HostingList = React.createClass({
   },
 
   renderHeader() {
-    const { handleTitleClick, handleSelectAll, handleUnselectAll, items, getCheckedItems } = this.props;
+    const { handleTitleClick } = this.props;
 
     return (
       <ColumnList.Header>
@@ -96,26 +73,6 @@ const HostingList = React.createClass({
           className="col-sm-11"
         >
           Website Url
-        </Column.ColumnHeader>
-        <Column.ColumnHeader
-          columnName="DESC"
-          className="col-sm-3"
-        >
-          Files
-        </Column.ColumnHeader>
-        <Column.ColumnHeader
-          columnName="DESC"
-          className="col-sm-3 align-center row"
-        >
-          Default
-        </Column.ColumnHeader>
-        <Column.ColumnHeader columnName="MENU">
-          <Lists.Menu
-            checkedItemsCount={getCheckedItems().length}
-            handleSelectAll={handleSelectAll}
-            handleUnselectAll={handleUnselectAll}
-            itemsCount={items.length}
-          />
         </Column.ColumnHeader>
       </ColumnList.Header>
     );
@@ -147,9 +104,7 @@ const HostingList = React.createClass({
         style={style}
         data-e2e="hosting-list-container"
       >
-        {this.getDialogs()}
         {this.renderHeader()}
-        <HostingPublishDialog />
         <Lists.List
           {...other}
           isLoading={isLoading}

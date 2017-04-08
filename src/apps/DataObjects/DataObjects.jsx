@@ -105,6 +105,12 @@ const DataObjects = React.createClass({
     }
   },
 
+  handleBackClick() {
+    const { router, params } = this.props;
+
+    router.push(`/instances/${params.instanceName}/classes/`);
+  },
+
   initDialogs() {
     const { isLoading } = this.props;
     const { selectedItemsIDs } = this.state;
@@ -169,7 +175,13 @@ const DataObjects = React.createClass({
         <Helmet title={title} />
         {this.getDialogs()}
 
-        <InnerToolbar title={`${title} ${titleSelectedItemsText}`}>
+        <InnerToolbar
+          title={`${title} ${titleSelectedItemsText}`}
+          backButton={true}
+          forceBackFallback={true}
+          backFallback={this.handleBackClick}
+          backButtonTooltip="Go Back to Classes"
+        >
           <div style={styles.buttonsWrapper}>
             <DataObjectSearchForm classObj={classObj} />
             <IconButton

@@ -20,11 +20,7 @@ const ClassesListItem = Radium(React.createClass({
     return {
       checkIcon: {
         fileName: {
-          width: '35vw',
-          color: '#1976d2',
-          ':hover': {
-            color: '#42a5f5'
-          }
+          width: '35vw'
         },
         fileDescription: {
           width: '35vw'
@@ -47,7 +43,7 @@ const ClassesListItem = Radium(React.createClass({
         id={item.name}
       >
         <Column.CheckIcon
-          clickable={true}
+          checkable={false}
           className="col-flex-3"
           customStyles={styles.checkIcon}
           id={item.name}

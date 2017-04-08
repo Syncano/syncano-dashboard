@@ -14,7 +14,7 @@ import OnboardingDialogContent from '../../common/OnboardingDialogContent/Onboar
 import { DialogsMixin } from '../../mixins';
 
 import { RaisedButton } from 'material-ui';
-import { Container, Show, InnerToolbar, Dialog, PageIntro } from '../../common/';
+import { Container, Show, InnerToolbar, Dialog } from '../../common/';
 
 import InstancesList from './InstancesList';
 import SharedInstancesList from './SharedInstancesList';
@@ -127,33 +127,36 @@ const Instances = React.createClass({
             />
           </InnerToolbar>
         </Show>
-        <Show if={myInstances.length}>
-          <InstancesList
-            ref="myInstancesList"
-            name="Instances"
-            items={myInstances}
-            isLoading={isLoading}
-            hideDialogs={hideDialogs}
-            emptyItemHandleClick={this.showInstanceDialog}
-            emptyItemContent="Create an instance"
-          />
-        </Show>
 
-        <Show if={sharedInstances.length === 0 && myInstances.length === 0}>
-          <OnboardingDialogContent />
-        </Show>
+        <Container id="instances">
+          <Show if={myInstances.length}>
+            <InstancesList
+              ref="myInstancesList"
+              name="Instances"
+              items={myInstances}
+              isLoading={isLoading}
+              hideDialogs={hideDialogs}
+              emptyItemHandleClick={this.showInstanceDialog}
+              emptyItemContent="Create an instance"
+            />
+          </Show>
 
-        <Show if={sharedInstances.length && !isLoading}>
-          <SharedInstancesList
-            ref="otherInstancesList"
-            items={sharedInstances}
-            hideDialogs={hideDialogs}
-            isLoading={isLoading}
-          />
-        </Show>
+          <Show if={sharedInstances.length === 0 && myInstances.length === 0 && !isLoading}>
+            <OnboardingDialogContent />
+          </Show>
+
+          <Show if={sharedInstances.length && !isLoading}>
+            <SharedInstancesList
+              ref="otherInstancesList"
+              items={sharedInstances}
+              hideDialogs={hideDialogs}
+              isLoading={isLoading}
+            />
+          </Show>
+        </Container>
       </div>
     );
   }
 });
 
-export default withRouter(PageIntro.HOC(Instances, 'instancesPageIntro'));
+export default withRouter(Instances, 'instancesPageIntro');

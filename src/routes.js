@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect, IndexRedirect, IndexRoute } from 'react-router';
+import { Route, IndexRedirect, IndexRoute } from 'react-router';
 
 import { RoutesUtil } from './utils';
 
@@ -11,7 +11,6 @@ import InstancePage from './pages/instance';
 import ProfilePage from './pages/profile';
 import SetupPage from './pages/setup';
 import NotFoundPage from './pages/notfound';
-import PushDevicesPage from './pages/pushDevices';
 import ExpiredAccountPage from './pages/expiredAccount';
 import FailedPaymentPage from './pages/failedPayment';
 import FreeLimitsExceededPage from './pages/freeLimitsExceeded';
@@ -29,17 +28,13 @@ import InstanceEdit from './apps/Instances/InstanceEdit';
 // Instance Apps
 import Admins from './apps/Admins/Admins';
 import ApiKeys from './apps/ApiKeys/ApiKeys';
-import BackupAndRestore from './apps/BackupAndRestore';
 import Classes from './apps/Classes';
 import CustomSockets from './apps/CustomSockets';
 import SocketsRegistry from './apps/SocketsRegistry';
 import DataObjects from './apps/DataObjects/DataObjects';
 import Users from './apps/Users/Users';
 import Sockets from './apps/Sockets';
-import PushNotifications from './apps/PushNotifications';
-import PushDevices from './apps/PushDevices';
 import Usage from './apps/Usage';
-import PushMessages from './apps/PushMessages';
 import Hosting from './apps/Hosting';
 
 const handleAppEnter = (nextState, replace) => RoutesUtil.onAppEnter(nextState, replace);
@@ -47,6 +42,7 @@ const handleDashboardEnter = (nextState, replace) => RoutesUtil.onDashboardEnter
 const handleDashboardChange = (prevState, nextState, replace) => (
   RoutesUtil.onDashboardChange(prevState, nextState, replace)
 );
+const handleInstanceEnter = (nextState, replace, cb) => RoutesUtil.onInstanceEnter(nextState, replace, cb);
 
 export default (
   <Route
@@ -144,7 +140,7 @@ export default (
 
       <Route
         name="instance"
-        onEnter={RoutesUtil.checkInstanceActiveSubscription}
+        onEnter={handleInstanceEnter}
         component={InstancePage}
         path="instances/:instanceName"
       >
@@ -229,89 +225,6 @@ export default (
           />
 
           <IndexRoute component={Classes} />
-        </Route>
-
-        {/* Push Notifications */}
-        <Route
-          name="push-notifications"
-          path="push-notifications"
-        >
-
-          <Route
-            name="push-notification-config"
-            path="config"
-            component={PushNotifications}
-          />
-
-          {/* Push Notification Devices */}
-          <Route
-            name="push-notification-devices"
-            path="devices"
-            component={PushDevicesPage}
-          >
-            <Route
-              name="all-push-notification-devices"
-              path="all"
-              component={PushDevices.AllDevices}
-            />
-            <Route
-              name="apns-devices"
-              path="apns"
-              component={PushDevices.APNS}
-            />
-            <Route
-              name="gcm-devices"
-              path="gcm"
-              component={PushDevices.GCM}
-            />
-            <Redirect
-              from="/instances/:instanceName/push-notifications/devices"
-              to="all-push-notification-devices"
-            />
-          </Route>
-
-          <Route
-            name="push-notification-messages"
-            path="messages"
-            component={PushMessages}
-          >
-            <Route
-              name="all-push-notification-messages"
-              path="all"
-              component={PushMessages.AllList}
-            />
-            <Route
-              name="apns-messages"
-              path="apns"
-              component={PushMessages.APNSList}
-            />
-            <Route
-              name="gcm-messages"
-              path="gcm"
-              component={PushMessages.GCMList}
-            />
-            <Redirect
-              from="/instances/:instanceName/push-notifications/messages"
-              to="all-push-notification-messages"
-            />
-          </Route>
-
-          <IndexRedirect to="/instances/:instanceName/push-notifications/config/" />
-        </Route>
-
-        {/* Backup & Restore */}
-        <Route
-          name="backup-and-restore"
-          path="backup-and-restore"
-          component={BackupAndRestore}
-        >
-          <Route
-            name="full-backups"
-            path="full"
-            component={BackupAndRestore.Full}
-          />
-
-          <IndexRoute component={BackupAndRestore.Full} />
         </Route>
 
         {/* Data Objects */}

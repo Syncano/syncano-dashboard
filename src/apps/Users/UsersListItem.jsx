@@ -89,13 +89,9 @@ export default React.createClass({
             handleIconClick={onIconClick}
             primaryText={item.username}
             secondaryText={`ID: ${item.id}`}
+            handleClick={this.toggleUserInfo}
           />
           <Column.Desc>{this.renderItemGroups(item.groups)}</Column.Desc>
-          <Column.Desc className="col-xs-4">
-            <a href="" onClick={this.toggleUserInfo}>
-              {!userInfoVisible ? 'Show' : 'Hide'}
-            </a>
-          </Column.Desc>
           <Column.Date date={item.profile.updated_at} />
           <Column.Date date={item.profile.created_at} />
           <Column.Menu>

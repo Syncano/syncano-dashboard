@@ -64,12 +64,6 @@ export default React.createClass({
             Users
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Groups</Column.ColumnHeader>
-          <Column.ColumnHeader
-            columnName="DESC"
-            className="col-xs-4"
-          >
-            User info
-          </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Updated</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">

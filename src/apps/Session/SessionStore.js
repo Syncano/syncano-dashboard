@@ -235,8 +235,8 @@ export default Reflux.createStore({
       return;
     }
 
-    Actions.setUser(payload);
     this.token = payload.account_key;
+    Actions.setUser(payload);
     localStorage.setItem('token', payload.account_key);
     this.connection.setAccountKey(payload.account_key);
     this.setLoggedInCookie();
