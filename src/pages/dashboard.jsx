@@ -13,9 +13,7 @@ const Dashboard = React.createClass({
     location: PropTypes.object
   },
 
-  mixins: [
-    Reflux.connect(ProfileBillingPlanStore, 'billing')
-  ],
+  mixins: [Reflux.connect(ProfileBillingPlanStore, 'billing')],
 
   componentDidMount() {
     const { router } = this.props;
@@ -23,7 +21,7 @@ const Dashboard = React.createClass({
 
     if (SessionStore.getSignUpMode()) {
       router.push({
-        pathname: '/setup/',
+        pathname: '/instances/',
         query: location.query
       });
     }
