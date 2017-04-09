@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
-// import HeaderSection from './HeaderSection';
-import Terminal from './OnboardingDialogTerminal';
+import Terminal from './OnboardingTerminal';
 
-class OnboardingDialogContent extends Component {
+class Onboarding extends Component {
   constructor(props) {
     super(props);
 
@@ -40,7 +39,7 @@ class OnboardingDialogContent extends Component {
           <div style={styles.secondaryText}>
              To start using Syncano, you&apos;ll need to install&nbsp;
              <a target="_blank" href="https://nodejs.org">Node</a>
-             , go to your terminal and:
+             , go to your terminal, and:
           </div>
           <div style={styles.terminal}>
             <Terminal />
@@ -58,4 +57,4 @@ class OnboardingDialogContent extends Component {
   }
 }
 
-export default OnboardingDialogContent;
+export default Onboarding;

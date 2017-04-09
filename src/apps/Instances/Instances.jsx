@@ -9,7 +9,7 @@ import Store from './InstancesStore';
 import Actions from './InstancesActions';
 import InstanceDialogActions from './InstanceDialogActions';
 
-import OnboardingDialogContent from '../../common/OnboardingDialogContent/OnboardingDialogContent';
+import Onboarding from '../../common/Onboarding/Onboarding';
 
 import { DialogsMixin } from '../../mixins';
 
@@ -134,7 +134,7 @@ const Instances = React.createClass({
           </Show>
 
           <Show if={sharedInstances.length === 0 && myInstances.length === 0 && !isLoading}>
-            <OnboardingDialogContent />
+            <Onboarding />
           </Show>
 
           <Show if={sharedInstances.length && !isLoading}>

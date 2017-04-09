@@ -7,7 +7,6 @@ const Terminal = () => {
       flexFlow: 'row wrap',
       justifyContent: 'space-around',
       position: 'relative'
-      // paddingBottom: '0px !important'
     },
     terminal: {
       width: '100%',
