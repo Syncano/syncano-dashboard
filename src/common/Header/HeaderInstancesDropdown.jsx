@@ -187,6 +187,8 @@ const HeaderInstancesDropdown = Radium(React.createClass({
     const { currentInstance, myInstances, sharedInstances } = this.state;
     const instancesList = myInstances.concat(sharedInstances);
 
+    console.error(instancesList);
+
     if (!currentInstance || !instancesList.length) {
       return null;
     }

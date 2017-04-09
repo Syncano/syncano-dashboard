@@ -2,7 +2,6 @@ import Dialog from './Dialog';
 import DeleteDialog from './DeleteDialog';
 import DialogTitleWithIcon from './DialogTitleWithIcon';
 import FullPageDialog from './FullPageDialog';
-import BlurPageDialog from './BlurPageDialog';
 import DialogSidebar from './DialogSidebar';
 import DialogSidebarBox from './DialogSidebarBox';
 import DialogSidebarSection from './DialogSidebarSection';
@@ -16,7 +15,6 @@ import DialogBindShortcutsHOC from './DialogBindShortcutsHOC';
 
 Dialog.Delete = DeleteDialog;
 Dialog.FullPage = FullPageDialog;
-Dialog.BlurPage = BlurPageDialog;
 Dialog.TitleWithIcon = DialogTitleWithIcon;
 Dialog.Sidebar = DialogSidebar;
 Dialog.SidebarBox = DialogSidebarBox;

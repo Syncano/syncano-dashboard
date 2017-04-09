@@ -42,14 +42,6 @@ const Instances = React.createClass({
     Store.clearStore();
   },
 
-  getStyles() {
-    return {
-      blurPageDialog: {
-        top: '5%'
-      }
-    };
-  },
-
   showInstanceDialog() {
     InstanceDialogActions.showDialog();
   },
