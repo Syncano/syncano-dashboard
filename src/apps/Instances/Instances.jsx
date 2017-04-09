@@ -104,7 +104,7 @@ const Instances = React.createClass({
       <div>
         <Helmet title={title} />
         {this.getDialogs()}
-        <Show if={sharedInstances.length > 0 && myInstances.length > 0}>
+        <Show if={sharedInstances.length > 0 || myInstances.length > 0}>
           <InnerToolbar
             title={{
               title,
