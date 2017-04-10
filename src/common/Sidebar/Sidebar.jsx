@@ -17,14 +17,14 @@ export default Radium(React.createClass({
         zIndex: 11
       },
       background: {
-        background: '#fcfcfc',
+        background: '#F0F1F5',
         position: 'fixed',
         zIndex: '-1',
         width: 256,
         height: '100%',
         left: 0,
         top: 0,
-        borderRight: '1px solid #eee'
+        borderRight: '1px solid #D8D8D8'
       }
     };
   },

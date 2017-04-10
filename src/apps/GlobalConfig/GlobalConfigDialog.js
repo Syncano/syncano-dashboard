@@ -50,7 +50,9 @@ const GlobalConfigDialog = React.createClass({
         actions={
           <RaisedButton
             label="Close"
-            primary={true}
+            labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+            buttonStyle={{ borderRadius: '4px' }}
+            backgroundColor="#B8E986"
             onTouchTap={this.handleCancel}
             data-e2e="global-config-close"
           />

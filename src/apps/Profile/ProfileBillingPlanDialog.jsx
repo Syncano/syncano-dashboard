@@ -413,7 +413,9 @@ const ProfileBillingPlanDialog = React.createClass({
         <RaisedButton
           key="confirm"
           label="Purchase"
-          primary={true}
+          labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+          buttonStyle={{ borderRadius: '4px' }}
+          backgroundColor="#B8E986"
           onTouchTap={this.handleFormValidation}
           ref="submit"
           disabled={!canSubmit}

@@ -13,7 +13,9 @@ const CustomTitle = ({ title, id, ...other }) => {
       minWidth: 0,
       whiteSpace: 'nowrap',
       fontSize: 20,
-      color: 'rgba(0, 0, 0, .4)',
+      fontWeight: '100',
+      opacity: '0.9',
+      color: '#FFFFFF',
       lineHeight: '56px',
       width: '100%'
     }

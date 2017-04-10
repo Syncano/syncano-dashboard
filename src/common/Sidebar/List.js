@@ -7,7 +7,8 @@ export default ({ subheader, children }) => {
     list: {
       paddingTop: 0,
       paddingBottom: 10,
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
+      borderBottom: '1px solid #D8D8D8'
     }
   };
 

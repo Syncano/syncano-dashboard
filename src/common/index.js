@@ -59,7 +59,7 @@ import Tags from './Tags';
 import TogglePanel from './TogglePanel';
 import Tooltip from './Tooltip';
 import Truncate from './Truncate';
-import UpgradeButton from './UpgradeButton';
+import HeaderButton from './HeaderButton';
 import UpgradeNowToolbar from './UpgradeNowToolbar';
 
 export { AlertPageContent };
@@ -124,7 +124,7 @@ export { Tooltip };
 export { TraceBigResult };
 export { TraceResult };
 export { Truncate };
-export { UpgradeButton };
+export { HeaderButton };
 export { UpgradeNowToolbar };
 
 export default {
@@ -190,6 +190,6 @@ export default {
   TraceBigResult,
   TraceResult,
   Truncate,
-  UpgradeButton,
+  HeaderButton,
   UpgradeNowToolbar
 };
