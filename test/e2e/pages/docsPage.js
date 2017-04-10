@@ -5,16 +5,13 @@ export default {
       locateStrategy: 'xpath'
     },
     docsTarget: {
-      selector: 'section[@class="cover"]',
-      locateStrategy: 'xpath'
+      selector: 'section[@class="cover"]'
     },
     gettingStartedTarget: {
-      selector: '*[data-id="quickstart-guide"]',
-      locateStrategy: 'xpath'
+      selector: '*[data-id="quickstart-guide"]'
     },
     instancesTarget: {
-      selector: '*[data-e2e="instances-page-title"]',
-      locateStrategy: 'xpath'
+      selector: '*[data-e2e="instances-page-title"]'
     }
   }
 };
