@@ -46,7 +46,6 @@ const CustomSocketsList = React.createClass({
       style,
       ...other
     } = this.props;
-    // eslint-disable-next-line
     const docsUrl = 'https://syncano.github.io/syncano-node-cli/#/using-sockets/overview';
 
     if ((!items || !items.length) && !isLoading) {
