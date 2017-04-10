@@ -17,7 +17,7 @@ export default {
       selector: 'li[@id="menu-documentation"]'
     },
     gettingStarted: {
-      selector: 'li[@id="fa-rocket"]'
+      selector: 'li[@id="menu-getting-started"]'
     },
     menuNotifications: {
       selector: 'button[data-e2e="notification-top-nav-button"]'
