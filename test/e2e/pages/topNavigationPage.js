@@ -11,13 +11,13 @@ export default {
       selector: 'span[data-e2e="account-logout-top-nav-item"]'
     },
     instances: {
-      selector: 'li[@id="menu-instances"]'
+      selector: 'li[id="menu-instances"]'
     },
     docs: {
-      selector: 'li[@id="menu-documentation"]'
+      selector: 'li[id="menu-documentation"]'
     },
     gettingStarted: {
-      selector: 'li[@id="menu-getting-started"]'
+      selector: 'li[id="menu-getting-started"]'
     },
     menuNotifications: {
       selector: 'button[data-e2e="notification-top-nav-button"]'
