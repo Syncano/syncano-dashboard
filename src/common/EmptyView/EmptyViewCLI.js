@@ -215,7 +215,7 @@ const EmptyViewCLI = ({
       <div style={styles.description}>
         {CLIDescription}
         <a
-          href="https://github.com/Syncano/syncano-cli"
+          href="https://syncano.github.io/syncano-node-cli/#/cli-reference/commands?id=hosting"
           target="_blank"
         >
           Syncano CLI.

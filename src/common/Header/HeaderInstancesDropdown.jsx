@@ -29,7 +29,8 @@ const HeaderInstancesDropdown = Radium(React.createClass({
         paddingTop: 5,
         paddingBottom: 2,
         paddingLeft: 24,
-        backgroundColor: '#F2F2F2',
+        backgroundColor: '#040B1A',
+        color: '#828A9E',
         position: 'fixed',
         width: 256,
         zIndex: 1,
@@ -177,7 +178,10 @@ const HeaderInstancesDropdown = Radium(React.createClass({
         >
           {currentInstance.name}
         </div>
-        <FontIcon className="synicon-menu-down" />
+        <FontIcon
+          className="synicon-menu-down"
+          style={{ color: '#828A9E' }}
+        />
       </div>
     );
   },

@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import ListItem from './ListItem';
-import { colors as Colors } from 'material-ui/styles/';
 
 const LinkListItem = React.createClass({
   displayName: 'LinkListItem',
@@ -9,7 +8,8 @@ const LinkListItem = React.createClass({
   getStyles() {
     return {
       active: {
-        color: Colors.blue400
+        color: '#040b1a',
+        fontWeight: 500
       }
     };
   },

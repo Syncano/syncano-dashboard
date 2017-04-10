@@ -246,7 +246,9 @@ const ProfileBillingAddress = React.createClass({
                       label="Update"
                       className="raised-button"
                       disabled={!canSubmit}
-                      primary={true}
+                      labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+                      buttonStyle={{ borderRadius: '4px' }}
+                      backgroundColor="#B8E986"
                       data-e2e="billing-address-update-button"
                     />
                   </div>

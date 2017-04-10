@@ -39,7 +39,9 @@ const ProfileSettings = React.createClass({
         lineHeight: '36px',
         fontWeight: 400,
         paddingLeft: 30,
-        paddingRight: 30
+        paddingRight: 30,
+        textTransform: 'none',
+        color: '#436E1D'
       }
     };
   },
@@ -105,7 +107,8 @@ const ProfileSettings = React.createClass({
               labelStyle={styles.updateButtonLabel}
               className="raised-button"
               disabled={!canSubmit}
-              primary={true}
+              buttonStyle={{ borderRadius: '4px' }}
+              backgroundColor="#B8E986"
               data-e2e="profile-update-button"
             />
           </form>

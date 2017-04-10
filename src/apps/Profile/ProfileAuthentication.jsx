@@ -57,7 +57,9 @@ const ProfileAuthentication = Radium(React.createClass({
         lineHeight: '36px',
         fontWeight: 400,
         paddingLeft: 30,
-        paddingRight: 30
+        paddingRight: 30,
+        textTransform: 'none',
+        color: '#436E1D'
       },
       settingsTitle: {
         paddingBottom: 10
@@ -168,7 +170,8 @@ const ProfileAuthentication = Radium(React.createClass({
                     labelStyle={styles.updateButtonLabel}
                     className="raised-button"
                     disabled={!this.state.canSubmit}
-                    primary={true}
+                    buttonStyle={{ borderRadius: '4px' }}
+                    backgroundColor="#B8E986"
                     data-e2e="authentication-update-button"
                   />
                 </form>

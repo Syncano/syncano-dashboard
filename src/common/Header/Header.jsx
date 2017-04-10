@@ -14,9 +14,8 @@ import ProfileBillingPlanActions from '../../apps/Profile/ProfileBillingPlanActi
 // Components
 import Sticky from 'react-stickydiv';
 import { FontIcon, Divider, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu } from 'material-ui';
-import { Logo, UpgradeButton } from '../';
+import { Logo, HeaderButton } from '../';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
-import HeaderGettingStartedDropdown from './HeaderGettingStartedDropdown';
 
 import './Header.sass';
 
@@ -39,7 +38,7 @@ const Header = Radium(React.createClass({
   getStyles() {
     return {
       avatar: {
-        backgroundImage: `url(${this.getGravatarUrl()}), url(${this.getFallBackAvatar()})`,
+        backgroundImage: `url(${this.getGravatarUrl()})`,
         backgroundSize: '40px 40px',
         top: 'calc(50% - 20px)'
       },
@@ -50,7 +49,7 @@ const Header = Radium(React.createClass({
         paddingTop: 5
       },
       topToolbar: {
-        background: this.context.muiTheme.rawTheme.palette.primary1Color,
+        background: '#4C38D0',
         height: 50,
         padding: 0,
         justifyContent: 'flex-start'
@@ -107,7 +106,7 @@ const Header = Radium(React.createClass({
         />
         <Divider />
         <ListItem
-          onTouchTap={this.goToIntances}
+          onTouchTap={this.goToInstances}
           leftIcon={instancesListIcon}
           primaryText="My Instances"
         />
@@ -126,10 +125,6 @@ const Header = Radium(React.createClass({
     );
   },
 
-  getFallBackAvatar() {
-    return require('../../assets/img/fox.png');
-  },
-
   getGravatarUrl() {
     const { gravatarUrl } = this.state;
     const userEmail = SessionStore.getUser() ? SessionStore.getUser().email : null;
@@ -138,7 +133,7 @@ const Header = Radium(React.createClass({
       return gravatarUrl;
     }
 
-    return Gravatar.url(userEmail, { d: 'blank' }, true);
+    return Gravatar.url(userEmail, { d: 'mm' }, true);
   },
 
   goToAccountDetails() {
@@ -147,7 +142,7 @@ const Header = Radium(React.createClass({
     router.push('/account/');
   },
 
-  goToIntances() {
+  goToInstances() {
     const { router } = this.props;
 
     router.push('/instances/');
@@ -184,7 +179,12 @@ const Header = Radium(React.createClass({
         id="upgrade-button"
         style={{ ...styles.toolbarListItem, ...{ paddingRight: 0 } }}
       >
-        <UpgradeButton onTouchTap={() => router.push('/account/plan/')} />
+        <HeaderButton
+          onTouchTap={() => router.push('/account/plan/')}
+          label="Upgrade"
+          fontIcon="fa fa-arrow-up"
+        />
+
       </li>
     );
   },
@@ -221,8 +221,37 @@ const Header = Radium(React.createClass({
               className="toolbar-list left"
               style={styles.toolbarList}
             >
-              <li style={styles.toolbarDropdownListItem}>
-                <HeaderGettingStartedDropdown />
+              <li
+                id="menu-instances"
+                style={{ ...styles.toolbarListItem, paddingTop: '5px' }}
+              >
+                <HeaderButton
+                  onTouchTap={this.goToInstances}
+                  label="Instances"
+                  fontIcon="fa fa-list-alt"
+                />
+              </li>
+              <li
+                id="menu-getting-started"
+                style={styles.toolbarListItem}
+              >
+                <HeaderButton
+                  href="https://syncano.github.io/syncano-node-cli/#/getting-started/quickstart"
+                  target="_blank"
+                  label="Getting Started"
+                  fontIcon="fa fa-rocket"
+                />
+              </li>
+              <li
+                id="menu-documentation"
+                style={styles.toolbarListItem}
+              >
+                <HeaderButton
+                  href="https://syncano.github.io/syncano-node-cli/#/"
+                  target="_blank"
+                  label="Documentation"
+                  fontIcon="fa fa-book"
+                />
               </li>
             </ul>
           </ToolbarGroup>
@@ -234,13 +263,14 @@ const Header = Radium(React.createClass({
               {this.renderUpgradeButton()}
               <li
                 id="menu-notifications"
-                style={styles.toolbarListItem}
+                style={{ ...styles.toolbarListItem, ...{ paddingTop: '4px' } }}
               >
                 <HeaderNotificationsDropdown id="menu-notifications--dropdown" />
               </li>
               <li>
                 <IconMenu
                   iconButtonElement={this.renderIconButton()}
+                  style={{ cursor: 'pointer' }}
                   anchorOrigin={{
                     vertical: 'center',
                     horizontal: 'middle'

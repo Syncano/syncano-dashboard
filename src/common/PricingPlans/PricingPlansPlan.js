@@ -386,6 +386,7 @@ class PricingPlansPlan extends Component {
     const { apiPrice, cbxPrice } = this.state;
     const defaultButtonLabel = mode === 'downgrade' ? 'Downgrade' : 'Upgrade';
     const period = (price === 'Free') ? null : 'per month';
+    const buttonLabelStyle = isCurrent ? { color: '#4a4a4a' } : { color: '#436E1D' };
 
     if (isHidden) {
       return null;
@@ -421,8 +422,9 @@ class PricingPlansPlan extends Component {
             {this.renderSelect('cbxPrice')}
             <RaisedButton
               label={isCurrent ? 'Current Plan' : defaultButtonLabel}
-              backgroundColor="#FFCC01"
-              labelStyle={{ fontWeight: 700, color: '#1D2228' }}
+              buttonStyle={{ borderRadius: '4px' }}
+              backgroundColor="#B8E986"
+              labelStyle={{ ...buttonLabelStyle, ...{ textTransform: 'none' } }}
               style={styles.button}
               onTouchTap={this.handleButtonTouchTap}
               disabled={disabled || this.isButtonDisabled()}
