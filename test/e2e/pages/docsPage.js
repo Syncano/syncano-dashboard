@@ -5,7 +5,7 @@ export default {
       locateStrategy: 'xpath'
     },
     docsTarget: {
-      selector: 'section[@class="cover"]'
+      selector: '[class="cover show"]'
     },
     gettingStartedTarget: {
       selector: '*[data-id="quickstart-guide"]'
