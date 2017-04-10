@@ -8,7 +8,8 @@ const LinkListItem = React.createClass({
   getStyles() {
     return {
       active: {
-        color: '#040b1a'
+        color: '#040b1a',
+        fontWeight: 500
       }
     };
   },

@@ -10,11 +10,23 @@ export default {
     logoutDropdown: {
       selector: 'span[data-e2e="account-logout-top-nav-item"]'
     },
+    instances: {
+      selector: 'li[@id="menu-instances"]'
+    },
+    instancesTarget: {
+      selector: '*[data-e2e="instances-page-title"]'
+    },
     docs: {
-      selector: 'span[data-e2e="documentation-top-nav-item"]'
+      selector: 'li[@id="menu-documentation"]'
+    },
+    docsTarget: {
+      selector: 'section[@class="cover"]'
     },
     gettingStarted: {
-      selector: 'button[data-e2e="getting-started-top-nav-button"]'
+      selector: 'li[@id="fa-rocket"]'
+    },
+    gettingStartedTarget: {
+      selector: '*[data-id="quickstart-guide"]'
     },
     menuNotifications: {
       selector: 'button[data-e2e="notification-top-nav-button"]'

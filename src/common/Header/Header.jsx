@@ -16,7 +16,6 @@ import Sticky from 'react-stickydiv';
 import { FontIcon, Divider, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu } from 'material-ui';
 import { Logo, HeaderButton } from '../';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
-// import HeaderGettingStartedDropdown from './HeaderGettingStartedDropdown';
 
 import './Header.sass';
 
@@ -224,7 +223,7 @@ const Header = Radium(React.createClass({
             >
               <li
                 id="menu-instances"
-                style={{ ...styles.toolbarListItem, ...{ paddingTop: '5px' } }}
+                style={{ ...styles.toolbarListItem, paddingTop: '5px' }}
               >
                 <HeaderButton
                   onTouchTap={this.goToInstances}

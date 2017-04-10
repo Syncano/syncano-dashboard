@@ -22,7 +22,6 @@ export default React.createClass({
         padding: '11px 20px 9px 48px'
       },
       iconStyle: {
-        color: '#949CAD',
         fontSize: 18,
         margin: '10px 20px',
         width: 18,
