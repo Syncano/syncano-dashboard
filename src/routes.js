@@ -9,7 +9,6 @@ import ClassesPage from './pages/classes';
 import DashboardPage from './pages/dashboard';
 import InstancePage from './pages/instance';
 import ProfilePage from './pages/profile';
-import SetupPage from './pages/setup';
 import NotFoundPage from './pages/notfound';
 import ExpiredAccountPage from './pages/expiredAccount';
 import FailedPaymentPage from './pages/failedPayment';
@@ -62,11 +61,6 @@ export default (
       path="signup"
       component={Account.Signup}
       onEnter={RoutesUtil.redirectToDashboard}
-    />
-    <Route
-      name="setup"
-      component={SetupPage}
-      path="setup"
     />
     <Route
       name="activate"

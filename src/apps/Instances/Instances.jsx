@@ -9,6 +9,8 @@ import Store from './InstancesStore';
 import Actions from './InstancesActions';
 import InstanceDialogActions from './InstanceDialogActions';
 
+import Onboarding from '../../common/Onboarding/Onboarding';
+
 import { DialogsMixin } from '../../mixins';
 
 import { RaisedButton } from 'material-ui';
@@ -102,24 +104,38 @@ const Instances = React.createClass({
       <div>
         <Helmet title={title} />
         {this.getDialogs()}
-
-        <InnerToolbar
-          title={{
-            title,
-            [`data-e2e`]: 'instances-page-title'
-          }}
-        />
+        <Show if={sharedInstances.length > 0 || myInstances.length > 0}>
+          <InnerToolbar
+            title={{
+              title,
+              [`data-e2e`]: 'instances-page-title'
+            }}
+          >
+            <RaisedButton
+              primary={true}
+              label="Add"
+              style={{ marginRight: 0 }}
+              onTouchTap={InstanceDialogActions.showDialog}
+            />
+          </InnerToolbar>
+        </Show>
 
         <Container id="instances">
-          <InstancesList
-            ref="myInstancesList"
-            name="Instances"
-            items={myInstances}
-            isLoading={isLoading}
-            hideDialogs={hideDialogs}
-            emptyItemHandleClick={this.showInstanceDialog}
-            emptyItemContent="Create an instance"
-          />
+          <Show if={myInstances.length}>
+            <InstancesList
+              ref="myInstancesList"
+              name="Instances"
+              items={myInstances}
+              isLoading={isLoading}
+              hideDialogs={hideDialogs}
+              emptyItemHandleClick={this.showInstanceDialog}
+              emptyItemContent="Create an instance"
+            />
+          </Show>
+
+          <Show if={sharedInstances.length === 0 && myInstances.length === 0 && !isLoading}>
+            <Onboarding />
+          </Show>
 
           <Show if={sharedInstances.length && !isLoading}>
             <SharedInstancesList

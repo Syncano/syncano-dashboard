@@ -21,7 +21,7 @@ const Dashboard = React.createClass({
 
     if (SessionStore.getSignUpMode()) {
       router.push({
-        pathname: '/setup/',
+        pathname: '/instances/',
         query: location.query
       });
     }
