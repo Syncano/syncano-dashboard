@@ -89,9 +89,7 @@ const RoutesUtil = {
     const query = _.extend({}, uri.search(true), nextState.location.query);
 
     if (Cookies.get('redirectMode')) {
-      if (!localStorage.getItem('token')) {
-        localStorage.setItem('token', Cookies.get('token'));
-      }
+      localStorage.setItem('token', Cookies.get('token'));
 
       localStorage.removeItem('lastPathname');
       localStorage.removeItem('lastInstanceName');

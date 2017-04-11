@@ -18,7 +18,7 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
   const styles = {
     tooltipRoot: {
       display: 'flex',
-      color: '#FF0000',
+      color: 'rgb(201, 162, 6)',
       fontWeight: 100,
       flexGrow: 1
     },
@@ -57,11 +57,11 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
         onClick={() => window._elev.openModule('intercom')}
       >
         <FontIcon
-          color="#FF0000"
+          color="rgb(255, 204, 1)"
           style={{ fontSize: 16, marginRight: 5 }}
           className="synicon-alert"
         />
-        maintenance
+        deprecated
       </Tooltip>
     );
   };
