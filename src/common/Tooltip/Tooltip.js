@@ -100,6 +100,7 @@ export default Radium(React.createClass({
       <div
         onMouseEnter={this.showTooltip}
         onMouseLeave={this.hideTooltip}
+        style={{ display: 'flex' }}
       >
         {children}
       </div>
