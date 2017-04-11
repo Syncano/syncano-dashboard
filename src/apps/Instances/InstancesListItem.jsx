@@ -61,7 +61,7 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
           style={{ fontSize: 16, marginRight: 5 }}
           className="synicon-alert"
         />
-        depracated
+        deprecated
       </Tooltip>
     );
   };
