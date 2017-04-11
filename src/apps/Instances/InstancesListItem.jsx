@@ -6,13 +6,30 @@ import InstancesStore from './InstancesStore';
 import InstancesActions from './InstancesActions';
 import InstanceDialogActions from './InstanceDialogActions';
 
-import { MenuItem } from 'material-ui';
-import { Color, ColumnList, Truncate } from '../../common/';
+import { MenuItem, FontIcon } from 'material-ui';
+import { Color, ColumnList, Truncate, Tooltip } from '../../common/';
 
 const Column = ColumnList && ColumnList.Column;
 
 const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checkable }) => {
   const { checked, name, metadata, description, created_at } = item;
+  const instanceCreatedAt = Date.parse(created_at);
+  const releaseDate = Number(APP_CONFIG.SYNCANO5_RELEASE_DATE);
+  const styles = {
+    tooltipRoot: {
+      display: 'flex',
+      color: 'rgb(201, 162, 6)',
+      fontWeight: 100,
+      flexGrow: 1
+    },
+    tooltipContent: {
+      fontSize: 14,
+      lineHeight: '16px',
+      padding: 5,
+      top: 0,
+      letterSpacing: '0.4px'
+    }
+  };
   const handleInstanceNameClick = () => {
     localStorage.setItem('lastInstanceName', name);
     router.push(`/instances/${name}/sockets/`);
@@ -22,6 +39,31 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
   };
   const setClickedInstance = () => {
     InstancesActions.setClickedInstance(item);
+  };
+
+  const maintenanceInfo = () => {
+    const tooltipContent = () => (
+      <div style={{ whiteSpace: 'pre-wrap' }}>
+        This instance will not receive the upcoming features of Syncano as it was built on a previous version.
+        <span style={{ fontWeight: 700 }}> Click on the tooltip</span> to contact us for more information.
+      </div>
+    );
+
+    return (
+      <Tooltip
+        label={tooltipContent()}
+        style={styles.tooltipContent}
+        rootStyle={styles.tooltipRoot}
+        onClick={() => window._elev.openModule('intercom')}
+      >
+        <FontIcon
+          color="rgb(255, 204, 1)"
+          style={{ fontSize: 16, marginRight: 5 }}
+          className="synicon-alert"
+        />
+        depracated
+      </Tooltip>
+    );
   };
 
   return (
@@ -45,6 +87,7 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
             onClick={handleInstanceNameClick}
           />
         }
+        secondaryText={instanceCreatedAt < releaseDate && maintenanceInfo()}
       />
       <Column.Desc>{description}</Column.Desc>
       <Column.Date date={created_at} />
