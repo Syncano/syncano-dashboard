@@ -54,8 +54,9 @@ export default Radium(React.createClass({
         color: '#9B9B9B'
       },
       tooltip: {
-        top: 10,
-        pointerEvents: 'none'
+        top: 5,
+        pointerEvents: 'none',
+        whiteSpace: 'pre'
       }
     };
   },
@@ -93,27 +94,17 @@ export default Radium(React.createClass({
     );
   },
 
-  renderChildren() {
-    const { children } = this.props;
-
-    return (
-      <div
-        onMouseEnter={this.showTooltip}
-        onMouseLeave={this.hideTooltip}
-        style={{ display: 'flex' }}
-      >
-        {children}
-      </div>
-    );
-  },
-
   render() {
     const styles = this.getStyles();
     const { children, label, rootStyle } = this.props;
 
     return (
-      <div style={{ ...styles.root, ...rootStyle }}>
-        {children ? this.renderChildren() : this.renderDefaultIcon()}
+      <div
+        style={{ ...styles.root, ...rootStyle }}
+        onMouseEnter={this.showTooltip}
+        onMouseLeave={this.hideTooltip}
+      >
+        {!children ? this.renderDefaultIcon() : children}
         {label && this.renderTooltip()}
       </div>
     );
