@@ -112,9 +112,11 @@ const Instances = React.createClass({
             }}
           >
             <RaisedButton
-              primary={true}
+              labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+              buttonStyle={{ borderRadius: '4px' }}
+              backgroundColor="#B8E986"
               label="Add"
-              style={{ marginRight: 0 }}
+              style={{ marginRight: 0, borderRadius: '4px' }}
               onTouchTap={InstanceDialogActions.showDialog}
             />
           </InnerToolbar>

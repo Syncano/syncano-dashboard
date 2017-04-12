@@ -37,6 +37,9 @@ const ProfileBillingInvoices = React.createClass({
         <RaisedButton
           label="Retry Payment"
           secondary={true}
+          style={{ marginRight: 0, borderRadius: '4px' }}
+          labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+          buttonStyle={{ borderRadius: '4px' }}
           disabled={invoice.actionDisabled}
           onClick={() => this.handleRetryPaymentClick(invoice)}
         />
@@ -46,7 +49,10 @@ const ProfileBillingInvoices = React.createClass({
     return (
       <RaisedButton
         label="Download"
-        primary={true}
+        style={{ marginRight: 0, borderRadius: '4px' }}
+        labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+        buttonStyle={{ borderRadius: '4px' }}
+        backgroundColor="#B8E986"
         onClick={() => this.handlePDFClick(invoice)}
       />
     );
