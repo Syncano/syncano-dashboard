@@ -57,28 +57,31 @@ const Terminal = () => {
       color: '#888888'
     },
     terminalText: {
-      fontFamily: `"Lucida Console", Monaco, monospace`,
+      fontFamily: `"Monaco", monospace`,
       fontSize: '13px',
       fonstWeight: '100',
       float: 'left',
       width: '100%',
       minHeight: '130px',
       background: '#0B0F15',
-      padding: '24px 15px',
+      padding: '24px 39px',
       lineHeight: '1.65em'
     },
     terminalTextP: {
-      color: '#f1f1f1',
+      color: '#888',
       marginTop: '5px',
       marginBottom: '5px',
       textAlign: 'left'
+    },
+    lightGrey: {
+      color: '#ccc'
     },
     terminalTextPath: {
       color: '#5D5D5D'
     },
     cliOutput: {
       marginLeft: '24px',
-      color: '#f1f1f1'
+      color: '#888'
     },
     cursor: {
       background: '#f1f1f1',
@@ -107,31 +110,24 @@ const Terminal = () => {
           </div>
           <div style={styles.terminalText}>
             <div style={styles.terminalTextP}>
-              ⬢
-              <span style={styles.terminalTextPath}> &#126;&#47;awesome-project </ span>
-              npm install -g yarn <br />
+              <span style={styles.lightGrey}>⬢</span> $ npm install -g yarn <br />
             </div>
             <div style={styles.terminalTextP}>
-              ⬢
-              <span style={styles.terminalTextPath}> &#126;&#47;awesome-project </span>
-              npm install -g syncano-cli <br />
+              <span style={styles.lightGrey}>⬢</span> $ npm install -g syncano-cli <br />
             </div>
             <div style={styles.terminalTextP}>
-              ⬢
-              <span style={styles.terminalTextPath}> &#126;&#47;awesome-project </span>
-              syncano-cli init
+              <span style={styles.lightGrey}>⬢</span> $ syncano-cli init
             </div>
             <div style={styles.cliOutput}>
               ...<br />
-              &#62; Creating Syncano Instance... Done<br />
-              &#62; Syncano Instance crimson-fire-6113 has been created!<br />
-              &#62; Your project is attached to crimson-fire-6113 instance now!<br />
-              &#62; Project has been created.
+              <p style={styles.lightGrey}>New project? Exciting! 🎉 </p>
+              Creating Syncano Instance... Done<br />
+              Syncano Instance crimson-fire-6113 has been created!<br />
+              Your project is attached to crimson-fire-6113 instance now!<br />
+              Project has been created from hello template.
             </div>
             <div style={styles.terminalTextP}>
-              ⬢
-              <span style={styles.terminalTextPath}> &#126;&#47;awesome-project </span>
-              <span style={styles.cursor} />
+              <span style={styles.lightGrey}>⬢</span> $ <span style={styles.cursor} />
             </div>
           </div>
         </div>
