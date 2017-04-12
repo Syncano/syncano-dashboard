@@ -46,7 +46,12 @@ class Onboarding extends Component {
           </div>
           <div style={styles.footerText}>
             See the
-            <a target="_blank" href="https://syncano.github.io/syncano-node-cli/"> Quickstart Guide </a>
+            <a
+              target="_blank"
+              href="https://syncano.github.io/syncano-node-cli/#/getting-started/quickstart"
+            >
+              &nbsp;Quickstart Guide&nbsp;
+            </a>
             or catch us on
             <a target="_blank" href="https://www.syncano.io/slack-invite/"> Slack </a>
             if you&#39;d like us to assist you.
