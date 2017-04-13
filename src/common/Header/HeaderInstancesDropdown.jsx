@@ -73,6 +73,14 @@ const HeaderInstancesDropdown = Radium(React.createClass({
         fontSize: 16,
         lineHeight: '24px'
       },
+      tooltipContent: {
+        fontSize: 14,
+        lineHeight: '16px',
+        height: 'auto',
+        letterSpacing: '0.4px',
+        display: 'flex',
+        fontWeight: 400
+      },
       noInstancesItem: {
         fontWeight: 500,
         color: '#BDBDBD'
@@ -102,6 +110,21 @@ const HeaderInstancesDropdown = Radium(React.createClass({
     router.push(`/instances/${instanceName}/`);
   },
 
+  maintenanceInfo() {
+    const styles = this.getStyles();
+
+    return (
+      <div style={styles.tooltipContent}>
+        <FontIcon
+          color="rgb(255, 204, 1)"
+          style={{ fontSize: 16, marginRight: 5, display: 'inline-flex' }}
+          className="synicon-alert"
+        />
+        <span style={{ color: 'rgb(201, 162, 6)' }}>deprecated</span>
+      </div>
+    );
+  },
+
   renderListItems(instances) {
     const styles = this.getStyles();
     const { currentInstance } = this.state;
@@ -109,6 +132,8 @@ const HeaderInstancesDropdown = Radium(React.createClass({
     const defaultIcon = ColumnList.ColumnListConstans.DEFAULT_ICON;
     const items = instances.map((instance) => {
       const iconName = instance.metadata.icon ? `synicon-${instance.metadata.icon}` : `synicon-${defaultIcon}`;
+      const instanceCreatedAt = Date.parse(instance.created_at);
+      const releaseDate = Number(APP_CONFIG.SYNCANO5_RELEASE_DATE);
       const iconBackground = {
         backgroundColor: Color.getColorByName(instance.metadata.color, 'dark') || defaultIconBackground
       };
@@ -123,6 +148,7 @@ const HeaderInstancesDropdown = Radium(React.createClass({
         <ListItem
           key={instance.name}
           primaryText={instance.name}
+          secondaryText={instanceCreatedAt < releaseDate && this.maintenanceInfo()}
           onTouchTap={() => this.handleDropdownItemClick(instance.name)}
           style={instance.name === currentInstance.name && styles.currentInstanceListItem}
           leftIcon={icon}
