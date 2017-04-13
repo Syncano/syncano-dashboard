@@ -8,6 +8,7 @@ import SessionStore from '../../apps/Session/SessionStore';
 import SessionActions from '../../apps/Session/SessionActions';
 import InstancesStore from '../../apps/Instances/InstancesStore';
 import InstancesActions from '../../apps/Instances/InstancesActions';
+import InstanceDialogActions from '../../apps/Instances/InstanceDialogActions';
 
 import { FontIcon, IconMenu, List, ListItem, Subheader } from 'material-ui';
 import { Color, ColumnList } from '../../common/';
@@ -29,8 +30,7 @@ const HeaderInstancesDropdown = Radium(React.createClass({
         paddingTop: 5,
         paddingBottom: 2,
         paddingLeft: 24,
-        backgroundColor: '#040B1A',
-        color: '#828A9E',
+        backgroundColor: '#F2F2F2',
         position: 'fixed',
         width: 256,
         zIndex: 1,
@@ -49,6 +49,16 @@ const HeaderInstancesDropdown = Radium(React.createClass({
         color: '#fff',
         backgroundColor: 'green',
         margin: '8px 16px 8px 0'
+      },
+      addInstanceList: {
+        minWidth: 320,
+        paddingBottom: 0,
+        paddingTop: 0
+      },
+      addInstanceIcon: {
+        backgroundColor: '#BDBDBD',
+        color: '#FFF',
+        fontSize: 24
       },
       dropdownMenu: {
         left: 0,
@@ -107,10 +117,30 @@ const HeaderInstancesDropdown = Radium(React.createClass({
     this.refs.instancesDropdown.close();
     SessionActions.fetchInstance(instanceName);
     localStorage.setItem('lastInstanceName', instanceName);
-    router.push(`/instances/${instanceName}/`);
+    router.push(`/instances/${instanceName}/sockets/`);
   },
 
-  maintenanceInfo() {
+  renderAddInstanceItem() {
+    const styles = this.getStyles();
+    const icon = (
+      <FontIcon
+        className="synicon-plus"
+        style={{ ...styles.dropdownInstanceIcon, ...styles.addInstanceIcon }}
+      />
+    );
+
+    return (
+      <List style={styles.addInstanceList}>
+        <ListItem
+          primaryText="Add an Instance"
+          leftIcon={icon}
+          onTouchTap={InstanceDialogActions.showDialog}
+        />
+      </List>
+    );
+  },
+
+  renderMaintenanceInfo() {
     const styles = this.getStyles();
 
     return (
@@ -148,7 +178,7 @@ const HeaderInstancesDropdown = Radium(React.createClass({
         <ListItem
           key={instance.name}
           primaryText={instance.name}
-          secondaryText={instanceCreatedAt < releaseDate && this.maintenanceInfo()}
+          secondaryText={instanceCreatedAt < releaseDate && this.renderMaintenanceInfo()}
           onTouchTap={() => this.handleDropdownItemClick(instance.name)}
           style={instance.name === currentInstance.name && styles.currentInstanceListItem}
           leftIcon={icon}
@@ -173,7 +203,7 @@ const HeaderInstancesDropdown = Radium(React.createClass({
         className={InstancesStore.amIOwner(instances[0]) ? 'my-instances-list' : 'shared-instances-list'}
         style={styles.list}
       >
-        <Subheader style={!InstancesStore.amIOwner(instances[0]) && styles.separator}>
+        <Subheader style={styles.separator}>
           {subheaderText}
         </Subheader>
         {this.renderListItems(instances)}
@@ -204,10 +234,7 @@ const HeaderInstancesDropdown = Radium(React.createClass({
         >
           {currentInstance.name}
         </div>
-        <FontIcon
-          className="synicon-menu-down"
-          style={{ color: '#828A9E' }}
-        />
+        <FontIcon className="synicon-menu-down" />
       </div>
     );
   },
@@ -232,6 +259,7 @@ const HeaderInstancesDropdown = Radium(React.createClass({
           style={styles.iconMenu}
           menuStyle={styles.dropdownMenu}
         >
+          {this.renderAddInstanceItem()}
           {this.renderList(myInstances)}
           {this.renderList(sharedInstances)}
         </IconMenu>
