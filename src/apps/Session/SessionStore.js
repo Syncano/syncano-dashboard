@@ -84,7 +84,11 @@ export default Reflux.createStore({
   setAnalyticsIdentifying(user) {
     const UTMData = this.getUTMData();
     const analyticsIdentifyObject = {
+      'First name': user.first_name,
+      'Last name': user.last_name,
+      source: 'Sign up',
       email: user.email,
+      is_active: user.is_active,
       authBackend: user.network || 'password'
     };
 
