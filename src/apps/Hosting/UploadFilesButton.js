@@ -60,7 +60,7 @@ class UploadFilesButton extends Component {
 
     if (hasFiles) {
       return (
-        <div>
+        <div style={{ marginTop: 14 }}>
           <FlatButton
             style={{ marginRight: 10 }}
             label="Cancel"
@@ -82,7 +82,7 @@ class UploadFilesButton extends Component {
 
     if (this.isSupportedBrowser()) {
       return (
-        <div>
+        <div style={{ marginTop: 14 }}>
           <div>
             <RaisedButton
               label="Choose files"
@@ -123,7 +123,7 @@ class UploadFilesButton extends Component {
     }
 
     return (
-      <div>
+      <div style={{ marginTop: 14 }}>
         <RaisedButton
           label="Choose files from disk"
           primary={true}

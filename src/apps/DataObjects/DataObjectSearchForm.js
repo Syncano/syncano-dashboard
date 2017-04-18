@@ -28,6 +28,10 @@ const DataObjectSearchForm = React.createClass({
         alignItems: 'center',
         height: '80px'
       },
+      text: {
+        color: '#ffffff',
+        fontWeight: 100
+      },
       textField: {
         width: 160
       },
@@ -40,6 +44,10 @@ const DataObjectSearchForm = React.createClass({
       },
       iconButton: {
         marginTop: 2
+      },
+      iconStyle: {
+        color: '#fff',
+        opacity: 0.9
       }
     };
   },
@@ -76,6 +84,8 @@ const DataObjectSearchForm = React.createClass({
               name="search-data-object"
               autoFocus={true}
               hintText="Type Data Object ID"
+              hintStyle={styles.text}
+              inputStyle={styles.text}
               errorText={this.getValidationMessages('dataObjectID').join(' ')}
               style={styles.textField}
               errorStyle={styles.textFieldError}
@@ -90,6 +100,7 @@ const DataObjectSearchForm = React.createClass({
               iconClassName="synicon-magnify"
               style={styles.iconButton}
               data-e2e="search-data-object-button"
+              iconStyle={styles.iconStyle}
             />
           </div>
         </form>

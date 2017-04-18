@@ -41,6 +41,8 @@ const HostingFilesFolderForm = ({
           onChange={handleNewFolderNameChange}
           errorText={_.union(_.get(errors, 'name') || []).join(' ')}
           hintText="Type new folder name"
+          hintStyle={{ color: '#ffffff' }}
+          inputStyle={{ color: '#ffffff' }}
           style={styles.newFolderNameInput}
         />
       </Show>
