@@ -8,7 +8,6 @@ import UploadFilesButton from './UploadFilesButton';
 
 const HostingFilesEmptyView = ({
   currentFileIndex,
-  currentInstanceName,
   errorResponses,
   filesCount,
   handleCancelUploading,
@@ -81,9 +80,7 @@ const HostingFilesEmptyView = ({
   const iconClassName = isFilesQueue && 'synicon-cloud-upload';
   const iconColor = isFilesQueue ? Colors.blue500 : Colors.grey600;
   const bashSnippets = [
-    { description: 'Install Syncano CLI:', snippet: 'pip install syncano-cli' },
-    { description: 'Login to your Syncano account:', snippet: `syncano login --instance-name ${currentInstanceName}` },
-    { description: 'Deploy your application:', snippet: 'syncano hosting publish ./your/project/path' }
+    { description: '', snippet: 'syncano-cli hosting add ./your/webapp/path' }
   ];
 
   return (
@@ -93,17 +90,15 @@ const HostingFilesEmptyView = ({
       CLITitle="Use Syncano CLI"
       CLIDescription="The best way to manage your hosting files is with "
       description={description}
-      docsUrl="https://syncano.github.io/syncano-node-cli/#/"
+      docsUrl="https://syncano.github.io/syncano-node-cli/#/project/hosting"
       errorResponses={errorResponses}
       handleCancelUploading={handleCancelUploading}
       handleErrorsButtonClick={handleErrorsButtonClick}
-      hostingDocsUrl="https://syncano.github.io/syncano-node-cli/#/project/hosting"
-      hostingDocsButtonLabel="View Hosting Docs"
       isUploadFinished={isUploadFinished}
       headerImageSrc={require('../../assets/img/illustrations/hosting-files-types.svg')}
       iconClassName={iconClassName}
       iconColor={iconColor}
-      mainTitle="Hosting Files"
+      mainTitle="Or Upload Files from the Browser"
       showDocsUrl={false}
       urlLabel="Hosting"
     />
