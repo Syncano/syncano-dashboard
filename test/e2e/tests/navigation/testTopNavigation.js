@@ -43,13 +43,13 @@ export default addTestNamePrefixes({
 
     topNavigationPage.clickElement('@instances');
     docsPage.waitForElementVisible('@instancesTarget');
-  },
-  'Admin can view notification dropdown': (client) => {
-    const topNavigationPage = client.page.topNavigationPage();
-
-    topNavigationPage
-      .navigate()
-      .clickElement('@menuNotifications')
-      .waitForElementVisible('@notificationsDropdown');
   }
+  // 'Admin can view notification dropdown': (client) => {
+  //   const topNavigationPage = client.page.topNavigationPage();
+  //
+  //   topNavigationPage
+  //     .navigate()
+  //     .clickElement('@menuNotifications')
+  //     .waitForElementVisible('@notificationsDropdown');
+  // }
 });
