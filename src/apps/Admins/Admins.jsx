@@ -47,7 +47,9 @@ export default React.createClass({
         <InnerToolbar title={title}>
           <RaisedButton
             label="Invite"
-            primary={true}
+            labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+            buttonStyle={{ borderRadius: '4px' }}
+            backgroundColor="#B8E986"
             style={{ marginRight: 0 }}
             onTouchTap={Actions.showDialog}
           />

@@ -60,15 +60,19 @@ class UploadFilesButton extends Component {
 
     if (hasFiles) {
       return (
-        <div>
+        <div style={{ marginTop: 14 }}>
           <FlatButton
             style={{ marginRight: 10 }}
             label="Cancel"
+            labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+            buttonStyle={{ borderRadius: '4px' }}
             onTouchTap={handleClearFiles}
           />
           <RaisedButton
             label="Send Files"
-            primary={true}
+            labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+            buttonStyle={{ borderRadius: '4px' }}
+            backgroundColor="#B8E986"
             onTouchTap={handleSendFiles}
             data-e2e="hosting-send-files"
           />
@@ -78,11 +82,13 @@ class UploadFilesButton extends Component {
 
     if (this.isSupportedBrowser()) {
       return (
-        <div>
+        <div style={{ marginTop: 14 }}>
           <div>
             <RaisedButton
               label="Choose files"
-              primary={true}
+              labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+              buttonStyle={{ borderRadius: '4px' }}
+              backgroundColor="#B8E986"
               onTouchTap={this.handleClickFilesButton}
               style={{ marginRight: 10 }}
             >
@@ -96,7 +102,9 @@ class UploadFilesButton extends Component {
             </RaisedButton>
             <RaisedButton
               label="Choose folder *"
-              primary={true}
+              labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+              buttonStyle={{ borderRadius: '4px' }}
+              backgroundColor="#B8E986"
               onTouchTap={this.handleClickFoldersButton}
             >
               <input
@@ -115,7 +123,7 @@ class UploadFilesButton extends Component {
     }
 
     return (
-      <div>
+      <div style={{ marginTop: 14 }}>
         <RaisedButton
           label="Choose files from disk"
           primary={true}

@@ -2,7 +2,7 @@ import connection from '../create/connection';
 import utils from '../../e2e/utils';
 import _ from 'lodash';
 
-const createAPNSDevices = (apnsAmount) => {
+const createAPNSDevices = (apnsAmount = 1) => {
   const apnsDevices = _.times(apnsAmount, (index) => {
     const label = `ios_${Date.now()}${index}`;
 

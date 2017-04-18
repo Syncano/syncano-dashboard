@@ -13,7 +13,7 @@ const EmptyView = ({
   docsUrl,
   description,
   urlLabel,
-  actionButton = (
+  actionButton = buttonLabel && (
     <RaisedButton
       label={buttonLabel}
       data-e2e="zero-state-add-button"

@@ -22,7 +22,8 @@ const DialogStandardButtons = ({
       marginLeft: -10
     },
     button: {
-      marginLeft: 10
+      marginLeft: 10,
+      borderRadius: '4px'
     }
   };
 
@@ -31,6 +32,8 @@ const DialogStandardButtons = ({
       <FlatButton
         key="cancel"
         label={cancelLabel}
+        labelStyle={{ textTransform: 'none' }}
+        buttonStyle={{ borderRadius: '4px' }}
         style={styles.button}
         disabled={disabled || cancelDisabled}
         onTouchTap={_.debounce(handleCancel, 500, { leading: true })}
@@ -39,7 +42,9 @@ const DialogStandardButtons = ({
       <RaisedButton
         key="confirm"
         label={submitLabel}
-        primary={true}
+        labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+        buttonStyle={{ borderRadius: '4px' }}
+        backgroundColor="#B8E986"
         style={styles.button}
         disabled={disabled || submitDisabled}
         onTouchTap={_.debounce(handleConfirm, 500, { leading: true })}

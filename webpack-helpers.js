@@ -15,7 +15,9 @@ const getAppConfig = (env) => {
     'SYNCANO_BILLING_EMAIL',
     'SYNCANO_DEMO_APPS_ACCOUNT_KEY',
     'SYNCANO_SUPPORT_EMAIL',
-    'SYNCANO_BASE_URL'
+    'SYNCANO_BASE_URL',
+    'SYNCANO_OLD_DASHBOARD',
+    'SYNCANO5_RELEASE_DATE'
   ];
   const config = {
     ENV: Object.keys(env)[0],
@@ -59,33 +61,33 @@ const getS3Config = (env) => {
         region: 'us-west-2'
       },
       s3UploadOptions: {
-        Bucket: process.env.STAGING_AWS_BUCKET_NAME
+        Bucket: process.env.SYN5_STAGING_AWS_BUCKET_NAME
       },
       cloudfrontInvalidateOptions: {
-        DistributionId: process.env.STAGING_AWS_DISTRIBUTION_ID,
+        DistributionId: process.env.SYN5_STAGING_AWS_DISTRIBUTION_ID,
         Items: ['/*']
       }
     },
-    master: {
-      directory: resolve('dist'),
-      s3Options: {
-        region: 'us-west-2'
-      },
-      s3UploadOptions: {
-        Bucket: process.env.PRODUCTION_AWS_BUCKET_NAME
-      },
-      cloudfrontInvalidateOptions: {
-        DistributionId: process.env.PRODUCTION_AWS_DISTRIBUTION_ID,
-        Items: ['/*']
-      }
-    },
+    // master: {
+    //   directory: resolve('dist'),
+    //   s3Options: {
+    //     region: 'us-west-2'
+    //   },
+    //   s3UploadOptions: {
+    //     Bucket: process.env.PRODUCTION_AWS_BUCKET_NAME
+    //   },
+    //   cloudfrontInvalidateOptions: {
+    //     DistributionId: process.env.PRODUCTION_AWS_DISTRIBUTION_ID,
+    //     Items: ['/*']
+    //   }
+    // },
     default: {
       directory: resolve('dist'),
       s3Options: {
         region: 'us-west-2'
       },
       s3UploadOptions: {
-        Bucket: process.env.STAGING_AWS_BUCKET_NAME
+        Bucket: process.env.SYN5_STAGING_AWS_BUCKET_NAME
       },
       basePath: branch
     }

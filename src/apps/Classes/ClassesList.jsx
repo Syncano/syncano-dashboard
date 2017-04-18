@@ -3,13 +3,14 @@ import _ from 'lodash';
 
 // Utils
 import { DialogsMixin } from '../../mixins';
+import { colors as Colors } from 'material-ui/styles';
 
 // Stores and Actions
 import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 import ListItem from './ClassesListItem';
-import { ColumnList, Loading, Dialog, Lists } from '../../common/';
+import { ColumnList, Loading, Dialog, Lists, EmptyView } from '../../common/';
 
 const Column = ColumnList.Column;
 
@@ -105,24 +106,31 @@ export default React.createClass({
     return (
       <ListItem
         key={`classes-list-item-${item.name}`}
-        onIconClick={Actions.checkItem}
         item={item}
-        showDeleteDialog={() => this.showDialog('deleteClassDialog', item)}
       />
     );
   },
 
   render() {
-    const { items } = this.props;
-    const checkedItems = Store.getCheckedItems();
-    const checkedItemsCount = Store.getNumberOfChecked();
-    const someClassIsProtectedFromDelete = checkedItems.some(this.isProtectedFromDelete);
+    if (this.props.items.length === 0) {
+      return (
+        <EmptyView
+          title="Data Classes"
+          description={`Data Classes are templates for data objects you will store in Syncano.
+            In order to be able to add Data Objects, you have to define a Data Class for that type of data object`}
+          iconClassName="synicon-socket-data"
+          iconColor={Colors.blue600}
+          showDocsUrl={false}
+        />
+      );
+    }
 
     return (
       <Lists.Container className="classes-list">
         {this.getDialogs()}
         <ColumnList.Header>
           <Column.ColumnHeader
+            className="col-flex-3"
             primary={true}
             columnName="CHECK_ICON"
           >
@@ -140,31 +148,9 @@ export default React.createClass({
           >
             Group ID
           </Column.ColumnHeader>
-          <Column.ColumnHeader
-            columnName="DESC"
-            className="col-flex-1"
-          >
-            Permissions
-          </Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU">
-            <Lists.Menu
-              checkedItemsCount={checkedItemsCount}
-              handleSelectAll={Actions.selectAll}
-              handleUnselectAll={Actions.uncheckAll}
-              itemsCount={items.length}
-            >
-              <Lists.MenuItem
-                disabled={someClassIsProtectedFromDelete}
-                onTouchTap={() => this.showDialog('deleteClassDialog')}
-              />
-            </Lists.Menu>
-          </Column.ColumnHeader>
         </ColumnList.Header>
         <Lists.List
           {...this.props}
-          emptyItemContent="Add a Data Class"
-          emptyItemHandleClick={Actions.showDialog}
           key="classes-list"
           renderItem={this.renderItem}
         />

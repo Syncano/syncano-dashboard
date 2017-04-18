@@ -47,6 +47,10 @@ const DataObjects = React.createClass({
       buttonsWrapper: {
         display: 'flex',
         alignItems: 'center'
+      },
+      iconStyle: {
+        color: '#fff',
+        opacity: 0.9
       }
     };
   },
@@ -103,6 +107,12 @@ const DataObjects = React.createClass({
     if (columnNumber > -1) {
       DataObjectsStore.getSelectedRowObj(cellNumber);
     }
+  },
+
+  handleBackClick() {
+    const { router, params } = this.props;
+
+    router.push(`/instances/${params.instanceName}/classes/`);
   },
 
   initDialogs() {
@@ -169,7 +179,13 @@ const DataObjects = React.createClass({
         <Helmet title={title} />
         {this.getDialogs()}
 
-        <InnerToolbar title={`${title} ${titleSelectedItemsText}`}>
+        <InnerToolbar
+          title={`${title} ${titleSelectedItemsText}`}
+          backButton={true}
+          forceBackFallback={true}
+          backFallback={this.handleBackClick}
+          backButtonTooltip="Go Back to Classes"
+        >
           <div style={styles.buttonsWrapper}>
             <DataObjectSearchForm classObj={classObj} />
             <IconButton
@@ -178,6 +194,7 @@ const DataObjects = React.createClass({
               tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Add Data Object'}
               disabled={this.isClassProtected()}
               onClick={DataObjectsActions.showDialog}
+              iconStyle={styles.iconStyle}
             />
             <IconButton
               data-e2e="data-object-delete-button"
@@ -185,11 +202,13 @@ const DataObjects = React.createClass({
               tooltip={this.isClassProtected() ? <ReadOnlyTooltip className={className} /> : 'Delete Data Objects'}
               disabled={(selectedItemsIDs && !selectedItemsIDs.length) || this.isClassProtected()}
               onTouchTap={() => this.showDialog('deleteDataObjectDialog')}
+              iconStyle={styles.iconStyle}
             />
             <IconButton
               iconClassName="synicon-refresh"
               tooltip="Reload Data Objects"
               onTouchTap={DataObjectsActions.fetch}
+              iconStyle={styles.iconStyle}
             />
           </div>
         </InnerToolbar>

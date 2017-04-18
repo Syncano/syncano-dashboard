@@ -3,13 +3,13 @@ import _ from 'lodash';
 
 import { AutoComplete, MenuItem, FontIcon } from 'material-ui';
 import { Color } from '../../common/';
-import RuntimeStore from '../../apps/Runtimes/RuntimesStore';
 
 export default ({ name, items, showDividers = true, ...other }) => {
   const titles = {
     script: 'Scripts',
     class: 'Data Classes',
-    contentType: 'Content Type'
+    contentType: 'Content Type',
+    instanceName: 'Instance Name'
   };
   const title = titles[name] || 'Data';
   const dividerStyles = {
@@ -48,15 +48,14 @@ export default ({ name, items, showDividers = true, ...other }) => {
   const userDataDividerItem = { text: '', value: userDataDivider, type: 'userDataDivider' };
 
   const getIconInfo = (item) => {
-    const runtime = item.runtime_name && RuntimeStore.getRuntimeByKey(item.runtime_name) || {};
     const iconInfo = {
-      class: item.metadata && {
+      instanceName: item.metadata && {
         icon: item.metadata.icon,
         color: Color.getColorByName(item.metadata.color)
       },
-      script: {
-        icon: runtime.icon,
-        color: runtime.color
+      class: item.metadata && {
+        icon: item.metadata.icon,
+        color: Color.getColorByName(item.metadata.color)
       }
     }[name];
 

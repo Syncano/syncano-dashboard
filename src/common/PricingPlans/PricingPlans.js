@@ -105,6 +105,8 @@ class PricingPlans extends Component {
             >
               <RaisedButton
                 label="Configure your own plan"
+                labelStyle={{ textTransform: 'none' }}
+                buttonStyle={{ borderRadius: '4px' }}
                 onTouchTap={PlanDialogActions.showDialog}
                 data-e2e="open-plans-explorer-button"
               />

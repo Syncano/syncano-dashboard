@@ -34,7 +34,7 @@ const InnerToolbar = Radium(React.createClass({
 
     return {
       toolbar: {
-        background: 'rgba(243, 243, 243, .90)',
+        background: '#1D2639',
         padding: '0 24px',
         zIndex: 6,
         justifyContent: 'flex-start'
@@ -58,7 +58,7 @@ const InnerToolbar = Radium(React.createClass({
         justifyContent: 'flex-end'
       },
       icon: {
-        color: 'rgba(0, 0, 0, .4)'
+        color: 'rgba(255, 255, 255, .9)'
       },
       title: {
         flex: menu ? 'initial' : 'inherit'
@@ -116,12 +116,12 @@ const InnerToolbar = Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
-    const { children, menu, title, backButton, backFallback } = this.props;
+    const { children, menu, title, backButton, backFallback, style } = this.props;
 
     return (
       <Sticky offsetTop={50} zIndex={12}>
         <Toolbar
-          style={styles.toolbar}
+          style={{ ...styles.toolbar, ...style }}
           data-e2e="inner-toolbar"
         >
           {backFallback && backButton ? this.renderBackButton() : null}

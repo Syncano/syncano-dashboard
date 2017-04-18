@@ -28,9 +28,6 @@ export default {
     classes: {
       selector: 'a[data-e2e="left-sidebar-classes"]'
     },
-    snippets: {
-      selector: 'a[data-e2e="left-sidebar-snippets"]'
-    },
     general: {
       selector: 'span[data-e2e="left-sidebar-synicon-settings"]'
     },

@@ -8,7 +8,6 @@ import UploadFilesButton from './UploadFilesButton';
 
 const HostingFilesEmptyView = ({
   currentFileIndex,
-  currentInstanceName,
   errorResponses,
   filesCount,
   handleCancelUploading,
@@ -53,6 +52,9 @@ const HostingFilesEmptyView = ({
       <Show if={isUploading || (isUploadFinished && errorResponses.length)}>
         <RaisedButton
           label={isUploadFinished ? 'Close' : 'Cancel'}
+          labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+          buttonStyle={{ borderRadius: '4px' }}
+          backgroundColor="#B8E986"
           style={actionButtonStyle}
           onTouchTap={isUploadFinished ? handleErrorsButtonClick : handleCancelUploading}
           primary={true}
@@ -78,9 +80,7 @@ const HostingFilesEmptyView = ({
   const iconClassName = isFilesQueue && 'synicon-cloud-upload';
   const iconColor = isFilesQueue ? Colors.blue500 : Colors.grey600;
   const bashSnippets = [
-    { description: 'Install Syncano CLI:', snippet: 'pip install syncano-cli' },
-    { description: 'Login to your Syncano account:', snippet: `syncano login --instance-name ${currentInstanceName}` },
-    { description: 'Deploy your application:', snippet: 'syncano hosting publish ./your/project/path' }
+    { description: '', snippet: 'syncano-cli hosting add ./your/webapp/path' }
   ];
 
   return (
@@ -90,17 +90,15 @@ const HostingFilesEmptyView = ({
       CLITitle="Use Syncano CLI"
       CLIDescription="The best way to manage your hosting files is with "
       description={description}
-      docsUrl="http://docs.syncano.io/docs/"
+      docsUrl="https://syncano.github.io/syncano-node-cli/#/project/hosting"
       errorResponses={errorResponses}
       handleCancelUploading={handleCancelUploading}
       handleErrorsButtonClick={handleErrorsButtonClick}
-      hostingDocsUrl="http://docs.syncano.io/docs/hosting"
-      hostingDocsButtonLabel="View Hosting Docs"
       isUploadFinished={isUploadFinished}
       headerImageSrc={require('../../assets/img/illustrations/hosting-files-types.svg')}
       iconClassName={iconClassName}
       iconColor={iconColor}
-      mainTitle="Hosting Files"
+      mainTitle="Or Upload Files from the Browser"
       showDocsUrl={false}
       urlLabel="Hosting"
     />

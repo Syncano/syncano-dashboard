@@ -4,7 +4,7 @@ export default {
   url: `${utils.testBaseUrl()}/#/account/usage/`,
   elements: {
     planUsageTitle: {
-      selector: '//span[text()="Usage"]',
+      selector: '//div[@data-e2e="inner-toolbar"]/div/div/div[text()="Usage"]',
       locateStrategy: 'xpath'
     },
     instancePlanDropdown: {

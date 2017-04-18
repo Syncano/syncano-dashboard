@@ -84,7 +84,11 @@ export default Reflux.createStore({
   setAnalyticsIdentifying(user) {
     const UTMData = this.getUTMData();
     const analyticsIdentifyObject = {
+      'First name': user.first_name,
+      'Last name': user.last_name,
+      source: 'Sign up',
       email: user.email,
+      is_active: user.is_active,
       authBackend: user.network || 'password'
     };
 
@@ -93,9 +97,9 @@ export default Reflux.createStore({
     }
 
     if (this.signUpMode) {
-      window.analytics.identify(user.email, analyticsIdentifyObject);
+      window.analytics.identify(user.id, analyticsIdentifyObject);
     } else {
-      window.analytics.identify(user.email);
+      window.analytics.identify(user.id);
     }
   },
 
@@ -235,8 +239,8 @@ export default Reflux.createStore({
       return;
     }
 
-    Actions.setUser(payload);
     this.token = payload.account_key;
+    Actions.setUser(payload);
     localStorage.setItem('token', payload.account_key);
     this.connection.setAccountKey(payload.account_key);
     this.setLoggedInCookie();

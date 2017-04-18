@@ -10,11 +10,14 @@ export default {
     logoutDropdown: {
       selector: 'span[data-e2e="account-logout-top-nav-item"]'
     },
+    instances: {
+      selector: 'li[id="menu-instances"]'
+    },
     docs: {
-      selector: 'span[data-e2e="documentation-top-nav-item"]'
+      selector: 'li[id="menu-documentation"]'
     },
     gettingStarted: {
-      selector: 'button[data-e2e="getting-started-top-nav-button"]'
+      selector: 'li[id="menu-getting-started"]'
     },
     menuNotifications: {
       selector: 'button[data-e2e="notification-top-nav-button"]'

@@ -127,27 +127,34 @@ export default React.createClass({
 
   renderConfirmContent() {
     const { validationText } = this.state;
-    const { itemLabelName, groupName, actionName } = this.props;
+    const { actionName, description, itemLabelName, itemName, groupName } = this.props;
     const listItems = this.getItems();
     const itemsCount = listItems.length;
     const pluralizedGroup = pluralize(groupName, itemsCount);
     const confirmDescription = `To confirm ${actionName} type ${pluralizedGroup} name.`;
+    const containerStyles = {
+      lineHeight: 2
+    };
+    const confirmationFieldLabel = `${_.capitalize(pluralizedGroup)} name`;
 
     return (
-      <div style={{ lineHeight: '1.4' }}>
+      <div style={containerStyles}>
         <div className="vm-1-t">
-          <div className="vm-1-b">
+          <div>
             <strong>This action cannot be undone or stopped.</strong>
           </div>
-          <div className="vm-1-b">
-            All current data for {pluralizedGroup} <strong>will be lost.</strong>
+          <div>
+            All current data for {itemName || pluralizedGroup} <strong>will be lost.</strong>
           </div>
           <div>
             This will permanently {actionName} {pluralizedGroup}:
             {this.getDialogList(listItems, itemLabelName)}
           </div>
           <div className="vm-4-t">
-            {confirmDescription}
+            {description}
+            <div>
+              {confirmDescription}
+            </div>
           </div>
           <TextField
             className="confirmation-text-field"
@@ -155,8 +162,7 @@ export default React.createClass({
             onChange={(event, value) => this.setState({ validationText: value })}
             errorText={this.getValidationMessages('validationText').join(' ')}
             fullWidth={true}
-            floatingLabelText="Instance name"
-            hintText="Instance name"
+            floatingLabelText={confirmationFieldLabel}
           />
         </div>
       </div>
