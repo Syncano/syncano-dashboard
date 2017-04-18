@@ -27,7 +27,7 @@ export default addTestNamePrefixes({
       .fillInput('@inputLabel', labelName)
       .fillInput('@inputRegistrationId', registrationId)
       .clickElement('@confirmButton')
-      .clickElement('@summaryDialogCloseButton')
+      .clickElement('@apnsSummaryDialogCloseButton')
       .waitForElementNotPresent('@addTitleHeading');
 
     pushDevicesPage.verify.containsText('@firstDevice', labelName);
@@ -44,7 +44,7 @@ export default addTestNamePrefixes({
       .clickListItemDropdown('@firstItemOptionsMenu', 'Edit')
       .fillInput('@inputLabel', labelName)
       .clickElement('@confirmButton')
-      .clickElement('@summaryDialogCloseButton')
+      .clickElement('@apnsSummaryDialogCloseButton')
       .waitForElementNotPresent('@addTitleHeading');
 
     pushDevicesPage.verify.containsText('@firstDevice', labelName);
