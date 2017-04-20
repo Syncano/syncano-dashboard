@@ -71,6 +71,6 @@ export default addTestNamePrefixes({
     classesPage
       .clickElement('@userClassDropDown', client)
       .waitForElementVisible('@inactiveDeleteButton')
-      .assert.attributeContains('@inactiveDeleteButton', 'style', utils.getGreyedOutStyle(client));
+      .assert.attributeContains('@inactiveDeleteButton', 'style', 'cursor: not-allowed');
   }
 });
