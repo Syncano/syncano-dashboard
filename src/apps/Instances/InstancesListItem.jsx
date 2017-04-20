@@ -54,7 +54,7 @@ const InstancesListItem = ({ item, onIconClick, showDeleteDialog, router, checka
         label={tooltipContent()}
         style={styles.tooltipContent}
         rootStyle={styles.tooltipRoot}
-        onClick={() => window._elev.openModule('intercom')}
+        onClick={() => window.Intercom('show')}
       >
         <FontIcon
           color="rgb(255, 204, 1)"
