@@ -19,15 +19,12 @@ import FreeLimitsExceededPage from './pages/freeLimitsExceeded';
 import hardLimitReachedPage from './pages/hardLimitReached';
 import MaintenancePage from './pages/maintenance';
 
-// Apps
 import Account from './apps/Account';
 import Profile from './apps/Profile';
 
-// Apps for authenticated users
 import Instances from './apps/Instances/Instances';
 import InstanceEdit from './apps/Instances/InstanceEdit';
 
-// Instance Apps
 import Admins from './apps/Admins/Admins';
 import ApiKeys from './apps/ApiKeys/ApiKeys';
 import BackupAndRestore from './apps/BackupAndRestore';
@@ -58,6 +55,7 @@ const handleDashboardEnter = (nextState, replace) => RoutesUtil.onDashboardEnter
 const handleDashboardChange = (prevState, nextState, replace) => (
   RoutesUtil.onDashboardChange(prevState, nextState, replace)
 );
+const handleInstanceEnter = (nextState, replace, cb) => RoutesUtil.onInstanceEnter(nextState, replace, cb);
 
 export default (
   <Route
@@ -149,7 +147,7 @@ export default (
 
       <Route
         name="instance"
-        onEnter={RoutesUtil.checkInstanceActiveSubscription}
+        onEnter={handleInstanceEnter}
         component={InstancePage}
         path="instances/:instanceName"
       >

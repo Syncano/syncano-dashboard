@@ -29,7 +29,7 @@ export default addTestNamePrefixes({
       .fillInput('@inputRegistrationId', registrationId)
       .fillInput('@inputDeviceId', deviceId)
       .clickElement('@confirmButton')
-      .clickElement('@summaryDialogCloseButton')
+      .clickElement('@gcmSummaryDialogCloseButton')
       .waitForElementNotPresent('@addTitleHeading');
 
     pushDevicesPage.verify.containsText('@firstDevice', labelName);
@@ -47,7 +47,7 @@ export default addTestNamePrefixes({
       .fillInput('@inputLabel', labelName)
       .fillInput('@inputDeviceId', deviceId)
       .clickElement('@confirmButton')
-      .clickElement('@summaryDialogCloseButton')
+      .clickElement('@gcmSummaryDialogCloseButton')
       .waitForElementNotPresent('@addTitleHeading');
 
     pushDevicesPage.verify.containsText('@firstDevice', labelName);
