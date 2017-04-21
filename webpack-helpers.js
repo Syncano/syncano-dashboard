@@ -68,19 +68,19 @@ const getS3Config = (env) => {
         Items: ['/*']
       }
     },
-    // master: {
-    //   directory: resolve('dist'),
-    //   s3Options: {
-    //     region: 'us-west-2'
-    //   },
-    //   s3UploadOptions: {
-    //     Bucket: process.env.PRODUCTION_AWS_BUCKET_NAME
-    //   },
-    //   cloudfrontInvalidateOptions: {
-    //     DistributionId: process.env.PRODUCTION_AWS_DISTRIBUTION_ID,
-    //     Items: ['/*']
-    //   }
-    // },
+    master: {
+      directory: resolve('dist'),
+      s3Options: {
+        region: 'us-west-2'
+      },
+      s3UploadOptions: {
+        Bucket: process.env.PRODUCTION_AWS_BUCKET_NAME
+      },
+      cloudfrontInvalidateOptions: {
+        DistributionId: process.env.PRODUCTION_AWS_DISTRIBUTION_ID,
+        Items: ['/*']
+      }
+    },
     default: {
       directory: resolve('dist'),
       s3Options: {
