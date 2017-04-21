@@ -10,10 +10,10 @@ import AuthStore from './AuthStore';
 import AuthActions from './AuthActions';
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
-import Constants from './AuthConstants';
+// import Constants from './AuthConstants';
 
 import { RaisedButton, TextField } from 'material-ui';
-import { SocialAuthButtonsList } from '../../common/';
+// import { SocialAuthButtonsList } from '../../common/';
 import AccountContainer from './AccountContainer';
 
 const AccountSignup = React.createClass({
@@ -163,11 +163,13 @@ const AccountSignup = React.createClass({
             onClick={this.handleFormValidation}
           />
         </form>
+        {/*
         <SocialAuthButtonsList
           mode="signup"
           networks={Constants.SOCIAL_NETWORKS_SIGNUP}
           onSocialLogin={this.handleSocialLogin}
         />
+        */}
         <div className="account-container__content__footer">
           <ul className="list--flex list--horizontal">
             <li>
