@@ -40,7 +40,7 @@ const CustomSocketsEndpointsList = ({ isLoading, items, socketName }) => {
       <Lists.List
         isLoading={isLoading}
         items={items}
-        emptyItemContent="Install new Socket by Syncano CLI to see Socket Endpoints"
+        emptyItemContent="You can create Socket Endpoints by defining them in a socket.yml file"
         key="custom-sockets-endpoints-list"
         renderItem={renderListItem}
       />
