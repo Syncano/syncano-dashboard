@@ -74,10 +74,10 @@ const getS3Config = (env) => {
         region: 'us-west-2'
       },
       s3UploadOptions: {
-        Bucket: process.env.SYN4_PRODUCTION_AWS_DISTRIBUTION_ID
+        Bucket: process.env.SYN4_PRODUCTION_AWS_BUCKET_NAME
       },
       cloudfrontInvalidateOptions: {
-        DistributionId: process.env.SYN4_PRODUCTION_AWS_BUCKET_NAME,
+        DistributionId: process.env.SYN4_PRODUCTION_AWS_DISTRIBUTION_ID,
         Items: ['/*']
       }
     },
