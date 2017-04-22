@@ -28,6 +28,16 @@ export default React.createClass({
     GroupsActions.fetch();
   },
 
+  getStyles() {
+    return {
+      button: {
+        marginRight: 0,
+        borderRadius: '4px',
+        textTransform: 'none'
+      }
+    };
+  },
+
   handleMoreRows() {
     const { nextParams } = this.state.users;
 
@@ -46,6 +56,7 @@ export default React.createClass({
 
   render() {
     const { groups, users } = this.state;
+    const styles = this.getStyles();
 
     return (
       <div>
@@ -57,15 +68,19 @@ export default React.createClass({
           <RaisedButton
             data-e2e="add-group-button"
             label="Add a Group"
-            primary={true}
-            style={{ marginRight: 0 }}
+            labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+            backgroundColor="#B8E986"
+            style={styles.button}
+            buttonStyle={{ borderRadius: '4px' }}
             onTouchTap={GroupsActions.showDialog}
           />
           <RaisedButton
             data-e2e="add-user-button"
             label="Add a User"
-            primary={true}
-            style={{ marginRight: 0 }}
+            labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+            backgroundColor="#B8E986"
+            style={styles.button}
+            buttonStyle={{ borderRadius: '4px' }}
             onTouchTap={() => this.showUserDialog(null)}
           />
         </InnerToolbar>

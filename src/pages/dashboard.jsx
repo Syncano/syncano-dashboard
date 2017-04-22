@@ -4,7 +4,6 @@ import { withRouter } from 'react-router';
 
 import SessionStore from '../apps/Session/SessionStore';
 import ProfileBillingPlanStore from '../apps/Profile/ProfileBillingPlanStore';
-import RuntimeActions from '../apps/Runtimes/RuntimesActions';
 
 import { Header, UpgradeNowToolbar } from '../common/';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
@@ -22,13 +21,12 @@ const Dashboard = React.createClass({
 
     if (SessionStore.getSignUpMode()) {
       router.push({
-        pathname: '/setup/',
+        pathname: '/instances/',
         query: location.query
       });
     }
 
     ProfileBillingPlanStore.init();
-    RuntimeActions.fetch();
   },
 
   componentWillUnmount() {

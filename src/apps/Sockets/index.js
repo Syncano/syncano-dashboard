@@ -1,12 +1,18 @@
 import Sockets from './Sockets';
-import SocketsList from './SocketsList';
-import SocketsActions from './SocketsActions';
 import SocketsStore from './SocketsStore';
-import EmptyView from './EmptyView';
+import SocketsList from './SocketsList';
+import SocketsListItem from './SocketsListItem';
+import SocketsActions from './SocketsActions';
+import SocketsDialog from './SocketsDialog';
+import SocketsDialogStore from './SocketsDialogStore';
+import SocketsDetailsView from './DetailsView/SocketDetailsView';
 
-Sockets.Actions = SocketsActions;
 Sockets.Store = SocketsStore;
 Sockets.List = SocketsList;
-Sockets.EmptyView = EmptyView;
+Sockets.ListItem = SocketsListItem;
+Sockets.Actions = SocketsActions;
+Sockets.Dialog = SocketsDialog;
+Sockets.DialogStore = SocketsDialogStore;
+Sockets.Details = SocketsDetailsView;
 
 export default Sockets;

@@ -1,24 +1,25 @@
 import React from 'react';
 
-import { colors as Colors } from 'material-ui/styles/';
+import { colors as Colors } from 'material-ui/styles';
 
 const styles = {
   container: {
-    width: '60px',
+    padding: '8px 0',
     borderRadius: 5,
-    color: '#fff',
+    width: 64,
+    color: Colors.grey100,
     display: 'inline-flex',
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize: 14,
+    fontSize: 12,
     textTransform: 'uppercase'
   },
   backgroundColor: {
-    get: Colors.green700,
-    post: '#105CCA',
+    get: Colors.green500,
+    post: Colors.blue500,
     put: Colors.purple500,
     patch: Colors.deepOrange500,
-    delete: '#FF1300'
+    delete: Colors.red500
   }
 };
 
@@ -26,7 +27,7 @@ const MethodLabel = ({ method, style }) => {
   const methodLabelStyle = {
     ...styles.container,
     ...style,
-    backgroundColor: styles.backgroundColor[method]
+    backgroundColor: styles.backgroundColor[method.toLowerCase()]
   };
 
   return (

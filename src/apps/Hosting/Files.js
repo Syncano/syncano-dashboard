@@ -16,7 +16,6 @@ import HostingFilesFolderForm from './HostingFilesFolderForm';
 import { FontIcon, RaisedButton } from 'material-ui';
 import { InnerToolbar, Container, Show } from '../../common';
 import HostingFilesList from './HostingFilesList';
-import HostingDialog from './HostingDialog';
 import HostingPublishDialog from './HostingPublishDialog';
 
 const HostingFilesView = React.createClass({
@@ -194,7 +193,9 @@ const HostingFilesView = React.createClass({
         />
         <RaisedButton
           label="Upload files"
-          primary={true}
+          labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+          buttonStyle={{ borderRadius: '4px' }}
+          backgroundColor="#B8E986"
           icon={<FontIcon className="synicon-cloud-upload" />}
           style={{ marginRight: 10 }}
           onTouchTap={this.handleShowUploadDialog}
@@ -233,7 +234,6 @@ const HostingFilesView = React.createClass({
     return (
       <div>
         <Helmet title={hostingDetails.name} />
-        <HostingDialog />
         <HostingPublishDialog />
 
         <InnerToolbar
@@ -252,9 +252,11 @@ const HostingFilesView = React.createClass({
             </Show>
             <RaisedButton
               label="Go to site"
-              primary={true}
+              labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+              buttonStyle={{ borderRadius: '4px' }}
+              backgroundColor="#B8E986"
               icon={<FontIcon className="synicon-open-in-new" />}
-              onTouchTap={() => this.handleOnTouchTap(hostingUrl)}
+              href={hostingUrl}
               target="_blank"
             />
           </div>

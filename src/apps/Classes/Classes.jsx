@@ -2,19 +2,10 @@ import React from 'react';
 import Reflux from 'reflux';
 import Helmet from 'react-helmet';
 
-// Utils
-import { DialogsMixin } from '../../mixins';
-
-// Stores and Actions
 import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
-// Components
-import { RaisedButton } from 'material-ui';
-import { Container, Loading, InnerToolbar } from '../../common/';
-
-// Local components
-import ClassDialog from './ClassDialog';
+import { Container, Loading, InnerToolbar } from '../../common';
 import ClassesList from './ClassesList';
 
 export default React.createClass({
@@ -24,10 +15,7 @@ export default React.createClass({
     params: React.PropTypes.object
   },
 
-  mixins: [
-    Reflux.connect(Store),
-    DialogsMixin
-  ],
+  mixins: [Reflux.connect(Store)],
 
   componentDidMount() {
     console.info('Classes::componentDidMount');
@@ -50,17 +38,7 @@ export default React.createClass({
     return (
       <div>
         <Helmet title={title} />
-        <ClassDialog />
-
-        <InnerToolbar title={title}>
-          <RaisedButton
-            label="Add"
-            primary={true}
-            style={{ marginRight: 0 }}
-            onTouchTap={Actions.showDialog}
-            data-e2e="classes-add-button"
-          />
-        </InnerToolbar>
+        <InnerToolbar title={title} />
 
         <Container>
           <Loading show={isLoading}>

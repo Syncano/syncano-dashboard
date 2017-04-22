@@ -2,10 +2,8 @@ import React from 'react';
 import _ from 'lodash';
 import pluralize from 'pluralize';
 
-import Show from '../Show';
 import {
   FontIcon,
-  FlatButton,
   RaisedButton,
   Table,
   TableBody,
@@ -22,18 +20,13 @@ const EmptyViewCLI = ({
   buttonLabel,
   CLITitle,
   CLIDescription,
-  docsUrl,
   description,
   errorResponses,
   handleClick,
-  hostingDocsUrl,
-  hostingDocsButtonLabel,
   headerImageSrc,
   iconClassName,
   iconColor,
   mainTitle,
-  showDocsUrl = true,
-  urlLabel,
   actionButton = (
     <RaisedButton
       label={buttonLabel}
@@ -56,7 +49,6 @@ const EmptyViewCLI = ({
     },
     mainContainer: {
       width: 640,
-      height: 770,
       border: '2px #dedede dashed',
       borderRadius: 5,
       margin: '50px auto 0 auto',
@@ -142,7 +134,6 @@ const EmptyViewCLI = ({
   const renderSnippets = (
     _.map(bashSnippets, (item) => (
       <BashSnippet
-        description={item.description}
         snippet={item.snippet}
       />
      )
@@ -215,20 +206,13 @@ const EmptyViewCLI = ({
       <div style={styles.description}>
         {CLIDescription}
         <a
-          href="https://github.com/Syncano/syncano-cli"
+          href="https://syncano.github.io/syncano-node-cli/#/project/hosting"
           target="_blank"
         >
-          Syncano CLI.
+          Syncano CLI:
         </a>
       </div>
       {renderSnippets}
-      <FlatButton
-        label={hostingDocsButtonLabel}
-        primary={true}
-        href={hostingDocsUrl}
-        target="_blank"
-        style={styles.docsButton}
-      />
     </div>
   );
 
@@ -239,26 +223,14 @@ const EmptyViewCLI = ({
     >
       <div style={styles.container}>
         {renderHeaderImage()}
+        {!errorResponses.length ? renderCLIUsage : renderErrorsView}
         <div style={styles.title}>
           {mainTitle}
         </div>
         <div style={styles.description}>
           {description}
         </div>
-        <Show if={showDocsUrl}>
-          <div style={styles.description}>
-            Read our
-            <a
-              href={docsUrl}
-              target="_blank"
-            >
-              {` ${urlLabel} docs `}
-            </a>
-            to learn more.
-          </div>
-        </Show>
         {actionButton}
-        {!errorResponses.length ? renderCLIUsage : renderErrorsView}
       </div>
     </div>
   );

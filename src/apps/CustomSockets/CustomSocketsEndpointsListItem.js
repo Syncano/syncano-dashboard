@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router';
+import { withRouter } from 'react-router';
 import _ from 'lodash';
 
 import { SnackbarNotificationMixin } from '../../mixins';
@@ -60,15 +60,12 @@ const CustomSocketsEndpointsListItem = React.createClass({
   },
 
   render() {
-    const { item, socketName, params } = this.props;
-    const { instanceName } = params;
+    const { item } = this.props;
     const { metadata } = item;
+    const link = item.links.self;
+    const endpointName = item.name.split('/')[1];
     const metaIconType = metadata && metadata.icon ? metadata.icon : 'custom-socket';
     const metaIconColor = Color.getColorByName(metadata && metadata.color ? metadata.color : 'purple');
-    const link = `/v1.1/instances/${instanceName}/endpoints/sockets/${socketName}/${item.endpointName}/`;
-    const scriptTraceLink = `/instances/${instanceName}/script-endpoints/${item.name}/traces/`;
-    const scriptId = item && item.scriptEndpoint && item.scriptEndpoint.script;
-    const scriptLink = `/instances/${instanceName}/scripts/${scriptId}/`;
 
     return (
       <ColumnList.Item>
@@ -78,13 +75,13 @@ const CustomSocketsEndpointsListItem = React.createClass({
           background={metaIconColor}
           checkable={false}
           style={styles.icon}
-          primaryText={item.endpointName}
+          primaryText={endpointName}
           secondaryText={
             <Clipboard
-              text={link}
+              text={item.links.self}
               copyText={`${APP_CONFIG.SYNCANO_BASE_URL}${link}`}
               onCopy={this.handleOpenSnackbar}
-              tooltip="Copy Custom Socket Endpoint url"
+              tooltip="Copy Socket Endpoint url"
               type="link"
             />
           }
@@ -94,21 +91,8 @@ const CustomSocketsEndpointsListItem = React.createClass({
           style={styles.methodColumnDesc}
         >
           <div>
-            {this.renderCallMethodsLabel(item.methods)}
+            {this.renderCallMethodsLabel(item.allowed_methods)}
           </div>
-        </Column.Desc>
-        <Column.Desc className="col-sm-3">
-          <Link
-            data-e2e={`${item.name}-script-custom-socket-related-script`}
-            to={{ pathname: scriptLink }}
-          >
-            {item.name}
-          </Link>
-        </Column.Desc>
-        <Column.Desc className="col-sm-3">
-          <Link to={{ pathname: scriptTraceLink }}>
-            Traces
-          </Link>
         </Column.Desc>
       </ColumnList.Item>
     );

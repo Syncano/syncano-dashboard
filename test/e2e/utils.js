@@ -1,9 +1,4 @@
 import _ from 'lodash';
-import { apiBaseUrl } from './globals';
-
-import sampleScripts from '../../src/apps/Scripts/SampleScripts';
-import sampleSchemas from '../../src/apps/Classes/SampleSchemas';
-import { SNIPPET_TEMPLATE_DATA_SOURCE_TYPES } from '../../src/constants/Constants';
 
 const NIGHTWATCH_METHODS = ['tags', 'before', 'after', 'afterEach', 'beforeEach'];
 const addTestNamePrefixes = (config) => {
@@ -55,10 +50,6 @@ const utils = {
     return '{% set name = response.name %} {% if name %} {{- timestamp -}}{{\',\' -}}{{- name -}} {% endif %}';
   },
 
-  templateDataSourceUrl(instanceName) {
-    return `${apiBaseUrl}/v1.1/instances/${instanceName}/classes/user_profile/`;
-  },
-
   randomString(length) {
     const possible = 'ABCDEFabcdef0123456789';
     let apiKey = '';
@@ -72,28 +63,6 @@ const utils = {
 
   randomInt(min, max) {
     return Math.floor((Math.random() * max) + min);
-  },
-
-  getGreyedOutStyle(client) {
-    const { browserName } = client.capabilities;
-    const greyedMap = {
-      chrome: 'color: rgba(0, 0, 0, 0.298039)',
-      firefox: 'color: rgba(0, 0, 0, 0.3)'
-    };
-
-    return greyedMap[browserName] || '';
-  },
-
-  getRandomSampleScriptName() {
-    return _.sample(sampleScripts).label;
-  },
-
-  getRandomSampleClassName() {
-    return _.sample(sampleSchemas).name;
-  },
-
-  getRandomTemplateContentType() {
-    return _.sample(SNIPPET_TEMPLATE_DATA_SOURCE_TYPES);
   },
 
   splitTestBaseEmail() {

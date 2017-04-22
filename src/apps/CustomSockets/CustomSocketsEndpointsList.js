@@ -26,33 +26,21 @@ const CustomSocketsEndpointsList = ({ isLoading, items, socketName }) => {
           columnName="CHECK_ICON"
           className="col-flex-3"
         >
-          {`${socketName} Endpoints`}
+          {`Endpoint name`}
         </Column.ColumnHeader>
         <Column.ColumnHeader
           columnName="DESC"
           className="col-flex-1"
         >
           <div style={tableHeaderStyle}>
-            Method
+            Allowed methods
           </div>
-        </Column.ColumnHeader>
-        <Column.ColumnHeader
-          columnName="DESC"
-          className="col-sm-3"
-        >
-          Script
-        </Column.ColumnHeader>
-        <Column.ColumnHeader
-          columnName="DESC"
-          className="col-sm-3"
-        >
-          Traces
         </Column.ColumnHeader>
       </ColumnList.Header>
       <Lists.List
         isLoading={isLoading}
         items={items}
-        emptyItemContent="Add a Custom Socket to see Endpoints"
+        emptyItemContent="You can create Socket Endpoints by defining them in a socket.yml file"
         key="custom-sockets-endpoints-list"
         renderItem={renderListItem}
       />
@@ -61,4 +49,3 @@ const CustomSocketsEndpointsList = ({ isLoading, items, socketName }) => {
 };
 
 export default CustomSocketsEndpointsList;
-

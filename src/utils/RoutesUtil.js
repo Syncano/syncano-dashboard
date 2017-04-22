@@ -7,6 +7,7 @@ import auth from '../apps/Account/auth';
 import NewLibConnection from '../apps/Session/NewLibConnection';
 
 import SessionStore from '../apps/Session/SessionStore';
+import SessionActions from '../apps/Session/SessionActions';
 import AuthStore from '../apps/Account/AuthStore';
 
 const RoutesUtil = {
@@ -87,6 +88,18 @@ const RoutesUtil = {
     let pathname = decodeURIComponent(nextState.location.pathname).replace('//', '/');
     const query = _.extend({}, uri.search(true), nextState.location.query);
 
+    if (Cookies.get('redirectMode')) {
+      localStorage.setItem('token', Cookies.get('token'));
+
+      localStorage.removeItem('lastPathname');
+      localStorage.removeItem('lastInstanceName');
+
+      Cookies.remove('redirectMode', { domain: APP_CONFIG.SYNCANO_BASE_DOMAIN });
+      Cookies.remove('token', { domain: APP_CONFIG.SYNCANO_BASE_DOMAIN });
+
+      SessionActions.fetchUser();
+    }
+
     SessionStore.setUTMData(nextState.location.query);
 
     // remove trailing slash
@@ -147,6 +160,10 @@ const RoutesUtil = {
   onDashboardEnter(nextState, replace) {
     const { signUpMode } = nextState.location.query;
 
+    if (!signUpMode) {
+      this.redirectToSyn4Instance(nextState);
+    }
+
     if (!auth.loggedIn() && !signUpMode) {
       return this.redirectToLogin(nextState, replace);
     }
@@ -165,7 +182,7 @@ const RoutesUtil = {
 
     if (lastInstanceName) {
       this.isInstanceAvailable(lastInstanceName).then(() => replace({
-        pathname: `/instances/${lastInstanceName}/sockets/`
+        pathname: `/instances/${lastInstanceName}/my-sockets/`
       }));
     }
   },
@@ -194,6 +211,33 @@ const RoutesUtil = {
     Cookies.remove('logged_in', { domain: APP_CONFIG.SYNCANO_BASE_DOMAIN });
 
     return replace({ name: 'login', query: _.merge({ next: nextState.location.pathname }, query) });
+  },
+
+  redirectToSyn4Instance(nextState) {
+    const lastInstanceName = nextState.params.instanceName;
+
+    return this.isInstanceAvailable(lastInstanceName)
+      .then((instance = {}) => {
+        const instanceCreatedAt = Date.parse(instance.created_at);
+        const releaseDate = Number(APP_CONFIG.SYNCANO5_RELEASE_DATE);
+
+        if (instanceCreatedAt < releaseDate && !instance.metadata.testInstance) {
+          Cookies.set('token', localStorage.getItem('token'), {
+            domain: APP_CONFIG.SYNCANO_BASE_DOMAIN,
+            expires: 365
+          });
+          Cookies.set('redirectMode', true, {
+            domain: APP_CONFIG.SYNCANO_BASE_DOMAIN,
+            expires: 365
+          });
+          window.location = `${APP_CONFIG.SYNCANO_OLD_DASHBOARD}/#/instances/${instance.name}`;
+        }
+      });
+  },
+
+  onInstanceEnter(nextState, replace, cb) {
+    this.checkInstanceActiveSubscription(nextState, replace, cb);
+    this.redirectToSyn4Instance(nextState);
   }
 };
 

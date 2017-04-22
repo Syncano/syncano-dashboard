@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect, IndexRedirect, IndexRoute } from 'react-router';
+import { Route, IndexRedirect, IndexRoute } from 'react-router';
 
 import { RoutesUtil } from './utils';
 
@@ -9,10 +9,7 @@ import ClassesPage from './pages/classes';
 import DashboardPage from './pages/dashboard';
 import InstancePage from './pages/instance';
 import ProfilePage from './pages/profile';
-import ScriptsPage from './pages/scripts';
-import SetupPage from './pages/setup';
 import NotFoundPage from './pages/notfound';
-import PushDevicesPage from './pages/pushDevices';
 import ExpiredAccountPage from './pages/expiredAccount';
 import FailedPaymentPage from './pages/failedPayment';
 import FreeLimitsExceededPage from './pages/freeLimitsExceeded';
@@ -26,33 +23,17 @@ import Profile from './apps/Profile';
 // Apps for authenticated users
 import Instances from './apps/Instances/Instances';
 import InstanceEdit from './apps/Instances/InstanceEdit';
-import Solutions from './apps/Solutions';
 
 // Instance Apps
 import Admins from './apps/Admins/Admins';
 import ApiKeys from './apps/ApiKeys/ApiKeys';
-import BackupAndRestore from './apps/BackupAndRestore';
-import ChannelHistory from './apps/ChannelHistory';
-import Channels from './apps/Channels';
 import Classes from './apps/Classes';
 import CustomSockets from './apps/CustomSockets';
-import ScriptEndpoints from './apps/ScriptEndpoints';
-import Script from './apps/Script';
-import Scripts from './apps/Scripts';
+import SocketsRegistry from './apps/SocketsRegistry';
 import DataObjects from './apps/DataObjects/DataObjects';
-import DataEndpoints from './apps/DataEndpoints';
 import Users from './apps/Users/Users';
 import Sockets from './apps/Sockets';
-import Snippets from './apps/Snippets';
-import Template from './apps/Template';
-import Templates from './apps/Templates';
-import Triggers from './apps/Triggers';
-import Schedules from './apps/Schedules';
-import PushNotifications from './apps/PushNotifications';
-import PushDevices from './apps/PushDevices';
 import Usage from './apps/Usage';
-import PushMessages from './apps/PushMessages';
-import DemoApps from './apps/DemoApps';
 import Hosting from './apps/Hosting';
 
 const handleAppEnter = (nextState, replace) => RoutesUtil.onAppEnter(nextState, replace);
@@ -60,6 +41,7 @@ const handleDashboardEnter = (nextState, replace) => RoutesUtil.onDashboardEnter
 const handleDashboardChange = (prevState, nextState, replace) => (
   RoutesUtil.onDashboardChange(prevState, nextState, replace)
 );
+const handleInstanceEnter = (nextState, replace, cb) => RoutesUtil.onInstanceEnter(nextState, replace, cb);
 
 export default (
   <Route
@@ -79,11 +61,6 @@ export default (
       path="signup"
       component={Account.Signup}
       onEnter={RoutesUtil.redirectToDashboard}
-    />
-    <Route
-      name="setup"
-      component={SetupPage}
-      path="setup"
     />
     <Route
       name="activate"
@@ -150,8 +127,14 @@ export default (
       />
 
       <Route
+        name="socket-details"
+        component={Sockets.Details}
+        path="instances/:instanceName/sockets/:socketId"
+      />
+
+      <Route
         name="instance"
-        onEnter={RoutesUtil.checkInstanceActiveSubscription}
+        onEnter={handleInstanceEnter}
         component={InstancePage}
         path="instances/:instanceName"
       >
@@ -159,8 +142,8 @@ export default (
         {/* Sockets */}
         <Route
           name="sockets"
-          path="sockets"
           component={Sockets}
+          path="sockets"
         />
 
         {/* Hosting */}
@@ -182,20 +165,6 @@ export default (
           <IndexRoute component={Hosting} />
         </Route>
 
-        {/* Data */}
-        <Route
-          name="data"
-          path="data-endpoints"
-        >
-          <Route
-            name="data-endpoints-preview"
-            path=":dataEndpointName/preview"
-            component={DataEndpoints.Preview}
-          />
-
-          <IndexRoute component={DataEndpoints} />
-        </Route>
-
         {/* Admins */}
         <Route
           name="admins"
@@ -212,12 +181,12 @@ export default (
 
         {/* Custom Sockets */}
         <Route
-          name="custom-sockets"
-          path="custom-sockets"
+          name="my-sockets"
+          path="my-sockets"
         >
           <Route
-            name="custom-socket-detail"
-            path=":customSocketName"
+            name="my-socket-endpoints"
+            path=":socketName"
             component={CustomSockets.Endpoints}
           />
           <IndexRoute component={CustomSockets} />
@@ -252,196 +221,12 @@ export default (
           <IndexRoute component={Classes} />
         </Route>
 
-        {/* Push Notifications */}
-        <Route
-          name="push-notifications"
-          path="push-notifications"
-        >
-
-          <Route
-            name="push-notification-config"
-            path="config"
-            component={PushNotifications}
-          />
-
-          {/* Push Notification Devices */}
-          <Route
-            name="push-notification-devices"
-            path="devices"
-            component={PushDevicesPage}
-          >
-            <Route
-              name="all-push-notification-devices"
-              path="all"
-              component={PushDevices.AllDevices}
-            />
-            <Route
-              name="apns-devices"
-              path="apns"
-              component={PushDevices.APNS}
-            />
-            <Route
-              name="gcm-devices"
-              path="gcm"
-              component={PushDevices.GCM}
-            />
-            <Redirect
-              from="/instances/:instanceName/push-notifications/devices"
-              to="all-push-notification-devices"
-            />
-          </Route>
-
-          <Route
-            name="push-notification-messages"
-            path="messages"
-            component={PushMessages}
-          >
-            <Route
-              name="all-push-notification-messages"
-              path="all"
-              component={PushMessages.AllList}
-            />
-            <Route
-              name="apns-messages"
-              path="apns"
-              component={PushMessages.APNSList}
-            />
-            <Route
-              name="gcm-messages"
-              path="gcm"
-              component={PushMessages.GCMList}
-            />
-            <Redirect
-              from="/instances/:instanceName/push-notifications/messages"
-              to="all-push-notification-messages"
-            />
-          </Route>
-
-          <IndexRedirect to="/instances/:instanceName/push-notifications/config/" />
-        </Route>
-
-        {/* Backup & Restore */}
-        <Route
-          name="backup-and-restore"
-          path="backup-and-restore"
-          component={BackupAndRestore}
-        >
-          <Route
-            name="full-backups"
-            path="full"
-            component={BackupAndRestore.Full}
-          />
-
-          <IndexRoute component={BackupAndRestore.Full} />
-        </Route>
-
-
-        {/* ScriptEndpoints */}
-        <Route
-          name="script-endpoints"
-          path="script-endpoints"
-        >
-
-
-          {/* ScriptEndpoints Traces */}
-          <Route
-            name="scriptEndpoint-traces"
-            component={ScriptEndpoints.Traces}
-            path=":scriptEndpointName/traces"
-          />
-
-          <IndexRoute component={ScriptEndpoints} />
-
-        </Route>
-
-        <Route
-          name="snippets"
-          path="snippets"
-          component={Snippets}
-        />
-
-        {/* Templates */}
-        <Route
-          name="templates"
-          path="templates"
-        >
-          <Route
-            name="template"
-            component={Template}
-            path=":templateName"
-          />
-          <IndexRoute component={Templates} />
-        </Route>
-
-        {/* Scripts */}
-        <Route
-          name="scripts"
-          component={ScriptsPage}
-          path="scripts"
-        >
-          <Route
-            name="script"
-            component={Script}
-            path=":scriptId"
-          />
-          <IndexRoute component={Scripts} />
-        </Route>
-        <Route
-          name="scripts-add"
-          component={Scripts}
-          path="scripts/:action"
-        />
-
         {/* Data Objects */}
         <Route
           name="data-objects"
           component={DataObjects}
           path="objects"
         />
-
-        {/* Triggers */}
-        <Route
-          name="triggers"
-          path="triggers"
-        >
-
-          <Route
-            name="trigger-traces"
-            component={Triggers.Traces}
-            path=":triggerId/traces"
-          />
-
-          <IndexRoute component={Triggers} />
-        </Route>
-
-        {/* Schedules */}
-        <Route
-          name="schedules"
-          path="schedules"
-        >
-
-          <Route
-            name="schedule-traces"
-            component={Schedules.Traces}
-            path=":scheduleId/traces"
-          />
-
-          <IndexRoute component={Schedules} />
-        </Route>
-
-        {/* Channels */}
-        <Route
-          name="channels"
-          path="channels"
-        >
-          <Route
-            name="channel-history"
-            component={ChannelHistory.Messages}
-            path=":channelName/history"
-          />
-
-          <IndexRoute component={Channels} />
-        </Route>
 
         {/* Users */}
         <Route
@@ -450,7 +235,7 @@ export default (
           path="users"
         />
 
-        <IndexRedirect to="sockets" />
+        <IndexRedirect to="my-sockets" />
       </Route>
 
       {/* Profile Billing */}
@@ -508,51 +293,18 @@ export default (
         <IndexRoute component={Profile.Settings} />
       </Route>
 
-      {/* Solutions */}
+      {/* Custom Sockets Registry */}
       <Route
-        name="solutions"
-        path="/solutions"
-        onEnter={RoutesUtil.checkActiveSubscriptions}
+        name="sockets-registry"
+        component={SocketsRegistry}
+        path="sockets-registry"
       >
         <Route
-          name="solutions-list"
-          component={Solutions.ListView}
-          path="list"
+          name="sockets-registry-details"
+          component={SocketsRegistry.Details}
+          path=":socketId/details"
         />
-        <Route
-          name="solutions-install"
-          component={Solutions.EditView}
-          path="/solutions/:solutionId/:action"
-        />
-        <Route
-          name="solutions-edit"
-          component={Solutions.EditView}
-          path="/solutions/:solutionId/edit"
-        />
-        <Route
-          name="solutions-add-version"
-          component={Solutions.AddVersionView}
-          path="/solutions/:solutionId/versions/add"
-        />
-        <Redirect
-          from="/solutions"
-          to="solutions-list"
-        />
-        <IndexRoute component={Solutions.ListView} />
-      </Route>
-
-      {/* Demo Apps */}
-      <Route
-        name="demo-apps"
-        path="/demo-apps"
-        onEnter={RoutesUtil.checkActiveSubscriptions}
-      >
-        <Route
-          name="demo-app"
-          component={DemoApps.DemoApp}
-          path=":appName"
-        />
-        <IndexRoute component={DemoApps} />
+        <IndexRoute component={SocketsRegistry.List} />
       </Route>
 
       <IndexRoute

@@ -41,12 +41,16 @@ const HostingFilesFolderForm = ({
           onChange={handleNewFolderNameChange}
           errorText={_.union(_.get(errors, 'name') || []).join(' ')}
           hintText="Type new folder name"
+          hintStyle={{ color: '#ffffff' }}
+          inputStyle={{ color: '#ffffff' }}
           style={styles.newFolderNameInput}
         />
       </Show>
       <RaisedButton
         label={createFolderButtonLabel}
-        primary={true}
+        labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+        buttonStyle={{ borderRadius: '4px' }}
+        backgroundColor="#B8E986"
         onTouchTap={createFolderButtonAction}
         disabled={disableNewFolderButton}
       />

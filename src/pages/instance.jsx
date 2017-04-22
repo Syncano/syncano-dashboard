@@ -32,16 +32,15 @@ const Instance = React.createClass({
             <HeaderInstancesDropdown />
             <div style={{ paddingTop: 56 }}>
               <Sidebar.List
-                key="API Builder"
-                subheader="API Builder"
+                key="Sockets"
+                subheader="Sockets"
               >
                 <Sidebar.LinkListItem
-                  key="Sockets"
-                  routeName="sockets"
-                  primaryText="Sockets"
-                  iconClassName="synicon-hexagon-outline"
-                  iconStyle={{ transform: 'rotate(30deg)' }}
-                  data-e2e="left-sidebar-sockets"
+                  key="My Sockets"
+                  routeName="my-sockets"
+                  primaryText="My Sockets"
+                  iconClassName="synicon-custom-socket"
+                  data-e2e="left-sidebar-my-sockets"
                 />
               </Sidebar.List>
               <Sidebar.List
@@ -62,79 +61,12 @@ const Instance = React.createClass({
                   iconClassName="synicon-layers"
                   primaryText="Data Classes"
                 />
-
-                <Sidebar.LinkListItem
-                  key="Snippets"
-                  routeName="snippets"
-                  data-e2e="left-sidebar-snippets"
-                  primaryText="Snippets"
-                  iconClassName="synicon-code-tags"
-                  initiallyOpen={true}
-                  autoGenerateNestedIndicator={false}
-                  nestedItems={[
-                    <Sidebar.NestedLinkListItem
-                      key="scripts"
-                      routeName="scripts"
-                      primaryText="Scripts"
-                    />,
-                    <Sidebar.NestedLinkListItem
-                      key="templates"
-                      routeName="templates"
-                      primaryText="Templates"
-                    />
-                  ]}
-                />
-
                 <Sidebar.LinkListItem
                   key="Hosting"
                   routeName="hosting"
                   data-e2e="left-sidebar-hosting"
                   iconClassName="synicon-web"
                   primaryText="Hosting"
-                />
-
-                <Sidebar.LinkListItem
-                  key="pushDevices"
-                  routeName="all-push-notification-devices"
-                  data-e2e="left-sidebar-all-push-notification-devices"
-                  primaryText="Push Devices"
-                  iconClassName="synicon-cellphone-iphone"
-                  initiallyOpen={true}
-                  autoGenerateNestedIndicator={false}
-                  nestedItems={[
-                    <Sidebar.NestedLinkListItem
-                      key="iOSDevices"
-                      routeName="apns-devices"
-                      primaryText="iOS Devices"
-                    />,
-                    <Sidebar.NestedLinkListItem
-                      key="androidDevices"
-                      routeName="gcm-devices"
-                      primaryText="Android Devices"
-                    />
-                  ]}
-                />
-
-                <Sidebar.LinkListItem
-                  key="pushMessages"
-                  routeName="all-push-notification-messages"
-                  data-e2e="left-sidebar-all-push-notification-messages"
-                  primaryText="Push Messages"
-                  iconClassName="synicon-cellphone-iphone"
-                  initiallyOpen={true}
-                  autoGenerateNestedIndicator={false}
-                  nestedItems={[
-                    <Sidebar.NestedLinkListItem
-                      key="iOSMessages"
-                      routeName="apns-messages"
-                      primaryText="iOS Messages"
-                    />,
-                    <Sidebar.NestedLinkListItem
-                      key="androidMessages"
-                      routeName="gcm-messages"
-                      primaryText="Android Messages"
-                    />
-                  ]}
                 />
 
               </Sidebar.List>
@@ -150,25 +82,11 @@ const Instance = React.createClass({
                   onTouchTap={() => InstanceDialogActions.showDialog(SessionStore.getInstance())}
                 />
                 <Sidebar.LinkListItem
-                  key="backupAndRestore"
-                  routeName="full-backups"
-                  data-e2e="left-sidebar-full-backups"
-                  iconClassName="synicon-backup-restore"
-                  primaryText="Backup & Restore"
-                />
-                <Sidebar.LinkListItem
                   key="Administrators"
                   routeName="admins"
                   data-e2e="left-sidebar-admins"
                   iconClassName="synicon-account-star-variant"
                   primaryText="Administrators"
-                />
-                <Sidebar.LinkListItem
-                  key="API Keys"
-                  routeName="api-keys"
-                  data-e2e="left-sidebar-api-keys"
-                  iconClassName="synicon-key-variant"
-                  primaryText="API Keys"
                 />
                 <Sidebar.ListItem
                   key="globalConfig"
@@ -179,20 +97,6 @@ const Instance = React.createClass({
                 />
 
               </Sidebar.List>
-              {/* eslint-disable no-inline-comments */}
-              {/* <Sidebar.LinkListItem
-                key="backupAndRestore"
-                routeName="all-backups"
-                iconClassName="synicon-backup-restore"
-                primaryText="Backup & Restore"
-                initiallyOpen={true}
-                autoGenerateNestedIndicator={false}
-                nestedItems={[
-                  <Sidebar.NestedLinkListItem
-                    key="fullBackups"
-                    routeName="full-backups"
-                    primaryText="Full Backups" />,
-                ]}/> */}
             </div>
           </Sidebar>
           <div style={{ maxWidth: 'calc(100vw - 256px)', display: 'flex', flexDirection: 'column', flex: 1 }}>

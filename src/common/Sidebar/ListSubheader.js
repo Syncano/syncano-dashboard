@@ -9,17 +9,10 @@ export default Radium(({ text }) => {
       alignItems: 'center'
     },
     text: {
-      color: '#aaa',
+      color: '#949CAD',
       fontSize: 10,
       textTransform: 'uppercase',
       paddingRight: 10
-    },
-    line: {
-      height: 1,
-      flex: '1',
-      background: '#eee',
-      position: 'relative',
-      top: '-1px'
     }
   };
 

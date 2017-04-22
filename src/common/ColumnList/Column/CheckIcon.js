@@ -38,7 +38,8 @@ export default Radium(React.createClass({
         justifyContent: 'center',
         wordBreak: 'break-all',
         flex: 1,
-        color: this.state.color
+        color: this.state.color,
+        cursor: 'pointer'
       },
       secondaryText: {
         color: '#9b9b9b'
@@ -55,6 +56,7 @@ export default Radium(React.createClass({
       handleIconClick,
       className,
       customStyles,
+      handleClick,
       ...other
       } = this.props;
 
@@ -70,6 +72,7 @@ export default Radium(React.createClass({
         />
         <div style={{ flex: 1, maxWidth: 'calc(100% - 66px)' }}>
           <div
+            onClick={handleClick}
             data-e2e={`${primaryText}-list-item-name`}
             style={[styles.primaryText, customStyles.fileName]}
           >
@@ -77,7 +80,7 @@ export default Radium(React.createClass({
           </div>
           <div
             data-e2e={`${primaryText}-list-item-description`}
-            style={[styles.secondaryText, customStyles.fileName]}
+            style={[styles.secondaryText, customStyles.fileDescription]}
           >
             {typeof secondaryText === 'string' ? <Truncate text={secondaryText} /> : secondaryText}
           </div>

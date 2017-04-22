@@ -198,13 +198,17 @@ const ProfileBillingPayment = Radium(React.createClass({
                     <RaisedButton
                       className="raised-button"
                       style={{ marginRight: 10 }}
+                      labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+                      buttonStyle={{ borderRadius: '4px' }}
                       label="Cancel"
                       onClick={() => this.toggleForm(false)}
                     />
                   </Show>
                   <RaisedButton
                     type="submit"
-                    primary={true}
+                    labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+                    buttonStyle={{ borderRadius: '4px' }}
+                    backgroundColor="#B8E986"
                     className="raised-button"
                     style={{ margin: '0 0 0 auto' }}
                     label={formSubmitButtonLabel}
@@ -226,13 +230,17 @@ const ProfileBillingPayment = Radium(React.createClass({
                 <div className="col-flex-1">
                   <RaisedButton
                     label="Remove payment"
+                    labelStyle={{ textTransform: 'none' }}
+                    buttonStyle={{ borderRadius: '4px' }}
                     style={{ marginRight: 10 }}
                     onClick={() => this.showDialog('deleteBillingCard', {})}
                     data-e2e="payment-remove-button"
                   />
                   <RaisedButton
                     type="submit"
-                    primary={true}
+                    labelStyle={{ textTransform: 'none', color: '#436E1D' }}
+                    buttonStyle={{ borderRadius: '4px' }}
+                    backgroundColor="#B8E986"
                     label="Update payment"
                     onClick={() => this.toggleForm(true)}
                     data-e2e="payment-update-button"

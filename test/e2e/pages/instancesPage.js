@@ -59,7 +59,7 @@ export default {
       locateStrategy: 'xpath'
     },
     selectInstance: {
-      selector: '//div[@class="instances-list"]/div[2]/div[1]/div[1]//span',
+      selector: '//div[@class="instances-list"]/div[2]/div[1]/div[1]//button',
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
@@ -91,10 +91,6 @@ export default {
     },
     emptyListItem: {
       selector: '.empty-list-item'
-    },
-    addInstanceModalTitle: {
-      selector: '//h3[text()="Add an Instance"]',
-      locateStrategy: 'xpath'
     },
     editInstanceModalTitle: {
       selector: '//h3[text()="Update an Instance"]',

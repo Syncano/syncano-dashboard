@@ -2,7 +2,7 @@ import React from 'react';
 import CheckIcon from './CheckIcon';
 import { colors as Colors } from 'material-ui/styles/';
 
-export default (props) => {
+const SocketCheckIcon = (props) => {
   const icon = {
     className: props.iconClassName,
     color: props.iconColor,
@@ -36,3 +36,5 @@ export default (props) => {
     />
   );
 };
+
+export default SocketCheckIcon;

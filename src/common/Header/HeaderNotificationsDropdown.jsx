@@ -39,20 +39,28 @@ export default Radium(React.createClass({
     return {
       icon: {
         color: Colors.white,
-        fontSize: 21
+        fontSize: 21,
+        opacity: '0.5'
       },
       badgeContainer: {
         padding: 0
       },
       badgeContainerFilled: {
-        padding: '0 6px 0 0'
+        padding: 0
       },
       badge: {
         backgroundColor: 'transparent',
         color: '#fff'
       },
       badgeFilled: {
-        background: this.context.muiTheme.rawTheme.palette.accent2Color
+        background: '#15E2B4',
+        borderColor: '#4C38D0',
+        borderStyle: 'solid',
+        borderWidth: '2px',
+        width: '10px',
+        height: '10px',
+        top: '12px',
+        right: '12px'
       },
       resendEmailText: {
         cursor: 'pointer',
@@ -166,22 +174,19 @@ export default Radium(React.createClass({
   renderIcon() {
     const notifications = this.renderItems();
     const isBadge = notifications.length > 0;
-    const notificationCountIcon = isBadge ? notifications.length : '';
-    const iconClassName = notifications.length ? 'synicon-bell' : 'synicon-bell-outline';
     const styles = this.getStyles();
     const badgeContainerStyle = { ...styles.badgeContainer, ...(isBadge && styles.badgeContainerFilled) };
     const badgeStyle = { ...styles.badge, ...(isBadge && styles.badgeFilled) };
 
     return (
       <Badge
-        badgeContent={notificationCountIcon}
         style={badgeContainerStyle}
         badgeStyle={badgeStyle}
       >
         <IconButton
           data-e2e="notification-top-nav-button"
           iconStyle={styles.icon}
-          iconClassName={iconClassName}
+          iconClassName="synicon-bell-outline"
           onTouchTap={(event) => this.togglePopover(event, true)}
         />
       </Badge>

@@ -48,6 +48,9 @@ const HostingFileListItem = Radium(({ item, onFolderEnter, onIconClick, showDele
     checkIcon: {
       fileName: {
         width: '38vw'
+      },
+      fileDescription: {
+        width: '38vw'
       }
     }
   };
