@@ -237,7 +237,17 @@ const RoutesUtil = {
 
   onInstanceEnter(nextState, replace, cb) {
     this.checkInstanceActiveSubscription(nextState, replace, cb);
-    this.redirectToSyn5Instance(nextState);
+    const lastInstanceName = localStorage.getItem('lastInstanceName');
+
+    return this.isInstanceAvailable(lastInstanceName)
+      .then((instance = {}) => {
+        const instanceCreatedAt = Date.parse(instance.created_at);
+        const releaseDate = Number(APP_CONFIG.SYNCANO5_RELEASE_DATE);
+
+        if (instanceCreatedAt > releaseDate) {
+          window.location = `${APP_CONFIG.SYNCANO_NEW_DASHBOARD}/#/instances/${instance.name}`;
+        }
+      });
   }
 };
 
