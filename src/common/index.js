@@ -1,7 +1,6 @@
 import AlertPageContent from './AlertPageContent';
 import AutoCompleteWrapper from './AutoCompleteWrapper';
 import BashSnippet from './BashSnippet';
-import BetaSignUp from './BetaSignUp';
 import Billing from './Billing';
 import CheckIcon from './CheckIcon';
 import Clipboard from './Clipboard';
@@ -64,7 +63,6 @@ import StatusLabel from './StatusLabel';
 export { AlertPageContent };
 export { AutoCompleteWrapper };
 export { BashSnippet };
-export { BetaSignUp };
 export { Billing };
 export { CheckIcon };
 export { Clipboard };
@@ -129,7 +127,6 @@ export default {
   AlertPageContent,
   AutoCompleteWrapper,
   BashSnippet,
-  BetaSignUp,
   Billing,
   CheckIcon,
   Clipboard,

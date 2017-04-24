@@ -8,25 +8,13 @@ import RuntimeActions from '../apps/Runtimes/RuntimesActions';
 
 import { Header, UpgradeNowToolbar } from '../common/';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
-import BlurPageDialog from '../common/Dialog/BlurPageDialog';
-import BetaDialogContent from '../common/BetaDialogContent/BetaDialogContent';
 
 const Dashboard = React.createClass({
   contextTypes: {
     location: PropTypes.object
   },
 
-  childContextTypes: {
-    onApplyBeta: React.PropTypes.function
-  },
-
   mixins: [Reflux.connect(ProfileBillingPlanStore, 'billing')],
-
-  getChildContext() {
-    return {
-      onApplyBeta: this.onApplyBeta
-    };
-  },
 
   componentDidMount() {
     const { router } = this.props;
@@ -48,31 +36,13 @@ const Dashboard = React.createClass({
   },
 
   getStyles() {
-    const { showBetaDialog } = this.state;
-
     return {
       root: {
         display: 'flex',
         flexDirection: 'column',
         flex: 1
-      },
-      content: {
-        filter: showBetaDialog && 'blur(5px)'
       }
     };
-  },
-
-  onApplyBeta() {
-    window.analytics.track('Beta user subscription');
-    this.setState({
-      showBetaDialog: true
-    });
-  },
-
-  closeBetaDialog() {
-    this.setState({
-      showBetaDialog: false
-    });
   },
 
   renderUpgradeToolbar() {
@@ -97,12 +67,6 @@ const Dashboard = React.createClass({
           {children}
         </div>
         {this.renderUpgradeToolbar()}
-        <BlurPageDialog
-          open={this.state.showBetaDialog}
-          onRequestClose={this.closeBetaDialog}
-        >
-          <BetaDialogContent />
-        </BlurPageDialog>
         <InstanceDialog />
       </div>
     );
