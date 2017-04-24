@@ -14,7 +14,7 @@ import ProfileBillingPlanActions from '../../apps/Profile/ProfileBillingPlanActi
 
 import Sticky from 'react-stickydiv';
 import { FontIcon, Divider, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu } from 'material-ui';
-import { BetaSignUp, Logo, Clipboard, UpgradeButton } from '../';
+import { Logo, Clipboard, UpgradeButton } from '../';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 import HeaderGettingStartedDropdown from './HeaderGettingStartedDropdown';
 
@@ -35,7 +35,6 @@ const Header = Radium(React.createClass({
 
   getInitialState() {
     return {
-      closeBetaBanner: localStorage.getItem('closeBetaBanner'),
       user: SessionStore.getUser({ metadata: {} })
     };
   },
@@ -52,12 +51,6 @@ const Header = Radium(React.createClass({
         backgroundImage: `url(${this.getGravatarUrl()}), url(${this.getFallBackAvatar()})`,
         backgroundSize: '40px 40px',
         top: 'calc(50% - 20px)'
-      },
-      betaBadge: {
-        color: '#fff',
-        fontWeight: 600,
-        paddingLeft: 10,
-        paddingTop: 5
       },
       topToolbar: {
         background: this.context.muiTheme.rawTheme.palette.primary1Color,
@@ -189,13 +182,6 @@ const Header = Radium(React.createClass({
     router.push('/account/plan/');
   },
 
-  closeBetaBanner() {
-    localStorage.setItem('closeBetaBanner', true);
-    this.setState({
-      closeBetaBanner: true
-    });
-  },
-
   showSnackbarNotification() {
     this.setSnackbarNotification({ message: 'Account Key copied to the clipboard' });
   },
@@ -230,24 +216,11 @@ const Header = Radium(React.createClass({
     );
   },
 
-  renderBetaBadge() {
-    const styles = this.getStyles();
-
-    if (APP_CONFIG.ENV !== 'beta') {
-      return null;
-    }
-
-    return (
-      <span style={styles.betaBadge}>BETA</span>
-    );
-  },
-
   render() {
     const styles = this.getStyles();
 
     return (
       <Sticky zIndex={13}>
-        {!this.state.closeBetaBanner && <BetaSignUp closeBanner={this.closeBetaBanner} />}
         <Toolbar style={styles.topToolbar}>
           <ToolbarGroup style={styles.logotypeContainer}>
             <Link to="app">
@@ -256,7 +229,6 @@ const Header = Radium(React.createClass({
                 style={styles.logo}
               />
             </Link>
-            {this.renderBetaBadge()}
           </ToolbarGroup>
           <ToolbarGroup style={{ height: '100%' }}>
             <ul
