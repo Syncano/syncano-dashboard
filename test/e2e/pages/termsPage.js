@@ -1,9 +1,9 @@
 export default {
-  url: 'http://www.syncano.com/terms-of-service/',
+  url: 'https://syncano.io/#/terms-of-service',
   commands: [],
   elements: {
     termsOfUseContainer: {
-      selector: '//h1[text()="Terms and Legal"]',
+      selector: '//h1[text()="Terms of Service"]',
       locateStrategy: 'xpath'
     }
   }
