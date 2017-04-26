@@ -15,6 +15,6 @@ export default addTestNamePrefixes({
 
     termsPage
       .waitForElementVisible('@termsOfUseContainer')
-      .assert.containsText('@termsOfUseContainer', 'Terms and Legal');
+      .assert.containsText('@termsOfUseContainer', 'Terms of Service');
   }
 });
