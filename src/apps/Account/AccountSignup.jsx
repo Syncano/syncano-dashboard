@@ -81,7 +81,7 @@ const AccountSignup = React.createClass({
       <p className="vm-0-b text--center">
         {'By signing up you agree to our '}
         <a
-          href="http://www.syncano.com/terms-of-service/"
+          href="https://syncano.io/#/terms-of-service"
           target="_blank"
         >
           Terms of Use and Privacy Policy
