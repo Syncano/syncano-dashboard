@@ -39,22 +39,17 @@ test:
         timeout: 400
 
 deployment:
-  # production:
-  #   branch: master
-  #   commands:
-  #     - yarn git-config
-  #     - yarn deploy
+  production:
+    branch: master
+    commands:
+      - yarn git-config
+      - yarn deploy
 
-  # staging:
-  #   branch: devel
-  #   commands:
-  #     - yarn deploy:staging
-  #     - yarn deploy:beta
-
-  sockets:
-    branch: /.*/
+  staging:
+    branch: devel
     commands:
       - yarn deploy:staging
+      - yarn deploy:beta
 
 experimental:
   notify:
