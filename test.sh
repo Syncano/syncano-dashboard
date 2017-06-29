@@ -57,7 +57,7 @@ function ci_setup {
 }
 
 function ci_tests {
-    MESSAGE=$(git log --pretty=format:%s -n 1 "$CIRCLE_SHA1")
+    MESSAGE=$(git log -1)
     yarn run lint
 
     if [[ "$MESSAGE" == *\[e2e-skip\]* ]] || [ $CIRCLE_BRANCH = 'syn4-master' ]; then
