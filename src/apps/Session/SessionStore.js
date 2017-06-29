@@ -257,6 +257,7 @@ export default Reflux.createStore({
     Cookies.remove('logged_in', { domain: APP_CONFIG.SYNCANO_BASE_DOMAIN });
 
     Raven.setUserContext();
+    window.analytics.identify();
     this.trigger(this);
 
     if (this.router) {
