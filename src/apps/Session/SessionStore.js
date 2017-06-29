@@ -97,11 +97,8 @@ export default Reflux.createStore({
     if (this.signUpMode) {
       analyticsIdentifyObject.source = 'Sign up';
       analyticsIdentifyObject.authBackend = user.network || 'password';
-      window.analytics.identify(user.id, analyticsIdentifyObject);
-    } else {
-      window.analytics.identify(user.id);
-      window.analytics.identify(user.id, analyticsIdentifyObject);
     }
+    window.analytics.identify(user.id, analyticsIdentifyObject);
   },
 
   setToken(token) {
