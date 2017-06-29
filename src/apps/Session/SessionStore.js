@@ -97,10 +97,8 @@ export default Reflux.createStore({
     if (this.signUpMode) {
       analyticsIdentifyObject.source = 'Sign up';
       analyticsIdentifyObject.authBackend = user.network || 'password';
-      window.analytics.identify(user.id, analyticsIdentifyObject);
-    } else {
-      window.analytics.identify(user.id, analyticsIdentifyObject);
     }
+    window.analytics.identify(user.id, analyticsIdentifyObject);
   },
 
   setToken(token) {
@@ -259,7 +257,6 @@ export default Reflux.createStore({
     Cookies.remove('logged_in', { domain: APP_CONFIG.SYNCANO_BASE_DOMAIN });
 
     Raven.setUserContext();
-    window.analytics.identify();
     this.trigger(this);
 
     if (this.router) {
