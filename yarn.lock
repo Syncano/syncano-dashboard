@@ -8459,9 +8459,9 @@ symbol@^0.2.1:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/symbol/-/symbol-0.2.3.tgz#3b9873b8a901e47c6efe21526a3ac372ef28bbc7"
 
-syncano@1.0.28:
-  version "1.0.28"
-  resolved "https://registry.yarnpkg.com/syncano/-/syncano-1.0.28.tgz#de1141873ef74c60eea5471a406228a5cfe333a7"
+syncano@^1.0.29:
+  version "1.0.29"
+  resolved "https://registry.yarnpkg.com/syncano/-/syncano-1.0.29.tgz#ac21eaaedbdda33d7de85f63264c067146d7cd7d"
   dependencies:
     bluebird "^3.2.2"
     lodash "^4.6.1"
