@@ -48,13 +48,13 @@ export default Reflux.createStore({
     ProfileActions.fetchInvoices();
   },
 
-  onRetryPaymentFailure(message) {
+  onRetryPaymentFailure(error) {
     this.data.invoices = _.map(this.data.invoices, (invoice) => {
       invoice.actionDisabled = false;
       return invoice;
     });
 
-    this.setSnackbarNotification({ message: message.detail || message });
+    this.setSnackbarNotification({ message: error.message || error });
     this.trigger(this.data);
   }
 });
