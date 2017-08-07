@@ -38,8 +38,8 @@ const ProfileBillingInvoices = React.createClass({
           label="Retry Payment"
           secondary={true}
           style={{ marginRight: 0, borderRadius: '4px' }}
-          labelStyle={{ textTransform: 'none', color: '#436E1D' }}
-          buttonStyle={{ borderRadius: '4px' }}
+          labelStyle={{ textTransform: 'none', color: '#fff' }}
+          buttonStyle={{ borderRadius: '4px', backgroundColor: '#e51148' }}
           disabled={invoice.actionDisabled}
           onClick={() => this.handleRetryPaymentClick(invoice)}
         />
