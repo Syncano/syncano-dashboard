@@ -3,6 +3,7 @@ import React from 'react';
 import ListItem from './CustomSocketsListItem';
 import { colors as Colors } from 'material-ui/styles';
 import { ColumnList, Lists, EmptyView } from '../../common/';
+import { URLS } from '../../constants/Constants'
 
 const Column = ColumnList.Column;
 
@@ -46,7 +47,6 @@ const CustomSocketsList = React.createClass({
       style,
       ...other
     } = this.props;
-    const docsUrl = 'https://syncano.github.io/syncano-node-cli/#/using-sockets/overview';
 
     if ((!items || !items.length) && !isLoading) {
       return (
@@ -56,7 +56,7 @@ const CustomSocketsList = React.createClass({
           title="Syncano Sockets"
           urlLabel="Syncano Sockets"
           description="Use Syncano CLI to install a Socket from library"
-          docsUrl={docsUrl}
+          docsUrl={URLS['docs-sockets']}
         />
       );
     }

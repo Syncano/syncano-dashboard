@@ -184,5 +184,21 @@ export default {
     'night', 'pond', 'darkness', 'snowflake', 'silence', 'sound', 'sky', 'shape', 'surf', 'thunder', 'violet', 'water',
     'wildflower', 'wave', 'water', 'resonance', 'sun', 'wood', 'dream', 'cherry', 'tree', 'fog', 'frost', 'voice',
     'paper', 'frog', 'smoke', 'star'
-  ]
+  ],
+
+  URLS: {
+    landing: 'https://www.syncano.io/',
+    docs: '',
+    'docs-quickstart': ' https://docs.syncano.io/#/getting-started/quickstart',
+    'docs-hosting': 'https://docs.syncano.io/#/project/hosting',
+    'docs-sockets': 'https://docs.syncano.io/#/using-sockets/overview',
+    'slack-invite': 'https://www.syncano.io/slack-invite/',
+    terms: 'https://syncano.io/#/terms-of-service',
+    twitter: 'https://twitter.com/Syncano/',
+    facebook: 'https://www.facebook.com/syncano/',
+    'syncano-v3': 'https://login.syncano.com/',
+    status: 'http://status.syncano.com/',
+    'status-api': 'https://6l1kzwgr7t06.statuspage.io/api/v2/status.json'
+  }
 };
+

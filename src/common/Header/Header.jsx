@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 import Radium from 'radium';
 import { withRouter, Link } from 'react-router';
 import Gravatar from 'gravatar';
+import { URLS } from '../../constants/Constants'
 
 // Stores & Actions
 import SessionActions from '../../apps/Session/SessionActions';
@@ -235,7 +236,7 @@ const Header = Radium(React.createClass({
                 style={styles.toolbarListItem}
               >
                 <HeaderButton
-                  href="https://syncano.github.io/syncano-node-cli/#/getting-started/quickstart"
+                  href={URLS['docs-quickstart']}
                   target="_blank"
                   label="Getting Started"
                   fontIcon="fa fa-rocket"
@@ -246,7 +247,7 @@ const Header = Radium(React.createClass({
                 style={styles.toolbarListItem}
               >
                 <HeaderButton
-                  href="https://syncano.github.io/syncano-node-cli/#/"
+                  href={URLS.docs}
                   target="_blank"
                   label="Documentation"
                   fontIcon="fa fa-book"
