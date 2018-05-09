@@ -14,6 +14,7 @@ general:
 
 dependencies:
   pre:
+    - nvm use 7.10.1
     - |
       if [[ ! -e ~/.yarn/bin/yarn || $(yarn --version) != "${YARN_VERSION}" ]]; then
         echo "Download and install Yarn."

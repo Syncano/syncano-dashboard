@@ -45,6 +45,7 @@ function ci_cleanup {
 function ci_setup {
     selenium_install
 
+    node ./node_modules/phantomjs-prebuilt/install.js
     yarn run build:test
     mv ./dist ./dist_e2e
 
