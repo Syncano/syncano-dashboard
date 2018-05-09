@@ -4,7 +4,7 @@ machine:
   java:
     version: oraclejdk8
   environment:
-    YARN_VERSION: 0.17.10
+    YARN_VERSION: 1.1.0
     PATH: "${PATH}:${HOME}/.yarn/bin"
 
 general:
