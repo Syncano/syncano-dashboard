@@ -3,7 +3,7 @@ import React from 'react';
 import ListItem from './CustomSocketsListItem';
 import { colors as Colors } from 'material-ui/styles';
 import { ColumnList, Lists, EmptyView } from '../../common/';
-import { URLS } from '../../constants/Constants'
+import { URLS } from '../../constants/Constants';
 
 const Column = ColumnList.Column;
 

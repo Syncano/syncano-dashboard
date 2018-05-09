@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import Radium from 'radium';
 import { withRouter, Link } from 'react-router';
 import Gravatar from 'gravatar';
-import { URLS } from '../../constants/Constants'
+import { URLS } from '../../constants/Constants';
 
 // Stores & Actions
 import SessionActions from '../../apps/Session/SessionActions';

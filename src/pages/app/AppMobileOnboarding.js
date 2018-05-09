@@ -1,7 +1,7 @@
 import React from 'react';
 import { RaisedButton } from 'material-ui';
 import { MobileOnboarding } from '../../common/';
-import { URLS } from '../../constants/Constants'
+import { URLS } from '../../constants/Constants';
 
 const AppMobileOnboarding = () => (
   <MobileOnboarding>
@@ -66,14 +66,14 @@ const AppMobileOnboarding = () => (
       </div>
       <div style={{ marginTop: 30, display: 'flex', justifyContent: 'center' }}>
         <a
-          href={URLS['twitter']}
+          href={URLS.twitter}
           target="_blank"
           style={{ display: 'block', fontSize: 36, color: '#afb8c2', margin: '0 10px' }}
         >
           <span className="synicon-twitter" />
         </a>
         <a
-          href={URLS['facebook']}
+          href={URLS.facebook}
           target="_blank"
           style={{ display: 'block', fontSize: 36, color: '#afb8c2', margin: '0 10px' }}
         >

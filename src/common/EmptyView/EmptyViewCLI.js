@@ -14,7 +14,7 @@ import {
 } from 'material-ui';
 import { colors as Colors } from 'material-ui/styles';
 import { BashSnippet } from '../../common';
-import { URLS } from '../../constants/Constants'
+import { URLS } from '../../constants/Constants';
 
 const EmptyViewCLI = ({
   bashSnippets,

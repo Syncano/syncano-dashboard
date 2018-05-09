@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { RaisedButton } from 'material-ui';
 import AlertPageContent from '../common/AlertPageContent';
-import { URLS } from '../constants/Constants'
+import { URLS } from '../constants/Constants';
 
 export default class extends Component {
   constructor(props) {

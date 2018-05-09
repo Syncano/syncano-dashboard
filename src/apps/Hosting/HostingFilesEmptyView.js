@@ -5,7 +5,7 @@ import { colors as Colors } from 'material-ui/styles';
 import { LinearProgress, RaisedButton } from 'material-ui';
 import { EmptyView, Show } from '../../common';
 import UploadFilesButton from './UploadFilesButton';
-import { URLS } from '../../constants/Constants'
+import { URLS } from '../../constants/Constants';
 
 const HostingFilesEmptyView = ({
   currentFileIndex,

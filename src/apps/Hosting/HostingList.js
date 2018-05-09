@@ -7,7 +7,7 @@ import HostingStore from './HostingStore';
 
 import { ColumnList, Lists, EmptyView } from '../../common/';
 import { colors as Colors } from 'material-ui/styles';
-import { URLS } from '../../constants/Constants'
+import { URLS } from '../../constants/Constants';
 import ListItem from './HostingListItem';
 
 const Column = ColumnList.Column;
