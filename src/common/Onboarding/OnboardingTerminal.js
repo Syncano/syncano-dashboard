@@ -110,13 +110,13 @@ const Terminal = () => {
           </div>
           <div style={styles.terminalText}>
             <div style={styles.terminalTextP}>
-              <span style={styles.lightGrey}>⬢</span> $ npm install -g yarn <br />
+              <span style={styles.lightGrey}>⬢</span> $ mkdir my-project && cd my-project<br />
             </div>
             <div style={styles.terminalTextP}>
-              <span style={styles.lightGrey}>⬢</span> $ npm install -g syncano-cli <br />
+              <span style={styles.lightGrey}>⬢</span> $ npm i @syncano/cli<br />
             </div>
             <div style={styles.terminalTextP}>
-              <span style={styles.lightGrey}>⬢</span> $ syncano-cli init
+              <span style={styles.lightGrey}>⬢</span> $ npx s init
             </div>
             <div style={styles.cliOutput}>
               ...<br />
@@ -124,7 +124,7 @@ const Terminal = () => {
               Creating Syncano Instance... Done<br />
               Syncano Instance crimson-fire-6113 has been created!<br />
               Your project is attached to crimson-fire-6113 instance now!<br />
-              Project has been created from hello template.
+              Project has been created from @syncano/template-project-hello template.
             </div>
             <div style={styles.terminalTextP}>
               <span style={styles.lightGrey}>⬢</span> $ <span style={styles.cursor} />

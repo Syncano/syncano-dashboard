@@ -11,6 +11,7 @@ import AuthActions from './AuthActions';
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 import Constants from './AuthConstants';
+import { URLS } from '../../constants/Constants';
 
 import { RaisedButton, TextField } from 'material-ui';
 import { Notification, Show, SocialAuthButtonsList } from '../../common/';
@@ -164,7 +165,7 @@ const AccountLogin = React.createClass({
             </li>
           </ul>
           <p className="vm-4-t vm-0-b">
-            If you created your account before August 2015, please login <a href="https://login.syncano.com/">here</a>
+            If you created your account before August 2015, please login <a href={URLS['syncano-v3']}>here</a>
           </p>
         </div>
       </AccountContainer>

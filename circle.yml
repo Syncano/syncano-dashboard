@@ -4,8 +4,7 @@ machine:
   java:
     version: oraclejdk8
   environment:
-    YARN_VERSION: 0.17.10
-    PATH: "${PATH}:${HOME}/.yarn/bin"
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
 
 general:
   artifacts:
@@ -14,18 +13,9 @@ general:
 
 dependencies:
   pre:
-    - |
-      if [[ ! -e ~/.yarn/bin/yarn || $(yarn --version) != "${YARN_VERSION}" ]]; then
-        echo "Download and install Yarn."
-        curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
-      else
-        echo "The correct version of Yarn is already installed."
-      fi
+    - nvm use 7.10.1
   override:
-    - yarn install
-  cache_directories:
-    - ~/.yarn
-    - ~/.yarn-cache
+    - npm install
   post:
     - curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     - sudo dpkg -i google-chrome.deb
@@ -35,21 +25,21 @@ dependencies:
 
 test:
   override:
-    - yarn e2e:
+    - npm run e2e:
         timeout: 400
 
 deployment:
   production:
     branch: master
     commands:
-      - yarn git-config
-      - yarn deploy
+      - npm run git-config
+      - npm run deploy
 
   staging:
     branch: devel
     commands:
-      - yarn deploy:staging
-      - yarn deploy:beta
+      - npm run deploy:staging
+      - npm run deploy:beta
 
 experimental:
   notify:

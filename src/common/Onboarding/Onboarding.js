@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Terminal from './OnboardingTerminal';
+import URLS from '../../constants/Constants';
 
 class Onboarding extends Component {
   constructor(props) {
@@ -48,12 +49,12 @@ class Onboarding extends Component {
             See the
             <a
               target="_blank"
-              href="https://syncano.github.io/syncano-node-cli/#/getting-started/quickstart"
+              href={URLS['docs-quickstart']}
             >
               &nbsp;Quickstart Guide&nbsp;
             </a>
             or catch us on
-            <a target="_blank" href="https://www.syncano.io/slack-invite/"> Slack </a>
+            <a target="_blank" href={URLS['slack-invite']}> Slack </a>
             if you&#39;d like us to assist you.
           </div>
         </div>

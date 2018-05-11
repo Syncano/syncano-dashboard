@@ -5,6 +5,7 @@ import { colors as Colors } from 'material-ui/styles';
 import { LinearProgress, RaisedButton } from 'material-ui';
 import { EmptyView, Show } from '../../common';
 import UploadFilesButton from './UploadFilesButton';
+import { URLS } from '../../constants/Constants';
 
 const HostingFilesEmptyView = ({
   currentFileIndex,
@@ -90,7 +91,7 @@ const HostingFilesEmptyView = ({
       CLITitle="Use Syncano CLI"
       CLIDescription="The best way to manage your hosting files is with "
       description={description}
-      docsUrl="https://syncano.github.io/syncano-node-cli/#/project/hosting"
+      docsUrl={URLS['docs-hosting']}
       errorResponses={errorResponses}
       handleCancelUploading={handleCancelUploading}
       handleErrorsButtonClick={handleErrorsButtonClick}
