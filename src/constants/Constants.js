@@ -188,8 +188,8 @@ export default {
 
   URLS: {
     landing: 'https://www.syncano.io/',
-    docs: '',
-    'docs-quickstart': ' https://docs.syncano.io/#/getting-started/quickstart',
+    docs: 'https://docs.syncano.io/#/',
+    'docs-quickstart': 'https://docs.syncano.io/#/getting-started/quickstart',
     'docs-hosting': 'https://docs.syncano.io/#/project/hosting',
     'docs-sockets': 'https://docs.syncano.io/#/using-sockets/overview',
     'slack-invite': 'https://www.syncano.io/slack-invite/',
