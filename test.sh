@@ -18,14 +18,14 @@ function selenium_install {
       message "Installing selenium..."
       fi
 
-      yarn run selenium-install
+      npm run selenium-install
       mkdir -p reports/
     fi
 }
 
 function selenium_start {
     # Use defult config for selenium-standalone lib
-    nohup yarn run selenium-start > ./reports/selenium.log 2>&1&
+    nohup npm run selenium-start > ./reports/selenium.log 2>&1&
 }
 
 function http_server_start {
@@ -45,12 +45,13 @@ function ci_cleanup {
 function ci_setup {
     selenium_install
 
-    yarn run build:test
+    node ./node_modules/phantomjs-prebuilt/install.js
+    npm run build:test
     mv ./dist ./dist_e2e
 
     babel-node ./test/setup/createTestInstances.js
     touch simplefilename.testfile
-    yarn run lint-tests
+    npm run lint-tests
 
     selenium_start
     http_server_start
@@ -58,7 +59,7 @@ function ci_setup {
 
 function ci_tests {
     MESSAGE=$(git log --pretty=format:%s -n 1 "$CIRCLE_SHA1")
-    yarn run lint
+    npm run lint
 
     if [[ "$MESSAGE" == *\[e2e-skip\]* ]] || [ $CIRCLE_BRANCH = 'master' ]; then
         message "[WARN] Skipping E2E tests !!!"
@@ -67,10 +68,10 @@ function ci_tests {
 
         if [ $CIRCLE_BRANCH = 'devel' ]; then
             message "Starting devel test flow..."
-            yarn run e2e-master-devel
+            npm run e2e-master-devel
         else
             message "Starting branch test flow..."
-            yarn run e2e-branch
+            npm run e2e-branch
         fi
 
         ci_cleanup
@@ -103,18 +104,18 @@ function local_setup {
 function local_tests {
     local_setup
     message "Checking tests with lint..."
-    yarn run lint-tests -- --fix
+    npm run lint-tests -- --fix
 
     if [ -n "$1" ]; then
         message "Tag: ${1} local tests starts..."
-        yarn run e2e-tag $1
+        npm run e2e-tag $1
     else
         if [[ $CI == 'local' ]]; then
           message "[INFO] Running internal full tests, be sure to export all variables"
-          yarn run e2e-branch
+          npm run e2e-branch
         else
           message "Full local tests starts..."
-          yarn run e2e-local
+          npm run e2e-local
         fi
     fi
 }

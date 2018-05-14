@@ -10,7 +10,7 @@ import AuthStore from './AuthStore';
 import AuthActions from './AuthActions';
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
-// import Constants from './AuthConstants';
+import { URLS } from '../../constants/Constants';
 
 import { RaisedButton, TextField } from 'material-ui';
 // import { SocialAuthButtonsList } from '../../common/';
@@ -81,7 +81,7 @@ const AccountSignup = React.createClass({
       <p className="vm-0-b text--center">
         {'By signing up you agree to our '}
         <a
-          href="https://syncano.io/#/terms-of-service"
+          href={URLS.terms}
           target="_blank"
         >
           Terms of Use and Privacy Policy

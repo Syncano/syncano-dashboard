@@ -7,6 +7,7 @@ import HostingStore from './HostingStore';
 
 import { ColumnList, Lists, EmptyView } from '../../common/';
 import { colors as Colors } from 'material-ui/styles';
+import { URLS } from '../../constants/Constants';
 import ListItem from './HostingListItem';
 
 const Column = ColumnList.Column;
@@ -94,7 +95,7 @@ const HostingList = React.createClass({
           title="Hosting"
           urlLabel="Hosting"
           description="Host, deploy and publish your websites using Syncano platform."
-          docsUrl="https://syncano.github.io/syncano-node-cli/#/project/hosting"
+          docsUrl={URLS['docs-hosting']}
         />
       );
     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { RaisedButton } from 'material-ui';
 import AlertPageContent from '../common/AlertPageContent';
+import { URLS } from '../constants/Constants';
 
 export default class extends Component {
   constructor(props) {
@@ -11,7 +12,7 @@ export default class extends Component {
       hasSupportFormVisible: false,
       status: {
         page: {
-          url: 'http://status.syncano.com/'
+          url: URLS.status
         },
         status: {
           description: 'Fetching current status...',
@@ -32,7 +33,7 @@ export default class extends Component {
   };
 
   fetchCurrentStatus = () => {
-    const url = 'https://6l1kzwgr7t06.statuspage.io/api/v2/status.json';
+    const url = URLS['status-api'];
 
     axios.get(url).then((response) => this.setState({ status: response.data }));
   };
@@ -47,7 +48,7 @@ export default class extends Component {
         message={<span>{'We\'ll be back as soon as we update a few things.'}<br />Thank you for your patience!</span>}
         buttonSet={
           <div>
-            <a href="https://www.syncano.io/" target="_blank">
+            <a href={URLS.landing} target="_blank">
               <RaisedButton
                 label="Go to our website"
                 backgroundColor="#FFCC01"
