@@ -192,7 +192,7 @@ export default {
     'docs-quickstart': 'https://docs.syncano.io/#/getting-started/quickstart',
     'docs-hosting': 'https://docs.syncano.io/#/project/hosting',
     'docs-sockets': 'https://docs.syncano.io/#/using-sockets/overview',
-    'slack-invite': 'https://www.syncano.io/slack-invite/',
+    'slack-invite': 'https://syncano.io/#/slack-invite',
     terms: 'https://syncano.io/#/terms-of-service',
     twitter: 'https://twitter.com/Syncano/',
     facebook: 'https://www.facebook.com/syncano/',
