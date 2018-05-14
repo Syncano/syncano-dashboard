@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Terminal from './OnboardingTerminal';
-import URLS from '../../constants/Constants';
+import { URLS } from '../../constants/Constants';
 
 class Onboarding extends Component {
   constructor(props) {
